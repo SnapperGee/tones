@@ -2,16 +2,16 @@ package sogott.beep;
 
 class Wave {
     static byte[] sin(double freq, int duration) {
-        return sin(freq, duration, 44100);
+        return sin(freq, duration, 44100, Short.MAX_VALUE);
     }
 
-    static byte[] sin(double freq, int duration, float sampleRate) {
+    static byte[] sin(double freq, int duration, float sampleRate, short amplitude) {
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
         for (int currentSample = 0; currentSample < samples; ++currentSample) {
             final double angle = 2.0 * Math.PI * freq * currentSample / sampleRate;
-            final short sample = (short) (Math.sin(angle) * Short.MAX_VALUE);
+            final short sample = (short) (Math.sin(angle) * amplitude);
 
             // Little endian
             output[2 * currentSample] = (byte) (sample & 0xFF);
