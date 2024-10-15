@@ -20,7 +20,7 @@ public class Main {
         line.start();
 
         // Generate waveform data (e.g., sine wave)
-        byte[] buffer = Wave.SIN.generate(frequency, duration, sampleRate);
+        byte[] buffer = Wave.sin(frequency, duration, sampleRate);
 
         // Play the waveform
         line.write(buffer, 0, buffer.length);
