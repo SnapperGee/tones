@@ -6,14 +6,14 @@ enum Cli {
     BPM(Option.builder("b")
             .argName("INTEGER")
             .longOpt("bpm")
-            .hasArg(true)
+            .hasArg()
             .desc("Set speed of playback to INTEGER beats per minute (defaults to 140).")
             .converter(Integer::parseInt)
             .build()),
     TIME_SIGNATURE(Option.builder("t")
             .argName("INTEGER/INTEGER")
             .longOpt("time-signature")
-            .hasArg(true)
+            .hasArg()
             .desc("Set time signature to INTEGER/INTEGER (defaults to 4/4).")
             .build()),
     VERSION(Option.builder("v")
