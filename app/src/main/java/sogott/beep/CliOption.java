@@ -2,7 +2,7 @@ package sogott.beep;
 
 import org.apache.commons.cli.Option;
 
-enum Cli {
+enum CliOption {
     BPM(Option.builder("b")
             .argName("INTEGER")
             .longOpt("bpm")
@@ -25,13 +25,13 @@ enum Cli {
             .desc("Ignores all other arguments and prints this help message.")
             .build());
 
-    final private Option _option;
+    final private Option _value;
 
-    private Cli(Option option) {
-        this._option = option;
+    private CliOption(Option value) {
+        this._value = value;
     }
 
-    Option option() {
-        return this._option;
+    Option value() {
+        return this._value;
     }
 }

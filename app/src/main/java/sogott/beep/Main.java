@@ -1,7 +1,6 @@
 package sogott.beep;
 
 import javax.sound.sampled.*;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -12,48 +11,40 @@ import org.apache.commons.cli.ParseException;
 final public class Main {
     public static void main(String[] args) throws LineUnavailableException {
         final Options options = new Options()
-                .addOption(Cli.BPM.option())
-                .addOption(Cli.TIME_SIGNATURE.option())
-                .addOption(Cli.VERSION.option())
-                .addOption(Cli.HELP.option());
+                .addOption(CliOption.BPM.value())
+                .addOption(CliOption.TIME_SIGNATURE.value())
+                .addOption(CliOption.VERSION.value())
+                .addOption(CliOption.HELP.value());
 
         final CommandLineParser cliParser = new DefaultParser(false);
 
         try {
             final CommandLine cliArgs = cliParser.parse(options, args);
 
-            if (cliArgs.hasOption(Cli.HELP.option())) {
+            if (cliArgs.hasOption(CliOption.HELP.value())) {
                 final HelpFormatter helpFormatter = new HelpFormatter();
 
                 helpFormatter.printHelp(
-                        "beep [--%s|-%s=%s] [--%s|-%s=%s] [--%s|-%s] [--%s|-%s] [WAVE>](NOTE.INTEGER|FLOAT)..."
-                                .formatted(Cli.BPM.option().getLongOpt(), Cli.BPM.option().getOpt(),
-                                        Cli.BPM.option().getArgName(), Cli.TIME_SIGNATURE.option().getLongOpt(),
-                                        Cli.TIME_SIGNATURE.option().getOpt(),
-                                        Cli.TIME_SIGNATURE.option().getArgName(), Cli.VERSION.option().getLongOpt(),
-                                        Cli.VERSION.option().getOpt(), Cli.HELP.option().getLongOpt(),
-                                        Cli.HELP.option().getOpt()),
+                        "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s] [WAVE>](NOTE.INTEGER|FLOAT)..."
+                                .formatted(CliOption.BPM.value().getLongOpt(), CliOption.BPM.value().getOpt(),
+                                        CliOption.BPM.value().getArgName(),
+                                        CliOption.TIME_SIGNATURE.value().getLongOpt(),
+                                        CliOption.TIME_SIGNATURE.value().getOpt(),
+                                        CliOption.TIME_SIGNATURE.value().getArgName(),
+                                        CliOption.VERSION.value().getLongOpt(),
+                                        CliOption.VERSION.value().getOpt(), CliOption.HELP.value().getLongOpt(),
+                                        CliOption.HELP.value().getOpt()),
                         options);
-            } else if (cliArgs.hasOption(Cli.VERSION.option())) {
+            } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");
             } else {
-                final int bpm = cliArgs.getParsedOptionValue(Cli.BPM.option(), 140);
+                final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), 140);
 
-                final String timeSignature = cliArgs.getOptionValue(Cli.TIME_SIGNATURE.option(), "4/4");
-                final String[] splitTimeSignature = timeSignature.split("/");
-
-                if (splitTimeSignature.length != 2 || splitTimeSignature[0].isEmpty() || splitTimeSignature[1].isEmpty()
-                        || !splitTimeSignature[0].codePoints().allMatch(Character::isDigit)
-                        || !splitTimeSignature[1].codePoints().allMatch(Character::isDigit)) {
-                    throw new ParseException("Illegal time signature format: \"%s\"".formatted(timeSignature));
-                }
-
-                final int beatsPerMeasure = Integer.parseInt(splitTimeSignature[0]);
-                final int beatNoteValue = Integer.parseInt(splitTimeSignature[1]);
+                final int timeSignatureDenominator = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(), 4);
 
                 final double beatDuration = 60000.0 / bpm;
 
-                final double wholeNoteDuration = beatDuration * beatDuration;
+                final double wholeNoteDuration = beatDuration * timeSignatureDenominator;
             }
         } catch (ParseException e) {
             e.printStackTrace();
