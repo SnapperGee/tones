@@ -2,7 +2,7 @@ package sogott.beep;
 
 import javax.sound.sampled.*;
 
-public class Main {
+final public class Main {
     public static void main(String[] args) throws LineUnavailableException {
         final float sampleRate = 44100;
         final int sampleSizeInBits = 16;
