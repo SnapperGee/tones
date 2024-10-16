@@ -1,6 +1,6 @@
 package sogott.beep;
 
-final class Wave {
+final class GenerateWave {
     static byte[] sin(double freq, int duration) {
         return sin(freq, duration, 44100, Short.MAX_VALUE);
     }
