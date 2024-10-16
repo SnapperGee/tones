@@ -38,6 +38,7 @@ final public class Main {
                 System.out.println("beep 0.0.1");
             } else {
                 final int bpm = cliArgs.getParsedOptionValue(Cli.BPM.option(), 140);
+
                 final String timeSignature = cliArgs.getOptionValue(Cli.TIME_SIGNATURE.option(), "4/4");
                 final String[] splitTimeSignature = timeSignature.split("/");
 
@@ -49,6 +50,10 @@ final public class Main {
 
                 final int beatsPerMeasure = Integer.parseInt(splitTimeSignature[0]);
                 final int beatNoteValue = Integer.parseInt(splitTimeSignature[1]);
+
+                final double beatDuration = 60000.0 / bpm;
+
+                final double wholeNoteDuration = beatDuration * beatDuration;
             }
         } catch (ParseException e) {
             e.printStackTrace();
