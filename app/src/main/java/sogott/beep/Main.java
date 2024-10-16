@@ -37,18 +37,22 @@ final public class Main {
             } else if (cliArgs.hasOption(Cli.VERSION.option())) {
                 System.out.println("beep 0.0.1");
             } else {
-                if (cliArgs.hasOption(Cli.BPM.option())) {
-                    System.out.println("BPM arg passed: %d".formatted(cliArgs.getParsedOptionValue(Cli.BPM.option())));
+                final int bpm = cliArgs.getParsedOptionValue(Cli.BPM.option(), 140);
+                final String timeSignature = cliArgs.getOptionValue(Cli.TIME_SIGNATURE.option(), "4/4");
+                final String[] splitTimeSignature = timeSignature.split("/");
+
+                if (splitTimeSignature.length != 2 || splitTimeSignature[0].isEmpty() || splitTimeSignature[1].isEmpty()
+                        || !splitTimeSignature[0].codePoints().allMatch(Character::isDigit)
+                        || !splitTimeSignature[1].codePoints().allMatch(Character::isDigit)) {
+                    throw new ParseException("Illegal time signature format: \"%s\"".formatted(timeSignature));
                 }
 
-                if (cliArgs.hasOption(Cli.TIME_SIGNATURE.option())) {
-                    System.out.println(
-                            "TIME_SIGNATURE arg passed: %s"
-                                    .formatted(cliArgs.getOptionValue(Cli.TIME_SIGNATURE.option())));
-                }
+                final int beatsPerMeasure = Integer.parseInt(splitTimeSignature[0]);
+                final int beatNoteValue = Integer.parseInt(splitTimeSignature[1]);
             }
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+            System.err.format("\n%s", e.getMessage());
         }
 
         // final float sampleRate = 44100;
