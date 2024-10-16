@@ -13,6 +13,18 @@ final class GenerateWave {
         return triangle(freq, duration, 44100, Short.MAX_VALUE);
     }
 
+    static byte[] sin(double freq, int duration, short amplitude) {
+        return sin(freq, duration, 44100, amplitude);
+    }
+
+    static byte[] square(double freq, int duration, short amplitude) {
+        return square(freq, duration, 44100, amplitude);
+    }
+
+    static byte[] triangle(double freq, int duration, short amplitude) {
+        return triangle(freq, duration, 44100, amplitude);
+    }
+
     static byte[] sin(double freq, int duration, float sampleRate, short amplitude) {
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final byte[] output = new byte[samples * 2]; // 16-bit audio
@@ -71,6 +83,14 @@ final class GenerateWave {
 
         static byte[] down(double freq, int duration) {
             return down(freq, duration, 44100, Short.MAX_VALUE);
+        }
+
+        static byte[] up(double freq, int duration, short amplitude) {
+            return up(freq, duration, 44100, amplitude);
+        }
+
+        static byte[] down(double freq, int duration, short amplitude) {
+            return down(freq, duration, 44100, amplitude);
         }
 
         static byte[] up(double freq, int duration, float sampleRate, short amplitude) {
