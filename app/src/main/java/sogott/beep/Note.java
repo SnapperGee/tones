@@ -53,6 +53,43 @@ final class Note {
         return noteFrequency;
     }
 
+    static double frequency(String note, int octave) {
+        if (note == null) {
+            throw new IllegalArgumentException("Null note String.");
+        }
+
+        if (note.length() == 1) {
+            final int baseNoteOffset = baseSemitoneOffset(note.charAt(0));
+            final int octaveOffset = (octave - 4) * 12;
+            final double noteFrequency = 440
+                    * Math.pow(2, (baseNoteOffset + octaveOffset) / 12.0);
+            return noteFrequency;
+        }
+
+        if (note.length() == 2) {
+            final int baseNoteOffset = baseSemitoneOffset(note.charAt(0));
+
+            final char accidentalChar = note.charAt(1);
+            final Accidental accidental = switch (accidentalChar) {
+                case '+' -> Accidental.SHARP;
+                case '-' -> Accidental.FLAT;
+                default -> throw new IllegalArgumentException(
+                        "Illegal note String accidental char ('+' or '-' expected, but got '%c'): \"%s\""
+                                .formatted(accidentalChar, note));
+            };
+
+            final int octaveOffset = (octave - 4) * 12;
+            final double noteFrequency = 440
+                    * Math.pow(2,
+                            (baseNoteOffset + (accidental == null ? 0 : accidental.semitoneOffset()) + octaveOffset)
+                                    / 12.0);
+            return noteFrequency;
+        }
+
+        throw new IllegalArgumentException(
+                "Illegal note String length (1-2 expected, but got %d): \"%s\"".formatted(note.length(), note));
+    }
+
     static double frequency(char note) {
         return frequency(note, null, 4);
     }
@@ -63,5 +100,9 @@ final class Note {
 
     static double frequency(char note, int octave) {
         return frequency(note, null, octave);
+    }
+
+    static double frequency(String note) {
+        return frequency(note);
     }
 }
