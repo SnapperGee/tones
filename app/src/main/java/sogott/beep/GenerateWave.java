@@ -25,7 +25,23 @@ final class GenerateWave {
         return triangle(freq, duration, 44100, amplitude);
     }
 
-    static byte[] sin(double freq, int duration, float sampleRate, short amplitude) {
+    static byte[] sin(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
+        if (freq <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+        }
+
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+        }
+
+        if (sampleRate <= 0) {
+            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+        }
+
+        if (amplitude <= 0) {
+            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+        }
+
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
@@ -41,7 +57,23 @@ final class GenerateWave {
         return output;
     }
 
-    static byte[] square(double freq, int duration, float sampleRate, short amplitude) {
+    static byte[] square(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
+        if (freq <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+        }
+
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+        }
+
+        if (sampleRate <= 0) {
+            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+        }
+
+        if (amplitude <= 0) {
+            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+        }
+
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
@@ -57,7 +89,24 @@ final class GenerateWave {
         return output;
     }
 
-    static byte[] triangle(double freq, int duration, float sampleRate, short amplitude) {
+    static byte[] triangle(double freq, int duration, float sampleRate, short amplitude)
+            throws IllegalArgumentException {
+        if (freq <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+        }
+
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+        }
+
+        if (sampleRate <= 0) {
+            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+        }
+
+        if (amplitude <= 0) {
+            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+        }
+
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final double period = sampleRate / freq;
         final byte[] output = new byte[samples * 2]; // 16-bit audio
@@ -93,7 +142,23 @@ final class GenerateWave {
             return down(freq, duration, 44100, amplitude);
         }
 
-        static byte[] up(double freq, int duration, float sampleRate, short amplitude) {
+        static byte[] up(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
+            if (freq <= 0) {
+                throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            }
+
+            if (duration <= 0) {
+                throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            }
+
+            if (sampleRate <= 0) {
+                throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            }
+
+            if (amplitude <= 0) {
+                throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            }
+
             final int samples = (int) ((duration / 1000.0) * sampleRate);
             final double period = sampleRate / freq;
             final byte[] output = new byte[samples * 2]; // 16-bit audio
@@ -111,7 +176,24 @@ final class GenerateWave {
             return output;
         }
 
-        static byte[] down(double freq, int duration, float sampleRate, short amplitude) {
+        static byte[] down(double freq, int duration, float sampleRate, short amplitude)
+                throws IllegalArgumentException {
+            if (freq <= 0) {
+                throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            }
+
+            if (duration <= 0) {
+                throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            }
+
+            if (sampleRate <= 0) {
+                throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            }
+
+            if (amplitude <= 0) {
+                throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            }
+
             final int samples = (int) ((duration / 1000.0) * sampleRate);
             final double period = sampleRate / freq;
             final byte[] output = new byte[samples * 2]; // 16-bit audio
