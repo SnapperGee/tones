@@ -1,30 +1,6 @@
 package sogott.beep;
 
 final class GenerateWave {
-    static byte[] sin(double freq, int duration) {
-        return sin(freq, duration, 44100, Short.MAX_VALUE);
-    }
-
-    static byte[] square(double freq, int duration) {
-        return square(freq, duration, 44100, Short.MAX_VALUE);
-    }
-
-    static byte[] triangle(double freq, int duration) {
-        return triangle(freq, duration, 44100, Short.MAX_VALUE);
-    }
-
-    static byte[] sin(double freq, int duration, short amplitude) {
-        return sin(freq, duration, 44100, amplitude);
-    }
-
-    static byte[] square(double freq, int duration, short amplitude) {
-        return square(freq, duration, 44100, amplitude);
-    }
-
-    static byte[] triangle(double freq, int duration, short amplitude) {
-        return triangle(freq, duration, 44100, amplitude);
-    }
-
     static byte[] sin(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
@@ -125,22 +101,6 @@ final class GenerateWave {
     }
 
     static class Saw {
-
-        static byte[] up(double freq, int duration) {
-            return up(freq, duration, 44100, Short.MAX_VALUE);
-        }
-
-        static byte[] down(double freq, int duration) {
-            return down(freq, duration, 44100, Short.MAX_VALUE);
-        }
-
-        static byte[] up(double freq, int duration, short amplitude) {
-            return up(freq, duration, 44100, amplitude);
-        }
-
-        static byte[] down(double freq, int duration, short amplitude) {
-            return down(freq, duration, 44100, amplitude);
-        }
 
         static byte[] up(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
             if (freq <= 0) {
