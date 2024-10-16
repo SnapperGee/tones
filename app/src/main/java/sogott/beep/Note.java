@@ -50,7 +50,7 @@ enum Note {
 
     final static class Parser {
 
-        static int baseSemitoneOffset(char note) {
+        static int baseSemitoneOffset(char note) throws IllegalArgumentException {
             switch (note) {
                 case 'C':
                 case 'c':
@@ -88,7 +88,7 @@ enum Note {
             return noteFrequency;
         }
 
-        static double frequency(String note, int octave) {
+        static double frequency(String note, int octave) throws IllegalArgumentException {
             if (note == null) {
                 throw new IllegalArgumentException("Null note String.");
             }
