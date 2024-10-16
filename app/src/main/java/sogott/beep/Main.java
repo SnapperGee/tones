@@ -26,7 +26,7 @@ final public class Main {
                 final HelpFormatter helpFormatter = new HelpFormatter();
 
                 helpFormatter.printHelp(
-                        "beep [--%s|-%s=%s] [--%s|-%s=%s] [--%s|-%s] [--%s|-%s]"
+                        "beep [--%s|-%s=%s] [--%s|-%s=%s] [--%s|-%s] [--%s|-%s] [WAVE>](NOTE.INTEGER|FLOAT)..."
                                 .formatted(Cli.BPM.option().getLongOpt(), Cli.BPM.option().getOpt(),
                                         Cli.BPM.option().getArgName(), Cli.TIME_SIGNATURE.option().getLongOpt(),
                                         Cli.TIME_SIGNATURE.option().getOpt(),
