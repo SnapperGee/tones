@@ -5,14 +5,14 @@ final class Note {
         SHARP(1),
         FLAT(-1);
 
-        final private int _offset;
+        final private int _semitoneOffset;
 
-        private Accidental(int offset) {
-            this._offset = offset;
+        private Accidental(int semitoneOffset) {
+            this._semitoneOffset = semitoneOffset;
         }
 
-        int offset() {
-            return this._offset;
+        int semitoneOffset() {
+            return this._semitoneOffset;
         }
     }
 
@@ -48,7 +48,8 @@ final class Note {
         final int baseNoteOffset = baseSemitoneOffset(note);
         final int octaveOffset = (octave - 4) * 12;
         final double noteFrequency = 440
-                * Math.pow(2, (baseNoteOffset + (accidental == null ? 0 : accidental.offset()) + octaveOffset) / 12.0);
+                * Math.pow(2, (baseNoteOffset + (accidental == null ? 0 : accidental.semitoneOffset()) + octaveOffset)
+                        / 12.0);
         return noteFrequency;
     }
 
