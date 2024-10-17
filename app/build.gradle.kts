@@ -28,4 +28,5 @@ tasks.named<Test>("test") {
 
 tasks.named<Javadoc>("javadoc") {
     title = "beep"
+    options.memberLevel = JavadocMemberLevel.PACKAGE
 }
