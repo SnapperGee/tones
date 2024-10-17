@@ -1,11 +1,10 @@
 package sogott.beep;
 
+import sogott.beep.Note.Accidental;
 import java.lang.constant.Constable;
 import java.lang.constant.ConstantDesc;
 import java.util.EnumSet;
 import java.util.Optional;
-
-import sogott.beep.Note.Accidental;
 
 /**
  * A {@code String} can be parsed to audio if it has at least enough
