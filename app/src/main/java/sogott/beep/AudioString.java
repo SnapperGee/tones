@@ -193,9 +193,8 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
     /**
      *
      * @author Snap
-     * @param aString {@code String} to check if it's a valid operand.
-     * @return {@code true} if passed {@code String} argument is a valid operand.
-     * @see Wave
+     * @param aString {@code String} to check if it's parsable to audio.
+     * @return {@code true} if passed {@code String} can be parsed to audio.
      */
     static boolean isParsable(String aString) {
 
