@@ -27,5 +27,5 @@ tasks.named<Test>("test") {
 }
 
 tasks.named<Javadoc>("javadoc") {
-    title = "Beep"
+    title = "beep"
 }
