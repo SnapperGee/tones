@@ -50,8 +50,8 @@ import sogott.beep.Note.Accidental;
  *
  * <h3>2.) Frequency</h3>
  * The part that follows the wave shape prefix (if it's present) and
- * precedes the duration defines the frequency of the audio. This part can
- * be divided into 3 parts, 2 required parts with an optional part in the
+ * precedes the duration suffix defines the frequency of the audio. This part
+ * can be divided into 3 parts, 2 required parts with an optional part in the
  * middle:
  *
  * <ol>
@@ -83,7 +83,7 @@ import sogott.beep.Note.Accidental;
  * wave that is an F&sharp; (sharp) half note in the 8th octave would be
  * {@code "SIN>F+8.2"}. Because a sin wave is the default wave shape, the
  * leading {@code "SIN>"} prefix could have been omitted and it could more
- * concisely written as {@code "F+8.2"}
+ * concisely be written as {@code "F+8.2"}
  *
  * @author Snap
  * @see Wave
