@@ -320,6 +320,28 @@ final class AudioStringValidator {
         return aString.codePoints().skip(startIndex).allMatch(Character::isDigit);
     }
 
+    static boolean isParsableWaveShapePrefix(String aString) {
+        if (aString == null) {
+            return false;
+        }
+
+        if (aString.length() < 4) {
+            return false;
+        }
+
+        if (!aString.endsWith(">")) {
+            return false;
+        }
+
+        final String strippedString = aString.substring(0, aString.length() - 1);
+
+        if (_waves.stream().noneMatch(wave -> wave.name().equalsIgnoreCase(strippedString))) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      *
      * @author Snap
