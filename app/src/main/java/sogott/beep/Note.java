@@ -9,6 +9,10 @@ enum Note {
         this._noteChar = this.name().charAt(0);
     }
 
+    char charValue() {
+        return this._noteChar;
+    }
+
     double natural() {
         return Parser.frequency(this._noteChar);
     }
