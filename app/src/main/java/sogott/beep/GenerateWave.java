@@ -100,75 +100,73 @@ final class GenerateWave {
         return output;
     }
 
-    static class Saw {
-
-        static byte[] up(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
-            if (freq <= 0) {
-                throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
-            }
-
-            if (duration <= 0) {
-                throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
-            }
-
-            if (sampleRate <= 0) {
-                throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
-            }
-
-            if (amplitude <= 0) {
-                throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
-            }
-
-            final int samples = (int) ((duration / 1000.0) * sampleRate);
-            final double period = sampleRate / freq;
-            final byte[] output = new byte[samples * 2]; // 16-bit audio
-
-            for (int currentSample = 0; currentSample < samples; ++currentSample) {
-                final double position = currentSample % period;
-                final double value = (2 * (position / period)) - 1;
-                final short sample = (short) (value * amplitude);
-
-                // Little endian
-                output[2 * currentSample] = (byte) (sample & 0xFF);
-                output[2 * currentSample + 1] = (byte) ((sample >> 8) & 0xFF);
-            }
-
-            return output;
+    static byte[] sawUp(double freq, int duration, float sampleRate, short amplitude)
+            throws IllegalArgumentException {
+        if (freq <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }
 
-        static byte[] down(double freq, int duration, float sampleRate, short amplitude)
-                throws IllegalArgumentException {
-            if (freq <= 0) {
-                throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
-            }
-
-            if (duration <= 0) {
-                throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
-            }
-
-            if (sampleRate <= 0) {
-                throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
-            }
-
-            if (amplitude <= 0) {
-                throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
-            }
-
-            final int samples = (int) ((duration / 1000.0) * sampleRate);
-            final double period = sampleRate / freq;
-            final byte[] output = new byte[samples * 2]; // 16-bit audio
-
-            for (int currentSample = 0; currentSample < samples; ++currentSample) {
-                final double position = currentSample % period;
-                final double value = 1 - (2 * (position / period));
-                final short sample = (short) (value * amplitude);
-
-                // Little endian
-                output[2 * currentSample] = (byte) (sample & 0xFF);
-                output[2 * currentSample + 1] = (byte) ((sample >> 8) & 0xFF);
-            }
-
-            return output;
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
         }
+
+        if (sampleRate <= 0) {
+            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+        }
+
+        if (amplitude <= 0) {
+            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+        }
+
+        final int samples = (int) ((duration / 1000.0) * sampleRate);
+        final double period = sampleRate / freq;
+        final byte[] output = new byte[samples * 2]; // 16-bit audio
+
+        for (int currentSample = 0; currentSample < samples; ++currentSample) {
+            final double position = currentSample % period;
+            final double value = (2 * (position / period)) - 1;
+            final short sample = (short) (value * amplitude);
+
+            // Little endian
+            output[2 * currentSample] = (byte) (sample & 0xFF);
+            output[2 * currentSample + 1] = (byte) ((sample >> 8) & 0xFF);
+        }
+
+        return output;
+    }
+
+    static byte[] sawDown(double freq, int duration, float sampleRate, short amplitude)
+            throws IllegalArgumentException {
+        if (freq <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+        }
+
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+        }
+
+        if (sampleRate <= 0) {
+            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+        }
+
+        if (amplitude <= 0) {
+            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+        }
+
+        final int samples = (int) ((duration / 1000.0) * sampleRate);
+        final double period = sampleRate / freq;
+        final byte[] output = new byte[samples * 2]; // 16-bit audio
+
+        for (int currentSample = 0; currentSample < samples; ++currentSample) {
+            final double position = currentSample % period;
+            final double value = 1 - (2 * (position / period));
+            final short sample = (short) (value * amplitude);
+
+            // Little endian
+            output[2 * currentSample] = (byte) (sample & 0xFF);
+            output[2 * currentSample + 1] = (byte) ((sample >> 8) & 0xFF);
+        }
+
+        return output;
     }
 }

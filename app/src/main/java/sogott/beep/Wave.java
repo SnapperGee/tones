@@ -7,9 +7,10 @@ enum Wave {
     SQUARE((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.square(freq, duration, sampleRate, amplitude)),
     TRIANGLE((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.triangle(freq, duration, sampleRate, amplitude)),
-    SAW_UP((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.Saw.up(freq, duration, sampleRate, amplitude)),
+    SAW_UP((freq,
+            duration) -> (sampleRate, amplitude) -> GenerateWave.sawUp(freq, duration, sampleRate, amplitude)),
     SAW_DOWN((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateWave.Saw.down(freq, duration, sampleRate, amplitude));
+            duration) -> (sampleRate, amplitude) -> GenerateWave.sawDown(freq, duration, sampleRate, amplitude));
 
     final private static float DEFAULT_SAMPLE_RATE = 44100;
 
