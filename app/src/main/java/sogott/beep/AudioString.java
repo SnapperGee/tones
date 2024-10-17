@@ -197,7 +197,7 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
      * @return {@code true} if passed {@code String} argument is a valid operand.
      * @see Wave
      */
-    static boolean isValid(String aString) {
+    static boolean isParsable(String aString) {
 
         if (aString == null) {
             return false;
