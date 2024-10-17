@@ -25,3 +25,7 @@ application {
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
+
+tasks.named<Javadoc>("javadoc") {
+    title = "Beep"
+}
