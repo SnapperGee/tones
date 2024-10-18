@@ -8,8 +8,8 @@ import java.util.Optional;
 
 /**
  * A {@code String} can be parsed to audio if it has at least enough
- * information to know the frequency and duration of the audio. These parts of
- * the string are referred to as the <i>frequency</i> and <i>duration</i>
+ * information to know the frequency and duration of the audio. These segments
+ * of the string are referred to as the <i>frequency</i> and <i>duration</i>
  * respectively. The duration also being referred to as the <i>duration
  * suffix</i> as it's always the last part of the string. An optional leading
  * prefix can specify the wave shape of the audio. This part is referred to as
@@ -26,6 +26,9 @@ import java.util.Optional;
  * <li>* <b>Duration</b> suffix (required)
  * </ol>
  *
+ * {@code "SIN>F+8.2"} is an example of an {@link AudioString} with all 3
+ * segments.
+ *
  * <h3>1.) Wave shape prefix</h3>
  * The leading portion <i>can</i> specify what kind of wave shape the audio
  * consists of. The types of wave shapes can be designated via:
@@ -41,8 +44,8 @@ import java.util.Optional;
  * to separate it from the frequency section of the string which follows it.
  * An example of a wave shape prefix for a triangle wave would be
  * {@code "TRIANGLE>"} with the rest of the string coming after the
- * {@code '>'} character (not shown in example). The types of supported wave
- * shapes are defined in the {@link Wave} enum.
+ * {@code '>'} character. The types of supported wave shapes are defined in the
+ * {@link Wave} enum.
  *
  * <p>
  * If the leading wave shape prefix is omitted it defaults to a sin wave.
