@@ -38,7 +38,7 @@ enum AudioStringSegment {
 
             final String strippedString = aString.substring(0, aString.length() - 1);
 
-            if (Arrays.stream(Wave.values()).noneMatch(wave -> wave.name().equalsIgnoreCase(strippedString))) {
+            if (Arrays.stream(Wave.values()).noneMatch(wave -> wave.stringValue().equalsIgnoreCase(strippedString))) {
                 return false;
             }
 
