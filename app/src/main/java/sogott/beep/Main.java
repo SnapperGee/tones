@@ -9,10 +9,17 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 final public class Main {
+    private final static class Default {
+        final static int BPM = 140;
+        final static int TIME_SIGNATURE_DENOMINATOR = 4;
+        final static String WAVE = Wave.SIN.name();
+    }
+
     public static void main(String[] args) throws LineUnavailableException {
         final Options options = new Options()
                 .addOption(CliOption.BPM.value())
                 .addOption(CliOption.TIME_SIGNATURE.value())
+                .addOption(CliOption.WAVE.value())
                 .addOption(CliOption.VERSION.value())
                 .addOption(CliOption.HELP.value());
 
@@ -38,9 +45,12 @@ final public class Main {
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");
             } else {
-                final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), 140);
+                final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), Default.BPM);
 
-                final int timeSignatureDenominator = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(), 4);
+                final int timeSignatureDenominator = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(),
+                        Default.TIME_SIGNATURE_DENOMINATOR);
+
+                final String wave = cliArgs.getOptionValue(CliOption.WAVE.value(), Default.WAVE);
 
                 final double beatDuration = 60000.0 / bpm;
 

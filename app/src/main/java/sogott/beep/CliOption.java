@@ -16,6 +16,12 @@ enum CliOption {
             .hasArg()
             .desc("Set time signature to INTEGER/INTEGER (defaults to 4/4).")
             .build()),
+    WAVE(Option.builder("w")
+            .argName("WAVE_SHAPE")
+            .longOpt("wave-shape")
+            .hasArg()
+            .desc("Set default wave shape to WAVE_SHAPE (defaults to SIN).")
+            .build()),
     VERSION(Option.builder("v")
             .longOpt("version")
             .desc("Prints currently installed version (ignores all other arguments except the help option).")
