@@ -26,26 +26,26 @@ import java.util.Optional;
  * <li>* <b>Duration</b> suffix (required)
  * </ol>
  *
- * {@code "SIN>F+8.2"} is an example of an {@link AudioString} with all 3
- * segments.
+ * {@code "SIN>F+8.2"} is an example of an {@link AudioString} including all
+ * optional segments.
  *
  * <h3>1.) Wave shape prefix</h3>
  * The leading portion <i>can</i> specify what kind of wave shape the audio
  * consists of. The types of wave shapes can be designated via:
  *
  * <ul>
- * <li>{@code "SIN"}
- * <li>{@code "TRIANGLE"}
- * <li>{@code "SAWUP"}
- * <li>{@code "SAWDOWN"}
+ * <li>{@code "SIN"} for a <i>sin</i> wave shape.
+ * <li>{@code "TRI"} for a <i>triangle</i> wave shape.
+ * <li>{@code "SQR"} for a <i>square</i> wave shape.
+ * <li>{@code "SUP"} for a <i>sawtooth up</i> wave shape.
+ * <li>{@code "SDN"} for a <i>sawtooth down</i> wave shape.
  * </ul>
  *
  * The right angle bracket/greater than character ({@code '>'}) is then used
  * to separate it from the frequency section of the string which follows it.
- * An example of a wave shape prefix for a triangle wave would be
- * {@code "TRIANGLE>"} with the rest of the string coming after the
- * {@code '>'} character. The types of supported wave shapes are defined in the
- * {@link Wave} enum.
+ * An example of a wave shape prefix for a triangle wave would be {@code "TRI>"}
+ * with the rest of the string coming after the {@code '>'} character. The types
+ * of supported wave shapes are defined in the {@link Wave} enum.
  *
  * <p>
  * If the leading wave shape prefix is omitted it defaults to a sin wave.
