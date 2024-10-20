@@ -3,16 +3,16 @@ package sogott.beep;
 enum Note {
     A(0), B(2), C(-9), D(-7), E(-5), F(-4), G(-2);
 
-    final private char _noteChar;
+    final private char _char;
     final private int _offset;
 
     private Note(int offSet) {
-        this._noteChar = this.name().charAt(0);
+        this._char = this.name().charAt(0);
         this._offset = offSet;
     }
 
     char charValue() {
-        return this._noteChar;
+        return this._char;
     }
 
     int offset() {
@@ -33,17 +33,23 @@ enum Note {
     }
 
     static enum Accidental {
-        SHARP(1),
-        FLAT(-1);
+        SHARP('+', 1),
+        FLAT('-', -1);
 
+        final private char _char;
         final private int _offset;
 
-        private Accidental(int offset) {
+        private Accidental(char charValue, int offset) {
+            this._char = charValue;
             this._offset = offset;
         }
 
         int offset() {
             return this._offset;
+        }
+
+        char charValue() {
+            return this._char;
         }
     }
 }
