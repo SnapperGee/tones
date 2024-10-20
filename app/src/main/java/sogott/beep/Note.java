@@ -22,7 +22,7 @@ enum Note {
         return this._offset;
     }
 
-    double frequency(int octave, Accidental accidental) {
+    double frequency(Accidental accidental, int octave) {
         final int octaveOffset = (octave - 4) * 12;
         final double noteFrequency = 440
                 * Math.pow(2,
@@ -32,7 +32,7 @@ enum Note {
     }
 
     double frequency(int octave) {
-        return frequency(octave, null);
+        return frequency(null, octave);
     }
 
     static Optional<Note> fromChar(char aChar) {
