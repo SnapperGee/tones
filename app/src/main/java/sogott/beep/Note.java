@@ -23,7 +23,7 @@ enum Note {
         final int octaveOffset = (octave - 4) * 12;
         final double noteFrequency = 440
                 * Math.pow(2,
-                        (this._offset + (accidental == null ? 0 : accidental.semitoneOffset()) + octaveOffset)
+                        (this._offset + (accidental == null ? 0 : accidental.offset()) + octaveOffset)
                                 / 12.0);
         return noteFrequency;
     }
@@ -36,14 +36,14 @@ enum Note {
         SHARP(1),
         FLAT(-1);
 
-        final private int _semitoneOffset;
+        final private int _offset;
 
-        private Accidental(int semitoneOffset) {
-            this._semitoneOffset = semitoneOffset;
+        private Accidental(int offset) {
+            this._offset = offset;
         }
 
-        int semitoneOffset() {
-            return this._semitoneOffset;
+        int offset() {
+            return this._offset;
         }
     }
 }
