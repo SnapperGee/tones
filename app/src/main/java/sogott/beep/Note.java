@@ -54,7 +54,7 @@ enum Note {
 
     final static class Parser {
 
-        static int baseSemitoneOffset(char note) throws IllegalArgumentException {
+        static int noteOffset(char note) throws IllegalArgumentException {
             switch (note) {
                 case 'C':
                 case 'c':
@@ -83,7 +83,7 @@ enum Note {
         }
 
         static double frequency(char note, Accidental accidental, int octave) {
-            final int baseNoteOffset = baseSemitoneOffset(note);
+            final int baseNoteOffset = noteOffset(note);
             final int octaveOffset = (octave - 4) * 12;
             final double noteFrequency = 440
                     * Math.pow(2,
@@ -98,7 +98,7 @@ enum Note {
             }
 
             if (note.length() == 1) {
-                final int baseNoteOffset = baseSemitoneOffset(note.charAt(0));
+                final int baseNoteOffset = noteOffset(note.charAt(0));
                 final int octaveOffset = (octave - 4) * 12;
                 final double noteFrequency = 440
                         * Math.pow(2, (baseNoteOffset + octaveOffset) / 12.0);
@@ -106,7 +106,7 @@ enum Note {
             }
 
             if (note.length() == 2) {
-                final int baseNoteOffset = baseSemitoneOffset(note.charAt(0));
+                final int baseNoteOffset = noteOffset(note.charAt(0));
 
                 final char accidentalChar = note.charAt(1);
                 final Accidental accidental = switch (accidentalChar) {
