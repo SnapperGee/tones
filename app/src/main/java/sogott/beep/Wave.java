@@ -1,6 +1,10 @@
 package sogott.beep;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 enum Wave {
@@ -12,10 +16,12 @@ enum Wave {
             "TRI"),
     SAW_UP((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawUp(freq, duration, sampleRate, amplitude),
-            "SUP"),
+            "SUP",
+            Set.of("SAWUP")),
     SAW_DOWN((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawDown(freq, duration, sampleRate, amplitude),
-            "SDN");
+            "SDN",
+            Set.of("SAWDOWN"));
 
     final private static float DEFAULT_SAMPLE_RATE = 44100;
 
@@ -23,18 +29,35 @@ enum Wave {
 
     final private String _stringValue;
 
+    final private Set<String> _stringValueAliases;
+
     private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc) {
         this._generatorFunc = generatorFunc;
         this._stringValue = this.name();
+        this._stringValueAliases = Collections.singleton(this._stringValue);
     }
 
     private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc, String stringValue) {
         this._generatorFunc = generatorFunc;
         this._stringValue = Objects.requireNonNull(stringValue, "Null Wave string value.");
+        this._stringValueAliases = Set.of(this._stringValue, this.name());
+    }
+
+    private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc, String stringValue,
+            Set<String> stringValueAliases) {
+        this._generatorFunc = generatorFunc;
+        this._stringValue = Objects.requireNonNull(stringValue, "Null Wave string value.");
+        final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, this.name()));
+        stringSet.addAll(stringValueAliases);
+        this._stringValueAliases = Collections.unmodifiableSet(stringSet);
     }
 
     String stringValue() {
         return this._stringValue;
+    }
+
+    Set<String> stringValueAliases() {
+        return this._stringValueAliases;
     }
 
     byte[] generate(double freq, int duration) {
