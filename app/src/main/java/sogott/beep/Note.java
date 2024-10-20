@@ -1,16 +1,22 @@
 package sogott.beep;
 
 enum Note {
-    A, B, C, D, E, F, G;
+    A(0), B(2), C(-9), D(-7), E(-5), F(-4), G(-2);
 
     final private char _noteChar;
+    final private int _offset;
 
-    private Note() {
+    private Note(int offSet) {
         this._noteChar = this.name().charAt(0);
+        this._offset = offSet;
     }
 
     char charValue() {
         return this._noteChar;
+    }
+
+    int offset() {
+        return this._offset;
     }
 
     double natural() {
