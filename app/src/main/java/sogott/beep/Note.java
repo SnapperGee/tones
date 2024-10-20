@@ -1,5 +1,8 @@
 package sogott.beep;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 enum Note {
     A(0), B(2), C(-9), D(-7), E(-5), F(-4), G(-2);
 
@@ -32,6 +35,11 @@ enum Note {
         return frequency(octave, null);
     }
 
+    static Optional<Note> fromChar(char aChar) {
+        final char upperCaseChar = Character.toUpperCase(aChar);
+        return Arrays.stream(Note.values()).filter(note -> note.charValue() == upperCaseChar).findFirst();
+    }
+
     static enum Accidental {
         SHARP('+', 1),
         FLAT('-', -1);
@@ -50,6 +58,14 @@ enum Note {
 
         char charValue() {
             return this._char;
+        }
+
+        static Optional<Accidental> fromChar(char aChar) {
+            return SHARP.charValue() == aChar
+                    ? Optional.of(SHARP)
+                    : FLAT.charValue() == aChar
+                            ? Optional.of(FLAT)
+                            : Optional.empty();
         }
     }
 }
