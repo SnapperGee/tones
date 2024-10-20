@@ -22,19 +22,6 @@ enum Note {
         return this._offset;
     }
 
-    double frequency(Accidental accidental, int octave) {
-        final int octaveOffset = (octave - 4) * 12;
-        final double noteFrequency = 440
-                * Math.pow(2,
-                        (this._offset + (accidental == null ? 0 : accidental.offset()) + octaveOffset)
-                                / 12.0);
-        return noteFrequency;
-    }
-
-    double frequency(int octave) {
-        return frequency(null, octave);
-    }
-
     static Optional<Note> fromChar(char aChar) {
         final char upperCaseChar = Character.toUpperCase(aChar);
         return Arrays.stream(Note.values()).filter(note -> note.charValue() == upperCaseChar).findFirst();
