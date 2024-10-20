@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.in;
 
@@ -16,9 +18,102 @@ final class WaveTest {
     }
 
     @Test
+    void sinWaveEnumStringValueAliasesHasSize1() {
+        final Set<String> sinWaveStringValueAliases = Wave.SIN.stringValueAliases();
+        final int sinWaveStringValueAliasesSize = 1;
+        assertThat(sinWaveStringValueAliases, hasSize(sinWaveStringValueAliasesSize));
+    }
+
+    @Test
     void sinWaveEnumValueNameInStringValueAliases() {
         final Set<String> sinWaveStringValueAliases = Wave.SIN.stringValueAliases();
         final String sinWaveEnumValueName = Wave.SIN.name();
         assertThat(sinWaveEnumValueName, is(in(sinWaveStringValueAliases)));
+    }
+
+    @Test
+    void squareWaveStringValueIsSQRString() {
+        final String squareWaveStringValue = Wave.SQUARE.stringValue();
+        final String expectedSquareWaveStringValue = "SQR";
+        assertEquals(expectedSquareWaveStringValue, squareWaveStringValue);
+    }
+
+    @Test
+    void squareWaveEnumStringValueAliasesHasSize2() {
+        final Set<String> squareWaveStringValueAliases = Wave.SQUARE.stringValueAliases();
+        final int squareWaveStringValueAliasesSize = 2;
+        assertThat(squareWaveStringValueAliases, hasSize(squareWaveStringValueAliasesSize));
+    }
+
+    @Test
+    void squareWaveStringValueAliasesHasEnumValueNameAndStringValue() {
+        final Set<String> squareWaveStringValueAliases = Wave.SQUARE.stringValueAliases();
+        final String[] expectedSquareWaveStringValueAliases = { Wave.SQUARE.name(), Wave.SQUARE.stringValue() };
+        assertThat(squareWaveStringValueAliases, hasItems(expectedSquareWaveStringValueAliases));
+    }
+
+    @Test
+    void triangleWaveStringValueIsTRIString() {
+        final String triangleWaveStringValue = Wave.TRIANGLE.stringValue();
+        final String expectedTriangleWaveStringValue = "TRI";
+        assertEquals(expectedTriangleWaveStringValue, triangleWaveStringValue);
+    }
+
+    @Test
+    void triangleWaveEnumStringValueAliasesHasSize2() {
+        final Set<String> triangleWaveStringValueAliases = Wave.TRIANGLE.stringValueAliases();
+        final int triangleWaveStringValueAliasesSize = 2;
+        assertThat(triangleWaveStringValueAliases, hasSize(triangleWaveStringValueAliasesSize));
+    }
+
+    @Test
+    void triangleWaveStringValueAliasesHasEnumValueNameAndStringValue() {
+        final Set<String> triangleWaveStringValueAliases = Wave.TRIANGLE.stringValueAliases();
+        final String[] expectedTriangleWaveStringValueAliases = { Wave.TRIANGLE.name(), Wave.TRIANGLE.stringValue() };
+        assertThat(triangleWaveStringValueAliases, hasItems(expectedTriangleWaveStringValueAliases));
+    }
+
+    @Test
+    void sawUpWaveStringValueIsSUPString() {
+        final String sawUpWaveStringValue = Wave.SAW_UP.stringValue();
+        final String expectedSawUpWaveStringValue = "SUP";
+        assertEquals(expectedSawUpWaveStringValue, sawUpWaveStringValue);
+    }
+
+    @Test
+    void sawUpWaveEnumStringValueAliasesHasSize3() {
+        final Set<String> sawUpWaveStringValueAliases = Wave.SAW_UP.stringValueAliases();
+        final int sawUpWaveStringValueAliasesSize = 3;
+        assertThat(sawUpWaveStringValueAliases, hasSize(sawUpWaveStringValueAliasesSize));
+    }
+
+    @Test
+    void sawUpWaveStringValueAliasesHasCorrectStrings() {
+        final Set<String> sawUpWaveStringValueAliases = Wave.SAW_UP.stringValueAliases();
+        final String[] expectedSawUpWaveStringValueAliases = { Wave.SAW_UP.name(), Wave.SAW_UP.stringValue(),
+                "SAWUP" };
+        assertThat(sawUpWaveStringValueAliases, hasItems(expectedSawUpWaveStringValueAliases));
+    }
+
+    @Test
+    void sawDownWaveStringValueIsSDNString() {
+        final String sawDownWaveStringValue = Wave.SAW_DOWN.stringValue();
+        final String expectedSawUpWaveStringValue = "SDN";
+        assertEquals(expectedSawUpWaveStringValue, sawDownWaveStringValue);
+    }
+
+    @Test
+    void sawDownWaveEnumStringValueAliasesHasSize3() {
+        final Set<String> sawDownWaveStringValueAliases = Wave.SAW_DOWN.stringValueAliases();
+        final int sawDownWaveStringValueAliasesSize = 3;
+        assertThat(sawDownWaveStringValueAliases, hasSize(sawDownWaveStringValueAliasesSize));
+    }
+
+    @Test
+    void sawDownWaveStringValueAliasesHasCorrectStrings() {
+        final Set<String> sawDownWaveStringValueAliases = Wave.SAW_DOWN.stringValueAliases();
+        final String[] expectedSawDownWaveStringValueAliases = { Wave.SAW_DOWN.name(), Wave.SAW_DOWN.stringValue(),
+                "SAWDOWN" };
+        assertThat(sawDownWaveStringValueAliases, hasItems(expectedSawDownWaveStringValueAliases));
     }
 }
