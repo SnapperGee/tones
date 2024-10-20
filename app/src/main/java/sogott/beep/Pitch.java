@@ -13,6 +13,10 @@ final class Pitch {
     }
 
     static double frequency(Note note, int octave) {
-        return frequency(null, octave);
+        return frequency(note, null, octave);
+    }
+
+    private Pitch() {
+        throw new UnsupportedOperationException("This is a static class and cannot be instantiated.");
     }
 }
