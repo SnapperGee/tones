@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
-final class Pitch {
+final class Pitch implements Comparable<Pitch> {
     final private Note _note;
     final private Accidental _accidental;
     final private int _octave;
@@ -193,5 +193,22 @@ final class Pitch {
 
         // if there are only digit chars after leading or second '+' or '-' char
         return aString.codePoints().skip(startIndex).allMatch(Character::isDigit);
+    }
+
+    @Override
+    public int compareTo(Pitch other) {
+        int compareResult = this._note.compareTo(other._note);
+
+        if (compareResult != 0) {
+            return compareResult;
+        }
+
+        compareResult = this._accidental.compareTo(other._accidental);
+
+        if (compareResult != 0) {
+            return compareResult;
+        }
+
+        return this._octave - other._octave;
     }
 }
