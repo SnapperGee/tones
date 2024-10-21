@@ -3,7 +3,9 @@ package sogott.beep;
 import java.lang.constant.Constable;
 import java.lang.constant.ConstantDesc;
 import java.util.EnumSet;
+import java.util.Set;
 import java.util.Optional;
+import static java.util.Collections.unmodifiableSet;
 
 /**
  * A {@code String} can be parsed to audio if it has at least enough
@@ -92,8 +94,8 @@ import java.util.Optional;
  */
 final class AudioString implements Comparable<AudioString>, Constable, CharSequence {
 
-    final private static EnumSet<Note> _notes = EnumSet.allOf(Note.class);
-    final private static EnumSet<Wave> _waves = EnumSet.allOf(Wave.class);
+    final private static Set<Note> _notes = unmodifiableSet(EnumSet.allOf(Note.class));
+    final private static Set<Wave> _waves = unmodifiableSet(EnumSet.allOf(Wave.class));
 
     final private String _string;
     final private Wave _wave;
