@@ -1,10 +1,27 @@
 package sogott.beep;
 
+import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
-final class Pitch {
-    static double frequency(Note note, Accidental accidental, int octave) {
+final record Pitch(Note note, Accidental accidental, int octave) {
+    Pitch {
+        requireNonNull(note, "Null %s %s.".formatted(Pitch.class.getSimpleName(), Note.class.getSimpleName()));
+    }
+
+    double frequency() {
+        return frequencyFrom(note, accidental, octave);
+    }
+
+    static Pitch create(Note note, Accidental accidental, int octave) {
+        return new Pitch(note, accidental, octave);
+    }
+
+    static Pitch create(Note note, int octave) {
+        return new Pitch(note, null, octave);
+    }
+
+    static double frequencyFrom(Note note, Accidental accidental, int octave) {
         final int octaveOffset = (octave - 4) * 12;
         final double noteFrequency = 440
                 * Math.pow(2,
@@ -13,11 +30,11 @@ final class Pitch {
         return noteFrequency;
     }
 
-    static double frequency(Note note, int octave) {
-        return frequency(note, null, octave);
+    static double frequencyFrom(Note note, int octave) {
+        return frequencyFrom(note, null, octave);
     }
 
-    static OptionalDouble frequency(String aString) {
+    static OptionalDouble frequencyFrom(String aString) {
 
         // A pitch string must be at least a note and octave (int)
         if (aString.length() < 2) {
@@ -53,13 +70,9 @@ final class Pitch {
         // if there is an accidental
         if (startIndex == 2) {
             final Accidental accidental = Accidental.fromChar(aString.charAt(1)).orElseThrow();
-            return OptionalDouble.of(frequency(note, accidental, octave));
+            return OptionalDouble.of(frequencyFrom(note, accidental, octave));
         } // if there is no accidental
 
-        return OptionalDouble.of(frequency(note, null, octave));
-    }
-
-    private Pitch() {
-        throw new UnsupportedOperationException("This is a static class and cannot be instantiated.");
+        return OptionalDouble.of(frequencyFrom(note, null, octave));
     }
 }
