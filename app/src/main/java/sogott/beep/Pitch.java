@@ -29,7 +29,7 @@ final class Pitch implements Comparable<Pitch> {
                 ? "%c%d".formatted(this._note.charValue(), this._octave)
                 : "%c%c%d".formatted(this._note.charValue(), this._accidental.charValue(), this._octave);
         this._hashCode = Objects.hash(this._note, this._accidental, this._octave);
-        this._toString = "%s{note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(this._note.name(),
+        this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(this._note.name(),
                 this._accidental.name(),
                 this._octave, this._stringValue);
     }
