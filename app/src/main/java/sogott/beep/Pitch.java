@@ -1,6 +1,5 @@
 package sogott.beep;
 
-import sogott.beep.Note.Accidental;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
@@ -35,8 +34,8 @@ final class Pitch {
         final Note note = noteOptional.get();
 
         // Check if the second character is '+' or '-'
-        final int startIndex = aString.charAt(1) == Note.Accidental.SHARP.charValue()
-                || aString.charAt(1) == Note.Accidental.FLAT.charValue() ? 2 : 1;
+        final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
+                || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
 
         // if second char is '+' or '-' and there aren't any chars left (an octave is
         // required)
@@ -53,7 +52,7 @@ final class Pitch {
 
         // if there is an accidental
         if (startIndex == 2) {
-            final Accidental accidental = Note.Accidental.fromChar(aString.charAt(1)).orElseThrow();
+            final Accidental accidental = Accidental.fromChar(aString.charAt(1)).orElseThrow();
             return OptionalDouble.of(frequency(note, accidental, octave));
         } // if there is no accidental
 
