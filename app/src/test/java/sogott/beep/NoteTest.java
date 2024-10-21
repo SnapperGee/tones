@@ -107,8 +107,15 @@ final class NoteTest {
     }
 
     @ParameterizedTest
-    @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f' })
-    void noteIsNoteCharReturnsTrueForValidChar(char aChar) {
+    @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F' })
+    void noteIsNoteCharReturnsTrueForValidUppercaseChar(char aChar) {
+        final boolean isCharResult = Note.isNoteChar(aChar);
+        assertTrue(isCharResult);
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'a', 'b', 'c', 'd', 'e', 'f' })
+    void noteIsNoteCharReturnsTrueForValidLowercaseChar(char aChar) {
         final boolean isCharResult = Note.isNoteChar(aChar);
         assertTrue(isCharResult);
     }
