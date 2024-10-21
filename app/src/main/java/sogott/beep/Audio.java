@@ -21,6 +21,10 @@ final class Audio implements Comparable<Audio> {
                     "Null %s %s.".formatted(Audio.class.getSimpleName(), Pitch.class.getSimpleName()));
         }
 
+        if (duration < 0) {
+            throw new IllegalArgumentException("Negative duration: %d".formatted(duration));
+        }
+
         this._wave = wave;
         this._pitch = pitch;
         this._duration = duration;
@@ -28,6 +32,10 @@ final class Audio implements Comparable<Audio> {
         this._hashCode = hash(this._wave, this._pitch, this._duration);
         this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(this._wave.name(),
                 this._pitch.stringValue(), this._duration);
+    }
+
+    Audio(Pitch pitch, int duration) {
+        this(Wave.SIN, pitch, duration);
     }
 
     Wave wave() {
