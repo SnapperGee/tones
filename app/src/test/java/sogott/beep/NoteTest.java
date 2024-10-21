@@ -107,14 +107,14 @@ final class NoteTest {
         assertEquals(expectedNoteOffsetValue, noteOffsetValue);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns true")
     @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F' })
     void noteIsNoteCharReturnsTrueForValidUpperCaseChar(char validUpperCaseNoteChar) {
         final boolean isCharResultShouldBeTrue = Note.isNoteChar(validUpperCaseNoteChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns true")
     @ValueSource(chars = { 'a', 'b', 'c', 'd', 'e', 'f' })
     void noteIsNoteCharReturnsTrueForValidLowerCaseChar(char validLowerCaseNoteChar) {
         final boolean isCharResultShouldBeTrue = Note.isNoteChar(validLowerCaseNoteChar);
