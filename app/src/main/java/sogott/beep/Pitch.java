@@ -1,10 +1,18 @@
 package sogott.beep;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
-final record Pitch(Note note, Accidental accidental, int octave) {
-    Pitch {
+final class Pitch {
+    final private Note _note;
+    final private Accidental _accidental;
+    final private int _octave;
+    final private String _stringValue;
+    final private int _hashCode;
+    final private String _toString;
+
+    Pitch(Note note, Accidental accidental, int octave) {
         if (note == null) {
             throw new IllegalArgumentException(
                     "Null %s %s.".formatted(Pitch.class.getSimpleName(), Note.class.getSimpleName()));
@@ -13,10 +21,55 @@ final record Pitch(Note note, Accidental accidental, int octave) {
         if (octave < 0) {
             throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
         }
+
+        this._note = note;
+        this._accidental = accidental;
+        this._octave = octave;
+        this._stringValue = this._accidental == null
+                ? "%c%d".formatted(this._note.charValue(), this._octave)
+                : "%c%c%d".formatted(this._note.charValue(), this._accidental.charValue(), this._octave);
+        this._hashCode = Objects.hash(this._note, this._accidental, this._octave);
+        this._toString = "%s{note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(this._note.name(),
+                this._accidental.name(),
+                this._octave, this._stringValue);
+    }
+
+    Note note() {
+        return this._note;
+    }
+
+    Accidental accidental() {
+        return this._accidental;
+    }
+
+    int octave() {
+        return this._octave;
+    }
+
+    String stringValue() {
+        return this._stringValue;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Pitch other
+                && this._note == other._note
+                && this._accidental == other._accidental
+                && this._octave == other._octave;
+    }
+
+    @Override
+    public int hashCode() {
+        return this._hashCode;
+    }
+
+    @Override
+    public String toString() {
+        return this._toString;
     }
 
     double frequency() {
-        return frequencyFrom(note, accidental, octave);
+        return frequencyFrom(this._note, this._accidental, this._octave);
     }
 
     static Pitch create(Note note, Accidental accidental, int octave) {
