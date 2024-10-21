@@ -97,9 +97,9 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
 
     final private String _string;
     final private Wave _wave;
-    final private double _frequency;
+    // final private double _frequency;
     final private int _duration;
-    final private String _toString;
+    // final private String _toString;
 
     AudioString(String string) {
         this._string = string;
@@ -120,20 +120,22 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
                 ? splitString[1].split("[.]")
                 : splitString[0].split("[.]");
 
-        this._frequency = Character.isAlphabetic(frequencyAndDuration[0].charAt(0))
-                ? frequencyAndDuration[0].length() == 3
-                        ? Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
-                                frequencyAndDuration[0].charAt(1) == '+' ? Accidental.SHARP : Accidental.FLAT,
-                                Character.getNumericValue(frequencyAndDuration[0].charAt(2)))
-                        : Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
-                                Character.getNumericValue(frequencyAndDuration[0].charAt(1)))
-                : Double.parseDouble(frequencyAndDuration[0]);
+        // this._frequency = Character.isAlphabetic(frequencyAndDuration[0].charAt(0))
+        // ? frequencyAndDuration[0].length() == 3
+        // ? Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
+        // frequencyAndDuration[0].charAt(1) == '+' ? Accidental.SHARP :
+        // Accidental.FLAT,
+        // Character.getNumericValue(frequencyAndDuration[0].charAt(2)))
+        // : Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
+        // Character.getNumericValue(frequencyAndDuration[0].charAt(1)))
+        // : Double.parseDouble(frequencyAndDuration[0]);
 
         this._duration = Integer.parseInt(frequencyAndDuration[1]);
 
-        this._toString = "%s {string=%s, wave=%s, frequency=%f, duration=%d}".formatted(
-                AudioString.class.getSimpleName(),
-                this._string, this._wave.name(), this._frequency, this._duration);
+        // this._toString = "%s {string=%s, wave=%s, frequency=%f,
+        // duration=%d}".formatted(
+        // AudioString.class.getSimpleName(),
+        // this._string, this._wave.name(), this._frequency, this._duration);
     }
 
     String string() {
@@ -144,9 +146,9 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
         return this._wave;
     }
 
-    double frequency() {
-        return this._frequency;
-    }
+    // double frequency() {
+    // return this._frequency;
+    // }
 
     int duration() {
         return this._duration;
@@ -187,10 +189,10 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
         return this._string.subSequence(end, end);
     }
 
-    @Override
-    public String toString() {
-        return this._toString;
-    }
+    // @Override
+    // public String toString() {
+    // return this._toString;
+    // }
 
     /**
      *
