@@ -28,6 +28,11 @@ final record Pitch(Note note, Accidental accidental, int octave) {
     }
 
     static double frequencyFrom(Note note, Accidental accidental, int octave) {
+        if (note == null) {
+            throw new IllegalArgumentException(
+                    "Null %s.".formatted(Note.class.getSimpleName()));
+        }
+
         if (octave < 0) {
             throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
         }
