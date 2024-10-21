@@ -163,7 +163,8 @@ final class Pitch {
 
         // if there is an accidental
         if (startIndex == 2) {
-            final Accidental accidental = Accidental.fromChar(aString.charAt(1)).orElseThrow();
+            final Accidental accidental = Accidental.fromChar(aString.charAt(1))
+                    .orElseThrow(() -> new RuntimeException("Accidental value could not be converted from char."));
             return OptionalDouble.of(frequencyFrom(note, accidental, octave));
         } // if there is no accidental
 
