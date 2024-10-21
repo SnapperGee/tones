@@ -1,5 +1,6 @@
 package sogott.beep;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -108,15 +109,106 @@ final class NoteTest {
 
     @ParameterizedTest
     @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F' })
-    void noteIsNoteCharReturnsTrueForValidUppercaseChar(char aChar) {
-        final boolean isCharResult = Note.isNoteChar(aChar);
-        assertTrue(isCharResult);
+    void noteIsNoteCharReturnsTrueForValidUpperCaseChar(char validUpperCaseNoteChar) {
+        final boolean isCharResultShouldBeTrue = Note.isNoteChar(validUpperCaseNoteChar);
+        assertTrue(isCharResultShouldBeTrue);
     }
 
     @ParameterizedTest
     @ValueSource(chars = { 'a', 'b', 'c', 'd', 'e', 'f' })
-    void noteIsNoteCharReturnsTrueForValidLowercaseChar(char aChar) {
-        final boolean isCharResult = Note.isNoteChar(aChar);
-        assertTrue(isCharResult);
+    void noteIsNoteCharReturnsTrueForValidLowerCaseChar(char validLowerCaseNoteChar) {
+        final boolean isCharResultShouldBeTrue = Note.isNoteChar(validLowerCaseNoteChar);
+        assertTrue(isCharResultShouldBeTrue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseAReturnsA() {
+        final Optional<Note> optionalNote = Note.fromChar('A');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.A;
+
+        assertEquals(expectedNoteValue, noteValue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseBReturnsB() {
+        final Optional<Note> optionalNote = Note.fromChar('B');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.B;
+
+        assertEquals(expectedNoteValue, noteValue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseCReturnsC() {
+        final Optional<Note> optionalNote = Note.fromChar('C');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.C;
+
+        assertEquals(expectedNoteValue, noteValue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseDReturnsD() {
+        final Optional<Note> optionalNote = Note.fromChar('D');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.D;
+
+        assertEquals(expectedNoteValue, noteValue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseEReturnsE() {
+        final Optional<Note> optionalNote = Note.fromChar('E');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.E;
+
+        assertEquals(expectedNoteValue, noteValue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseFReturnsF() {
+        final Optional<Note> optionalNote = Note.fromChar('F');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.F;
+
+        assertEquals(expectedNoteValue, noteValue);
+    }
+
+    @Test
+    void noteFromCharUpperCaseGReturnsG() {
+        final Optional<Note> optionalNote = Note.fromChar('G');
+        final boolean optionalNoteIsPresent = optionalNote.isPresent();
+
+        assertTrue(optionalNoteIsPresent);
+
+        final Note noteValue = optionalNote.get();
+        final Note expectedNoteValue = Note.G;
+
+        assertEquals(expectedNoteValue, noteValue);
     }
 }
