@@ -1,12 +1,18 @@
 package sogott.beep;
 
-import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
 final record Pitch(Note note, Accidental accidental, int octave) {
     Pitch {
-        requireNonNull(note, "Null %s %s.".formatted(Pitch.class.getSimpleName(), Note.class.getSimpleName()));
+        if (note == null) {
+            throw new IllegalArgumentException(
+                    "Null %s %s.".formatted(Pitch.class.getSimpleName(), Note.class.getSimpleName()));
+        }
+
+        if (octave < 0) {
+            throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
+        }
     }
 
     double frequency() {
