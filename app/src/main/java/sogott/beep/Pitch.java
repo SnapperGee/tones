@@ -53,18 +53,11 @@ final class Pitch {
 
         // if there is an accidental
         if (startIndex == 2) {
-            final Optional<Accidental> accidentalOptional = Note.Accidental.fromChar(aString.charAt(1));
-            if (accidentalOptional.isEmpty()) {
-                return OptionalDouble.empty();
-            }
-            final Accidental accidental = accidentalOptional.get();
-            final double frequency = frequency(note, accidental, octave);
-            return OptionalDouble.of(frequency);
+            final Accidental accidental = Note.Accidental.fromChar(aString.charAt(1)).orElseThrow();
+            return OptionalDouble.of(frequency(note, accidental, octave));
         } // if there is no accidental
 
-        final double frequency = frequency(note, null, octave);
-
-        return OptionalDouble.of(frequency);
+        return OptionalDouble.of(frequency(note, null, octave));
     }
 
     private Pitch() {
