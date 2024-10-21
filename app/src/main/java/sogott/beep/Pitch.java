@@ -30,8 +30,34 @@ final record Pitch(Note note, Accidental accidental, int octave) {
         return noteFrequency;
     }
 
+    static OptionalDouble frequencyFrom(char note, char accidental, int octave) {
+        final Optional<Note> _note = Note.fromChar(note);
+
+        if (_note.isEmpty()) {
+            OptionalDouble.empty();
+        }
+
+        final Optional<Accidental> _accidental = Accidental.fromChar(accidental);
+
+        if (_accidental.isEmpty()) {
+            OptionalDouble.empty();
+        }
+
+        return OptionalDouble.of(frequencyFrom(_note.get(), _accidental.get(), octave));
+    }
+
     static double frequencyFrom(Note note, int octave) {
         return frequencyFrom(note, null, octave);
+    }
+
+    static OptionalDouble frequencyFrom(char note, int octave) {
+        final Optional<Note> _note = Note.fromChar(note);
+
+        if (_note.isEmpty()) {
+            OptionalDouble.empty();
+        }
+
+        return OptionalDouble.of(frequencyFrom(_note.get(), null, octave));
     }
 
     static OptionalDouble frequencyFrom(String aString) {
