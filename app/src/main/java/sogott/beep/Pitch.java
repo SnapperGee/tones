@@ -56,10 +56,11 @@ final class Pitch implements Comparable<Pitch> {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Pitch other
-                && this._note == other._note
-                && this._accidental == other._accidental
-                && this._octave == other._octave;
+        return this == obj ||
+                obj instanceof Pitch other
+                        && this._note == other._note
+                        && this._accidental == other._accidental
+                        && this._octave == other._octave;
     }
 
     @Override
