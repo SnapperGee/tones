@@ -169,4 +169,9 @@ final class GenerateWave {
 
         return output;
     }
+
+    private GenerateWave() {
+        throw new UnsupportedOperationException(
+                "%s is a static class and cannot be instantiated.".formatted(GenerateWave.class.getName()));
+    }
 }
