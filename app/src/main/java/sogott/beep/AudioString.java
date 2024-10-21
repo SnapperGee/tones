@@ -119,8 +119,8 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
                 : Wave.SIN;
 
         final String[] frequencyAndDuration = splitString.length == 2
-                ? splitString[1].split("[.]")
-                : splitString[0].split("[.]");
+                ? splitString[1].split("\\.")
+                : splitString[0].split("\\.");
 
         // this._frequency = Character.isAlphabetic(frequencyAndDuration[0].charAt(0))
         // ? frequencyAndDuration[0].length() == 3
@@ -224,7 +224,7 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
             return false;
         }
 
-        final String[] splitString = aString.split("[.]");
+        final String[] splitString = aString.split("\\.");
 
         // String should have 1 period separating frequency and duration
         if (splitString.length != 2) {
