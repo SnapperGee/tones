@@ -123,10 +123,10 @@ final class AudioString implements Comparable<AudioString>, Constable, CharSeque
 
         this._frequency = Character.isAlphabetic(frequencyAndDuration[0].charAt(0))
                 ? frequencyAndDuration[0].length() == 3
-                        ? Note.Parser.frequency(frequencyAndDuration[0].charAt(0),
+                        ? Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
                                 frequencyAndDuration[0].charAt(1) == '+' ? Accidental.SHARP : Accidental.FLAT,
                                 Character.getNumericValue(frequencyAndDuration[0].charAt(2)))
-                        : Note.Parser.frequency(frequencyAndDuration[0].charAt(0),
+                        : Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
                                 Character.getNumericValue(frequencyAndDuration[0].charAt(1)))
                 : Double.parseDouble(frequencyAndDuration[0]);
 
