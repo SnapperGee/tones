@@ -198,6 +198,10 @@ final class Pitch implements Comparable<Pitch> {
     }
 
     static boolean isParsable(String aString) {
+        if (aString == null) {
+            return false;
+        }
+
         // string must be at least a note char and octave int
         if (aString.length() < 2) {
             return false;
