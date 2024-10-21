@@ -56,10 +56,11 @@ final class Audio implements Comparable<Audio> {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Audio other
-                && this._wave == other._wave
-                && this._pitch.equals(other._pitch)
-                && this._duration == other._duration;
+        return this == obj ||
+                obj instanceof Audio other
+                        && this._wave == other._wave
+                        && this._pitch.equals(other._pitch)
+                        && this._duration == other._duration;
     }
 
     @Override
