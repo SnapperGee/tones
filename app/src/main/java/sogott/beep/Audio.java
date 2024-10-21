@@ -10,7 +10,7 @@ final class Audio implements Comparable<Audio> {
     final private int _hashCode;
     final private String _toString;
 
-    Audio(Wave wave, Pitch pitch, int duration) {
+    Audio(Wave wave, Pitch pitch, int duration) throws IllegalArgumentException {
         if (wave == null) {
             throw new IllegalArgumentException(
                     "Null %s %s.".formatted(Audio.class.getSimpleName(), Wave.class.getSimpleName()));
