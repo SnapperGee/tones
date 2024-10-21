@@ -12,7 +12,7 @@ final public class Main {
     private final static class Default {
         final static int BPM = 140;
         final static int TIME_SIGNATURE_DENOMINATOR = 4;
-        final static String WAVE = Wave.SIN.name();
+        final static Wave WAVE = Wave.SIN;
     }
 
     public static void main(String[] args) throws LineUnavailableException {
@@ -55,7 +55,7 @@ final public class Main {
                 final int timeSignatureDenominator = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(),
                         Default.TIME_SIGNATURE_DENOMINATOR);
 
-                final String wave = cliArgs.getOptionValue(CliOption.WAVE.value(), Default.WAVE);
+                final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), Default.WAVE);
 
                 final double beatDuration = 60000.0 / bpm;
 

@@ -1,5 +1,6 @@
 package sogott.beep;
 
+import java.util.Arrays;
 import org.apache.commons.cli.Option;
 
 enum CliOption {
@@ -20,6 +21,10 @@ enum CliOption {
             .argName("WAVE_SHAPE")
             .longOpt("wave-shape")
             .hasArg()
+            .converter(aString -> Arrays.stream(Wave.values())
+                    .filter(wave -> wave.stringValueAliases().stream()
+                            .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue)))
+                    .findFirst().orElseThrow())
             .desc("Set default wave shape to WAVE_SHAPE (defaults to SIN).")
             .build()),
     VERSION(Option.builder("v")
