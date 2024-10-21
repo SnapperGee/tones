@@ -84,6 +84,27 @@ final class Pitch implements Comparable<Pitch> {
         return new Pitch(note, null, octave);
     }
 
+    static Optional<Pitch> create(String aString) {
+        if (!Pitch.isParsable(aString)) {
+            return Optional.empty();
+        }
+
+        final Note note = Note.fromChar(aString.charAt(0)).orElseThrow();
+
+        final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
+                || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
+
+        final int octave = Integer.parseInt(aString.substring(startIndex));
+
+        // if second char is accidental ('+' or '-')
+        if (startIndex == 2) {
+            final Accidental accidental = Accidental.fromChar(aString.charAt(startIndex - 1)).orElseThrow();
+            return Optional.of(new Pitch(note, accidental, octave));
+        } // if string is only note and octave (without accidental)
+
+        return Optional.of(new Pitch(note, octave));
+    }
+
     static double frequencyFrom(Note note, Accidental accidental, int octave) throws IllegalArgumentException {
         if (note == null) {
             throw new IllegalArgumentException(
