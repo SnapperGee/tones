@@ -22,6 +22,10 @@ final record Pitch(Note note, Accidental accidental, int octave) {
     }
 
     static double frequencyFrom(Note note, Accidental accidental, int octave) {
+        if (octave < 0) {
+            throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
+        }
+
         final int octaveOffset = (octave - 4) * 12;
         final double noteFrequency = 440
                 * Math.pow(2,
