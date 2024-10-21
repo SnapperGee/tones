@@ -32,14 +32,19 @@ final public class Main {
                 final HelpFormatter helpFormatter = new HelpFormatter();
 
                 helpFormatter.printHelp(
-                        "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s] [WAVE>](NOTE.INTEGER|FLOAT)..."
-                                .formatted(CliOption.BPM.value().getLongOpt(), CliOption.BPM.value().getOpt(),
+                        "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE_SHAPE>]NOTE.INTEGER..."
+                                .formatted(CliOption.BPM.value().getLongOpt(),
+                                        CliOption.BPM.value().getOpt(),
                                         CliOption.BPM.value().getArgName(),
                                         CliOption.TIME_SIGNATURE.value().getLongOpt(),
                                         CliOption.TIME_SIGNATURE.value().getOpt(),
                                         CliOption.TIME_SIGNATURE.value().getArgName(),
                                         CliOption.VERSION.value().getLongOpt(),
-                                        CliOption.VERSION.value().getOpt(), CliOption.HELP.value().getLongOpt(),
+                                        CliOption.VERSION.value().getOpt(),
+                                        CliOption.WAVE.value().getLongOpt(),
+                                        CliOption.WAVE.value().getOpt(),
+                                        CliOption.WAVE.value().getArgName(),
+                                        CliOption.HELP.value().getLongOpt(),
                                         CliOption.HELP.value().getOpt()),
                         options);
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
