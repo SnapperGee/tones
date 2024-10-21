@@ -25,7 +25,8 @@ enum CliOption {
             .converter(aString -> Arrays.stream(Wave.values())
                     .filter(wave -> wave.stringValueAliases().stream()
                             .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue)))
-                    .findFirst().orElseThrow(() -> new NoSuchElementException("Invalid WAVE argument.")))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException("Invalid WAVE command line option argument.")))
             .desc("Set default wave shape to WAVE_SHAPE (defaults to SIN).")
             .build()),
     VERSION(Option.builder("v")
