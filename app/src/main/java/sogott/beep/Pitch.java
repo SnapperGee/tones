@@ -34,6 +34,10 @@ final class Pitch implements Comparable<Pitch> {
                 this._octave, this._stringValue);
     }
 
+    Pitch(Note note, int octave) {
+        this(note, null, octave);
+    }
+
     Note note() {
         return this._note;
     }
