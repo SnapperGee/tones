@@ -1,7 +1,11 @@
 package sogott.beep;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class NoteTest {
     @Test
@@ -100,5 +104,12 @@ final class NoteTest {
         final int noteOffsetValue = Note.G.offset();
         final int expectedNoteOffsetValue = -2;
         assertEquals(expectedNoteOffsetValue, noteOffsetValue);
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f' })
+    void noteIsNoteCharReturnsTrueForValidChar(char aChar) {
+        final boolean isCharResult = Note.isNoteChar(aChar);
+        assertTrue(isCharResult);
     }
 }
