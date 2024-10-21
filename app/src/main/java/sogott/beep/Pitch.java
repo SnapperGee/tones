@@ -12,7 +12,7 @@ final class Pitch implements Comparable<Pitch> {
     final private int _hashCode;
     final private String _toString;
 
-    Pitch(Note note, Accidental accidental, int octave) {
+    Pitch(Note note, Accidental accidental, int octave) throws IllegalArgumentException {
         if (note == null) {
             throw new IllegalArgumentException(
                     "Null %s %s.".formatted(Pitch.class.getSimpleName(), Note.class.getSimpleName()));
@@ -80,7 +80,7 @@ final class Pitch implements Comparable<Pitch> {
         return new Pitch(note, null, octave);
     }
 
-    static double frequencyFrom(Note note, Accidental accidental, int octave) {
+    static double frequencyFrom(Note note, Accidental accidental, int octave) throws IllegalArgumentException {
         if (note == null) {
             throw new IllegalArgumentException(
                     "Null %s.".formatted(Note.class.getSimpleName()));
@@ -128,7 +128,7 @@ final class Pitch implements Comparable<Pitch> {
         return OptionalDouble.of(frequencyFrom(_note.get(), null, octave));
     }
 
-    static OptionalDouble frequencyFrom(String aString) {
+    static OptionalDouble frequencyFrom(String aString) throws RuntimeException {
 
         // A pitch string must be at least a note and octave (int)
         if (aString.length() < 2) {
@@ -144,17 +144,17 @@ final class Pitch implements Comparable<Pitch> {
 
         final Note note = noteOptional.get();
 
-        // Check if the second character is '+' or '-'
+        // Check if the second character is an accidental ('+' or '-')
         final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
                 || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
 
-        // if second char is '+' or '-' and there aren't any chars left (an octave is
-        // required)
+        // if second char is accidental ('+' or '-') there must be an octave int after
+        // it
         if (startIndex == 2 && aString.length() < 3) {
             return OptionalDouble.empty();
         }
 
-        // if an octave (int) isn't following leading note char or accidental if present
+        // if an octave (int) isn't following leading note char or accidental
         if (!aString.codePoints().skip(startIndex).allMatch(Character::isDigit)) {
             return OptionalDouble.empty();
         }
@@ -172,26 +172,26 @@ final class Pitch implements Comparable<Pitch> {
     }
 
     static boolean isParsable(String aString) {
-        // if string isn't at least a note char and octave
+        // string must be at least a note char and octave int
         if (aString.length() < 2) {
             return false;
         }
 
-        // if leading char isn't valid note char
+        // leading char must be valid note
         if (Note.isNoteChar(aString.charAt(0))) {
             return false;
         }
 
-        // Check if the second character is '+' or '-'
+        // Check if the second character is accidental ('+' or '-')
         final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
                 || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
 
-        // if second char is '+' or '-' and there aren't any chars left
+        // if second char is accidental ('+' or '-') there must be an octave int
         if (startIndex == 2 && aString.length() < 3) {
             return false;
         }
 
-        // if there are only digit chars after leading or second '+' or '-' char
+        // only an active int after leading note or second accidental '+' or '-' char
         return aString.codePoints().skip(startIndex).allMatch(Character::isDigit);
     }
 
