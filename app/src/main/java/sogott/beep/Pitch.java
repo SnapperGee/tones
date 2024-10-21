@@ -3,7 +3,6 @@ package sogott.beep;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalDouble;
-import java.util.Arrays;
 
 final class Pitch {
     final private Note _note;
