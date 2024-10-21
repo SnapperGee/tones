@@ -26,4 +26,9 @@ enum Note {
         final char upperCaseChar = Character.toUpperCase(aChar);
         return Arrays.stream(Note.values()).filter(note -> note.charValue() == upperCaseChar).findFirst();
     }
+
+    static boolean isNoteChar(char aChar) {
+        final char upperCaseChar = Character.toUpperCase(aChar);
+        return Arrays.stream(Note.values()).anyMatch(note -> note.charValue() == upperCaseChar);
+    }
 }
