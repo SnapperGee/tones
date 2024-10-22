@@ -1,7 +1,6 @@
 package sogott.beep;
 
 import static java.util.Objects.hash;
-import java.util.Arrays;
 
 final class Audio implements Comparable<Audio> {
     final Wave _wave;
