@@ -9,6 +9,7 @@ final class Pitch implements Comparable<Pitch> {
     final private Accidental _accidental;
     final private int _octave;
     final private String _stringValue;
+    final private double _frequency;
     final private int _hashCode;
     final private String _toString;
 
@@ -28,6 +29,7 @@ final class Pitch implements Comparable<Pitch> {
         this._stringValue = this._accidental == null
                 ? "%c%d".formatted(this._note.charValue(), this._octave)
                 : "%c%c%d".formatted(this._note.charValue(), this._accidental.charValue(), this._octave);
+        this._frequency = frequencyFrom(this._note, this._accidental, this._octave);
         this._hashCode = Objects.hash(this._note, this._accidental, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
@@ -77,7 +79,7 @@ final class Pitch implements Comparable<Pitch> {
     }
 
     double frequency() {
-        return frequencyFrom(this._note, this._accidental, this._octave);
+        return this._frequency;
     }
 
     static Pitch create(Note note, Accidental accidental, int octave) {
