@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class AccidentalTest {
     static char[] nonAccidentalChars() {
@@ -74,6 +75,25 @@ final class AccidentalTest {
         final Accidental expectedAccidentalValue = Accidental.FLAT;
 
         assertEquals(expectedAccidentalValue, noteValue);
+    }
+
+    @Test
+    void accidentalIsAccidentalCharReturnsTrueForPlus() {
+        final boolean isAccidentalCharShouldBeTrue = Accidental.isAccidentalChar('+');
+        assertTrue(isAccidentalCharShouldBeTrue);
+    }
+
+    @Test
+    void accidentalIsAccidentalCharReturnsTrueForMinus() {
+        final boolean isAccidentalCharShouldBeTrue = Accidental.isAccidentalChar('-');
+        assertTrue(isAccidentalCharShouldBeTrue);
+    }
+
+    @ParameterizedTest(name = "Accidental.isAccidentalChar(''{0}'') returns false")
+    @MethodSource("nonAccidentalChars")
+    void accidentalIsAccidentalCharReturnsFalseForNonAccidentalChar(char nonAccidentalChar) {
+        final boolean isAccidentalCharShouldBeFalse = Accidental.isAccidentalChar(nonAccidentalChar);
+        assertFalse(isAccidentalCharShouldBeFalse);
     }
 
     @ParameterizedTest(name = "Accidental.fromChar(''{0}'') returns empty optional")
