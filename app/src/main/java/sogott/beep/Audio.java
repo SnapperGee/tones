@@ -88,7 +88,7 @@ final class Audio implements Comparable<Audio> {
             return compareResults;
         }
 
-        return this._duration - other._duration;
+        return Integer.compare(this._duration, other._duration);
     }
 
     static boolean isParsable(String aString) {
