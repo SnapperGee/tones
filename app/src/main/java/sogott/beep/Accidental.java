@@ -22,6 +22,10 @@ enum Accidental {
         return this._char;
     }
 
+    static boolean isAccidentalChar(char aChar) {
+        return Accidental.SHARP.charValue() == aChar || Accidental.FLAT.charValue() == aChar;
+    }
+
     static Optional<Accidental> fromChar(char aChar) {
         return SHARP.charValue() == aChar
                 ? Optional.of(SHARP)
