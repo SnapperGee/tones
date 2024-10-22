@@ -32,7 +32,7 @@ final class Pitch implements Comparable<Pitch> {
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
                 this._note.name(),
-                this._accidental.name(),
+                this._accidental == null ? "natural" : this._accidental.name(),
                 this._octave,
                 this._stringValue);
     }
