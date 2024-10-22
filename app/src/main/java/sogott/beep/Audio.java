@@ -48,9 +48,9 @@ import static java.util.Objects.hash;
  * property and defines the duration of the synthesized audio.
  * </ol>
  *
- * So putting all this together, a {@code String} to explicitly designate a sin
- * wave that is an F&sharp; (sharp) half note in the 8th octave would be written
- * as {@code "SIN>F+8.2"}.
+ * So putting all this together, an example of a {@code String} to explicitly
+ * designate a sin wave that is an F&sharp; (sharp) half note in the 8th octave
+ * would be written as {@code "SIN>F+8.2"}.
  *
  * @author Snap
  * @see Wave
