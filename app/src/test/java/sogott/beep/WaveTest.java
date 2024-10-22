@@ -1,8 +1,13 @@
 package sogott.beep;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Optional;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasItems;
@@ -115,5 +120,143 @@ final class WaveTest {
         final String[] expectedSawDownWaveStringValueAliases = { Wave.SAW_DOWN.name(), Wave.SAW_DOWN.stringValue(),
                 "SAWDOWN" };
         assertThat(sawDownWaveStringValueAliases, hasItems(expectedSawDownWaveStringValueAliases));
+    }
+
+    @Test
+    void parseUpperCaseSinStringsReturnsSinWave() {
+        final Optional<Wave> optionalWave = Wave.parse("SIN");
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SIN;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SQUARE")
+    @ValueSource(strings = { "SQUARE", "SQR" })
+    void parseUpperCaseSquareStringsReturnsSquareWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SQUARE;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.TRIANGLE")
+    @ValueSource(strings = { "TRIANGLE", "TRI" })
+    void parseUpperCaseTriangleStringsReturnsTriangleWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.TRIANGLE;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_UP")
+    @ValueSource(strings = { "SAW_UP", "SUP", "SAWUP" })
+    void parseUpperCaseSawUpStringsReturnsSawUpWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SAW_UP;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_DOWN")
+    @ValueSource(strings = { "SAW_DOWN", "SDN", "SAWDOWN" })
+    void parseUpperCaseSawDownStringsReturnsSawDownWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SAW_DOWN;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @Test
+    void parseLowerCaseSinStringsReturnsSinWave() {
+        final Optional<Wave> optionalWave = Wave.parse("sin");
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SIN;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SQUARE")
+    @ValueSource(strings = { "square", "sqr" })
+    void parseLowerCaseSquareStringsReturnsSquareWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SQUARE;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.TRIANGLE")
+    @ValueSource(strings = { "triangle", "tri" })
+    void parseLowerCaseTriangleStringsReturnsTriangleWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.TRIANGLE;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_UP")
+    @ValueSource(strings = { "saw_up", "sup", "sawup" })
+    void parseLowerCaseSawUpStringsReturnsSawUpWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SAW_UP;
+
+        assertEquals(expectedWaveValue, waveValue);
+    }
+
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_DOWN")
+    @ValueSource(strings = { "saw_down", "sdn", "sawdown" })
+    void parseLowerCaseSawDownStringsReturnsSawDownWave(String waveStringValue) {
+        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
+        final boolean optionalWaveIsPresent = optionalWave.isPresent();
+
+        assertTrue(optionalWaveIsPresent);
+
+        final Wave waveValue = optionalWave.get();
+        final Wave expectedWaveValue = Wave.SAW_DOWN;
+
+        assertEquals(expectedWaveValue, waveValue);
     }
 }
