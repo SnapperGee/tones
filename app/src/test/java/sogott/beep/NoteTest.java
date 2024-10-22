@@ -18,6 +18,7 @@ final class NoteTest {
                         IntStream.rangeClosed(32, 64),
                         IntStream.rangeClosed(72, 96)),
                 IntStream.rangeClosed(104, 126))
+                .mapToObj(i -> (char) i)
                 .collect(
                         StringBuilder::new,
                         StringBuilder::append,
