@@ -2,7 +2,7 @@ package sogott.beep;
 
 import java.util.Optional;
 
-public enum Accidental {
+enum Accidental {
     SHARP('+', 1),
     FLAT('-', -1);
 
