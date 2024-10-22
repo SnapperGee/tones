@@ -1,6 +1,7 @@
 package sogott.beep;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * A {@code String} can be parsed to audio if it has at least enough
@@ -88,6 +89,25 @@ import java.util.Arrays;
  * @see Note
  */
 final class AudioString {
+
+    static Optional<Audio> parse(String aString) {
+        if (!isParsable(aString)) {
+            return Optional.empty();
+        }
+
+        final String[] splitString = aString.split("\\.");
+        final String waveShapePrefixAndPitch = splitString[0];
+        final String durationString = splitString[1];
+        final int duration = Integer.parseInt(durationString);
+        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
+        final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? Wave.SIN
+                : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+        final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
+                ? Pitch.create(splitWaveShapePrefixAndPitch[0]).orElseThrow()
+                : Pitch.create(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+
+        return Optional.of(new Audio(wave, pitch, duration));
+    }
 
     static boolean isParsable(String aString) {
         if (aString == null) {
