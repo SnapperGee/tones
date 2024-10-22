@@ -213,8 +213,7 @@ final class Pitch implements Comparable<Pitch> {
         }
 
         // Check if the second character is accidental ('+' or '-')
-        final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
-                || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
+        final int startIndex = Accidental.isAccidentalChar(aString.charAt(1)) ? 2 : 1;
 
         // if second char is accidental ('+' or '-') there must be an octave int after
         // it
