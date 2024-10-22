@@ -238,6 +238,6 @@ final class Pitch implements Comparable<Pitch> {
             return compareResult;
         }
 
-        return this._octave - other._octave;
+        return Integer.compare(this._octave, other._octave);
     }
 }
