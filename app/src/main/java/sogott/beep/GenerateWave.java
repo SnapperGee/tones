@@ -1,7 +1,7 @@
 package sogott.beep;
 
 final class GenerateWave {
-    static byte[] sin(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
+    static byte[] sin(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }
@@ -33,7 +33,7 @@ final class GenerateWave {
         return output;
     }
 
-    static byte[] square(double freq, int duration, float sampleRate, short amplitude) throws IllegalArgumentException {
+    static byte[] square(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }
@@ -99,8 +99,7 @@ final class GenerateWave {
         return output;
     }
 
-    static byte[] sawUp(double freq, int duration, float sampleRate, short amplitude)
-            throws IllegalArgumentException {
+    static byte[] sawUp(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }
@@ -134,8 +133,7 @@ final class GenerateWave {
         return output;
     }
 
-    static byte[] sawDown(double freq, int duration, float sampleRate, short amplitude)
-            throws IllegalArgumentException {
+    static byte[] sawDown(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }

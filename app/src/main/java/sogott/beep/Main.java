@@ -15,7 +15,7 @@ final public class Main {
         final static Wave WAVE = Wave.SIN;
     }
 
-    public static void main(String[] args) throws LineUnavailableException {
+    public static void main(String[] args) {
         final Options options = new Options()
                 .addOption(CliOption.BPM.value())
                 .addOption(CliOption.TIME_SIGNATURE.value())
