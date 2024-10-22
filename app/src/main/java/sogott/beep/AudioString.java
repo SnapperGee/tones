@@ -2,6 +2,7 @@ package sogott.beep;
 
 import java.lang.constant.Constable;
 import java.lang.constant.ConstantDesc;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.Optional;
@@ -92,190 +93,67 @@ import static java.util.Collections.unmodifiableSet;
  * @see Wave
  * @see Note
  */
-final class AudioString implements Comparable<AudioString>, Constable, CharSequence {
-
-    final private static Set<Note> _notes = unmodifiableSet(EnumSet.allOf(Note.class));
-    final private static Set<Wave> _waves = unmodifiableSet(EnumSet.allOf(Wave.class));
-
-    final private String _string;
-    final private Wave _wave;
-    // final private double _frequency;
-    final private int _duration;
-    // final private String _toString;
-
-    AudioString(String string) {
-        this._string = string;
-
-        final String[] splitString = this._string.split(">", 2);
-
-        this._wave = splitString.length == 2
-                ? _waves.stream()
-                        .filter(wave -> {
-                            final String waveString = wave.name().replace("_", "");
-                            return splitString[0].equalsIgnoreCase(waveString);
-                        })
-                        .findFirst()
-                        .orElse(Wave.SIN)
-                : Wave.SIN;
-
-        final String[] frequencyAndDuration = splitString.length == 2
-                ? splitString[1].split("\\.")
-                : splitString[0].split("\\.");
-
-        // this._frequency = Character.isAlphabetic(frequencyAndDuration[0].charAt(0))
-        // ? frequencyAndDuration[0].length() == 3
-        // ? Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
-        // frequencyAndDuration[0].charAt(1) == '+' ? Accidental.SHARP :
-        // Accidental.FLAT,
-        // Character.getNumericValue(frequencyAndDuration[0].charAt(2)))
-        // : Note.Parser.frequencyFrom(frequencyAndDuration[0].charAt(0),
-        // Character.getNumericValue(frequencyAndDuration[0].charAt(1)))
-        // : Double.parseDouble(frequencyAndDuration[0]);
-
-        this._duration = Integer.parseInt(frequencyAndDuration[1]);
-
-        // this._toString = "%s {string=%s, wave=%s, frequency=%f,
-        // duration=%d}".formatted(
-        // AudioString.class.getSimpleName(),
-        // this._string, this._wave.name(), this._frequency, this._duration);
+final class AudioString {
+    private AudioString() {
+        throw new UnsupportedOperationException(
+                "%s is a static class and cannot be instantiated.".formatted(AudioString.class.getName()));
     }
 
-    String string() {
-        return this._string;
-    }
-
-    Wave wave() {
-        return this._wave;
-    }
-
-    // double frequency() {
-    // return this._frequency;
-    // }
-
-    int duration() {
-        return this._duration;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof AudioString operand && this._string.equals(operand._string);
-    }
-
-    @Override
-    public int hashCode() {
-        return this._string.hashCode();
-    }
-
-    @Override
-    public int compareTo(AudioString operand) {
-        return this._string.compareTo(operand._string);
-    }
-
-    @Override
-    public Optional<? extends ConstantDesc> describeConstable() {
-        return this._string.describeConstable();
-    }
-
-    @Override
-    public int length() {
-        return this._string.length();
-    }
-
-    @Override
-    public char charAt(int index) {
-        return this._string.charAt(index);
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return this._string.subSequence(end, end);
-    }
-
-    // @Override
-    // public String toString() {
-    // return this._toString;
-    // }
-
-    /**
-     *
-     * @author Snap
-     * @param aString {@code String} to check if it's parsable to audio.
-     * @return {@code true} if passed {@code String} can be parsed to audio.
-     */
     static boolean isParsable(String aString) {
-
         if (aString == null) {
             return false;
         }
 
-        // String needs to be at least a note character, octave integer, period, and
-        // duration integer
+        // string must be at least note char, octave int, period, duration int
         if (aString.length() < 4) {
-            return false;
-        }
-
-        // If there isn't exactly one period character
-        if (aString.codePoints().filter(cp -> cp == '.').limit(2).count() != 1) {
-            return false;
-        }
-
-        // If there is more than 1 right angle bracket/greater than character
-        if (aString.codePoints().filter(cp -> cp == '>').limit(2).count() > 1) {
             return false;
         }
 
         final String[] splitString = aString.split("\\.");
 
-        // String should have 1 period separating frequency and duration
+        // string must have at least single period to delineate duration from pitch
+        // frequency
         if (splitString.length != 2) {
             return false;
         }
 
-        final String waveShapePrefixAndFrequency = splitString[0];
-        final String durationSuffix = splitString[1];
+        final String waveShapePrefixAndPitch = splitString[0];
+        final String duration = splitString[1];
 
-        // frequency must be at least 2 chars and wave shape prefix can be omitted
-        if (waveShapePrefixAndFrequency.length() < 2) {
+        // must be at least note char and octave int
+        if (waveShapePrefixAndPitch.length() < 2) {
             return false;
         }
 
-        // Tail of String should be an integer for duration
-        if (!durationSuffix.codePoints().allMatch(Character::isDigit)) {
+        // duration suffix must be an int
+        if (!duration.codePoints().allMatch(Character::isDigit)) {
             return false;
         }
 
-        if (waveShapePrefixAndFrequency.endsWith(">")) {
-            return false;
+        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
+
+        // if segment before duration does not contain a right angle bracket/greater
+        // than it must be parsable pitch
+        if (splitWaveShapePrefixAndPitch.length == 1) {
+            return Pitch.isParsable(splitWaveShapePrefixAndPitch[0]);
         }
 
-        final String[] splitWaveShapePrefixAndFrequency = waveShapePrefixAndFrequency.split(">");
+        if (splitWaveShapePrefixAndPitch.length == 2) {
+            final String pitch = splitWaveShapePrefixAndPitch[1];
 
-        // if part of string preceding duration suffix doesn't contain a right angle
+            if (!Pitch.isParsable(pitch)) {
+                return false;
+            }
+
+            final String waveShapePrefix = splitWaveShapePrefixAndPitch[0];
+
+            // If wave shape prefix is valid case insensitive wave shape string
+            return Arrays.stream(Wave.values()).noneMatch(wave -> wave.stringValueAliases().stream()
+                    .anyMatch(waveStringValue -> waveShapePrefix.equalsIgnoreCase(waveStringValue)));
+        }
+
+        // wave shape prefix and duration portion contains more than 1 right angle
         // bracket/greater than char
-        if (splitWaveShapePrefixAndFrequency.length == 1) {
-            final String frequency = splitWaveShapePrefixAndFrequency[0];
-
-            if (frequency.length() < 2) {
-                return false;
-            }
-
-            // if leading character isn't a valid note character
-            if (!Character.isLetter(frequency.charAt(0)) || _notes.stream()
-                    .noneMatch(note -> note.charValue() == Character.toUpperCase(frequency.charAt(0)))) {
-                return false;
-            }
-
-            // if frequency is only 2 chars and second char isn't an octave
-            if (frequency.length() == 2 && !Character.isDigit(frequency.charAt(1))) {
-                return false;
-            }
-
-            if (!frequency.codePoints().skip(frequency.charAt(1) == '+' || frequency.charAt(1) == '-' ? 2 : 1)
-                    .allMatch(Character::isDigit)) {
-                return false;
-            }
-        }
-
-        return true;
+        return false;
     }
 }
