@@ -82,14 +82,6 @@ final class Pitch implements Comparable<Pitch> {
         return this._frequency;
     }
 
-    static Pitch create(Note note, Accidental accidental, int octave) {
-        return new Pitch(note, accidental, octave);
-    }
-
-    static Pitch create(Note note, int octave) {
-        return new Pitch(note, null, octave);
-    }
-
     static Optional<Pitch> create(String aString) {
         if (!Pitch.isParsable(aString)) {
             return Optional.empty();
