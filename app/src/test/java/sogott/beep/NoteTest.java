@@ -1,14 +1,32 @@
 package sogott.beep;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class NoteTest {
+    static char[] nonNoteChars() {
+        return IntStream.concat(
+                IntStream.concat(
+                        IntStream.rangeClosed(32, 64),
+                        IntStream.rangeClosed(72, 96)),
+                IntStream.rangeClosed(104, 126))
+                .mapToObj(i -> (char) i)
+                .collect(
+                        StringBuilder::new,
+                        StringBuilder::append,
+                        StringBuilder::append)
+                .toString()
+                .toCharArray();
+    }
+
     @Test
     void noteAOCharValueEqualsA() {
         final char noteCharValue = Note.A.charValue();
@@ -119,6 +137,21 @@ final class NoteTest {
     void noteIsNoteCharReturnsTrueForValidLowerCaseChar(char validLowerCaseNoteChar) {
         final boolean isCharResultShouldBeTrue = Note.isNoteChar(validLowerCaseNoteChar);
         assertTrue(isCharResultShouldBeTrue);
+    }
+
+    @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns false")
+    @MethodSource("nonNoteChars")
+    void noteIsNoteCharReturnsFalseForInvalidNoteChar(char invalidNoteChar) {
+        final boolean isCharResultShouldBeFalse = Note.isNoteChar(invalidNoteChar);
+        assertFalse(isCharResultShouldBeFalse);
+    }
+
+    @ParameterizedTest(name = "Note.fromChar(''{0}'') returns empty Optional")
+    @MethodSource("nonNoteChars")
+    void noteFromCharReturnsEmptyOptionalForInvalidNoteChar(char invalidNoteChar) {
+        final Optional<Note> fromCharResultShouldBeEmpty = Note.fromChar(invalidNoteChar);
+        final boolean isEmptyShouldBeTrue = fromCharResultShouldBeEmpty.isEmpty();
+        assertTrue(isEmptyShouldBeTrue);
     }
 
     @Test
