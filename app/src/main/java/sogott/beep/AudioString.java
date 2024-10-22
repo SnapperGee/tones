@@ -94,10 +94,6 @@ import static java.util.Collections.unmodifiableSet;
  * @see Note
  */
 final class AudioString {
-    private AudioString() {
-        throw new UnsupportedOperationException(
-                "%s is a static class and cannot be instantiated.".formatted(AudioString.class.getName()));
-    }
 
     static boolean isParsable(String aString) {
         if (aString == null) {
@@ -155,5 +151,10 @@ final class AudioString {
         // wave shape prefix and duration portion contains more than 1 right angle
         // bracket/greater than char
         return false;
+    }
+
+    private AudioString() {
+        throw new UnsupportedOperationException(
+                "%s is a static class and cannot be instantiated.".formatted(AudioString.class.getName()));
     }
 }
