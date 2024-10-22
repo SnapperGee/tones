@@ -171,8 +171,7 @@ final class Pitch implements Comparable<Pitch> {
         final Note note = noteOptional.get();
 
         // Check if the second character is an accidental ('+' or '-')
-        final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
-                || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
+        final int startIndex = Accidental.isAccidentalChar(aString.charAt(1)) ? 2 : 1;
 
         // if second char is accidental ('+' or '-') there must be an octave int after
         // it
