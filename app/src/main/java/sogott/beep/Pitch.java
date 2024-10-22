@@ -12,7 +12,7 @@ final class Pitch implements Comparable<Pitch> {
     final private int _hashCode;
     final private String _toString;
 
-    Pitch(Note note, Accidental accidental, int octave) throws IllegalArgumentException {
+    Pitch(Note note, Accidental accidental, int octave) {
         if (note == null) {
             throw new IllegalArgumentException(
                     "Null %s %s.".formatted(Pitch.class.getSimpleName(), Note.class.getSimpleName()));
@@ -106,7 +106,7 @@ final class Pitch implements Comparable<Pitch> {
         return Optional.of(new Pitch(note, octave));
     }
 
-    static double frequencyFrom(Note note, Accidental accidental, int octave) throws IllegalArgumentException {
+    static double frequencyFrom(Note note, Accidental accidental, int octave) {
         if (note == null) {
             throw new IllegalArgumentException(
                     "Null %s.".formatted(Note.class.getSimpleName()));
@@ -154,7 +154,7 @@ final class Pitch implements Comparable<Pitch> {
         return OptionalDouble.of(frequencyFrom(_note.get(), null, octave));
     }
 
-    static OptionalDouble frequencyFrom(String aString) throws RuntimeException {
+    static OptionalDouble frequencyFrom(String aString) {
 
         // A pitch string must be at least a note and octave (int)
         if (aString.length() < 2) {

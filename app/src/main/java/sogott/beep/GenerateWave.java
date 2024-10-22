@@ -65,8 +65,7 @@ final class GenerateWave {
         return output;
     }
 
-    static byte[] triangle(double freq, int duration, float sampleRate, short amplitude)
-            throws IllegalArgumentException {
+    static byte[] triangle(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }
