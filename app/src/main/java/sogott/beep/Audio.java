@@ -2,6 +2,32 @@ package sogott.beep;
 
 import static java.util.Objects.hash;
 
+/**
+ * The {@link Audio} class contains the properties necessary needed to
+ * synthesize audio. The following parts are:
+ *
+ * <ol>
+ * <li>
+ * <h3><i>Wave</i></h3>
+ * The {@code wave} property designates the shape of the wave of the synthesized
+ * audio. The following shapes include <i>sine</i>, <i>square</i>,
+ * <i>triangle</i>, <i>saw up</i>, and <i>saw down</i>. The wave shapes are
+ * defined as the values of the {@link Wave} enum.
+ * <li>
+ * <h3><i>Pitch</i></h3>
+ * The {@code pitch} property designates the frequency of the synthesized audio.
+ * This property is constructed from a {@link Pitch} object.
+ * <li>
+ * <h3><i>duration</i></h3>
+ * The {@code duration} property designates the duration of the synthesized
+ * audio. This is a non negative integer that sets how many milliseconds the
+ * audio will play for.
+ * </ol>
+ *
+ * @author Snap
+ * @see Wave
+ * @see Pitch
+ */
 final class Audio implements Comparable<Audio> {
     final Wave _wave;
     final Pitch _pitch;
