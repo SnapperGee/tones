@@ -28,49 +28,49 @@ final class NoteTest {
     }
 
     @Test
-    void noteACharValueEqualsA() {
+    void noteAOCharValueEqualsA() {
         final char noteCharValue = Note.A.charValue();
         final char expectedNoteCharValue = 'A';
         assertEquals(expectedNoteCharValue, noteCharValue);
     }
 
     @Test
-    void noteBCharValueEqualsB() {
+    void noteBOCharValueEqualsB() {
         final char noteCharValue = Note.B.charValue();
         final char expectedNoteCharValue = 'B';
         assertEquals(expectedNoteCharValue, noteCharValue);
     }
 
     @Test
-    void noteCCharValueEqualsC() {
+    void noteCOCharValueEqualsC() {
         final char noteCharValue = Note.C.charValue();
         final char expectedNoteCharValue = 'C';
         assertEquals(expectedNoteCharValue, noteCharValue);
     }
 
     @Test
-    void noteDCharValueEqualsD() {
+    void noteDOCharValueEqualsD() {
         final char noteCharValue = Note.D.charValue();
         final char expectedNoteCharValue = 'D';
         assertEquals(expectedNoteCharValue, noteCharValue);
     }
 
     @Test
-    void noteECharValueEqualsE() {
+    void noteEOCharValueEqualsE() {
         final char noteCharValue = Note.E.charValue();
         final char expectedNoteCharValue = 'E';
         assertEquals(expectedNoteCharValue, noteCharValue);
     }
 
     @Test
-    void noteFCharValueEqualsF() {
+    void noteFOCharValueEqualsF() {
         final char noteCharValue = Note.F.charValue();
         final char expectedNoteCharValue = 'F';
         assertEquals(expectedNoteCharValue, noteCharValue);
     }
 
     @Test
-    void noteGCharValueEqualsG() {
+    void noteGOCharValueEqualsG() {
         final char noteCharValue = Note.G.charValue();
         final char expectedNoteCharValue = 'G';
         assertEquals(expectedNoteCharValue, noteCharValue);
