@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class NoteTest {
-    static char[] nonNoteChars() {
+    static private char[] nonNoteChars() {
         return IntStream.concat(
                 IntStream.concat(
                         IntStream.rangeClosed(32, 64),
