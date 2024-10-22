@@ -1,12 +1,6 @@
 package sogott.beep;
 
-import java.lang.constant.Constable;
-import java.lang.constant.ConstantDesc;
 import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Set;
-import java.util.Optional;
-import static java.util.Collections.unmodifiableSet;
 
 /**
  * A {@code String} can be parsed to audio if it has at least enough
