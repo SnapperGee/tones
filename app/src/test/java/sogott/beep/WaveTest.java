@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Optional;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -19,7 +20,7 @@ final class WaveTest {
     void sinWaveStringValueIsEnumValueName() {
         final String sinWaveStringValue = Wave.SIN.stringValue();
         final String sinWaveEnumValueName = Wave.SIN.name();
-        assertEquals(sinWaveEnumValueName, sinWaveStringValue);
+        assertSame(sinWaveEnumValueName, sinWaveStringValue);
     }
 
     @Test
@@ -132,7 +133,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SIN;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SQUARE")
@@ -146,7 +147,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SQUARE;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.TRIANGLE")
@@ -160,7 +161,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.TRIANGLE;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_UP")
@@ -174,7 +175,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SAW_UP;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_DOWN")
@@ -188,7 +189,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SAW_DOWN;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @Test
@@ -201,7 +202,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SIN;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SQUARE")
@@ -215,7 +216,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SQUARE;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.TRIANGLE")
@@ -229,7 +230,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.TRIANGLE;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_UP")
@@ -243,7 +244,7 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SAW_UP;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_DOWN")
@@ -257,6 +258,6 @@ final class WaveTest {
         final Wave waveValue = optionalWave.get();
         final Wave expectedWaveValue = Wave.SAW_DOWN;
 
-        assertEquals(expectedWaveValue, waveValue);
+        assertSame(expectedWaveValue, waveValue);
     }
 }
