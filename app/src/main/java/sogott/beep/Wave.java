@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 
@@ -58,6 +59,13 @@ enum Wave {
 
     Set<String> stringValueAliases() {
         return this._stringValueAliases;
+    }
+
+    static Optional<Wave> parse(String aString) {
+        return aString != null && !aString.isBlank()
+                ? Arrays.stream(Wave.values()).filter(wave -> wave._stringValueAliases.stream()
+                        .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst()
+                : Optional.empty();
     }
 
     byte[] generate(double freq, int duration) {
