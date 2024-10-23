@@ -103,8 +103,8 @@ final class AudioString {
         final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? Wave.SIN
                 : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
-                ? Pitch.create(splitWaveShapePrefixAndPitch[0]).orElseThrow()
-                : Pitch.create(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+                ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
+                : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
         return Optional.of(new Audio(wave, pitch, duration));
     }

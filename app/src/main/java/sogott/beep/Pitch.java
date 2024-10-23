@@ -82,7 +82,7 @@ final class Pitch implements Comparable<Pitch> {
         return this._frequency;
     }
 
-    static Optional<Pitch> create(String aString) {
+    static Optional<Pitch> parse(String aString) {
         if (!Pitch.isParsable(aString)) {
             return Optional.empty();
         }
