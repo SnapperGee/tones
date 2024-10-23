@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,7 +12,6 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,6 +32,40 @@ final class NoteArgProvider {
         }
 
         private EnumValuesWithOffset() {
+        }
+    }
+
+    final static class EnumValuesWithUpperCaseChar implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Note.A, 'A'),
+                    arguments(Note.B, 'B'),
+                    arguments(Note.C, 'C'),
+                    arguments(Note.D, 'D'),
+                    arguments(Note.E, 'E'),
+                    arguments(Note.F, 'F'),
+                    arguments(Note.G, 'G'));
+        }
+
+        private EnumValuesWithUpperCaseChar() {
+        }
+    }
+
+    final static class EnumValuesWithLowerCaseChar implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Note.A, 'a'),
+                    arguments(Note.B, 'b'),
+                    arguments(Note.C, 'c'),
+                    arguments(Note.D, 'd'),
+                    arguments(Note.E, 'e'),
+                    arguments(Note.F, 'f'),
+                    arguments(Note.G, 'g'));
+        }
+
+        private EnumValuesWithLowerCaseChar() {
         }
     }
 
@@ -64,53 +96,27 @@ final class NoteTest {
         assertSame(offset, noteOffset);
     }
 
-    @Test
-    void noteACharValueEqualsA() {
-        final char noteCharValue = Note.A.charValue();
-        final char expectedNoteCharValue = 'A';
-        assertEquals(expectedNoteCharValue, noteCharValue);
+    @ParameterizedTest(name = "Note.{0}.charValue() is ''{1}''")
+    @ArgumentsSource(NoteArgProvider.EnumValuesWithUpperCaseChar.class)
+    void noteCharValueIsValid(Note note, char expectedCarValue) {
+        final char charValue = note.charValue();
+        assertSame(expectedCarValue, charValue);
     }
 
-    @Test
-    void noteBCharValueEqualsB() {
-        final char noteCharValue = Note.B.charValue();
-        final char expectedNoteCharValue = 'B';
-        assertEquals(expectedNoteCharValue, noteCharValue);
+    @ParameterizedTest(name = "Note.fromChar(''{1}'') is Note.{0}")
+    @ArgumentsSource(NoteArgProvider.EnumValuesWithUpperCaseChar.class)
+    void noteFromUpperCaseChar(Note note, char upperCaseChar) {
+        final Optional<Note> noteOptional = Note.fromChar(upperCaseChar);
+        assertTrue(noteOptional.isPresent());
+        assertSame(note, noteOptional.get());
     }
 
-    @Test
-    void noteCCharValueEqualsC() {
-        final char noteCharValue = Note.C.charValue();
-        final char expectedNoteCharValue = 'C';
-        assertEquals(expectedNoteCharValue, noteCharValue);
-    }
-
-    @Test
-    void noteDCharValueEqualsD() {
-        final char noteCharValue = Note.D.charValue();
-        final char expectedNoteCharValue = 'D';
-        assertEquals(expectedNoteCharValue, noteCharValue);
-    }
-
-    @Test
-    void noteECharValueEqualsE() {
-        final char noteCharValue = Note.E.charValue();
-        final char expectedNoteCharValue = 'E';
-        assertEquals(expectedNoteCharValue, noteCharValue);
-    }
-
-    @Test
-    void noteFCharValueEqualsF() {
-        final char noteCharValue = Note.F.charValue();
-        final char expectedNoteCharValue = 'F';
-        assertEquals(expectedNoteCharValue, noteCharValue);
-    }
-
-    @Test
-    void noteGCharValueEqualsG() {
-        final char noteCharValue = Note.G.charValue();
-        final char expectedNoteCharValue = 'G';
-        assertEquals(expectedNoteCharValue, noteCharValue);
+    @ParameterizedTest(name = "Note.fromChar(''{1}'') is Note.{0}")
+    @ArgumentsSource(NoteArgProvider.EnumValuesWithLowerCaseChar.class)
+    void noteFromLowerCaseChar(Note note, char lowerCaseChar) {
+        final Optional<Note> noteOptional = Note.fromChar(lowerCaseChar);
+        assertTrue(noteOptional.isPresent());
+        assertSame(note, noteOptional.get());
     }
 
     @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns true")
@@ -140,187 +146,5 @@ final class NoteTest {
         final Optional<Note> fromCharResultShouldBeEmpty = Note.fromChar(invalidNoteChar);
         final boolean isEmptyShouldBeTrue = fromCharResultShouldBeEmpty.isEmpty();
         assertTrue(isEmptyShouldBeTrue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseAReturnsA() {
-        final Optional<Note> optionalNote = Note.fromChar('A');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.A;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseBReturnsB() {
-        final Optional<Note> optionalNote = Note.fromChar('B');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.B;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseCReturnsC() {
-        final Optional<Note> optionalNote = Note.fromChar('C');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.C;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseDReturnsD() {
-        final Optional<Note> optionalNote = Note.fromChar('D');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.D;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseEReturnsE() {
-        final Optional<Note> optionalNote = Note.fromChar('E');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.E;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseFReturnsF() {
-        final Optional<Note> optionalNote = Note.fromChar('F');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.F;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharUpperCaseGReturnsG() {
-        final Optional<Note> optionalNote = Note.fromChar('G');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.G;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseAReturnsA() {
-        final Optional<Note> optionalNote = Note.fromChar('a');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.A;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseBReturnsB() {
-        final Optional<Note> optionalNote = Note.fromChar('b');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.B;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseCReturnsC() {
-        final Optional<Note> optionalNote = Note.fromChar('c');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.C;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseDReturnsD() {
-        final Optional<Note> optionalNote = Note.fromChar('d');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.D;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseEReturnsE() {
-        final Optional<Note> optionalNote = Note.fromChar('e');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.E;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseFReturnsF() {
-        final Optional<Note> optionalNote = Note.fromChar('f');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.F;
-
-        assertEquals(expectedNoteValue, noteValue);
-    }
-
-    @Test
-    void noteFromCharLowerCaseGReturnsG() {
-        final Optional<Note> optionalNote = Note.fromChar('g');
-        final boolean optionalNoteIsPresent = optionalNote.isPresent();
-
-        assertTrue(optionalNoteIsPresent);
-
-        final Note noteValue = optionalNote.get();
-        final Note expectedNoteValue = Note.G;
-
-        assertEquals(expectedNoteValue, noteValue);
     }
 }
