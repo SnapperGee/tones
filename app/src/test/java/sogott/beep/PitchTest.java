@@ -4,7 +4,9 @@ import java.util.stream.Stream;
 import java.util.Arrays;
 import java.util.random.RandomGenerator;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -68,6 +71,17 @@ final class PitchArgProvider {
         }
 
         final static class NoteAndOctaveStringValue implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return Arrays.stream(Note.values()).map(note -> {
+                    final int octave = random.nextInt(13);
+                    final String stringValue = "%c%d".formatted(note.charValue(), octave);
+                    return arguments(note, octave, stringValue);
+                });
+            }
+        }
+
+        final static class PitchWithNoteAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return Arrays.stream(Note.values()).map(note -> {
@@ -152,7 +166,8 @@ final class PitchTest {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(note, octave));
     }
 
-    @RepeatedTest(5)
+    @Test
+    @DisplayName("new Pitch(null, 0<=#<=12) throws IllegalArgumentException")
     void pitchConstructorWithNullNoteAndNonNegativeOctaveThrows() {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(null, PitchArgProvider.random.nextInt(13)));
     }
@@ -205,5 +220,28 @@ final class PitchTest {
         final Pitch pitch = new Pitch(note, null, octave);
         final String stringValueProperty = pitch.stringValue();
         assertEquals(stringValue, stringValueProperty);
+    }
+
+    ////////////////////
+    // equals(Object) //
+    ////////////////////
+
+    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) equals same returns true")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
+    void pitchEqualsSameReturnsTrue(Note note, Accidental accidental,
+            int octave) {
+        final Pitch pitch = new Pitch(note, accidental, octave);
+        final boolean equalsResults = pitch.equals(pitch);
+        assertTrue(equalsResults);
+    }
+
+    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) equals equivalent returns true")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
+    void pitchEqualsEquivalentReturnsTrue(Note note, Accidental accidental,
+            int octave) {
+        final Pitch aPitch = new Pitch(note, accidental, octave);
+        final Pitch anotherPitch = new Pitch(note, accidental, octave);
+        final boolean equalsResults = aPitch.equals(anotherPitch);
+        assertTrue(equalsResults);
     }
 }
