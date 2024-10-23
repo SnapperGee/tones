@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 final class PitchArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    private static Stream<Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
+    private static Stream<? extends Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
         return Arrays.stream(Note.values()).flatMap(note -> Arrays.stream(Accidental.values())
                 .map(accidental -> arguments(note, accidental, random.nextInt(octaveOrigin, octaveBound))));
     }
 
-    private static Stream<Arguments> noteAndOctave(int octaveOrigin, int octaveBound) {
+    private static Stream<? extends Arguments> noteAndOctave(int octaveOrigin, int octaveBound) {
         return Arrays.stream(Note.values()).map(note -> arguments(note, random.nextInt(octaveOrigin, octaveBound)));
     }
 
