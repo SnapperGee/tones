@@ -2,262 +2,157 @@ package sogott.beep;
 
 import java.util.Optional;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.in;
+
+final class WaveArgProvider {
+    final static class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Wave.SIN, Wave.SIN.name()),
+                    arguments(Wave.SQUARE, "SQR"),
+                    arguments(Wave.TRIANGLE, "TRI"),
+                    arguments(Wave.SAW_UP, "SUP"),
+                    arguments(Wave.SAW_DOWN, "SDN"));
+        }
+
+        private EnumValuesWithUpperCaseStringValue() {
+        }
+    }
+
+    final static class EnumValuesWithLowerCaseStringValue implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Wave.SIN, Wave.SIN.name().toLowerCase()),
+                    arguments(Wave.SQUARE, "sqr"),
+                    arguments(Wave.TRIANGLE, "tri"),
+                    arguments(Wave.SAW_UP, "sup"),
+                    arguments(Wave.SAW_DOWN, "sdn"));
+        }
+
+        private EnumValuesWithLowerCaseStringValue() {
+        }
+    }
+
+    final static class EnumValuesWithUpperCaseStringAliases implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Wave.SIN, Set.of(Wave.SIN.name())),
+                    arguments(Wave.SQUARE, Set.of(Wave.SQUARE.name(), Wave.SQUARE.stringValue())),
+                    arguments(Wave.TRIANGLE, Set.of(Wave.TRIANGLE.name(), Wave.TRIANGLE.stringValue())),
+                    arguments(Wave.SAW_UP, Set.of(Wave.SAW_UP.name(), Wave.SAW_UP.stringValue(), "SAWUP")),
+                    arguments(Wave.SAW_DOWN, Set.of(Wave.SAW_DOWN.name(), Wave.SAW_DOWN.stringValue(), "SAWDOWN")));
+        }
+
+        private EnumValuesWithUpperCaseStringAliases() {
+        }
+    }
+
+    final static class EnumValuesWithLowerCaseStringAliases implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Wave.SIN, Set.of(Wave.SIN.name().toLowerCase())),
+                    arguments(Wave.SQUARE,
+                            Set.of(Wave.SQUARE.name().toLowerCase(), Wave.SQUARE.stringValue().toLowerCase())),
+                    arguments(Wave.TRIANGLE,
+                            Set.of(Wave.TRIANGLE.name().toLowerCase(), Wave.TRIANGLE.stringValue().toLowerCase())),
+                    arguments(Wave.SAW_UP,
+                            Set.of(Wave.SAW_UP.name().toLowerCase(), Wave.SAW_UP.stringValue().toLowerCase(), "sawup")),
+                    arguments(Wave.SAW_DOWN, Set.of(Wave.SAW_DOWN.name().toLowerCase(),
+                            Wave.SAW_DOWN.stringValue().toLowerCase(), "sawdown")));
+        }
+
+        private EnumValuesWithLowerCaseStringAliases() {
+        }
+    }
+
+    final static class EnumValuesWithUpperCaseStringAlias implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Wave.SIN.name(), Wave.SIN),
+                    arguments(Wave.SQUARE.name(), Wave.SQUARE),
+                    arguments("SQR", Wave.SQUARE),
+                    arguments(Wave.TRIANGLE.name(), Wave.TRIANGLE),
+                    arguments("TRI", Wave.TRIANGLE),
+                    arguments(Wave.SAW_UP.name(), Wave.SAW_UP),
+                    arguments("SUP", Wave.SAW_UP),
+                    arguments("SAWUP", Wave.SAW_UP),
+                    arguments(Wave.SAW_DOWN.name(), Wave.SAW_DOWN),
+                    arguments("SDN", Wave.SAW_DOWN),
+                    arguments("SAWDOWN", Wave.SAW_DOWN));
+        }
+
+        private EnumValuesWithUpperCaseStringAlias() {
+        }
+    }
+
+    final static class EnumValuesWithLowerCaseStringAlias implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Wave.SIN.name().toLowerCase(), Wave.SIN),
+                    arguments(Wave.SQUARE.name().toLowerCase(), Wave.SQUARE),
+                    arguments("sqr", Wave.SQUARE),
+                    arguments(Wave.TRIANGLE.name().toLowerCase(), Wave.TRIANGLE),
+                    arguments("tri", Wave.TRIANGLE),
+                    arguments(Wave.SAW_UP.name().toLowerCase(), Wave.SAW_UP),
+                    arguments("sup", Wave.SAW_UP),
+                    arguments("sawup", Wave.SAW_UP),
+                    arguments(Wave.SAW_DOWN.name().toLowerCase(), Wave.SAW_DOWN),
+                    arguments("sdn", Wave.SAW_DOWN),
+                    arguments("sawdown", Wave.SAW_DOWN));
+        }
+
+        private EnumValuesWithLowerCaseStringAlias() {
+        }
+    }
+
+    private WaveArgProvider() {
+    }
+}
 
 final class WaveTest {
-    @Test
-    void sinWaveStringValueIsEnumValueName() {
-        final String sinWaveStringValue = Wave.SIN.stringValue();
-        final String sinWaveEnumValueName = Wave.SIN.name();
-        assertSame(sinWaveEnumValueName, sinWaveStringValue);
+    @ParameterizedTest(name = "Wave.{0}.stringValue() = \"{1}\"")
+    @ArgumentsSource(WaveArgProvider.EnumValuesWithUpperCaseStringValue.class)
+    void waveStringValueIsValid(Wave wave, String expectedStringValue) {
+        final String waveStringValue = wave.stringValue();
+        assertEquals(expectedStringValue, waveStringValue);
     }
 
-    @Test
-    void sinWaveEnumStringValueAliasesHasSize1() {
-        final Set<String> sinWaveStringValueAliases = Wave.SIN.stringValueAliases();
-        final int sinWaveStringValueAliasesSize = 1;
-        assertThat(sinWaveStringValueAliases, hasSize(sinWaveStringValueAliasesSize));
+    @ParameterizedTest(name = "Wave.{0}.stringValueAliases() = {1}")
+    @ArgumentsSource(WaveArgProvider.EnumValuesWithUpperCaseStringAliases.class)
+    void waveStringValueAliasesIsValid(Wave wave, Set<String> expectedStringAliases) {
+        final Set<String> waveStringAliases = wave.stringValueAliases();
+        assertEquals(expectedStringAliases, waveStringAliases);
     }
 
-    @Test
-    void sinWaveEnumValueNameInStringValueAliases() {
-        final Set<String> sinWaveStringValueAliases = Wave.SIN.stringValueAliases();
-        final String sinWaveEnumValueName = Wave.SIN.name();
-        assertThat(sinWaveEnumValueName, is(in(sinWaveStringValueAliases)));
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
+    @ArgumentsSource(WaveArgProvider.EnumValuesWithUpperCaseStringAlias.class)
+    void waveParseUpperCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
+        final Optional<Wave> optionalWave = Wave.parse(waveString);
+        assertTrue(optionalWave.isPresent());
+        assertSame(expectedWave, optionalWave.get());
     }
 
-    @Test
-    void squareWaveStringValueIsSQRString() {
-        final String squareWaveStringValue = Wave.SQUARE.stringValue();
-        final String expectedSquareWaveStringValue = "SQR";
-        assertEquals(expectedSquareWaveStringValue, squareWaveStringValue);
-    }
-
-    @Test
-    void squareWaveEnumStringValueAliasesHasSize2() {
-        final Set<String> squareWaveStringValueAliases = Wave.SQUARE.stringValueAliases();
-        final int squareWaveStringValueAliasesSize = 2;
-        assertThat(squareWaveStringValueAliases, hasSize(squareWaveStringValueAliasesSize));
-    }
-
-    @Test
-    void squareWaveStringValueAliasesHasEnumValueNameAndStringValue() {
-        final Set<String> squareWaveStringValueAliases = Wave.SQUARE.stringValueAliases();
-        final String[] expectedSquareWaveStringValueAliases = { Wave.SQUARE.name(), Wave.SQUARE.stringValue() };
-        assertThat(squareWaveStringValueAliases, hasItems(expectedSquareWaveStringValueAliases));
-    }
-
-    @Test
-    void triangleWaveStringValueIsTRIString() {
-        final String triangleWaveStringValue = Wave.TRIANGLE.stringValue();
-        final String expectedTriangleWaveStringValue = "TRI";
-        assertEquals(expectedTriangleWaveStringValue, triangleWaveStringValue);
-    }
-
-    @Test
-    void triangleWaveEnumStringValueAliasesHasSize2() {
-        final Set<String> triangleWaveStringValueAliases = Wave.TRIANGLE.stringValueAliases();
-        final int triangleWaveStringValueAliasesSize = 2;
-        assertThat(triangleWaveStringValueAliases, hasSize(triangleWaveStringValueAliasesSize));
-    }
-
-    @Test
-    void triangleWaveStringValueAliasesHasEnumValueNameAndStringValue() {
-        final Set<String> triangleWaveStringValueAliases = Wave.TRIANGLE.stringValueAliases();
-        final String[] expectedTriangleWaveStringValueAliases = { Wave.TRIANGLE.name(), Wave.TRIANGLE.stringValue() };
-        assertThat(triangleWaveStringValueAliases, hasItems(expectedTriangleWaveStringValueAliases));
-    }
-
-    @Test
-    void sawUpWaveStringValueIsSUPString() {
-        final String sawUpWaveStringValue = Wave.SAW_UP.stringValue();
-        final String expectedSawUpWaveStringValue = "SUP";
-        assertEquals(expectedSawUpWaveStringValue, sawUpWaveStringValue);
-    }
-
-    @Test
-    void sawUpWaveEnumStringValueAliasesHasSize3() {
-        final Set<String> sawUpWaveStringValueAliases = Wave.SAW_UP.stringValueAliases();
-        final int sawUpWaveStringValueAliasesSize = 3;
-        assertThat(sawUpWaveStringValueAliases, hasSize(sawUpWaveStringValueAliasesSize));
-    }
-
-    @Test
-    void sawUpWaveStringValueAliasesHasCorrectStrings() {
-        final Set<String> sawUpWaveStringValueAliases = Wave.SAW_UP.stringValueAliases();
-        final String[] expectedSawUpWaveStringValueAliases = { Wave.SAW_UP.name(), Wave.SAW_UP.stringValue(),
-                "SAWUP" };
-        assertThat(sawUpWaveStringValueAliases, hasItems(expectedSawUpWaveStringValueAliases));
-    }
-
-    @Test
-    void sawDownWaveStringValueIsSDNString() {
-        final String sawDownWaveStringValue = Wave.SAW_DOWN.stringValue();
-        final String expectedSawUpWaveStringValue = "SDN";
-        assertEquals(expectedSawUpWaveStringValue, sawDownWaveStringValue);
-    }
-
-    @Test
-    void sawDownWaveEnumStringValueAliasesHasSize3() {
-        final Set<String> sawDownWaveStringValueAliases = Wave.SAW_DOWN.stringValueAliases();
-        final int sawDownWaveStringValueAliasesSize = 3;
-        assertThat(sawDownWaveStringValueAliases, hasSize(sawDownWaveStringValueAliasesSize));
-    }
-
-    @Test
-    void sawDownWaveStringValueAliasesHasCorrectStrings() {
-        final Set<String> sawDownWaveStringValueAliases = Wave.SAW_DOWN.stringValueAliases();
-        final String[] expectedSawDownWaveStringValueAliases = { Wave.SAW_DOWN.name(), Wave.SAW_DOWN.stringValue(),
-                "SAWDOWN" };
-        assertThat(sawDownWaveStringValueAliases, hasItems(expectedSawDownWaveStringValueAliases));
-    }
-
-    @Test
-    void parseUpperCaseSinStringsReturnsSinWave() {
-        final Optional<Wave> optionalWave = Wave.parse("SIN");
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SIN;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SQUARE")
-    @ValueSource(strings = { "SQUARE", "SQR" })
-    void parseUpperCaseSquareStringsReturnsSquareWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SQUARE;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.TRIANGLE")
-    @ValueSource(strings = { "TRIANGLE", "TRI" })
-    void parseUpperCaseTriangleStringsReturnsTriangleWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.TRIANGLE;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_UP")
-    @ValueSource(strings = { "SAW_UP", "SUP", "SAWUP" })
-    void parseUpperCaseSawUpStringsReturnsSawUpWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SAW_UP;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_DOWN")
-    @ValueSource(strings = { "SAW_DOWN", "SDN", "SAWDOWN" })
-    void parseUpperCaseSawDownStringsReturnsSawDownWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SAW_DOWN;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @Test
-    void parseLowerCaseSinStringsReturnsSinWave() {
-        final Optional<Wave> optionalWave = Wave.parse("sin");
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SIN;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SQUARE")
-    @ValueSource(strings = { "square", "sqr" })
-    void parseLowerCaseSquareStringsReturnsSquareWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SQUARE;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.TRIANGLE")
-    @ValueSource(strings = { "triangle", "tri" })
-    void parseLowerCaseTriangleStringsReturnsTriangleWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.TRIANGLE;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_UP")
-    @ValueSource(strings = { "saw_up", "sup", "sawup" })
-    void parseLowerCaseSawUpStringsReturnsSawUpWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SAW_UP;
-
-        assertSame(expectedWaveValue, waveValue);
-    }
-
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns Optional of Wave.SAW_DOWN")
-    @ValueSource(strings = { "saw_down", "sdn", "sawdown" })
-    void parseLowerCaseSawDownStringsReturnsSawDownWave(String waveStringValue) {
-        final Optional<Wave> optionalWave = Wave.parse(waveStringValue);
-        final boolean optionalWaveIsPresent = optionalWave.isPresent();
-
-        assertTrue(optionalWaveIsPresent);
-
-        final Wave waveValue = optionalWave.get();
-        final Wave expectedWaveValue = Wave.SAW_DOWN;
-
-        assertSame(expectedWaveValue, waveValue);
+    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
+    @ArgumentsSource(WaveArgProvider.EnumValuesWithLowerCaseStringAlias.class)
+    void waveParseLowerCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
+        final Optional<Wave> optionalWave = Wave.parse(waveString);
+        assertTrue(optionalWave.isPresent());
+        assertSame(expectedWave, optionalWave.get());
     }
 }
