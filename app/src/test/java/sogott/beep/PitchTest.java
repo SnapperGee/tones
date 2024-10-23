@@ -1,7 +1,9 @@
 package sogott.beep;
 
 import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,24 +14,47 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static java.util.Collections.unmodifiableList;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class PitchArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
+    final static List<Note> notes = unmodifiableList(Arrays.asList(Note.values()));
+
     private static Stream<? extends Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
-        return Arrays.stream(Note.values()).flatMap(note -> Arrays.stream(Accidental.values())
+        return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
                 .map(accidental -> arguments(note, accidental, random.nextInt(octaveOrigin, octaveBound))));
     }
 
+    private static Stream<? extends Arguments> differingNotesAccidentalsAndOctaves(int octaveOrigin, int octaveBound) {
+        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
+
+        return notes.stream().flatMap(note -> accidentals.stream()
+                .map(accidental -> {
+                    final int indexOfNote = notes.indexOf(note);
+                    final int indexOfDifferentNote = IntStream.generate(() -> random.nextInt(notes.size()))
+                            .filter(i -> i != indexOfNote).findFirst().orElseThrow();
+                    final Note aDifferentNote = notes.get(indexOfDifferentNote);
+                    final Accidental differentAccidental = accidental == Accidental.SHARP ? Accidental.FLAT
+                            : Accidental.SHARP;
+                    final int randomInt = random.nextInt(octaveOrigin, octaveBound);
+                    final int differentRandomInt = IntStream.generate(() -> random.nextInt(octaveOrigin, octaveBound))
+                            .filter(i -> i != randomInt).findFirst().orElseThrow();
+                    return arguments(note, aDifferentNote, accidental, differentAccidental,
+                            randomInt, differentRandomInt);
+                }));
+    }
+
     private static Stream<? extends Arguments> noteAndOctave(int octaveOrigin, int octaveBound) {
-        return Arrays.stream(Note.values()).map(note -> arguments(note, random.nextInt(octaveOrigin, octaveBound)));
+        return notes.stream().map(note -> arguments(note, random.nextInt(octaveOrigin, octaveBound)));
     }
 
     final static class Valid {
@@ -59,7 +84,7 @@ final class PitchArgProvider {
         final static class NoteAccidentalAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return Arrays.stream(Note.values()).flatMap(note -> Arrays.stream(Accidental.values())
+                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
                         .map(accidental -> {
                             final int octave = random.nextInt(13);
                             final String stringValue = "%c%c%d".formatted(note.charValue(), accidental.charValue(),
@@ -69,10 +94,17 @@ final class PitchArgProvider {
             }
         }
 
+        final static class DifferingNotesAccidentalsAndOctaves implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return differingNotesAccidentalsAndOctaves(0, 12);
+            }
+        }
+
         final static class NoteAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return Arrays.stream(Note.values()).map(note -> {
+                return notes.stream().map(note -> {
                     final int octave = random.nextInt(13);
                     final String stringValue = "%c%d".formatted(note.charValue(), octave);
                     return arguments(note, octave, stringValue);
@@ -83,7 +115,7 @@ final class PitchArgProvider {
         final static class PitchWithNoteAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return Arrays.stream(Note.values()).map(note -> {
+                return notes.stream().map(note -> {
                     final int octave = random.nextInt(13);
                     final String stringValue = "%c%d".formatted(note.charValue(), octave);
                     return arguments(note, octave, stringValue);
@@ -239,8 +271,19 @@ final class PitchTest {
     void pitchEqualsEquivalentReturnsTrue(Note note, Accidental accidental,
             int octave) {
         final Pitch aPitch = new Pitch(note, accidental, octave);
-        final Pitch anotherPitch = new Pitch(note, accidental, octave);
-        final boolean equalsResults = aPitch.equals(anotherPitch);
+        final Pitch equalPitch = new Pitch(note, accidental, octave);
+        final boolean equalsResults = aPitch.equals(equalPitch);
         assertTrue(equalsResults);
+    }
+
+    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{2}, {4}) does not equal new Pitch(Note.{1}, Accidental.{3}, {5})")
+    @ArgumentsSource(PitchArgProvider.Valid.DifferingNotesAccidentalsAndOctaves.class)
+    void pitchDoesNotEqualPitchWithDifferingNoteAccidentalAndOctave(Note aNote, Note anotherNote,
+            Accidental anAccidental, Accidental anotherAccidental,
+            int anOctave, int anotherOctave) {
+        final Pitch aPitch = new Pitch(aNote, anAccidental, anOctave);
+        final Pitch notEqualPitch = new Pitch(anotherNote, anotherAccidental, anotherOctave);
+        final boolean equalsResults = aPitch.equals(notEqualPitch);
+        assertFalse(equalsResults);
     }
 }
