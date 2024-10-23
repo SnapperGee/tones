@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class ArgProvider {
+final class PitchArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
     private static Stream<Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
@@ -101,7 +101,7 @@ final class ArgProvider {
         }
     }
 
-    private ArgProvider() {
+    private PitchArgProvider() {
     }
 }
 
@@ -112,20 +112,20 @@ final class PitchTest {
     ////////////////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) does not throw")
-    @ArgumentsSource(ArgProvider.Valid.NoteAccidentalAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructorWithNoteNonNullAccidentalAndNonNegativeOctaveDoesNotThrow(Note note, Accidental accidental,
             int octave) {
         assertDoesNotThrow(() -> new Pitch(note, accidental, octave));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, null, {1}) does not throw")
-    @ArgumentsSource(ArgProvider.Valid.NoteAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAndOctave.class)
     void pitchConstructorWithNoteNullAccidentalAndNonNegativeOctaveDoesNotThrow(Note note, int octave) {
         assertDoesNotThrow(() -> new Pitch(note, null, octave));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, {1}) does not throw")
-    @ArgumentsSource(ArgProvider.Valid.NoteAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAndOctave.class)
     void pitchConstructorWithNoteAndNonNegativeOctaveDoesNotThrow(Note note, int octave) {
         assertDoesNotThrow(() -> new Pitch(note, octave));
     }
@@ -135,26 +135,26 @@ final class PitchTest {
     //////////////////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) throws IllegalArgumentException")
-    @ArgumentsSource(ArgProvider.Invalid.NoteAccidentalAndNegativeOctave.class)
+    @ArgumentsSource(PitchArgProvider.Invalid.NoteAccidentalAndNegativeOctave.class)
     void pitchConstructorWithNoteAccidentalAndNegativeOctaveThrows(Note note, Accidental accidental, int octave) {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(note, accidental, octave));
     }
 
     @ParameterizedTest(name = "new Pitch(null, Note.{0}, {1}) throws IllegalArgumentException")
-    @ArgumentsSource(ArgProvider.Valid.AccidentalAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.AccidentalAndOctave.class)
     void pitchConstructorWithNullNoteAccidentalAndNonNegativeOctaveThrows(Accidental accidental, int octave) {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(null, accidental, octave));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, {1}) throws IllegalArgumentException")
-    @ArgumentsSource(ArgProvider.Invalid.NoteAndNegativeOctave.class)
+    @ArgumentsSource(PitchArgProvider.Invalid.NoteAndNegativeOctave.class)
     void pitchConstructorWithNoteAndNegativeOctaveThrows(Note note, int octave) {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(note, octave));
     }
 
-    @RepeatedTest(value = 5, name = "{currentRepetition}.) new Pitch(null, 0 <= # <= 12) throws IllegalArgumentException")
+    @RepeatedTest(5)
     void pitchConstructorWithNullNoteAndNonNegativeOctaveThrows() {
-        assertThrows(IllegalArgumentException.class, () -> new Pitch(null, ArgProvider.random.nextInt(13)));
+        assertThrows(IllegalArgumentException.class, () -> new Pitch(null, PitchArgProvider.random.nextInt(13)));
     }
 
     ////////////////////////
@@ -162,7 +162,7 @@ final class PitchTest {
     ////////////////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).note() is Note.{0}")
-    @ArgumentsSource(ArgProvider.Valid.NoteAccidentalAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructedWithNoteAccidentalAndOctavePropertyReturnsNote(Note note, Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(note, accidental, octave);
@@ -171,7 +171,7 @@ final class PitchTest {
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).accidental() is Accidental.{1}")
-    @ArgumentsSource(ArgProvider.Valid.NoteAccidentalAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructedWithNoteAccidentalAndOctavePropertyReturnsAccidental(Note note, Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(note, accidental, octave);
@@ -180,7 +180,7 @@ final class PitchTest {
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).octave() is {2}")
-    @ArgumentsSource(ArgProvider.Valid.NoteAccidentalAndOctave.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructedWithNoteAccidentalAndOctavePropertyReturnsDuration(Note note, Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(note, accidental, octave);
@@ -189,7 +189,7 @@ final class PitchTest {
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).stringValue() = \"{3}\"")
-    @ArgumentsSource(ArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
     void pitchConstructedWithNoteAccidentalAndOctaveStringValuePropertyReturnsStringValue(Note note,
             Accidental accidental,
             int octave, String stringValue) {
@@ -199,7 +199,7 @@ final class PitchTest {
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, null, {1}).stringValue() = \"{2}\"")
-    @ArgumentsSource(ArgProvider.Valid.NoteAndOctaveStringValue.class)
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAndOctaveStringValue.class)
     void pitchConstructedWithNoteAndOctaveStringValuePropertyReturnsStringValue(Note note, int octave,
             String stringValue) {
         final Pitch pitch = new Pitch(note, null, octave);
