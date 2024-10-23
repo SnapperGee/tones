@@ -2,14 +2,44 @@ package sogott.beep;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+final class NoteArgProvider {
+    final static class EnumValuesWithOffset implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Note.A, 0),
+                    arguments(Note.B, 2),
+                    arguments(Note.C, -9),
+                    arguments(Note.D, -7),
+                    arguments(Note.E, -5),
+                    arguments(Note.F, -4),
+                    arguments(Note.G, -2));
+        }
+
+        private EnumValuesWithOffset() {
+        }
+    }
+
+    private NoteArgProvider() {
+    }
+}
 
 final class NoteTest {
     static private char[] nonNoteChars() {
@@ -25,6 +55,13 @@ final class NoteTest {
                         StringBuilder::append)
                 .toString()
                 .toCharArray();
+    }
+
+    @ParameterizedTest(name = "Note.{0}.offSet() is {1}")
+    @ArgumentsSource(NoteArgProvider.EnumValuesWithOffset.class)
+    void noteOffsetValueIsValid(Note note, int offset) {
+        final int noteOffset = note.offset();
+        assertSame(offset, noteOffset);
     }
 
     @Test
@@ -74,55 +111,6 @@ final class NoteTest {
         final char noteCharValue = Note.G.charValue();
         final char expectedNoteCharValue = 'G';
         assertEquals(expectedNoteCharValue, noteCharValue);
-    }
-
-    @Test
-    void noteAOffsetEquals0() {
-        final int noteOffsetValue = Note.A.offset();
-        final int expectedNoteOffsetValue = 0;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
-    }
-
-    @Test
-    void noteBOffsetEquals2() {
-        final int noteOffsetValue = Note.B.offset();
-        final int expectedNoteOffsetValue = 2;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
-    }
-
-    @Test
-    void noteCOffsetEqualsNegative9() {
-        final int noteOffsetValue = Note.C.offset();
-        final int expectedNoteOffsetValue = -9;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
-    }
-
-    @Test
-    void noteDOffsetEqualsNegative7() {
-        final int noteOffsetValue = Note.D.offset();
-        final int expectedNoteOffsetValue = -7;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
-    }
-
-    @Test
-    void noteEOffsetEqualsNegative5() {
-        final int noteOffsetValue = Note.E.offset();
-        final int expectedNoteOffsetValue = -5;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
-    }
-
-    @Test
-    void noteFOffsetEqualsNegative4() {
-        final int noteOffsetValue = Note.F.offset();
-        final int expectedNoteOffsetValue = -4;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
-    }
-
-    @Test
-    void noteGOffsetEqualsNegative2() {
-        final int noteOffsetValue = Note.G.offset();
-        final int expectedNoteOffsetValue = -2;
-        assertEquals(expectedNoteOffsetValue, noteOffsetValue);
     }
 
     @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns true")
