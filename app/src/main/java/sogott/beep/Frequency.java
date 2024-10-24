@@ -1,6 +1,5 @@
 package sogott.beep;
 
-import java.util.Optional;
 import java.util.OptionalDouble;
 
 final class Frequency {
@@ -33,14 +32,10 @@ final class Frequency {
                 .orElse(OptionalDouble.empty());
     }
 
-    static OptionalDouble from(char note, int octave) {
-        final Optional<Note> _note = Note.fromChar(note);
-
-        if (_note.isEmpty()) {
-            OptionalDouble.empty();
-        }
-
-        return OptionalDouble.of(from(_note.get(), null, octave));
+    static OptionalDouble from(char noteChar, int octave) {
+        return Note.fromChar(noteChar)
+                .map(note -> OptionalDouble.of(from(note, null, octave)))
+                .orElse(OptionalDouble.empty());
     }
 
     static OptionalDouble parse(String aString) {
