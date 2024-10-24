@@ -21,6 +21,10 @@ final class Frequency {
         return noteFrequency;
     }
 
+    static double from(Note note, int octave) {
+        return from(note, null, octave);
+    }
+
     static double from(Pitch pitch) {
         return from(pitch.note(), pitch.accidental(), pitch.octave());
     }
@@ -34,7 +38,7 @@ final class Frequency {
 
     static OptionalDouble from(char noteChar, int octave) {
         return Note.fromChar(noteChar)
-                .map(note -> OptionalDouble.of(from(note, null, octave)))
+                .map(note -> OptionalDouble.of(from(note, octave)))
                 .orElse(OptionalDouble.empty());
     }
 
