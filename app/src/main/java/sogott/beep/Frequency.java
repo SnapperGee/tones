@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 
 final class Frequency {
-    static double of(Note note, Accidental accidental, int octave) {
+    static double from(Note note, Accidental accidental, int octave) {
         if (note == null) {
             throw new IllegalArgumentException(
                     "Null %s.".formatted(Note.class.getSimpleName()));
@@ -22,24 +22,28 @@ final class Frequency {
         return noteFrequency;
     }
 
-    static OptionalDouble of(char noteChar, char accidentalChar, int octave) {
+    static double from(Pitch pitch) {
+        return from(pitch.note(), pitch.accidental(), pitch.octave());
+    }
+
+    static OptionalDouble from(char noteChar, char accidentalChar, int octave) {
         return Note.fromChar(noteChar)
                 .flatMap(note -> Accidental.fromChar(accidentalChar)
-                        .map(accidental -> OptionalDouble.of(of(note, accidental, octave))))
+                        .map(accidental -> OptionalDouble.of(from(note, accidental, octave))))
                 .orElse(OptionalDouble.empty());
     }
 
-    static OptionalDouble of(char note, int octave) {
+    static OptionalDouble from(char note, int octave) {
         final Optional<Note> _note = Note.fromChar(note);
 
         if (_note.isEmpty()) {
             OptionalDouble.empty();
         }
 
-        return OptionalDouble.of(of(_note.get(), null, octave));
+        return OptionalDouble.of(from(_note.get(), null, octave));
     }
 
-    static OptionalDouble of(String aString) {
+    static OptionalDouble parse(String aString) {
 
         // A pitch string must be at least a note and octave (int)
         if (aString.length() < 2) {
@@ -75,10 +79,10 @@ final class Frequency {
         if (startIndex == 2) {
             final Accidental accidental = Accidental.fromChar(aString.charAt(1))
                     .orElseThrow(() -> new RuntimeException("Accidental value could not be converted from char."));
-            return OptionalDouble.of(of(note, accidental, octave));
+            return OptionalDouble.of(from(note, accidental, octave));
         } // if there is no accidental
 
-        return OptionalDouble.of(of(note, null, octave));
+        return OptionalDouble.of(from(note, null, octave));
     }
 
     private Frequency() {
