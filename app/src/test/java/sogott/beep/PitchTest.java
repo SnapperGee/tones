@@ -53,6 +53,46 @@ final class PitchArgProvider {
                 }));
     }
 
+    private static Stream<? extends Arguments> differingNotesWithAccidentalAndOctave(int octaveOrigin,
+            int octaveBound) {
+        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
+
+        return notes.stream().flatMap(note -> accidentals.stream()
+                .map(accidental -> {
+                    final int indexOfNote = notes.indexOf(note);
+                    final int indexOfDifferentNote = IntStream.generate(() -> random.nextInt(notes.size()))
+                            .filter(i -> i != indexOfNote).findFirst().orElseThrow();
+                    final Note aDifferentNote = notes.get(indexOfDifferentNote);
+                    return arguments(note, aDifferentNote, accidental,
+                            random.nextInt(octaveOrigin, octaveBound));
+                }));
+    }
+
+    private static Stream<? extends Arguments> noteWithDifferingAccidentalsAndOctave(int octaveOrigin,
+            int octaveBound) {
+        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
+
+        return notes.stream().flatMap(note -> accidentals.stream()
+                .map(accidental -> {
+                    final Accidental differentAccidental = accidental == Accidental.SHARP ? Accidental.FLAT
+                            : Accidental.SHARP;
+                    return arguments(note, accidental, differentAccidental,
+                            random.nextInt(octaveOrigin, octaveBound));
+                }));
+    }
+
+    private static Stream<? extends Arguments> noteAccidentalWithDifferingOctaves(int octaveOrigin, int octaveBound) {
+        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
+
+        return notes.stream().flatMap(note -> accidentals.stream()
+                .map(accidental -> {
+                    final int randomInt = random.nextInt(octaveOrigin, octaveBound);
+                    final int differentRandomInt = IntStream.generate(() -> random.nextInt(octaveOrigin, octaveBound))
+                            .filter(i -> i != randomInt).findFirst().orElseThrow();
+                    return arguments(note, accidental, randomInt, differentRandomInt);
+                }));
+    }
+
     private static Stream<? extends Arguments> noteAndOctave(int octaveOrigin, int octaveBound) {
         return notes.stream().map(note -> arguments(note, random.nextInt(octaveOrigin, octaveBound)));
     }
@@ -98,6 +138,27 @@ final class PitchArgProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return differingNotesAccidentalsAndOctaves(0, 12);
+            }
+        }
+
+        final static class DifferingNotesWithAccidentalAndOctave implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return differingNotesWithAccidentalAndOctave(0, 12);
+            }
+        }
+
+        final static class NoteWithDifferingAccidentalsAndOctave implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return noteWithDifferingAccidentalsAndOctave(0, 12);
+            }
+        }
+
+        final static class NoteAccidentalWithDifferingOctaves implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return noteAccidentalWithDifferingOctaves(0, 12);
             }
         }
 
@@ -156,7 +217,7 @@ final class PitchTest {
     // Valid Constructors //
     ////////////////////////
 
-    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) does not throw")
+    @ParameterizedTest(name = "new Pitch(Note.{0}, 31}, {2}) does not throw")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructorWithNoteNonNullAccidentalAndNonNegativeOctaveDoesNotThrow(Note note, Accidental accidental,
             int octave) {
@@ -276,13 +337,43 @@ final class PitchTest {
         assertTrue(equalsResults);
     }
 
-    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{2}, {4}) does not equal new Pitch(Note.{1}, Accidental.{3}, {5})")
+    @ParameterizedTest(name = "new Pitch(<Note.{0}>, <Accidental.{2}>, <{4}>) does not equal new Pitch(<Note.{1}>, <Accidental.{3}>, <{5}>)")
     @ArgumentsSource(PitchArgProvider.Valid.DifferingNotesAccidentalsAndOctaves.class)
-    void pitchDoesNotEqualPitchWithDifferingNoteAccidentalAndOctave(Note aNote, Note anotherNote,
-            Accidental anAccidental, Accidental anotherAccidental,
+    void pitchDoesNotEqualPitchWithDifferingNoteAccidentalAndOctave(Note aNote,
+            Note anotherNote, Accidental anAccidental, Accidental anotherAccidental,
             int anOctave, int anotherOctave) {
         final Pitch aPitch = new Pitch(aNote, anAccidental, anOctave);
-        final Pitch notEqualPitch = new Pitch(anotherNote, anotherAccidental, anotherOctave);
+        final Pitch notEqualPitch = new Pitch(anotherNote, anotherAccidental,
+                anotherOctave);
+        final boolean equalsResults = aPitch.equals(notEqualPitch);
+        assertFalse(equalsResults);
+    }
+
+    @ParameterizedTest(name = "new Pitch(<Note.{0}>, Accidental.{2}, {3}) does not equal new Pitch(<Note.{1}>, Accidental.{2}, {3})")
+    @ArgumentsSource(PitchArgProvider.Valid.DifferingNotesWithAccidentalAndOctave.class)
+    void pitchDoesNotEqualPitchWithDifferingNotes(Note aNote, Note anotherNote,
+            Accidental accidental, int octave) {
+        final Pitch aPitch = new Pitch(aNote, accidental, octave);
+        final Pitch notEqualPitch = new Pitch(anotherNote, accidental, octave);
+        final boolean equalsResults = aPitch.equals(notEqualPitch);
+        assertFalse(equalsResults);
+    }
+
+    @ParameterizedTest(name = "new Pitch(Note.{0}, <Accidental.{1}>, {3}) does not equal new Pitch(Note.{0}, <Accidental.{2}>, {3})")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteWithDifferingAccidentalsAndOctave.class)
+    void pitchDoesNotEqualPitchWithDifferingNotes(Note note, Accidental anAccidental, Accidental anotherAccidental,
+            int octave) {
+        final Pitch aPitch = new Pitch(note, anAccidental, octave);
+        final Pitch notEqualPitch = new Pitch(note, anotherAccidental, octave);
+        final boolean equalsResults = aPitch.equals(notEqualPitch);
+        assertFalse(equalsResults);
+    }
+
+    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, <{2}>) does not equal new Pitch(Note.{0}, Accidental.{1}, <{3}>)")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalWithDifferingOctaves.class)
+    void pitchDoesNotEqualPitchWithDifferingOctaves(Note note, Accidental accidental, int anOctave, int anotherOctave) {
+        final Pitch aPitch = new Pitch(note, accidental, anOctave);
+        final Pitch notEqualPitch = new Pitch(note, accidental, anotherOctave);
         final boolean equalsResults = aPitch.equals(notEqualPitch);
         assertFalse(equalsResults);
     }
