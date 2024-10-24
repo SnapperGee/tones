@@ -27,11 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class PitchArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
-
     final static List<Note> notes = unmodifiableList(Arrays.asList(Note.values()));
+    final static List<Accidental> accidentals = unmodifiableList(Arrays.asList(Accidental.values()));
 
     private static Stream<? extends Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
-        return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+        return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> arguments(note, accidental, random.nextInt(octaveOrigin, octaveBound))));
     }
 
@@ -125,7 +125,7 @@ final class PitchArgProvider {
         final static class NoteAccidentalAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                return notes.stream().flatMap(note -> accidentals.stream()
                         .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
                             final String stringValueWithAccidental = "%c%c%d".formatted(note.charValue(),
@@ -142,7 +142,7 @@ final class PitchArgProvider {
         final static class PitchStringValues implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                return notes.stream().flatMap(note -> accidentals.stream()
                         .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
                             final String stringValueWithAccidental = "%c%c%d".formatted(note.charValue(),
@@ -227,7 +227,7 @@ final class PitchArgProvider {
         final static class PitchStringValues implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                return notes.stream().flatMap(note -> accidentals.stream()
                         .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
                             final String firstString = "%1$c%1$c%2$c%3$d".formatted(note.charValue(),
