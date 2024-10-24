@@ -548,4 +548,12 @@ final class PitchTest {
         final Pitch pitch = new Pitch(note, accidental, octave);
         assertEquals(pitch, pitchOptional.get());
     }
+
+    @ParameterizedTest(name = "Pitch.parse(\"{0}\") returns empty Optional")
+    @ArgumentsSource(PitchArgProvider.Invalid.PitchStringValues.class)
+    @NullAndEmptySource
+    void staticPitchParseMethodReturnsEmptyOptionalIfPassedInvalidString(String invalidStringValue) {
+        final Optional<Pitch> pitchOptional = Pitch.parse(invalidStringValue);
+        assertTrue(pitchOptional.isEmpty());
+    }
 }
