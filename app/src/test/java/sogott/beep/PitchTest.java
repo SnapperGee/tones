@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 import java.util.stream.IntStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Objects;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -303,8 +304,7 @@ final class PitchTest {
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).stringValue() = \"{3}\"")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
     void pitchConstructedWithNoteAccidentalAndOctaveStringValuePropertyReturnsStringValue(Note note,
-            Accidental accidental,
-            int octave, String stringValue) {
+            Accidental accidental, int octave, String stringValue) {
         final Pitch pitch = new Pitch(note, accidental, octave);
         final String stringValueProperty = pitch.stringValue();
         assertEquals(stringValue, stringValueProperty);
@@ -447,5 +447,19 @@ final class PitchTest {
         final Pitch notEqualPitch = new Pitch(note, accidental, anotherOctave);
         final boolean hashCodesAReNotEqual = aPitch.hashCode() != notEqualPitch.hashCode();
         assertTrue(hashCodesAReNotEqual);
+    }
+
+    ///////////////////
+    // Parse(String) //
+    ///////////////////
+
+    @ParameterizedTest(name = "Pitch.parse(\"{3}\") creates new Pitch(Note.{0}, Accidental.{1}, {2})")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
+    void pareStringWithAccidentalWorks(Note note,
+            Accidental accidental, int octave, String stringValue) {
+        final Optional<Pitch> pitchOptional = Pitch.parse(stringValue);
+        assertTrue(pitchOptional.isPresent());
+        final Pitch pitch = new Pitch(note, accidental, octave);
+        assertEquals(pitch, pitchOptional);
     }
 }
