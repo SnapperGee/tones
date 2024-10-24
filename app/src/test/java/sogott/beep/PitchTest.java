@@ -125,17 +125,21 @@ final class PitchArgProvider {
         final static class NoteAccidentalAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return notes.stream().flatMap(note -> accidentals.stream()
-                        .flatMap(accidental -> {
-                            final int octave = random.nextInt(13);
-                            final String stringValueWithAccidental = "%c%c%d".formatted(note.charValue(),
-                                    accidental.charValue(),
-                                    octave);
-                            final String stringValueNoAccidental = "%c%d".formatted(note.charValue(),
-                                    octave);
-                            return Stream.of(arguments(note, accidental, octave, stringValueWithAccidental),
-                                    arguments(note, null, octave, stringValueNoAccidental));
-                        }));
+                return notes.stream().flatMap(note -> {
+                    final int octave = random.nextInt(13);
+                    final String stringValueNoAccidental = "%c%d".formatted(note.charValue(),
+                            octave);
+
+                    return Stream.concat(
+                            Stream.of(arguments(note, null, octave, stringValueNoAccidental)),
+                            accidentals.stream()
+                                    .map(accidental -> {
+                                        final String stringValueWithAccidental = "%c%c%d".formatted(note.charValue(),
+                                                accidental.charValue(),
+                                                octave);
+                                        return arguments(note, accidental, octave, stringValueWithAccidental);
+                                    }));
+                });
             }
         }
 
