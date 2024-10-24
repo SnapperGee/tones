@@ -204,7 +204,7 @@ final class Pitch implements Comparable<Pitch> {
         }
 
         // leading char must be valid note
-        if (Note.isNoteChar(aString.charAt(0))) {
+        if (!Note.isNoteChar(aString.charAt(0))) {
             return false;
         }
 
