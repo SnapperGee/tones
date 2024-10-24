@@ -479,4 +479,18 @@ final class PitchTest {
         final boolean pitchIsParsable = Pitch.isParsable(stringValue);
         assertTrue(pitchIsParsable);
     }
+
+    ///////////////////
+    // Parse(String) //
+    ///////////////////
+
+    @ParameterizedTest(name = "Pitch.parse(\"{3}\") returns new Pitch(Note.{0}, Accidental.{1}, {2})")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
+    void staticPitchParseMethodInitializesObject(Note note,
+            Accidental accidental, int octave, String stringValue) {
+        final Optional<Pitch> pitchOptional = Pitch.parse(stringValue);
+        assertTrue(pitchOptional.isPresent());
+        final Pitch pitch = new Pitch(note, accidental, octave);
+        assertEquals(pitch, pitchOptional.get());
+    }
 }
