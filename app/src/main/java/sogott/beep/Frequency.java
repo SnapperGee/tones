@@ -44,45 +44,9 @@ final class Frequency {
     }
 
     static OptionalDouble parse(String aString) {
-
-        // A pitch string must be at least a note and octave (int)
-        if (aString.length() < 2) {
-            return OptionalDouble.empty();
-        }
-
-        final Optional<Note> noteOptional = Note.fromChar(aString.charAt(0));
-
-        // first char must be note
-        if (noteOptional.isEmpty()) {
-            return OptionalDouble.empty();
-        }
-
-        final Note note = noteOptional.get();
-
-        // Check if the second character is an accidental ('+' or '-')
-        final int startIndex = Accidental.isAccidentalChar(aString.charAt(1)) ? 2 : 1;
-
-        // if second char is accidental ('+' or '-') there must be an octave int after
-        // it
-        if (startIndex == 2 && aString.length() < 3) {
-            return OptionalDouble.empty();
-        }
-
-        // if an octave (int) isn't following leading note char or accidental
-        if (!aString.codePoints().skip(startIndex).allMatch(Character::isDigit)) {
-            return OptionalDouble.empty();
-        }
-
-        final int octave = Integer.parseInt(aString.substring(startIndex));
-
-        // if there is an accidental
-        if (startIndex == 2) {
-            final Accidental accidental = Accidental.fromChar(aString.charAt(1))
-                    .orElseThrow(() -> new RuntimeException("Accidental value could not be converted from char."));
-            return OptionalDouble.of(from(note, accidental, octave));
-        } // if there is no accidental
-
-        return OptionalDouble.of(from(note, null, octave));
+        return Pitch.parse(aString)
+                .map(pitch -> OptionalDouble.of(from(pitch)))
+                .orElse(OptionalDouble.empty());
     }
 
     private Frequency() {
