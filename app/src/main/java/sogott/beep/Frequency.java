@@ -38,11 +38,6 @@ final class Frequency {
         return OptionalDouble.of(of(_note.get(), _accidental.get(), octave));
     }
 
-    private Frequency() {
-        throw new UnsupportedOperationException(
-                "%s is a static class and cannot be instantiated.".formatted(Frequency.class.getName()));
-    }
-
     static OptionalDouble of(char note, int octave) {
         final Optional<Note> _note = Note.fromChar(note);
 
@@ -93,5 +88,10 @@ final class Frequency {
         } // if there is no accidental
 
         return OptionalDouble.of(of(note, null, octave));
+    }
+
+    private Frequency() {
+        throw new UnsupportedOperationException(
+                "%s is a static class and cannot be instantiated.".formatted(Frequency.class.getName()));
     }
 }
