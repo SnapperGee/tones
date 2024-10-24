@@ -14,6 +14,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -228,19 +230,41 @@ final class PitchArgProvider {
                 return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
                         .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
-                            final String aString = "%1$c%1$c%2$c%3$d".formatted(note.charValue(),
+                            final String firstString = "%1$c%1$c%2$c%3$d".formatted(note.charValue(),
                                     accidental.charValue(),
                                     octave);
-                            final String anotherString = "%1$c%2$c%2$c%3$d".formatted(note.charValue(),
+                            final String secondString = "%1$c%2$c%2$c%3$d".formatted(note.charValue(),
                                     accidental.charValue(),
                                     octave);
-                            final String aStringAgain = "%3$d%1$c%2$c%3$d".formatted(note.charValue(),
+                            final String thirdString = "%3$d%1$c%2$c%3$d".formatted(note.charValue(),
                                     accidental.charValue(),
                                     octave);
-                            final String anotherStringAgain = "%1$c%1$c%2$d".formatted(note.charValue(),
+                            final String fourthString = "%1$c%1$c%2$d".formatted(note.charValue(),
                                     octave);
-                            return Stream.of(arguments(aString), arguments(anotherString), arguments(aStringAgain),
-                                    arguments(anotherStringAgain));
+                            final String fifthString = "%1$c%2$c%3$d%1$c".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String sixthString = "%1$c%2$d%1$c".formatted(note.charValue(),
+                                    octave);
+                            final String seventhString = "%c %c %d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String eighthString = "%c %d".formatted(note.charValue(),
+                                    octave);
+                            final String validStringWithAccidental = "%c%c%d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String validStringNoAccidental = "%c%d".formatted(note.charValue(),
+                                    octave);
+                            return Stream.of(arguments(Character.toString(note.charValue())),
+                                    arguments(Character.toString(accidental.charValue())),
+                                    arguments(Integer.toString(octave)), arguments(firstString),
+                                    arguments("\u0020"),
+                                    arguments(validStringWithAccidental + validStringWithAccidental),
+                                    arguments(secondString), arguments(thirdString),
+                                    arguments(fourthString), arguments(fifthString), arguments(sixthString),
+                                    arguments(seventhString), arguments(eighthString),
+                                    arguments(validStringNoAccidental + validStringNoAccidental));
                         }));
             }
         }
@@ -498,6 +522,7 @@ final class PitchTest {
 
     @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns false")
     @ArgumentsSource(PitchArgProvider.Invalid.PitchStringValues.class)
+    @NullAndEmptySource
     void isParsableOfInvalidReturnsFalse(String stringValue) {
         final boolean pitchIsParsable = Pitch.isParsable(stringValue);
         assertFalse(pitchIsParsable);
