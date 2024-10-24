@@ -26,9 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class PitchArgProvider {
+    private final static List<Note> notes = unmodifiableList(Arrays.asList(Note.values()));
+    private final static List<Accidental> accidentals = unmodifiableList(Arrays.asList(Accidental.values()));
+
     final static RandomGenerator random = RandomGenerator.getDefault();
-    final static List<Note> notes = unmodifiableList(Arrays.asList(Note.values()));
-    final static List<Accidental> accidentals = unmodifiableList(Arrays.asList(Accidental.values()));
 
     private static Stream<? extends Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
         return notes.stream().flatMap(note -> {
@@ -61,8 +62,6 @@ final class PitchArgProvider {
 
     private static Stream<? extends Arguments> differingNotesWithAccidentalAndOctave(int octaveOrigin,
             int octaveBound) {
-        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
-
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int indexOfNote = notes.indexOf(note);
@@ -76,8 +75,6 @@ final class PitchArgProvider {
 
     private static Stream<? extends Arguments> noteWithDifferingAccidentalsAndOctave(int octaveOrigin,
             int octaveBound) {
-        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
-
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final Accidental differentAccidental = accidental == Accidental.SHARP ? Accidental.FLAT
@@ -88,8 +85,6 @@ final class PitchArgProvider {
     }
 
     private static Stream<? extends Arguments> noteAccidentalWithDifferingOctaves(int octaveOrigin, int octaveBound) {
-        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
-
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int randomInt = random.nextInt(octaveOrigin, octaveBound);
