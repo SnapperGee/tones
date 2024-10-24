@@ -140,6 +140,26 @@ final class PitchArgProvider {
             }
         }
 
+        final static class PitchStringValues implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return Stream.concat(
+                        notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                                .map(accidental -> {
+                                    final int octave = random.nextInt(13);
+                                    final String stringValue = "%c%c%d".formatted(note.charValue(),
+                                            accidental.charValue(),
+                                            octave);
+                                    return arguments(stringValue);
+                                })),
+                        notes.stream().map(note -> {
+                            final int octave = random.nextInt(13);
+                            final String stringValue = "%c%d".formatted(note.charValue(), octave);
+                            return arguments(stringValue);
+                        }));
+            }
+        }
+
         final static class DifferingNotesAccidentalsAndOctaves implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
@@ -453,10 +473,9 @@ final class PitchTest {
     // isParsable(String) //
     ////////////////////////
 
-    @ParameterizedTest(name = "Pitch.isParsable(\"{3}\") returns true")
-    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
-    void isParsableOfNoteWithAccidentalReturnsTrue(Note note,
-            Accidental accidental, int octave, String stringValue) {
+    @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns true")
+    @ArgumentsSource(PitchArgProvider.Valid.PitchStringValues.class)
+    void isParsableOfNoteWithAccidentalReturnsTrue(String stringValue) {
         final boolean pitchIsParsable = Pitch.isParsable(stringValue);
         assertTrue(pitchIsParsable);
     }
