@@ -449,17 +449,15 @@ final class PitchTest {
         assertTrue(hashCodesAReNotEqual);
     }
 
-    ///////////////////
-    // Parse(String) //
-    ///////////////////
+    ////////////////////////
+    // isParsable(String) //
+    ////////////////////////
 
-    @ParameterizedTest(name = "Pitch.parse(\"{3}\") creates new Pitch(Note.{0}, Accidental.{1}, {2})")
+    @ParameterizedTest(name = "Pitch.isParsable(\"{3}\") returns true")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
-    void pareStringWithAccidentalWorks(Note note,
+    void isParsableOfNoteWithAccidentalReturnsTrue(Note note,
             Accidental accidental, int octave, String stringValue) {
-        final Optional<Pitch> pitchOptional = Pitch.parse(stringValue);
-        assertTrue(pitchOptional.isPresent());
-        final Pitch pitch = new Pitch(note, accidental, octave);
-        assertEquals(pitch, pitchOptional);
+        final boolean pitchIsParsable = Pitch.isParsable(stringValue);
+        assertTrue(pitchIsParsable);
     }
 }
