@@ -2,14 +2,12 @@ package sogott.beep;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalDouble;
 
 final class Pitch implements Comparable<Pitch> {
     final private Note _note;
     final private Accidental _accidental;
     final private int _octave;
     final private String _stringValue;
-    final private double _frequency;
     final private int _hashCode;
     final private String _toString;
 
@@ -29,7 +27,6 @@ final class Pitch implements Comparable<Pitch> {
         this._stringValue = this._accidental == null
                 ? "%c%d".formatted(this._note.charValue(), this._octave)
                 : "%c%c%d".formatted(this._note.charValue(), this._accidental.charValue(), this._octave);
-        this._frequency = frequencyFrom(this._note, this._accidental, this._octave);
         this._hashCode = Objects.hash(this._note, this._accidental, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
@@ -78,10 +75,6 @@ final class Pitch implements Comparable<Pitch> {
         return this._toString;
     }
 
-    double frequency() {
-        return this._frequency;
-    }
-
     static Optional<Pitch> parse(String aString) {
         if (!Pitch.isParsable(aString)) {
             return Optional.empty();
@@ -102,96 +95,6 @@ final class Pitch implements Comparable<Pitch> {
         } // if string is only note and octave (without accidental)
 
         return Optional.of(new Pitch(note, octave));
-    }
-
-    static double frequencyFrom(Note note, Accidental accidental, int octave) {
-        if (note == null) {
-            throw new IllegalArgumentException(
-                    "Null %s.".formatted(Note.class.getSimpleName()));
-        }
-
-        if (octave < 0) {
-            throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
-        }
-
-        final int octaveOffset = (octave - 4) * 12;
-        final double noteFrequency = 440
-                * Math.pow(2,
-                        (note.offset() + (accidental == null ? 0 : accidental.offset()) + octaveOffset)
-                                / 12.0);
-        return noteFrequency;
-    }
-
-    static OptionalDouble frequencyFrom(char note, char accidental, int octave) {
-        final Optional<Note> _note = Note.fromChar(note);
-
-        if (_note.isEmpty()) {
-            OptionalDouble.empty();
-        }
-
-        final Optional<Accidental> _accidental = Accidental.fromChar(accidental);
-
-        if (_accidental.isEmpty()) {
-            OptionalDouble.empty();
-        }
-
-        return OptionalDouble.of(frequencyFrom(_note.get(), _accidental.get(), octave));
-    }
-
-    static double frequencyFrom(Note note, int octave) {
-        return frequencyFrom(note, null, octave);
-    }
-
-    static OptionalDouble frequencyFrom(char note, int octave) {
-        final Optional<Note> _note = Note.fromChar(note);
-
-        if (_note.isEmpty()) {
-            OptionalDouble.empty();
-        }
-
-        return OptionalDouble.of(frequencyFrom(_note.get(), null, octave));
-    }
-
-    static OptionalDouble frequencyFrom(String aString) {
-
-        // A pitch string must be at least a note and octave (int)
-        if (aString.length() < 2) {
-            return OptionalDouble.empty();
-        }
-
-        final Optional<Note> noteOptional = Note.fromChar(aString.charAt(0));
-
-        // first char must be note
-        if (noteOptional.isEmpty()) {
-            return OptionalDouble.empty();
-        }
-
-        final Note note = noteOptional.get();
-
-        // Check if the second character is an accidental ('+' or '-')
-        final int startIndex = Accidental.isAccidentalChar(aString.charAt(1)) ? 2 : 1;
-
-        // if second char is accidental ('+' or '-') there must be an octave int after
-        // it
-        if (startIndex == 2 && aString.length() < 3) {
-            return OptionalDouble.empty();
-        }
-
-        // if an octave (int) isn't following leading note char or accidental
-        if (!aString.codePoints().skip(startIndex).allMatch(Character::isDigit)) {
-            return OptionalDouble.empty();
-        }
-
-        final int octave = Integer.parseInt(aString.substring(startIndex));
-
-        // if there is an accidental
-        if (startIndex == 2) {
-            final Accidental accidental = Accidental.fromChar(aString.charAt(1))
-                    .orElseThrow(() -> new RuntimeException("Accidental value could not be converted from char."));
-            return OptionalDouble.of(frequencyFrom(note, accidental, octave));
-        } // if there is no accidental
-
-        return OptionalDouble.of(frequencyFrom(note, null, octave));
     }
 
     static boolean isParsable(String aString) {
