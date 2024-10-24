@@ -31,8 +31,13 @@ final class PitchArgProvider {
     final static List<Accidental> accidentals = unmodifiableList(Arrays.asList(Accidental.values()));
 
     private static Stream<? extends Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
-        return notes.stream().flatMap(note -> accidentals.stream()
-                .map(accidental -> arguments(note, accidental, random.nextInt(octaveOrigin, octaveBound))));
+        return notes.stream().flatMap(note -> {
+            final int octave = random.nextInt(octaveOrigin, octaveBound);
+            return Stream.concat(
+                    Stream.of(arguments(note, null, octave)),
+                    accidentals.stream()
+                            .map(accidental -> arguments(note, accidental, octave)));
+        });
     }
 
     private static Stream<? extends Arguments> differingNotesAccidentalsAndOctaves(int octaveOrigin, int octaveBound) {
@@ -296,12 +301,6 @@ final class PitchTest {
     void pitchConstructorWithNoteNonNullAccidentalAndNonNegativeOctaveDoesNotThrow(Note note, Accidental accidental,
             int octave) {
         assertDoesNotThrow(() -> new Pitch(note, accidental, octave));
-    }
-
-    @ParameterizedTest(name = "new Pitch(Note.{0}, null, {1}) does not throw")
-    @ArgumentsSource(PitchArgProvider.Valid.NoteAndOctave.class)
-    void pitchConstructorWithNoteNullAccidentalAndNonNegativeOctaveDoesNotThrow(Note note, int octave) {
-        assertDoesNotThrow(() -> new Pitch(note, null, octave));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, {1}) does not throw")
