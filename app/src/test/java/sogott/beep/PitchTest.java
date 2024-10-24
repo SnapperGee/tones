@@ -222,6 +222,29 @@ final class PitchArgProvider {
             }
         }
 
+        final static class PitchStringValues implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                        .flatMap(accidental -> {
+                            final int octave = random.nextInt(13);
+                            final String aString = "%1$c%1$c%2$c%3$d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String anotherString = "%1$c%2$c%2$c%3$d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String aStringAgain = "%3$d%1$c%2$c%3$d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String anotherStringAgain = "%1$c%1$c%2$d".formatted(note.charValue(),
+                                    octave);
+                            return Stream.of(arguments(aString), arguments(anotherString), arguments(aStringAgain),
+                                    arguments(anotherStringAgain));
+                        }));
+            }
+        }
+
         private Invalid() {
         }
     }
@@ -468,9 +491,16 @@ final class PitchTest {
 
     @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns true")
     @ArgumentsSource(PitchArgProvider.Valid.PitchStringValues.class)
-    void isParsableOfNoteWithAccidentalReturnsTrue(String stringValue) {
+    void isParsableOfValidReturnsTrue(String stringValue) {
         final boolean pitchIsParsable = Pitch.isParsable(stringValue);
         assertTrue(pitchIsParsable);
+    }
+
+    @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns false")
+    @ArgumentsSource(PitchArgProvider.Invalid.PitchStringValues.class)
+    void isParsableOfInvalidReturnsFalse(String stringValue) {
+        final boolean pitchIsParsable = Pitch.isParsable(stringValue);
+        assertFalse(pitchIsParsable);
     }
 
     ///////////////////
