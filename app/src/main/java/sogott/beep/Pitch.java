@@ -1,6 +1,6 @@
 package sogott.beep;
 
-import java.util.Objects;
+import static java.util.Objects.hash;
 import java.util.Optional;
 
 final class Pitch implements Comparable<Pitch> {
@@ -27,7 +27,7 @@ final class Pitch implements Comparable<Pitch> {
         this._stringValue = this._accidental == null
                 ? "%c%d".formatted(this._note.charValue(), this._octave)
                 : "%c%c%d".formatted(this._note.charValue(), this._accidental.charValue(), this._octave);
-        this._hashCode = Objects.hash(this._note, this._accidental, this._octave);
+        this._hashCode = hash(this._note, this._accidental, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
                 this._note.name(),
