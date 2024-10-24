@@ -76,25 +76,34 @@ final class Pitch implements Comparable<Pitch> {
     }
 
     static Optional<Pitch> parse(String aString) {
-        if (!Pitch.isParsable(aString)) {
+        if (aString == null) {
             return Optional.empty();
         }
 
-        final Note note = Note.fromChar(aString.charAt(0)).orElseThrow();
+        // string must be at least a note char and octave int
+        if (aString.length() < 2) {
+            return Optional.empty();
+        }
 
         final int startIndex = Accidental.isAccidentalChar(aString.charAt(1))
                 ? 2
                 : 1;
 
-        final int octave = Integer.parseInt(aString.substring(startIndex));
+        final String octaveString = aString.substring(startIndex);
 
-        // if second char is accidental ('+' or '-')
-        if (startIndex == 2) {
-            final Accidental accidental = Accidental.fromChar(aString.charAt(startIndex - 1)).orElseThrow();
-            return Optional.of(new Pitch(note, accidental, octave));
-        } // if string is only note and octave (without accidental)
+        if (!octaveString.codePoints().allMatch(Character::isDigit)) {
+            return Optional.empty();
+        }
 
-        return Optional.of(new Pitch(note, octave));
+        final int octave = Integer.parseInt(octaveString);
+
+        return Note.fromChar(aString.charAt(0)).map(note -> {
+            return startIndex == 2
+                    ? Accidental.fromChar(aString.charAt(startIndex - 1))
+                            .map(accidental -> Optional.of(new Pitch(note, accidental, octave)))
+                            .orElse(Optional.empty())
+                    : Optional.of(new Pitch(note, octave));
+        }).orElse(Optional.empty());
     }
 
     static boolean isParsable(String aString) {
