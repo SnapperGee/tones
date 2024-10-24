@@ -89,8 +89,9 @@ final class Pitch implements Comparable<Pitch> {
 
         final Note note = Note.fromChar(aString.charAt(0)).orElseThrow();
 
-        final int startIndex = aString.charAt(1) == Accidental.SHARP.charValue()
-                || aString.charAt(1) == Accidental.FLAT.charValue() ? 2 : 1;
+        final int startIndex = Accidental.isAccidentalChar(aString.charAt(1))
+                ? 2
+                : 1;
 
         final int octave = Integer.parseInt(aString.substring(startIndex));
 
