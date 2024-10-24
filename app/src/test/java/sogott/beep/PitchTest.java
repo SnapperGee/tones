@@ -291,7 +291,7 @@ final class PitchTest {
     // Valid Constructors //
     ////////////////////////
 
-    @ParameterizedTest(name = "new Pitch(Note.{0}, 31}, {2}) does not throw")
+    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) does not throw")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructorWithNoteNonNullAccidentalAndNonNegativeOctaveDoesNotThrow(Note note, Accidental accidental,
             int octave) {
