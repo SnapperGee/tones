@@ -75,6 +75,19 @@ final class Pitch implements Comparable<Pitch> {
         return this._toString;
     }
 
+    static Optional<Pitch> create(char noteChar, char accidentalChar, int octave) {
+        return octave < 0 ? Optional.empty()
+                : Note.fromChar(noteChar).map(note -> Accidental.fromChar(accidentalChar)
+                        .map(accidental -> Optional.of(new Pitch(note, accidental, octave))).orElse(Optional.empty()))
+                        .orElse(Optional.empty());
+    }
+
+    static Optional<Pitch> create(char noteChar, int octave) {
+        return octave < 0 ? Optional.empty()
+                : Note.fromChar(noteChar).map(note -> Optional.of(new Pitch(note, null, octave)))
+                        .orElse(Optional.empty());
+    }
+
     static Optional<Pitch> parse(String aString) {
         if (aString == null) {
             return Optional.empty();
