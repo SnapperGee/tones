@@ -22,20 +22,11 @@ final class Frequency {
         return noteFrequency;
     }
 
-    static OptionalDouble of(char note, char accidental, int octave) {
-        final Optional<Note> _note = Note.fromChar(note);
-
-        if (_note.isEmpty()) {
-            OptionalDouble.empty();
-        }
-
-        final Optional<Accidental> _accidental = Accidental.fromChar(accidental);
-
-        if (_accidental.isEmpty()) {
-            OptionalDouble.empty();
-        }
-
-        return OptionalDouble.of(of(_note.get(), _accidental.get(), octave));
+    static OptionalDouble of(char noteChar, char accidentalChar, int octave) {
+        return Note.fromChar(noteChar)
+                .flatMap(note -> Accidental.fromChar(accidentalChar)
+                        .map(accidental -> OptionalDouble.of(of(note, accidental, octave))))
+                .orElse(OptionalDouble.empty());
     }
 
     static OptionalDouble of(char note, int octave) {
