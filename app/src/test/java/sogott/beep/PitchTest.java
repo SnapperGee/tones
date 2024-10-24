@@ -123,19 +123,16 @@ final class PitchArgProvider {
         final static class NoteAccidentalAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return Stream.concat(
-                        notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
-                                .map(accidental -> {
-                                    final int octave = random.nextInt(13);
-                                    final String stringValue = "%c%c%d".formatted(note.charValue(),
-                                            accidental.charValue(),
-                                            octave);
-                                    return arguments(note, accidental, octave, stringValue);
-                                })),
-                        notes.stream().map(note -> {
+                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                        .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
-                            final String stringValue = "%c%d".formatted(note.charValue(), octave);
-                            return arguments(note, null, octave, stringValue);
+                            final String stringValueWithAccidental = "%c%c%d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String stringValueNoAccidental = "%c%d".formatted(note.charValue(),
+                                    octave);
+                            return Stream.of(arguments(note, accidental, octave, stringValueWithAccidental),
+                                    arguments(note, null, octave, stringValueNoAccidental));
                         }));
             }
         }
@@ -143,19 +140,15 @@ final class PitchArgProvider {
         final static class PitchStringValues implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return Stream.concat(
-                        notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
-                                .map(accidental -> {
-                                    final int octave = random.nextInt(13);
-                                    final String stringValue = "%c%c%d".formatted(note.charValue(),
-                                            accidental.charValue(),
-                                            octave);
-                                    return arguments(stringValue);
-                                })),
-                        notes.stream().map(note -> {
+                return notes.stream().flatMap(note -> Arrays.stream(Accidental.values())
+                        .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
-                            final String stringValue = "%c%d".formatted(note.charValue(), octave);
-                            return arguments(stringValue);
+                            final String stringValueWithAccidental = "%c%c%d".formatted(note.charValue(),
+                                    accidental.charValue(),
+                                    octave);
+                            final String stringValueNoAccidental = "%c%d".formatted(note.charValue(),
+                                    octave);
+                            return Stream.of(arguments(stringValueWithAccidental), arguments(stringValueNoAccidental));
                         }));
             }
         }
