@@ -583,11 +583,21 @@ final class PitchTest {
 
     @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns new Pitch(Note.{3}, Accidental.{4}, {2})")
     @ArgumentsSource(PitchArgProvider.Valid.NoteCharAccidentalCharAndOctave.class)
-    void staticPitchCreateMethodReturnsPitchObject(char noteChar, char accidentalChar, int octave, Note note,
-            Accidental accidental) {
+    void staticPitchCreateMethodPassedValidNoteCharAccidentalCharAndOctaveInstantiatesObject(char noteChar,
+            char accidentalChar, int octave, Note note, Accidental accidental) {
         final Optional<Pitch> pitchOptional = Pitch.create(noteChar, accidentalChar, octave);
         assertTrue(pitchOptional.isPresent());
         final Pitch expectedPitchObject = new Pitch(note, accidental, octave);
+        assertEquals(expectedPitchObject, pitchOptional.get());
+    }
+
+    @ParameterizedTest(name = "Pitch.create(''{0}'', {1}) returns new Pitch(Note.{2}, null, {1})")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteCharAndOctave.class)
+    void staticPitchCreateMethodPassedValidNoteCharAndOctaveInstantiatesObject(
+            char noteChar, int octave, Note note) {
+        final Optional<Pitch> pitchOptional = Pitch.create(noteChar, octave);
+        assertTrue(pitchOptional.isPresent());
+        final Pitch expectedPitchObject = new Pitch(note, null, octave);
         assertEquals(expectedPitchObject, pitchOptional.get());
     }
 }
