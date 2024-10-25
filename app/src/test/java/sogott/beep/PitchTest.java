@@ -47,7 +47,7 @@ final class PitchArgProvider {
                         random.nextInt(octaveOrigin, octaveBound), note, accidental)));
     }
 
-    private static Stream<? extends Arguments> invalidNoteCharsAndAccidentalCharsWithOctaves(
+    private static Stream<? extends Arguments> invalidNoteCharInvalidAccidentalCharWithOctave(
             int octaveOrigin, int octaveBound) {
         return IntStream.concat(
                 IntStream.concat(
@@ -55,14 +55,14 @@ final class PitchArgProvider {
                         IntStream.rangeClosed(72, 96)),
                 IntStream.rangeClosed(104, 127))
                 .mapToObj(nonNoteCodePoint -> IntStream.rangeClosed(0, 127)
-                        .filter(cp -> cp != Accidental.SHARP.charValue() && cp != Accidental.FLAT.charValue())
+                        .filter(cp -> cp != '+' && cp != '-')
                         .mapToObj(nonAccidentalCodePoint -> arguments((char) nonNoteCodePoint,
                                 (char) nonAccidentalCodePoint,
                                 random.nextInt(octaveOrigin, octaveBound))))
                 .flatMap(s -> s);
     }
 
-    private static Stream<? extends Arguments> validNoteCharInvalidAccidentalCharValidOctave(
+    private static Stream<? extends Arguments> validNoteCharInvalidAccidentalCharWithOctave(
             int octaveOrigin, int octaveBound) {
         return IntStream.concat(
                 IntStream.rangeClosed(41, 47),
@@ -90,17 +90,28 @@ final class PitchArgProvider {
                 .flatMap(s -> s);
     }
 
-    private static Stream<? extends Arguments> validNoteCharAndAccidentalWithOctave(
+    private static Stream<? extends Arguments> validNoteCharValidAccidentalCharWithOctave(
             int octaveOrigin, int octaveBound) {
         return IntStream.concat(
                 IntStream.rangeClosed(32, 40),
                 IntStream.rangeClosed(97, 103))
                 .mapToObj(nonNoteCodePoint -> Stream.of(
-                        arguments((char) nonNoteCodePoint, Accidental.SHARP.charValue(),
+                        arguments((char) nonNoteCodePoint, '+',
                                 random.nextInt(octaveOrigin, octaveBound)),
-                        arguments((char) nonNoteCodePoint, Accidental.FLAT.charValue(),
+                        arguments((char) nonNoteCodePoint, '-',
                                 random.nextInt(octaveOrigin, octaveBound))))
                 .flatMap(s -> s);
+    }
+
+    private static Stream<? extends Arguments> invalidNoteCharWithOctave(
+            int octaveOrigin, int octaveBound) {
+        return IntStream.concat(
+                IntStream.concat(
+                        IntStream.rangeClosed(32, 40),
+                        IntStream.rangeClosed(72, 96)),
+                IntStream.rangeClosed(104, 127))
+                .mapToObj(nonNoteCodePoint -> arguments((char) nonNoteCodePoint,
+                        random.nextInt(octaveOrigin, octaveBound)));
     }
 
     private static Stream<? extends Arguments> noteCharAndOctave(int octaveOrigin, int octaveBound) {
@@ -316,14 +327,14 @@ final class PitchArgProvider {
         final static class NoteCharsAccidentalCharsAndOctaves implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return invalidNoteCharsAndAccidentalCharsWithOctaves(-12, 0);
+                return invalidNoteCharInvalidAccidentalCharWithOctave(-12, 0);
             }
         }
 
         final static class ValidNoteCharInvalidAccidentalCharValidOctave implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return validNoteCharInvalidAccidentalCharValidOctave(0, 13);
+                return validNoteCharInvalidAccidentalCharWithOctave(0, 13);
             }
         }
 
@@ -337,7 +348,14 @@ final class PitchArgProvider {
         final static class ValidNoteChaAndAccidentalCharWithInvalidOctave implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                return validNoteCharAndAccidentalWithOctave(-12, 0);
+                return validNoteCharValidAccidentalCharWithOctave(-12, 0);
+            }
+        }
+
+        final static class InvalidNoteCharWithValidOctave implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return invalidNoteCharWithOctave(0, 13);
             }
         }
 
@@ -685,7 +703,7 @@ final class PitchTest {
         assertEquals(expectedPitchObject, pitchOptional.get());
     }
 
-    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns returns empty optional")
+    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns empty optional")
     @ArgumentsSource(PitchArgProvider.Invalid.NoteCharsAccidentalCharsAndOctaves.class)
     void staticPitchCreateMethodPassedInvalidNoteCharsAccidentalCharsAndOctavesReturnsEmptyOptional(
             char noteChar, char accidentalChar, int octave) {
@@ -693,7 +711,7 @@ final class PitchTest {
         assertTrue(pitchOptional.isEmpty());
     }
 
-    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns returns empty optional")
+    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns empty optional")
     @ArgumentsSource(PitchArgProvider.Invalid.ValidNoteCharInvalidAccidentalCharValidOctave.class)
     void staticPitchCreateMethodPassedNoteCharAndInvalidAccidentalCharWithValidOctavesReturnsEmptyOptional(
             char noteChar, char accidentalChar, int octave) {
@@ -701,7 +719,7 @@ final class PitchTest {
         assertTrue(pitchOptional.isEmpty());
     }
 
-    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns returns empty optional")
+    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns empty optional")
     @ArgumentsSource(PitchArgProvider.Invalid.InvalidNoteCharValidAccidentalCharValidOctave.class)
     void staticPitchCreateMethodPassedInvalidNoteCharValidAccidentalCharValidOctavesReturnsEmptyOptional(
             char noteChar, char accidentalChar, int octave) {
@@ -709,11 +727,19 @@ final class PitchTest {
         assertTrue(pitchOptional.isEmpty());
     }
 
-    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns returns empty optional")
+    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns empty optional")
     @ArgumentsSource(PitchArgProvider.Invalid.ValidNoteChaAndAccidentalCharWithInvalidOctave.class)
     void staticPitchCreateMethodPassedValidNoteCharAndAccidentalCharWithInvalidOctaveReturnsEmptyOptional(
             char noteChar, char accidentalChar, int octave) {
         final Optional<Pitch> pitchOptional = Pitch.create(noteChar, accidentalChar, octave);
+        assertTrue(pitchOptional.isEmpty());
+    }
+
+    @ParameterizedTest(name = "Pitch.create(''{0}'', {1}) returns empty optional")
+    @ArgumentsSource(PitchArgProvider.Invalid.InvalidNoteCharWithValidOctave.class)
+    void staticPitchCreateMethodPassedInvalidNoteCharAndValidOctaveReturnsEmptyOptional(
+            char noteChar, int octave) {
+        final Optional<Pitch> pitchOptional = Pitch.create(noteChar, octave);
         assertTrue(pitchOptional.isEmpty());
     }
 }
