@@ -11,7 +11,7 @@ import org.apache.commons.cli.ParseException;
 final public class Main {
     private final static class Default {
         final static int BPM = 140;
-        final static int TIME_SIGNATURE_DENOMINATOR = 4;
+        final static int NOTE_BEAT_VALUE = 4;
         final static Wave WAVE = Wave.SIN;
     }
 
@@ -53,7 +53,7 @@ final public class Main {
                 final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), Default.BPM);
 
                 final int noteBeatValue = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(),
-                        Default.TIME_SIGNATURE_DENOMINATOR);
+                        Default.NOTE_BEAT_VALUE);
 
                 final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), Default.WAVE);
 
