@@ -52,14 +52,14 @@ final public class Main {
             } else {
                 final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), Default.BPM);
 
-                final int timeSignatureDenominator = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(),
+                final int beatNoteValue = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(),
                         Default.TIME_SIGNATURE_DENOMINATOR);
 
                 final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), Default.WAVE);
 
                 final double beatDuration = 60000.0 / bpm;
 
-                final double wholeNoteDuration = beatDuration * timeSignatureDenominator;
+                final double wholeNoteDuration = beatDuration * beatNoteValue;
             }
         } catch (ParseException e) {
             e.printStackTrace();
