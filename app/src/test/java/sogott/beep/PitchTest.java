@@ -41,6 +41,17 @@ final class PitchArgProvider {
         });
     }
 
+    private static Stream<? extends Arguments> noteCharAccidentalCharAndOctave(int octaveOrigin, int octaveBound) {
+        return notes.stream().flatMap(note -> accidentals.stream()
+                .map(accidental -> arguments(note.charValue(), accidental.charValue(),
+                        random.nextInt(octaveOrigin, octaveBound), note, accidental)));
+    }
+
+    private static Stream<? extends Arguments> noteCharAndOctave(int octaveOrigin, int octaveBound) {
+        return notes.stream().map(note -> arguments(note.charValue(),
+                random.nextInt(octaveOrigin, octaveBound), note));
+    }
+
     private static Stream<? extends Arguments> differingNotesAccidentalsAndOctaves(int octaveOrigin, int octaveBound) {
         final List<Accidental> accidentals = Arrays.asList(Accidental.values());
 
@@ -103,6 +114,20 @@ final class PitchArgProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteAccidentalAndOctave(0, 13);
+            }
+        }
+
+        final static class NoteCharAccidentalCharAndOctave implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return noteCharAccidentalCharAndOctave(0, 13);
+            }
+        }
+
+        final static class NoteCharAndOctave implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return noteCharAndOctave(0, 13);
             }
         }
 
@@ -333,7 +358,7 @@ final class PitchTest {
     }
 
     ////////////////////////
-    // Properties/Getters //
+    // properties/getters //
     ////////////////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).note() is Note.{0}")
@@ -531,7 +556,7 @@ final class PitchTest {
     }
 
     ///////////////////
-    // Parse(String) //
+    // parse(String) //
     ///////////////////
 
     @ParameterizedTest(name = "Pitch.parse(\"{3}\") returns new Pitch(Note.{0}, Accidental.{1}, {2})")
@@ -550,5 +575,19 @@ final class PitchTest {
     void staticPitchParseMethodReturnsEmptyOptionalIfPassedInvalidString(String invalidStringValue) {
         final Optional<Pitch> pitchOptional = Pitch.parse(invalidStringValue);
         assertTrue(pitchOptional.isEmpty());
+    }
+
+    ////////////
+    // create //
+    ////////////
+
+    @ParameterizedTest(name = "Pitch.create(''{0}'', ''{1}'', {2}) returns new Pitch(Note.{3}, Accidental.{4}, {2})")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteCharAccidentalCharAndOctave.class)
+    void staticPitchCreateMethodReturnsPitchObject(char noteChar, char accidentalChar, int octave, Note note,
+            Accidental accidental) {
+        final Optional<Pitch> pitchOptional = Pitch.create(noteChar, accidentalChar, octave);
+        assertTrue(pitchOptional.isPresent());
+        final Pitch expectedPitchObject = new Pitch(note, accidental, octave);
+        assertEquals(expectedPitchObject, pitchOptional.get());
     }
 }
