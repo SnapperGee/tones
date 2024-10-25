@@ -12,14 +12,14 @@ enum CliOption {
                         .desc("Set speed of playback to INTEGER beats per minute (defaults to 140).")
                         .converter(Integer::parseInt)
                         .build()),
-        TIME_SIGNATURE(Option.builder("t")
-                        .argName("INTEGER/INTEGER")
-                        .longOpt("time-signature")
+        NOTE_BEAT_VALUE(Option.builder("n")
+                        .argName("INTEGER")
+                        .longOpt("note-beat-value")
                         .hasArg()
-                        .desc("Set time signature to INTEGER/INTEGER (defaults to 4/4).")
+                        .desc("Set time signature to INTEGER (defaults to 4).")
                         .build()),
         WAVE(Option.builder("w")
-                        .argName("WAVE_SHAPE")
+                        .argName("WAVE")
                         .longOpt("wave")
                         .hasArg()
                         .converter(aString -> Arrays.stream(Wave.values())
@@ -29,7 +29,7 @@ enum CliOption {
                                         .findFirst()
                                         .orElseThrow(() -> new NoSuchElementException(
                                                         "Invalid WAVE command line option argument.")))
-                        .desc("Set default wave shape to WAVE_SHAPE (defaults to SIN).")
+                        .desc("Set default wave shape to WAVE (defaults to SIN).")
                         .build()),
         VERSION(Option.builder("v")
                         .longOpt("version")

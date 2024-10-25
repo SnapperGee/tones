@@ -18,7 +18,7 @@ final public class Main {
     public static void main(String[] args) {
         final Options options = new Options()
                 .addOption(CliOption.BPM.value())
-                .addOption(CliOption.TIME_SIGNATURE.value())
+                .addOption(CliOption.NOTE_BEAT_VALUE.value())
                 .addOption(CliOption.WAVE.value())
                 .addOption(CliOption.VERSION.value())
                 .addOption(CliOption.HELP.value());
@@ -32,13 +32,13 @@ final public class Main {
                 final HelpFormatter helpFormatter = new HelpFormatter();
 
                 helpFormatter.printHelp(
-                        "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE_SHAPE>]NOTE.INTEGER..."
+                        "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE>]NOTE.INTEGER..."
                                 .formatted(CliOption.BPM.value().getLongOpt(),
                                         CliOption.BPM.value().getOpt(),
                                         CliOption.BPM.value().getArgName(),
-                                        CliOption.TIME_SIGNATURE.value().getLongOpt(),
-                                        CliOption.TIME_SIGNATURE.value().getOpt(),
-                                        CliOption.TIME_SIGNATURE.value().getArgName(),
+                                        CliOption.NOTE_BEAT_VALUE.value().getLongOpt(),
+                                        CliOption.NOTE_BEAT_VALUE.value().getOpt(),
+                                        CliOption.NOTE_BEAT_VALUE.value().getArgName(),
                                         CliOption.VERSION.value().getLongOpt(),
                                         CliOption.VERSION.value().getOpt(),
                                         CliOption.WAVE.value().getLongOpt(),
@@ -52,7 +52,7 @@ final public class Main {
             } else {
                 final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), Default.BPM);
 
-                final int noteBeatValue = cliArgs.getParsedOptionValue(CliOption.TIME_SIGNATURE.value(),
+                final int noteBeatValue = cliArgs.getParsedOptionValue(CliOption.NOTE_BEAT_VALUE.value(),
                         Default.NOTE_BEAT_VALUE);
 
                 final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), Default.WAVE);
