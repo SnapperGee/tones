@@ -32,7 +32,7 @@ final public class Main {
                 final HelpFormatter helpFormatter = new HelpFormatter();
 
                 helpFormatter.printHelp(
-                        "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE>]NOTE.INTEGER..."
+                        "Usage: beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE>]NOTE.INTEGER..."
                                 .formatted(CliOption.BPM.value().getLongOpt(),
                                         CliOption.BPM.value().getOpt(),
                                         CliOption.BPM.value().getArgName(),
@@ -45,7 +45,8 @@ final public class Main {
                                         CliOption.WAVE.value().getOpt(),
                                         CliOption.WAVE.value().getArgName(),
                                         CliOption.HELP.value().getLongOpt(),
-                                        CliOption.HELP.value().getOpt()),
+                                        CliOption.HELP.value().getOpt())
+                                + "\nPlay musical note based beeps.\nExample: beep C4.4 D4.4 E-4.8 D4.8",
                         options);
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");

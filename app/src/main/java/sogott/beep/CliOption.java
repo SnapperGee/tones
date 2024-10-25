@@ -16,7 +16,7 @@ enum CliOption {
                         .argName("INTEGER")
                         .longOpt("note-beat-value")
                         .hasArg()
-                        .desc("Set time signature to INTEGER (defaults to 4).")
+                        .desc("Set the note value of a beat (defaults to 4).")
                         .build()),
         WAVE(Option.builder("w")
                         .argName("WAVE")
