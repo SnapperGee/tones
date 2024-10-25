@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -27,28 +27,28 @@ final class AccidentalTest {
     void accidentalSharpCharValueEqualsPlus() {
         final char sharpCharValue = Accidental.SHARP.charValue();
         final char expectedAccidentalSharpCharValue = '+';
-        assertEquals(expectedAccidentalSharpCharValue, sharpCharValue);
+        assertSame(expectedAccidentalSharpCharValue, sharpCharValue);
     }
 
     @Test
     void accidentalFlatCharValueEqualsPlus() {
         final char flatCharValue = Accidental.FLAT.charValue();
         final char expectedAccidentalFlatCharValue = '-';
-        assertEquals(expectedAccidentalFlatCharValue, flatCharValue);
+        assertSame(expectedAccidentalFlatCharValue, flatCharValue);
     }
 
     @Test
     void accidentalSharpOffsetEquals1() {
         final int accidentalSharpOffsetValue = Accidental.SHARP.offset();
         final int expectedAccidentalSharpOffsetValue = 1;
-        assertEquals(expectedAccidentalSharpOffsetValue, accidentalSharpOffsetValue);
+        assertSame(expectedAccidentalSharpOffsetValue, accidentalSharpOffsetValue);
     }
 
     @Test
     void accidentalFlatOffsetEqualsNegative1() {
         final int accidentalFlatOffsetValue = Accidental.FLAT.offset();
         final int expectedAccidentalFlatOffsetValue = -1;
-        assertEquals(expectedAccidentalFlatOffsetValue, accidentalFlatOffsetValue);
+        assertSame(expectedAccidentalFlatOffsetValue, accidentalFlatOffsetValue);
     }
 
     @Test
@@ -61,7 +61,7 @@ final class AccidentalTest {
         final Accidental noteValue = optionalAccidental.get();
         final Accidental expectedAccidentalValue = Accidental.SHARP;
 
-        assertEquals(expectedAccidentalValue, noteValue);
+        assertSame(expectedAccidentalValue, noteValue);
     }
 
     @Test
@@ -74,7 +74,7 @@ final class AccidentalTest {
         final Accidental noteValue = optionalAccidental.get();
         final Accidental expectedAccidentalValue = Accidental.FLAT;
 
-        assertEquals(expectedAccidentalValue, noteValue);
+        assertSame(expectedAccidentalValue, noteValue);
     }
 
     @Test
