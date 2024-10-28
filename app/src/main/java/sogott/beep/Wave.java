@@ -62,8 +62,8 @@ enum Wave {
     }
 
     boolean prefixes(String aString, boolean ignoreCase) {
-        return !aString.isEmpty() && this._stringValueAliases.stream()
-                .anyMatch(stringValueAlias -> stringValueAlias.length() >= aString.length()
+        return aString != null && !aString.isEmpty() && this._stringValueAliases.stream()
+                .anyMatch(stringValueAlias -> aString.length() >= stringValueAlias.length()
                         && aString.regionMatches(ignoreCase, 0, stringValueAlias, 0, stringValueAlias.length()));
     }
 
