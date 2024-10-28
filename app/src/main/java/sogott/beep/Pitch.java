@@ -104,7 +104,7 @@ final class Pitch implements Comparable<Pitch> {
 
         final String octaveString = aString.substring(startIndex);
 
-        if (!octaveString.codePoints().allMatch(Character::isDigit)) {
+        if (octaveString.length() == 0 || !octaveString.codePoints().allMatch(Character::isDigit)) {
             return Optional.empty();
         }
 
