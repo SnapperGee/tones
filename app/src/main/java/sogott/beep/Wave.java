@@ -61,10 +61,14 @@ enum Wave {
         return this._stringValueAliases;
     }
 
-    boolean prefixes(String aString) {
+    boolean prefixes(String aString, boolean ignoreCase) {
         return !aString.isEmpty() && this._stringValueAliases.stream()
                 .anyMatch(stringValueAlias -> stringValueAlias.length() >= aString.length()
-                        && aString.regionMatches(true, 0, stringValueAlias, 0, stringValueAlias.length()));
+                        && aString.regionMatches(ignoreCase, 0, stringValueAlias, 0, stringValueAlias.length()));
+    }
+
+    boolean prefixes(String aString) {
+        return prefixes(aString, true);
     }
 
     static Optional<Wave> parse(String aString) {
