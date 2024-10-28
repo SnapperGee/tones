@@ -2,7 +2,10 @@ package sogott.beep;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.Arrays;
 import java.util.stream.Stream;
+import java.util.stream.IntStream;
+import java.util.random.RandomGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class WaveArgProvider {
+
+    final private static RandomGenerator random = RandomGenerator.getDefault();
+
     final static class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
@@ -121,6 +127,21 @@ final class WaveArgProvider {
         }
     }
 
+    final static class PrefixedStrings implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Arrays.stream(Wave.values()).flatMap(wave -> Stream.concat(
+                    wave.stringValueAliases().stream().map(stringValueAlias -> arguments(wave, stringValueAlias)),
+                    wave.stringValueAliases().stream()
+                            .flatMap(stringValueAlias -> IntStream.range(1, 7)
+                                    .mapToObj(i -> arguments(wave, stringValueAlias
+                                            + IntStream.rangeClosed(32, 126).limit(random.nextLong(1, 10))
+                                                    .mapToObj(cp -> (char) cp).collect(StringBuilder::new,
+                                                            StringBuilder::append, StringBuilder::append)
+                                                    .toString())))));
+        }
+    }
+
     private WaveArgProvider() {
     }
 }
@@ -154,5 +175,11 @@ final class WaveTest {
         final Optional<Wave> optionalWave = Wave.parse(waveString);
         assertTrue(optionalWave.isPresent());
         assertSame(expectedWave, optionalWave.get());
+    }
+
+    @ParameterizedTest(name = "Wave.{0}.prefixes(\"{1}\") returns true")
+    @ArgumentsSource(WaveArgProvider.PrefixedStrings.class)
+    void prefixesReturnsTrueForPrefixedStrings(Wave wave, String prefixedString) {
+        assertTrue(wave.prefixes(prefixedString));
     }
 }
