@@ -5,8 +5,11 @@ import java.util.HashSet;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.BiFunction;
+
+import static java.util.Collections.unmodifiableSet;
 
 enum Wave {
     SIN((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.sin(freq, duration, sampleRate, amplitude)),
@@ -23,6 +26,8 @@ enum Wave {
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawDown(freq, duration, sampleRate, amplitude),
             "SDN",
             Set.of("SAWDOWN"));
+
+    final private static Set<Wave> waves = unmodifiableSet(EnumSet.allOf(Wave.class));
 
     final private static float DEFAULT_SAMPLE_RATE = 44100;
 
@@ -71,9 +76,20 @@ enum Wave {
         return prefixes(aString, true);
     }
 
+    static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
+        return waves.stream().flatMap(wave -> wave.stringValueAliases().stream())
+                .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
+                        && aString.regionMatches(ignoreCase, 0, waveStringAlias, 0, waveStringAlias.length()))
+                .findFirst();
+    }
+
+    static Optional<String> extractPrefix(String aString) {
+        return extractPrefix(aString, true);
+    }
+
     static Optional<Wave> parse(String aString) {
         return aString != null && !aString.isBlank()
-                ? Arrays.stream(Wave.values()).filter(wave -> wave._stringValueAliases.stream()
+                ? waves.stream().filter(wave -> wave._stringValueAliases.stream()
                         .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst()
                 : Optional.empty();
     }
