@@ -1,7 +1,11 @@
 package sogott.beep;
 
+import static java.util.Collections.unmodifiableSet;
+
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@code String} can be parsed to audio if it has the information to define
@@ -78,83 +82,121 @@ import java.util.Optional;
  * @see Note
  */
 final class AudioString {
+    static private final Set<Wave> waves = unmodifiableSet(EnumSet.allOf(Wave.class));
 
-    static Optional<Audio> parse(String aString) {
-        if (!isParsable(aString)) {
-            return Optional.empty();
-        }
+    // static Optional<Audio> parse(String aString) {
+    // if (!isParsable(aString)) {
+    // return Optional.empty();
+    // }
 
-        final String[] splitString = aString.split("\\.");
-        final String waveShapePrefixAndPitch = splitString[0];
-        final String durationString = splitString[1];
-        final int duration = Integer.parseInt(durationString);
-        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
-        final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? Wave.SIN
-                : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
-        final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
-                ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
-                : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+    // final String[] splitString = aString.split("\\.");
+    // final String waveShapePrefixAndPitch = splitString[0];
+    // final String durationString = splitString[1];
+    // final int duration = Integer.parseInt(durationString);
+    // final String[] splitWaveShapePrefixAndPitch =
+    // waveShapePrefixAndPitch.split(">");
+    // final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? Wave.SIN
+    // : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+    // final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
+    // ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
+    // : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
-        return Optional.of(new Audio(wave, pitch, duration));
+    // return Optional.of(new Audio(wave, pitch, duration));
+    // }
+
+    static boolean isParsable(String aString, boolean requireWaveShape) {
+        return aString != null
+                && !aString.isBlank()
+                && (requireWaveShape
+                        ? isParsableWithWaveShape(aString)
+                        : isParsableWithoutWaveShape(aString));
     }
 
-    static boolean isParsable(String aString) {
-        if (aString == null) {
+    private static boolean isParsableWithWaveShape(String aString) {
+        // must be at least a leading wav shape, angle bracket, note char,
+        // octave int, period, and duration int
+        if (aString.length() < 6) {
             return false;
         }
 
-        // string must be at least note char, octave int, period, duration int
-        if (aString.length() < 4) {
-            return false;
-        }
+        return Wave.extractPrefix(aString).map(prefix -> {
+            final int prefixLength = prefix.length();
 
-        final String[] splitString = aString.split("\\.");
-
-        // string must have at least single period to delineate duration from pitch
-        // frequency
-        if (splitString.length != 2) {
-            return false;
-        }
-
-        final String waveShapePrefixAndPitch = splitString[0];
-        final String duration = splitString[1];
-
-        // must be at least note char and octave int
-        if (waveShapePrefixAndPitch.length() < 2) {
-            return false;
-        }
-
-        // duration suffix must be an int
-        if (!duration.codePoints().allMatch(Character::isDigit)) {
-            return false;
-        }
-
-        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
-
-        // if segment before duration does not contain a right angle bracket/greater
-        // than it must be parsable pitch
-        if (splitWaveShapePrefixAndPitch.length == 1) {
-            return Pitch.isParsable(splitWaveShapePrefixAndPitch[0]);
-        }
-
-        if (splitWaveShapePrefixAndPitch.length == 2) {
-            final String pitch = splitWaveShapePrefixAndPitch[1];
-
-            if (!Pitch.isParsable(pitch)) {
+            if (aString.charAt(prefixLength) != '>') {
                 return false;
             }
 
-            final String waveShapePrefix = splitWaveShapePrefixAndPitch[0];
+            final String[] pitchAndDuration = aString.substring(prefixLength + 1).split("\\.", 3);
 
-            // If wave shape prefix is valid case insensitive wave shape string
-            return Arrays.stream(Wave.values()).noneMatch(wave -> wave.stringValueAliases().stream()
-                    .anyMatch(waveStringValue -> waveShapePrefix.equalsIgnoreCase(waveStringValue)));
-        }
+            return pitchAndDuration.length == 2 && Pitch.isParsable(pitchAndDuration[0])
+                    && !pitchAndDuration[1].isBlank() && pitchAndDuration[1].codePoints().allMatch(Character::isDigit);
+        }).orElse(false);
+    }
 
-        // wave shape prefix and duration portion contains more than 1 right angle
-        // bracket/greater than char
+    private static boolean isParsableWithoutWaveShape(String aString) {
         return false;
     }
+
+    // static boolean isParsable(String aString) {
+    // if (aString == null) {
+    // return false;
+    // }
+
+    // // string must be at least note char, octave int, period, duration int
+    // if (aString.length() < 4) {
+    // return false;
+    // }
+
+    // final String[] splitString = aString.split("\\.");
+
+    // // string must have at least single period to delineate duration from pitch
+    // // frequency
+    // if (splitString.length != 2) {
+    // return false;
+    // }
+
+    // final String waveShapePrefixAndPitch = splitString[0];
+    // final String duration = splitString[1];
+
+    // // must be at least note char and octave int
+    // if (waveShapePrefixAndPitch.length() < 2) {
+    // return false;
+    // }
+
+    // // duration suffix must be an int
+    // if (!duration.codePoints().allMatch(Character::isDigit)) {
+    // return false;
+    // }
+
+    // final String[] splitWaveShapePrefixAndPitch =
+    // waveShapePrefixAndPitch.split(">");
+
+    // // if segment before duration does not contain a right angle bracket/greater
+    // // than it must be parsable pitch
+    // if (splitWaveShapePrefixAndPitch.length == 1) {
+    // return Pitch.isParsable(splitWaveShapePrefixAndPitch[0]);
+    // }
+
+    // if (splitWaveShapePrefixAndPitch.length == 2) {
+    // final String pitch = splitWaveShapePrefixAndPitch[1];
+
+    // if (!Pitch.isParsable(pitch)) {
+    // return false;
+    // }
+
+    // final String waveShapePrefix = splitWaveShapePrefixAndPitch[0];
+
+    // // If wave shape prefix is valid case insensitive wave shape string
+    // return Arrays.stream(Wave.values()).noneMatch(wave ->
+    // wave.stringValueAliases().stream()
+    // .anyMatch(waveStringValue ->
+    // waveShapePrefix.equalsIgnoreCase(waveStringValue)));
+    // }
+
+    // // wave shape prefix and duration portion contains more than 1 right angle
+    // // bracket/greater than char
+    // return false;
+    // }
 
     private AudioString() {
         throw new UnsupportedOperationException(
