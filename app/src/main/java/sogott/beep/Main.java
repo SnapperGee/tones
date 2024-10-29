@@ -1,5 +1,7 @@
 package sogott.beep;
 
+import java.util.List;
+import java.util.ArrayList;
 import javax.sound.sampled.*;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -7,6 +9,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import static java.util.Collections.unmodifiableList;
 
 final public class Main {
     private final static class Default {
@@ -61,6 +64,24 @@ final public class Main {
                 final double beatDuration = 60000.0 / bpm;
 
                 final double wholeNoteDuration = beatDuration * noteBeatValue;
+
+                final List<String> operands = unmodifiableList(cliArgs.getArgList());
+
+                final record ValidAndInvalidOperands(List<String> valid, List<String> invalid) {
+                }
+
+                final ValidAndInvalidOperands validAndInvalidOperands = operands.stream().reduce(
+                        new ValidAndInvalidOperands(new ArrayList<String>(), new ArrayList<String>()),
+                        (acc, operand) -> {
+                            return acc;
+                        },
+                        (operands1, operands2) -> {
+                            operands1.valid().addAll(operands2.valid());
+                            operands1.invalid().addAll(operands2.invalid());
+                            return operands1;
+                        });
+
+                System.out.println(String.join("\n", operands));
             }
         } catch (ParseException e) {
             e.printStackTrace();
