@@ -12,7 +12,7 @@ import java.util.Optional;
  * <ol>
  * <li>Wave shape prefix
  * <li>Pitch Frequency
- * <li>Duration
+ * <li>Duration suffix
  * </ol>
  *
  * <h3>1.) Wave shape prefix</h3>
@@ -39,14 +39,13 @@ import java.util.Optional;
  * <h3>2.) Pitch Frequency</h3>
  * The segment that follows the wave shape prefix (if it's present) and
  * precedes the duration suffix segment defines the pitch/frequency of the
- * audio. This segment can be divided into 3 parts, 2 required parts with an
- * optional part in the middle:
+ * audio. This segment can be divided into 3 parts::
  *
  * <ol>
  * <li>A leading alpha character corresponding to a musical note specifying the
  * pitch.
- * <li>An optional plus ({@code '+'}) or minus ({@code '-'}) character
- * specifying if the note is a sharp or flat.
+ * <li>A plus ({@code '+'}) or minus ({@code '-'}) character specifying if the
+ * note is a sharp or flat or none if it's a natural.
  * <li>And an integer specifying the octave of the note.
  * </ol>
  *
@@ -58,7 +57,7 @@ import java.util.Optional;
  * being {@code "B+2"}. The characters that correspond to musical notes are
  * defined in the {@link Note} enum.
  *
- * <h3>3.) Duration</h3>
+ * <h3>3.) Duration suffix</h3>
  * The final segment specifies the duration of the audio. This is an integer
  * that designates the length of the audio </strong><b>relative to the
  * tempo/bpm</b></strong>. An easy way to think of it is that if the duration
@@ -69,7 +68,9 @@ import java.util.Optional;
  * <p>
  * So putting all this together, a {@code String} to explicitly designate a sin
  * wave that is an F&sharp; (sharp) half note in the 8th octave would be
- * {@code "SIN>F+8.2"}.
+ * {@code "SIN>F+8.2"}. Since an {@link AudioString} defaults to a sin wave if
+ * no wave shape prefix is included, this could also be written as
+ * {@code "F+8.2"}.
  *
  * @author Snap
  * @see Audio
