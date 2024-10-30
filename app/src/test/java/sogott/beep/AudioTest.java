@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static java.util.Collections.unmodifiableSet;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class AudioArgProvider {
 
@@ -48,13 +49,41 @@ final class AudioArgProvider {
             }
         }
     }
+
+    final static class Invalid {
+
+        final static class WavePitchDuration implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return waves.stream().flatMap(wave -> Stream.concat(
+                        notes.stream()
+                                .map(note -> arguments(wave, new Pitch(note, null, random.nextInt(13)),
+                                        -(1 << random.nextInt(8)))),
+                        notes.stream().flatMap(note -> accidentals.stream()
+                                .map(accidental -> arguments(wave, new Pitch(note, accidental, random.nextInt(13)),
+                                        -(1 << random.nextInt(8)))))));
+            }
+        }
+
+        final static class PitchDuration implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return notes.stream().flatMap(note -> Stream.concat(
+                        Stream.of(arguments(new Pitch(note, null, random.nextInt(13)), -(1 << random.nextInt(8)))),
+                        accidentals.stream()
+                                .map(accidental -> arguments(new Pitch(note, accidental, random.nextInt(13)),
+                                        -(1 << random.nextInt(8))))));
+            }
+        }
+    }
 }
 
-///////////////////////
-// valid constructor //
-///////////////////////
-
 final class AudioTest {
+
+    ///////////////////////
+    // valid constructor //
+    ///////////////////////
+
     @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) does not throw")
     @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
     void audioConstructorPassedValidWavePitchDurationDoesNotThrow(Wave wave, Pitch pitch, int duration) {
@@ -65,5 +94,21 @@ final class AudioTest {
     @ArgumentsSource(AudioArgProvider.Valid.PitchDuration.class)
     void audioConstructorPassedValidPitchDurationDoesNotThrow(Pitch pitch, int duration) {
         assertDoesNotThrow(() -> new Audio(pitch, duration));
+    }
+
+    /////////////////////////
+    // invalid constructor //
+    /////////////////////////
+
+    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) throws")
+    @ArgumentsSource(AudioArgProvider.Invalid.WavePitchDuration.class)
+    void audioConstructorPassedValidWavePitchInvalidDurationThrows(Wave wave, Pitch pitch, int duration) {
+        assertThrows(IllegalArgumentException.class, () -> new Audio(wave, pitch, duration));
+    }
+
+    @ParameterizedTest(name = "new Pitch({0}, {1}) throws")
+    @ArgumentsSource(AudioArgProvider.Invalid.PitchDuration.class)
+    void audioConstructorPassedValidPitchInvalidDurationThrows(Pitch pitch, int duration) {
+        assertThrows(IllegalArgumentException.class, () -> new Audio(pitch, duration));
     }
 }
