@@ -13,9 +13,15 @@ import static java.util.Objects.hash;
  * <li>
  * <h3><i>{@link Audio#wave() Wave}</i></h3>
  * The {@link Audio#wave() wave} property designates the shape of the wave of
- * the synthesized audio. The following shapes include <i>sin</i>,
- * <i>square</i>, <i>triangle</i>, <i>saw up</i>, and <i>saw down</i>. The wave
- * shapes are defined as the values of the {@link Wave} enum.
+ * the synthesized audio. This property will be one of the values defined in the
+ * {@link Wave} enum. The following wave shapes are:
+ * <ul>
+ * <li><i>sin</i>
+ * <li><i>triangle</i>
+ * <li><i>square</i>
+ * <li><i>sawtooth up</i>
+ * <li><i>sawtooth down</i>
+ * </ul>
  * <li>
  * <h3><i>{@link Audio#pitch() Pitch}</i></h3>
  * The {@link Audio#pitch() pitch} property designates the frequency of the
@@ -25,7 +31,13 @@ import static java.util.Objects.hash;
  * The {@link Audio#duration() duration} property designates the duration of the
  * synthesized audio. This is a non negative integer that designates the length
  * of the audio </strong><b>relative to the tempo/bpm and note beat
- * value</b></strong>.
+ * value</b></strong>. That is, if an {@link Audio} object has a duration of
+ * <i>N</i>, it has the duration of 1/<i>N</i>. So if it has a duration value of
+ * {@code 4}, then the audio has a time of 1/4 or a quarter note. This
+ * information on its own isn't enough to extrapolate the actual duration of the
+ * note. The tempo/bpm of the audio playing and the value each beat has must
+ * also be known to be able to use this value to create the span of time the
+ * audio will play.
  * </ol>
  *
  * An {@link Audio} object can be represented as a {@code String} that can be
