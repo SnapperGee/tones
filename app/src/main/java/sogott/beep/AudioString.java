@@ -1,5 +1,7 @@
 package sogott.beep;
 
+import java.util.Optional;
+
 /**
  * A {@code String} can be parsed to audio if it has the information to define
  * the <i>wave shape</i>, <i>pitch/frequency</i>, and <i>duration</i> of the
@@ -75,25 +77,32 @@ package sogott.beep;
  * @see Note
  */
 final class AudioString {
-    // static Optional<Audio> parse(String aString) {
-    // if (!isParsable(aString)) {
-    // return Optional.empty();
-    // }
+    static Optional<Audio> parse(String aString, Wave defaultWave) {
+        if (defaultWave == null) {
+            throw new IllegalArgumentException("Null default wave.");
+        }
 
-    // final String[] splitString = aString.split("\\.");
-    // final String waveShapePrefixAndPitch = splitString[0];
-    // final String durationString = splitString[1];
-    // final int duration = Integer.parseInt(durationString);
-    // final String[] splitWaveShapePrefixAndPitch =
-    // waveShapePrefixAndPitch.split(">");
-    // final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? Wave.SIN
-    // : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
-    // final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
-    // ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
-    // : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+        if (!isParsable(aString)) {
+            return Optional.empty();
+        }
 
-    // return Optional.of(new Audio(wave, pitch, duration));
-    // }
+        final String[] splitString = aString.split("\\.");
+        final String waveShapePrefixAndPitch = splitString[0];
+        final String durationString = splitString[1];
+        final int duration = Integer.parseInt(durationString);
+        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
+        final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
+                : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+        final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
+                ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
+                : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+
+        return Optional.of(new Audio(wave, pitch, duration));
+    }
+
+    static Optional<Audio> parse(String aString) {
+        return parse(aString, Wave.SIN);
+    }
 
     static boolean isParsable(String aString, boolean requireWaveShape) {
         return aString != null
