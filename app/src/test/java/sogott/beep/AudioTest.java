@@ -30,10 +30,10 @@ final class AudioArgProvider {
                 return waves.stream().flatMap(wave -> Stream.concat(
                         notes.stream()
                                 .map(note -> arguments(wave, new Pitch(note, null, random.nextInt(13)),
-                                        random.nextInt(1, 65))),
+                                        1 << random.nextInt(8))),
                         notes.stream().flatMap(note -> accidentals.stream()
                                 .map(accidental -> arguments(wave, new Pitch(note, accidental, random.nextInt(13)),
-                                        random.nextInt(1, 65))))));
+                                        1 << random.nextInt(8))))));
             }
         }
 
@@ -41,10 +41,10 @@ final class AudioArgProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> Stream.concat(
-                        Stream.of(arguments(new Pitch(note, null, random.nextInt(13)), random.nextInt(1, 65))),
+                        Stream.of(arguments(new Pitch(note, null, random.nextInt(13)), 1 << random.nextInt(8))),
                         accidentals.stream()
                                 .map(accidental -> arguments(new Pitch(note, accidental, random.nextInt(13)),
-                                        random.nextInt(1, 65)))));
+                                        1 << random.nextInt(8)))));
             }
         }
     }
