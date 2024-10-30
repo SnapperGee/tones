@@ -83,7 +83,10 @@ final class AudioArgProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> Stream.concat(
-                        Stream.of(arguments(new Pitch(note, null, random.nextInt(13)), -(1 << random.nextInt(8)))),
+                        Stream.of(
+                                arguments(new Pitch(note, null, random.nextInt(13)), -(1 << random.nextInt(8))),
+                                arguments(null, 1 << random.nextInt(8)),
+                                arguments(null, -(1 << random.nextInt(8)))),
                         accidentals.stream()
                                 .map(accidental -> arguments(new Pitch(note, accidental, random.nextInt(13)),
                                         -(1 << random.nextInt(8))))));
