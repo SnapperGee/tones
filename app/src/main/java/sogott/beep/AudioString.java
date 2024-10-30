@@ -110,6 +110,10 @@ final class AudioString {
                         : isParsableWithoutWaveShape(aString));
     }
 
+    static boolean isParsable(String aString) {
+        return isParsable(aString, false);
+    }
+
     private static boolean isParsableWithWaveShape(String aString) {
         // must be at least a leading wav shape, angle bracket, note char,
         // octave int, period, and duration int
