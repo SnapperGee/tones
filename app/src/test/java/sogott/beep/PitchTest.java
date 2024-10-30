@@ -5,7 +5,6 @@ import java.util.stream.IntStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Objects;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,7 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import static java.util.Objects.hash;
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -575,8 +575,8 @@ final class PitchTest {
     void hashCodesComputedFromNoteAccidentalAndOctave(Note note, Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(note, accidental, octave);
-        final int hashCodeComputedFromNoteAccidentalAndOctave = Objects.hash(note, accidental, octave);
-        assertEquals(hashCodeComputedFromNoteAccidentalAndOctave, pitch.hashCode());
+        final int computedHashCode = hash(note, accidental, octave);
+        assertEquals(computedHashCode, pitch.hashCode());
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).hashCode() is same for same object")
