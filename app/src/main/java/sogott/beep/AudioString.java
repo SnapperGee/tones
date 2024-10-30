@@ -134,7 +134,19 @@ final class AudioString {
     }
 
     private static boolean isParsableWithoutWaveShape(String aString) {
-        return false;
+        // must be at least a note char, octave int, period, and duration int
+        if (aString.length() < 4) {
+            return false;
+        }
+
+        if (!Note.isNoteChar(aString.charAt(0))) {
+            return isParsableWithWaveShape(aString);
+        }
+
+        final String[] pitchAndDuration = aString.split("\\.", 3);
+
+        return pitchAndDuration.length == 2 && Pitch.isParsable(pitchAndDuration[0]) && !pitchAndDuration[1].isBlank()
+                && pitchAndDuration[1].codePoints().allMatch(Character::isDigit);
     }
 
     // static boolean isParsable(String aString) {
