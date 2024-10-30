@@ -50,6 +50,6 @@ final class Frequency {
 
     private Frequency() {
         throw new UnsupportedOperationException(
-                "%s is a static class and cannot be instantiated.".formatted(Frequency.class.getName()));
+                "%s is a static class and cannot be instantiated.".formatted(Frequency.class.getSimpleName()));
     }
 }

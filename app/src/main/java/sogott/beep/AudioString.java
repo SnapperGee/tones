@@ -146,6 +146,6 @@ final class AudioString {
 
     private AudioString() {
         throw new UnsupportedOperationException(
-                "%s is a static class and cannot be instantiated.".formatted(AudioString.class.getName()));
+                "%s is a static class and cannot be instantiated.".formatted(AudioString.class.getSimpleName()));
     }
 }
