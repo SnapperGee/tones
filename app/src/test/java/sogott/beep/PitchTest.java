@@ -698,4 +698,21 @@ final class PitchTest {
         final Optional<Pitch> pitchOptional = Pitch.create(noteChar, octave);
         assertTrue(pitchOptional.isEmpty());
     }
+
+    //////////////
+    // toString //
+    //////////////
+
+    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).toString() returns pretty String")
+    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
+    void pitchToStringReturnsPrettyString(Note note, Accidental accidental, int octave) {
+        final Pitch pitch = new Pitch(note, accidental, octave);
+        final String stringValue = accidental == null
+                ? "%c%d".formatted(note.charValue(), octave)
+                : "%c%c%d".formatted(note.charValue(), accidental.charValue(), octave);
+        final String toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
+                Pitch.class.getSimpleName(),
+                note.name(), accidental == null ? "null" : accidental.name(), octave, stringValue);
+        assertEquals(toString, pitch.toString());
+    }
 }
