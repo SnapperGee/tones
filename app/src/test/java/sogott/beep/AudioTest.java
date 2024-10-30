@@ -36,6 +36,17 @@ final class AudioArgProvider {
                                         random.nextInt(1, 65))))));
             }
         }
+
+        final static class PitchDuration implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return notes.stream().flatMap(note -> Stream.concat(
+                        Stream.of(arguments(new Pitch(note, null, random.nextInt(13)), random.nextInt(1, 65))),
+                        accidentals.stream()
+                                .map(accidental -> arguments(new Pitch(note, accidental, random.nextInt(13)),
+                                        random.nextInt(1, 65)))));
+            }
+        }
     }
 }
 
@@ -46,7 +57,13 @@ final class AudioArgProvider {
 final class AudioTest {
     @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) does not throw")
     @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
-    void waveStringValueIsValid(Wave wave, Pitch pitch, int duration) {
+    void audioConstructorPassedValidWavePitchDurationDoesNotThrow(Wave wave, Pitch pitch, int duration) {
         assertDoesNotThrow(() -> new Audio(wave, pitch, duration));
+    }
+
+    @ParameterizedTest(name = "new Pitch({0}, {1}) does not throw")
+    @ArgumentsSource(AudioArgProvider.Valid.PitchDuration.class)
+    void audioConstructorPassedValidPitchDurationDoesNotThrow(Pitch pitch, int duration) {
+        assertDoesNotThrow(() -> new Audio(pitch, duration));
     }
 }
