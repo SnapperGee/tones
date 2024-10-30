@@ -142,6 +142,13 @@ final class AudioTest {
         assertSame(wave, audio.wave());
     }
 
+    @ParameterizedTest(name = "new Pitch({0}, {1}).wave() returns Wave.SIN")
+    @ArgumentsSource(AudioArgProvider.Valid.PitchDuration.class)
+    void audioWavePropertyReturnsWave(Pitch pitch, int duration) {
+        final Audio audio = new Audio(pitch, duration);
+        assertSame(Wave.SIN, audio.wave());
+    }
+
     @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).pitch() returns pitch")
     @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
     void audioPitchPropertyReturnsPitch(Wave wave, Pitch pitch, int duration) {
