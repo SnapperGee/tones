@@ -415,7 +415,7 @@ final class PitchArgProvider {
 final class PitchTest {
 
     ////////////////////////
-    // Valid Constructors //
+    // valid constructors //
     ////////////////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) does not throw")
@@ -432,7 +432,7 @@ final class PitchTest {
     }
 
     //////////////////////////
-    // Invalid Constructors //
+    // invalid constructors //
     //////////////////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) throws IllegalArgumentException")
@@ -508,9 +508,9 @@ final class PitchTest {
         assertEquals(stringValue, stringValueProperty);
     }
 
-    ////////////////////
-    // equals(Object) //
-    ////////////////////
+    ////////////
+    // equals //
+    ////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) equals same returns true")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
@@ -572,9 +572,9 @@ final class PitchTest {
         assertFalse(equalsResults);
     }
 
-    ////////////////
-    // hashCode() //
-    ////////////////
+    //////////////
+    // hashCode //
+    //////////////
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}).hashCode() equals Objects.hash(Note.{0}, Accidental.{1}, {2})")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctave.class)
@@ -638,9 +638,9 @@ final class PitchTest {
         assertTrue(hashCodesAReNotEqual);
     }
 
-    ////////////////////////
-    // isParsable(String) //
-    ////////////////////////
+    ////////////////
+    // isParsable //
+    ////////////////
 
     @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns true")
     @ArgumentsSource(PitchArgProvider.Valid.PitchStringValues.class)
@@ -657,9 +657,9 @@ final class PitchTest {
         assertFalse(pitchIsParsable);
     }
 
-    ///////////////////
-    // parse(String) //
-    ///////////////////
+    ///////////
+    // parse //
+    ///////////
 
     @ParameterizedTest(name = "Pitch.parse(\"{3}\") returns new Pitch(Note.{0}, Accidental.{1}, {2})")
     @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalAndOctaveStringValue.class)
