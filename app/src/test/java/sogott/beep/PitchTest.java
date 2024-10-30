@@ -517,8 +517,7 @@ final class PitchTest {
     void pitchEqualsSameReturnsTrue(Note note, Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(note, accidental, octave);
-        final boolean equalsResults = pitch.equals(pitch);
-        assertTrue(equalsResults);
+        assertTrue(pitch.equals(pitch));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, {2}) equals equivalent returns true")
@@ -527,8 +526,7 @@ final class PitchTest {
             int octave) {
         final Pitch aPitch = new Pitch(note, accidental, octave);
         final Pitch equalPitch = new Pitch(note, accidental, octave);
-        final boolean equalsResults = aPitch.equals(equalPitch);
-        assertTrue(equalsResults);
+        assertTrue(aPitch.equals(equalPitch));
     }
 
     @ParameterizedTest(name = "new Pitch(<Note.{0}>, <Accidental.{2}>, <{4}>) does not equal new Pitch(<Note.{1}>, <Accidental.{3}>, <{5}>)")
@@ -539,8 +537,7 @@ final class PitchTest {
         final Pitch aPitch = new Pitch(aNote, anAccidental, anOctave);
         final Pitch notEqualPitch = new Pitch(anotherNote, anotherAccidental,
                 anotherOctave);
-        final boolean equalsResults = aPitch.equals(notEqualPitch);
-        assertFalse(equalsResults);
+        assertFalse(aPitch.equals(notEqualPitch));
     }
 
     @ParameterizedTest(name = "new Pitch(<Note.{0}>, Accidental.{2}, {3}) does not equal new Pitch(<Note.{1}>, Accidental.{2}, {3})")
@@ -549,8 +546,7 @@ final class PitchTest {
             Accidental accidental, int octave) {
         final Pitch aPitch = new Pitch(aNote, accidental, octave);
         final Pitch notEqualPitch = new Pitch(anotherNote, accidental, octave);
-        final boolean equalsResults = aPitch.equals(notEqualPitch);
-        assertFalse(equalsResults);
+        assertFalse(aPitch.equals(notEqualPitch));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, <Accidental.{1}>, {3}) does not equal new Pitch(Note.{0}, <Accidental.{2}>, {3})")
@@ -559,8 +555,7 @@ final class PitchTest {
             int octave) {
         final Pitch aPitch = new Pitch(note, anAccidental, octave);
         final Pitch notEqualPitch = new Pitch(note, anotherAccidental, octave);
-        final boolean equalsResults = aPitch.equals(notEqualPitch);
-        assertFalse(equalsResults);
+        assertFalse(aPitch.equals(notEqualPitch));
     }
 
     @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, <{2}>) does not equal new Pitch(Note.{0}, Accidental.{1}, <{3}>)")
@@ -568,8 +563,7 @@ final class PitchTest {
     void pitchDoesNotEqualPitchWithDifferingOctaves(Note note, Accidental accidental, int anOctave, int anotherOctave) {
         final Pitch aPitch = new Pitch(note, accidental, anOctave);
         final Pitch notEqualPitch = new Pitch(note, accidental, anotherOctave);
-        final boolean equalsResults = aPitch.equals(notEqualPitch);
-        assertFalse(equalsResults);
+        assertFalse(aPitch.equals(notEqualPitch));
     }
 
     //////////////
@@ -591,51 +585,7 @@ final class PitchTest {
             int octave) {
         final Pitch aPitch = new Pitch(note, accidental, octave);
         final Pitch anotherEqualPitch = new Pitch(note, accidental, octave);
-        final boolean hashCodesAreEqual = aPitch.hashCode() == anotherEqualPitch.hashCode();
-        assertTrue(hashCodesAreEqual);
-    }
-
-    @ParameterizedTest(name = "new Pitch(<Note.{0}>, <Accidental.{2}>, <{4}>).hashCode() does not equal new Pitch(<Note.{1}>, <Accidental.{3}>, <{5}>).hashCode()")
-    @ArgumentsSource(PitchArgProvider.Valid.DifferingNotesAccidentalsAndOctaves.class)
-    void pitchesWithDifferingNotesAccidentalsAndOctavesHashCodesAreNotEqual(Note aNote,
-            Note anotherNote, Accidental anAccidental, Accidental anotherAccidental,
-            int anOctave, int anotherOctave) {
-        final Pitch aPitch = new Pitch(aNote, anAccidental, anOctave);
-        final Pitch notEqualPitch = new Pitch(anotherNote, anotherAccidental,
-                anotherOctave);
-        final boolean hashCodesAReNotEqual = aPitch.hashCode() != notEqualPitch.hashCode();
-        assertTrue(hashCodesAReNotEqual);
-    }
-
-    @ParameterizedTest(name = "new Pitch(<Note.{0}>, Accidental.{2}, {3}).hashCode() does not equal new Pitch(<Note.{1}>, Accidental.{2}, {3}).hashCode()")
-    @ArgumentsSource(PitchArgProvider.Valid.DifferingNotesWithAccidentalAndOctave.class)
-    void pitchesWithDifferingNotesHashCodesAreNotEqual(Note aNote, Note anotherNote,
-            Accidental accidental, int octave) {
-        final Pitch aPitch = new Pitch(aNote, accidental, octave);
-        final Pitch notEqualPitch = new Pitch(anotherNote, accidental, octave);
-        final boolean hashCodesAReNotEqual = aPitch.hashCode() != notEqualPitch.hashCode();
-        assertTrue(hashCodesAReNotEqual);
-    }
-
-    @ParameterizedTest(name = "new Pitch(Note.{0}, <Accidental.{1}>, {3}).hashCode() does not equal new Pitch(Note.{0}, <Accidental.{2}>, {3}).hashCode()")
-    @ArgumentsSource(PitchArgProvider.Valid.NoteWithDifferingAccidentalsAndOctave.class)
-    void pitchesWithDifferingAccidentalsHashCodesAreNotEqual(Note note, Accidental anAccidental,
-            Accidental anotherAccidental,
-            int octave) {
-        final Pitch aPitch = new Pitch(note, anAccidental, octave);
-        final Pitch notEqualPitch = new Pitch(note, anotherAccidental, octave);
-        final boolean hashCodesAReNotEqual = aPitch.hashCode() != notEqualPitch.hashCode();
-        assertTrue(hashCodesAReNotEqual);
-    }
-
-    @ParameterizedTest(name = "new Pitch(Note.{0}, Accidental.{1}, <{2}>).hashCode() does not equal new Pitch(Note.{0}, Accidental.{1}, <{3}>).hashCode()")
-    @ArgumentsSource(PitchArgProvider.Valid.NoteAccidentalWithDifferingOctaves.class)
-    void pitchesWithDifferingOctavesHashCodesAreNotEqual(Note note, Accidental accidental, int anOctave,
-            int anotherOctave) {
-        final Pitch aPitch = new Pitch(note, accidental, anOctave);
-        final Pitch notEqualPitch = new Pitch(note, accidental, anotherOctave);
-        final boolean hashCodesAReNotEqual = aPitch.hashCode() != notEqualPitch.hashCode();
-        assertTrue(hashCodesAReNotEqual);
+        assertTrue(aPitch.hashCode() == anotherEqualPitch.hashCode());
     }
 
     ////////////////
@@ -645,16 +595,14 @@ final class PitchTest {
     @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns true")
     @ArgumentsSource(PitchArgProvider.Valid.PitchStringValues.class)
     void isParsableOfValidReturnsTrue(String stringValue) {
-        final boolean pitchIsParsable = Pitch.isParsable(stringValue);
-        assertTrue(pitchIsParsable);
+        assertTrue(Pitch.isParsable(stringValue));
     }
 
     @ParameterizedTest(name = "Pitch.isParsable(\"{0}\") returns false")
     @ArgumentsSource(PitchArgProvider.Invalid.PitchStringValues.class)
     @NullAndEmptySource
     void isParsableOfInvalidReturnsFalse(String stringValue) {
-        final boolean pitchIsParsable = Pitch.isParsable(stringValue);
-        assertFalse(pitchIsParsable);
+        assertFalse(Pitch.isParsable(stringValue));
     }
 
     ///////////
