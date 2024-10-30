@@ -313,6 +313,65 @@ final class AudioArgProvider {
                         })));
             }
         }
+
+        final static class AltWavesAndPitchesWithDuration implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return waves.stream().flatMap(wave -> {
+                    final int waveIndex = waves.indexOf(wave);
+                    final int differentWaveIndex = random.ints(0, waves.size())
+                            .filter(i -> i != waveIndex).findFirst().orElseThrow();
+                    final Wave differentWave = waves.get(differentWaveIndex);
+
+                    return Stream.concat(
+                            notes.stream()
+                                    .map(note -> {
+                                        final int noteIndex = notes.indexOf(note);
+                                        final int differentNoteIndex = random
+                                                .ints(0, notes.size())
+                                                .filter(i -> i != noteIndex)
+                                                .findFirst().orElseThrow();
+                                        final Note differentNote = notes
+                                                .get(differentNoteIndex);
+                                        return arguments(wave, differentWave,
+                                                new Pitch(note, null, random
+                                                        .nextInt(13)),
+                                                new Pitch(differentNote, null,
+                                                        random.nextInt(13)),
+                                                1 << random.nextInt(8));
+                                    }),
+                            notes.stream().flatMap(note -> {
+                                final int noteIndex = notes.indexOf(note);
+                                final int differentNoteIndex = random.ints(0, notes.size())
+                                        .filter(i -> i != noteIndex).findFirst()
+                                        .orElseThrow();
+                                final Note differentNote = notes.get(differentNoteIndex);
+
+                                return accidentals.stream()
+                                        .map(accidental -> {
+                                            final int accidentalIndex = accidentals
+                                                    .indexOf(accidental);
+                                            final int differentAccidentalIndex = random
+                                                    .ints(0, accidentals
+                                                            .size())
+                                                    .filter(i -> i != accidentalIndex)
+                                                    .findFirst()
+                                                    .orElseThrow();
+                                            final Accidental differentAccidental = accidentals
+                                                    .get(differentAccidentalIndex);
+
+                                            return arguments(wave, differentWave,
+                                                    new Pitch(note, accidental,
+                                                            random.nextInt(13)),
+                                                    new Pitch(differentNote,
+                                                            differentAccidental,
+                                                            random.nextInt(13)),
+                                                    1 << random.nextInt(8));
+                                        });
+                            }));
+                });
+            }
+        }
     }
 
     final static class Invalid {
@@ -523,6 +582,15 @@ final class AudioTest {
             Pitch anotherPitch, int duration) {
         final Audio anAudio = new Audio(wave, aPitch, duration);
         final Audio aDifferentAudio = new Audio(wave, anotherPitch, duration);
+        assertFalse(anAudio.equals(aDifferentAudio));
+    }
+
+    @ParameterizedTest(name = "new Pitch(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
+    @ArgumentsSource(AudioArgProvider.Valid.AltWavesAndPitchesWithDuration.class)
+    void audioAltWavesAndPitchesWithEqualDurationReturnsFalse(Wave wave, Wave anotherWave,
+            Pitch aPitch, Pitch anotherPitch, int duration) {
+        final Audio anAudio = new Audio(wave, aPitch, duration);
+        final Audio aDifferentAudio = new Audio(anotherWave, anotherPitch, duration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 }
