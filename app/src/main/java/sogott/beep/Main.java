@@ -67,12 +67,17 @@ final public class Main {
 
                 final List<String> operands = unmodifiableList(cliArgs.getArgList());
 
-                final record ValidAndInvalidOperands(List<String> valid, List<String> invalid) {
+                final record ValidAndInvalidOperands(List<Audio> valid, List<String> invalid) {
                 }
 
                 final ValidAndInvalidOperands validAndInvalidOperands = operands.stream().reduce(
-                        new ValidAndInvalidOperands(new ArrayList<String>(), new ArrayList<String>()),
+                        new ValidAndInvalidOperands(new ArrayList<Audio>(), new ArrayList<String>()),
                         (acc, operand) -> {
+
+                            AudioString.parse(operand).ifPresentOrElse(
+                                    parsedOperand -> acc.valid().add(parsedOperand),
+                                    () -> acc.invalid().add(operand));
+
                             return acc;
                         },
                         (operands1, operands2) -> {
@@ -81,7 +86,12 @@ final public class Main {
                             return operands1;
                         });
 
-                System.out.println(String.join("\n", operands));
+                if (!validAndInvalidOperands.invalid().isEmpty()) {
+                    System.err.format("Illegal audio argument(s): %s", validAndInvalidOperands.invalid());
+                    System.exit(222);
+                }
+
+                System.out.println(validAndInvalidOperands.valid());
             }
         } catch (ParseException e) {
             e.printStackTrace();
