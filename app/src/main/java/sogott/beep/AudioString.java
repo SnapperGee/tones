@@ -82,8 +82,6 @@ import java.util.Set;
  * @see Note
  */
 final class AudioString {
-    static private final Set<Wave> waves = unmodifiableSet(EnumSet.allOf(Wave.class));
-
     // static Optional<Audio> parse(String aString) {
     // if (!isParsable(aString)) {
     // return Optional.empty();
