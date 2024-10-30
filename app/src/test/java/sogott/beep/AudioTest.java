@@ -162,4 +162,12 @@ final class AudioTest {
         final Audio audio = new Audio(wave, pitch, duration);
         assertEquals(duration, audio.duration());
     }
+
+    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).stringValue() returns string value")
+    @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
+    void audioStringValuePropertyReturnsStringValue(Wave wave, Pitch pitch, int duration) {
+        final Audio audio = new Audio(wave, pitch, duration);
+        final String stringValue = "%s>%s.%d".formatted(wave.stringValue(), pitch.stringValue(), duration);
+        assertEquals(stringValue, audio.stringValue());
+    }
 }
