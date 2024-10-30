@@ -78,7 +78,8 @@ final class Audio implements Comparable<Audio> {
         this._duration = duration;
         this._string = "%s>%s.%d".formatted(this._wave.stringValue(), this._pitch.stringValue(), this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
-        this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(this._wave.name(),
+        this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(Audio.class.getSimpleName(),
+                this._wave.name(),
                 this._pitch.stringValue(), this._duration);
     }
 
