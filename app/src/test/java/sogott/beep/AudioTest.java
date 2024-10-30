@@ -56,12 +56,26 @@ final class AudioArgProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return waves.stream().flatMap(wave -> Stream.concat(
-                        notes.stream()
-                                .map(note -> arguments(wave, new Pitch(note, null, random.nextInt(13)),
-                                        -(1 << random.nextInt(8)))),
-                        notes.stream().flatMap(note -> accidentals.stream()
-                                .map(accidental -> arguments(wave, new Pitch(note, accidental, random.nextInt(13)),
-                                        -(1 << random.nextInt(8)))))));
+                        Stream.of(
+                                arguments(null, null, 1 << random.nextInt(8)),
+                                arguments(null, null, -(1 << random.nextInt(8)))),
+                        Stream.concat(
+                                notes.stream()
+                                        .flatMap(note -> Stream.of(
+                                                arguments(wave, new Pitch(note, null, random.nextInt(13)),
+                                                        -(1 << random.nextInt(8))),
+                                                arguments(null, new Pitch(note, null, random.nextInt(13)),
+                                                        1 << random.nextInt(8)),
+                                                arguments(null, new Pitch(note, null, random.nextInt(13)),
+                                                        -(1 << random.nextInt(8))))),
+                                notes.stream().flatMap(note -> accidentals.stream()
+                                        .flatMap(accidental -> Stream.of(
+                                                arguments(wave, new Pitch(note, accidental, random.nextInt(13)),
+                                                        -(1 << random.nextInt(8))),
+                                                arguments(null, new Pitch(note, accidental, random.nextInt(13)),
+                                                        -(1 << random.nextInt(8))),
+                                                arguments(null, new Pitch(note, accidental, random.nextInt(13)),
+                                                        1 << random.nextInt(8))))))));
             }
         }
 
@@ -102,7 +116,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) throws")
     @ArgumentsSource(AudioArgProvider.Invalid.WavePitchDuration.class)
-    void audioConstructorPassedValidWavePitchInvalidDurationThrows(Wave wave, Pitch pitch, int duration) {
+    void audioConstructorPassedInvalidWavesPitchesDurationsThrows(Wave wave, Pitch pitch, int duration) {
         assertThrows(IllegalArgumentException.class, () -> new Audio(wave, pitch, duration));
     }
 
