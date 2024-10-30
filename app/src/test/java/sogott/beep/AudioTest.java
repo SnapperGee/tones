@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static java.util.Collections.unmodifiableSet;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -127,5 +129,30 @@ final class AudioTest {
     @ArgumentsSource(AudioArgProvider.Invalid.PitchDuration.class)
     void audioConstructorPassedValidPitchInvalidDurationThrows(Pitch pitch, int duration) {
         assertThrows(IllegalArgumentException.class, () -> new Audio(pitch, duration));
+    }
+
+    ////////////////////////
+    // properties/getters //
+    ////////////////////////
+
+    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).wave() returns wave")
+    @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
+    void audioWavePropertyReturnsWave(Wave wave, Pitch pitch, int duration) {
+        final Audio audio = new Audio(wave, pitch, duration);
+        assertSame(wave, audio.wave());
+    }
+
+    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).pitch() returns pitch")
+    @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
+    void audioPitchPropertyReturnsPitch(Wave wave, Pitch pitch, int duration) {
+        final Audio audio = new Audio(wave, pitch, duration);
+        assertSame(pitch, audio.pitch());
+    }
+
+    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).duration() returns duration")
+    @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
+    void audioDurationPropertyReturnsDuration(Wave wave, Pitch pitch, int duration) {
+        final Audio audio = new Audio(wave, pitch, duration);
+        assertEquals(duration, audio.duration());
     }
 }
