@@ -125,13 +125,13 @@ final class PitchArgProvider {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int indexOfNote = notes.indexOf(note);
-                    final int indexOfDifferentNote = IntStream.generate(() -> random.nextInt(notes.size()))
+                    final int indexOfDifferentNote = random.ints(0, notes.size())
                             .filter(i -> i != indexOfNote).findFirst().orElseThrow();
                     final Note aDifferentNote = notes.get(indexOfDifferentNote);
                     final Accidental differentAccidental = accidental == Accidental.SHARP ? Accidental.FLAT
                             : Accidental.SHARP;
                     final int randomInt = random.nextInt(octaveOrigin, octaveBound);
-                    final int differentRandomInt = IntStream.generate(() -> random.nextInt(octaveOrigin, octaveBound))
+                    final int differentRandomInt = random.ints(octaveOrigin, octaveBound)
                             .filter(i -> i != randomInt).findFirst().orElseThrow();
                     return arguments(note, aDifferentNote, accidental, differentAccidental,
                             randomInt, differentRandomInt);
@@ -143,7 +143,7 @@ final class PitchArgProvider {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int indexOfNote = notes.indexOf(note);
-                    final int indexOfDifferentNote = IntStream.generate(() -> random.nextInt(notes.size()))
+                    final int indexOfDifferentNote = random.ints(0, notes.size())
                             .filter(i -> i != indexOfNote).findFirst().orElseThrow();
                     final Note aDifferentNote = notes.get(indexOfDifferentNote);
                     return arguments(note, aDifferentNote, accidental,
@@ -166,7 +166,7 @@ final class PitchArgProvider {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int randomInt = random.nextInt(octaveOrigin, octaveBound);
-                    final int differentRandomInt = IntStream.generate(() -> random.nextInt(octaveOrigin, octaveBound))
+                    final int differentRandomInt = random.ints(octaveOrigin, octaveBound)
                             .filter(i -> i != randomInt).findFirst().orElseThrow();
                     return arguments(note, accidental, randomInt, differentRandomInt);
                 }));
