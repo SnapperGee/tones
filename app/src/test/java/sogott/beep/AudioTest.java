@@ -22,18 +22,19 @@ final class AudioArgProvider {
     final private static Set<Note> notes = unmodifiableSet(EnumSet.allOf(Note.class));
     final private static Set<Accidental> accidentals = unmodifiableSet(EnumSet.allOf(Accidental.class));
 
-    final static class WavePitchDuration implements ArgumentsProvider {
-        @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-            return waves.stream().flatMap(wave -> {
-                return Stream.concat(
+    final static class Valid {
+
+        final static class WavePitchDuration implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return waves.stream().flatMap(wave -> Stream.concat(
                         notes.stream()
                                 .map(note -> arguments(wave, new Pitch(note, null, random.nextInt(13)),
                                         random.nextInt(1, 65))),
                         notes.stream().flatMap(note -> accidentals.stream()
                                 .map(accidental -> arguments(wave, new Pitch(note, accidental, random.nextInt(13)),
-                                        random.nextInt(1, 65)))));
-            });
+                                        random.nextInt(1, 65))))));
+            }
         }
     }
 }
@@ -44,7 +45,7 @@ final class AudioArgProvider {
 
 final class AudioTest {
     @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) does not throw")
-    @ArgumentsSource(AudioArgProvider.WavePitchDuration.class)
+    @ArgumentsSource(AudioArgProvider.Valid.WavePitchDuration.class)
     void waveStringValueIsValid(Wave wave, Pitch pitch, int duration) {
         assertDoesNotThrow(() -> new Audio(wave, pitch, duration));
     }
