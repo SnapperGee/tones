@@ -98,7 +98,8 @@ final public class Main {
                         });
 
                 if (!validAndInvalidOperands.invalid().isEmpty()) {
-                    System.err.format("Illegal audio argument(s): %s", validAndInvalidOperands.invalid());
+                    System.err.format("Illegal audio argument(s): [\"%s\"]",
+                            String.join("\", \"", validAndInvalidOperands.invalid()));
                     System.exit(222);
                 }
 
