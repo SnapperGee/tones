@@ -129,9 +129,11 @@ final public class Main {
                 line.start();
 
                 Arrays.stream(audioBuffers).forEach(buffer -> {
-                    final int soundBytes = (int) (Default.SILENCE_RATIO * buffer.length);
+                    final int soundBytes = ((int) (Default.SILENCE_RATIO * buffer.length)) / audioFormat.getFrameSize()
+                            * audioFormat.getFrameSize();
                     line.write(buffer, 0, soundBytes);
-                    final byte[] silenceBuffer = new byte[buffer.length - soundBytes];
+                    final byte[] silenceBuffer = new byte[(buffer.length - soundBytes) / audioFormat.getFrameSize()
+                            * audioFormat.getFrameSize()];
                     line.write(silenceBuffer, 0, silenceBuffer.length);
                 });
 
