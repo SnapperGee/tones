@@ -104,9 +104,10 @@ final class GenerateWave {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
         }
 
-        if (duration <= 0) {
-            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
-        }
+        // if (duration <= 0) {
+        // throw new IllegalArgumentException("Non positive duration:
+        // %d".formatted(duration));
+        // }
 
         if (sampleRate <= 0) {
             throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));

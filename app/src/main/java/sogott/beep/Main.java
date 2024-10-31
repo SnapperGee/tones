@@ -1,6 +1,7 @@
 package sogott.beep;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 import javax.sound.sampled.*;
 import org.apache.commons.cli.CommandLine;
@@ -16,6 +17,12 @@ final public class Main {
         final static int BPM = 140;
         final static int NOTE_BEAT_VALUE = 4;
         final static Wave WAVE = Wave.SIN;
+        final static float SAMPLE_RATE = 44100;
+        final static short AMPLITUDE = Short.MAX_VALUE;
+        final static int SAMPLE_SIZE = 16; // in bits
+        final static int CHANNELS = 1;
+        final static boolean SIGNED = true;
+        final static boolean BIG_ENDIAN = false;
     }
 
     public static void main(String[] args) {
@@ -74,7 +81,7 @@ final public class Main {
                         new ValidAndInvalidOperands(new ArrayList<Audio>(), new ArrayList<String>()),
                         (acc, operand) -> {
 
-                            AudioString.parse(operand).ifPresentOrElse(
+                            AudioString.parse(operand, wave).ifPresentOrElse(
                                     parsedOperand -> acc.valid().add(parsedOperand),
                                     () -> acc.invalid().add(operand));
 
@@ -91,9 +98,46 @@ final public class Main {
                     System.exit(222);
                 }
 
-                System.out.println(validAndInvalidOperands.valid());
+                final byte[][] audioBuffers = validAndInvalidOperands.valid().stream()
+                        .map(audio -> switch (audio.wave()) {
+                            case Wave.SIN -> GenerateWave.sin(Frequency.from(audio.pitch()),
+                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
+                                    Default.AMPLITUDE);
+                            case Wave.SQUARE -> GenerateWave.square(Frequency.from(audio.pitch()),
+                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
+                                    Default.AMPLITUDE);
+                            case Wave.TRIANGLE -> GenerateWave.triangle(Frequency.from(audio.pitch()),
+                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
+                                    Default.AMPLITUDE);
+                            case Wave.SAW_UP -> GenerateWave.sawUp(Frequency.from(audio.pitch()),
+                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
+                                    Default.AMPLITUDE);
+                            case Wave.SAW_DOWN -> GenerateWave.sawDown(Frequency.from(audio.pitch()),
+                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
+                                    Default.AMPLITUDE);
+                            default -> throw new RuntimeException("Unrecognized wave type: %s".formatted(audio.wave()));
+                        })
+                        .toArray(byte[][]::new);
+
+                final AudioFormat audioFormat = new AudioFormat(Default.SAMPLE_RATE, Default.SAMPLE_SIZE,
+                        Default.CHANNELS, Default.SIGNED, Default.BIG_ENDIAN);
+
+                final SourceDataLine line = AudioSystem.getSourceDataLine(audioFormat);
+
+                line.open(audioFormat);
+                line.start();
+
+                Arrays.stream(audioBuffers).forEach(buffer -> {
+                    line.write(buffer, 0, buffer.length);
+                });
+
+                line.drain();
+                line.close();
             }
         } catch (ParseException e) {
+            e.printStackTrace();
+            System.err.format("\n%s", e.getMessage());
+        } catch (LineUnavailableException e) {
             e.printStackTrace();
             System.err.format("\n%s", e.getMessage());
         }
