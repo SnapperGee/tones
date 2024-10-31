@@ -128,7 +128,10 @@ final public class Main {
                 line.start();
 
                 Arrays.stream(audioBuffers).forEach(buffer -> {
-                    line.write(buffer, 0, buffer.length);
+                    final int soundBytes = (int) (0.85 * buffer.length);
+                    line.write(buffer, 0, soundBytes);
+                    final byte[] silenceBuffer = new byte[buffer.length - soundBytes];
+                    line.write(silenceBuffer, 0, silenceBuffer.length);
                 });
 
                 line.drain();
