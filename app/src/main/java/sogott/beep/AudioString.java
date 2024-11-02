@@ -108,15 +108,15 @@ final class AudioString {
         return aString != null
                 && !aString.isBlank()
                 && (requireWaveShape
-                        ? isParsableWithWaveShape(aString)
-                        : isParsableWithoutWaveShape(aString));
+                        ? isParsablePitchWithWaveShape(aString)
+                        : isParsablePitchWithoutWaveShape(aString));
     }
 
     static boolean isParsable(String aString) {
         return isParsable(aString, false);
     }
 
-    private static boolean isParsableWithWaveShape(String aString) {
+    private static boolean isParsablePitchWithWaveShape(String aString) {
         // must be at least a leading wav shape, angle bracket, note char,
         // octave int, period, and duration int
         if (aString.length() < 6) {
@@ -137,14 +137,14 @@ final class AudioString {
         }).orElse(false);
     }
 
-    private static boolean isParsableWithoutWaveShape(String aString) {
+    private static boolean isParsablePitchWithoutWaveShape(String aString) {
         // must be at least a note char, octave int, period, and duration int
         if (aString.length() < 4) {
             return false;
         }
 
         if (!Note.isNoteChar(aString.charAt(0))) {
-            return isParsableWithWaveShape(aString);
+            return isParsablePitchWithWaveShape(aString);
         }
 
         final String[] pitchAndDuration = aString.split("\\.", 3);
