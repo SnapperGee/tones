@@ -90,7 +90,33 @@ final class AudioString {
             throw new IllegalArgumentException("Null default wave.");
         }
 
-        if (!isParsableSilence(aString) && !isParsablePitch(aString)) {
+        if (isParsableSilence(aString)) {
+            return parseSilence(aString);
+        }
+
+        if (isParsablePitch(aString)) {
+            return parsePitch(aString, defaultWave);
+        }
+
+        return Optional.empty();
+    }
+
+    static Optional<Audio> parse(String aString) {
+        return parse(aString, Wave.SIN);
+    }
+
+    static Optional<Audio> parseSilence(String aString) {
+        if (!isParsableSilence(aString)) {
+            return Optional.empty();
+        }
+
+        final String durationString = aString.substring(aString.indexOf('.') + 1);
+        final int duration = Integer.parseInt(durationString);
+        return Optional.of(Audio.silence(duration));
+    }
+
+    static Optional<Audio> parsePitch(String aString, Wave defaultWave) {
+        if (!isParsablePitch(aString)) {
             return Optional.empty();
         }
 
@@ -106,10 +132,6 @@ final class AudioString {
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
         return Optional.of(new Audio(wave, pitch, duration));
-    }
-
-    static Optional<Audio> parse(String aString) {
-        return parse(aString, Wave.SIN);
     }
 
     static boolean isParsablePitch(String aString, boolean requireWaveShape) {
