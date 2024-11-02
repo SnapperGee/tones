@@ -82,6 +82,10 @@ final class AudioString {
     private final static String SILENCE_PREFIX = SILENCE_NOTE_CHAR + ".";
 
     static Optional<Audio> parse(String aString, Wave defaultWave) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null string.");
+        }
+
         if (defaultWave == null) {
             throw new IllegalArgumentException("Null default wave.");
         }
