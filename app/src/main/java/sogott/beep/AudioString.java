@@ -131,7 +131,7 @@ final class AudioString {
             return false;
         }
 
-        if (aString.startsWith(SILENCE_PREFIX)) {
+        if (!aString.startsWith(SILENCE_PREFIX)) {
             return false;
         }
 
