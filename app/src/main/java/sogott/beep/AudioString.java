@@ -86,7 +86,7 @@ final class AudioString {
             throw new IllegalArgumentException("Null default wave.");
         }
 
-        if (!isParsable(aString)) {
+        if (!isParsablePitch(aString)) {
             return Optional.empty();
         }
 
@@ -108,7 +108,7 @@ final class AudioString {
         return parse(aString, Wave.SIN);
     }
 
-    static boolean isParsable(String aString, boolean requireWaveShape) {
+    static boolean isParsablePitch(String aString, boolean requireWaveShape) {
         return aString != null
                 && !aString.isBlank()
                 && (requireWaveShape
@@ -116,11 +116,15 @@ final class AudioString {
                         : isParsablePitchWithoutWaveShape(aString));
     }
 
-    static boolean isParsable(String aString) {
-        return isParsable(aString, false);
+    static boolean isParsablePitch(String aString) {
+        return isParsablePitch(aString, false);
     }
 
     private static boolean isParsableSilence(String aString) {
+        if (aString == null) {
+            return false;
+        }
+
         // must be at least a leading silence char, angle bracket, period, and
         // duration int
         if (aString.length() < 3) {
