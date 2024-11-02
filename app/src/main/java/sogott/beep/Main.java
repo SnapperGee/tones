@@ -1,7 +1,6 @@
 package sogott.beep;
 
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -132,14 +131,14 @@ final public class Main {
                 line.open(audioFormat);
                 line.start();
 
-                Arrays.stream(audioBuffers).forEach(buffer -> {
+                for (final byte[] buffer : audioBuffers) {
                     final int soundBytes = ((int) (Default.SILENCE_RATIO * buffer.length)) / audioFormat.getFrameSize()
                             * audioFormat.getFrameSize();
                     line.write(buffer, 0, soundBytes);
                     final byte[] silenceBuffer = new byte[(buffer.length - soundBytes) / audioFormat.getFrameSize()
                             * audioFormat.getFrameSize()];
                     line.write(silenceBuffer, 0, silenceBuffer.length);
-                });
+                }
 
                 line.stop();
                 line.drain();
