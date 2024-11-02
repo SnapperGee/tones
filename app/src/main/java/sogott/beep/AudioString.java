@@ -86,7 +86,7 @@ final class AudioString {
             throw new IllegalArgumentException("Null default wave.");
         }
 
-        if (!isParsablePitch(aString)) {
+        if (!isParsableSilence(aString) && !isParsablePitch(aString)) {
             return Optional.empty();
         }
 
