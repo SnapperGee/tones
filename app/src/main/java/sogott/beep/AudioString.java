@@ -77,6 +77,10 @@ import java.util.Optional;
  * @see Note
  */
 final class AudioString {
+    final static char SILENCE_NOTE_CHAR = '?';
+
+    private final static String SILENCE_PREFIX = SILENCE_NOTE_CHAR + ".";
+
     static Optional<Audio> parse(String aString, Wave defaultWave) {
         if (defaultWave == null) {
             throw new IllegalArgumentException("Null default wave.");
@@ -114,6 +118,20 @@ final class AudioString {
 
     static boolean isParsable(String aString) {
         return isParsable(aString, false);
+    }
+
+    private static boolean isParsableSilence(String aString) {
+        // must be at least a leading silence char, angle bracket, period, and
+        // duration int
+        if (aString.length() < 3) {
+            return false;
+        }
+
+        if (aString.startsWith(SILENCE_PREFIX)) {
+            return false;
+        }
+
+        return Character.isDigit(aString.charAt(2)) && aString.codePoints().skip(3).allMatch(Character::isDigit);
     }
 
     private static boolean isParsablePitchWithWaveShape(String aString) {

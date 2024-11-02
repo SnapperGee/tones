@@ -51,8 +51,6 @@ import static java.util.Objects.hash;
  * @see AudioString
  */
 final class Audio implements Comparable<Audio> {
-    final static char SILENCE_NOTE_CHAR = '?';
-
     final Wave _wave;
     final Pitch _pitch;
     final private int _duration;
@@ -68,7 +66,7 @@ final class Audio implements Comparable<Audio> {
         this._wave = null;
         this._pitch = null;
         this._duration = duration;
-        this._string = "%c.%d".formatted(SILENCE_NOTE_CHAR, this._duration);
+        this._string = "%c.%d".formatted(AudioString.SILENCE_NOTE_CHAR, this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
         this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
                 Audio.class.getSimpleName(), this._duration);
