@@ -79,6 +79,21 @@ import java.util.Optional;
 final class AudioString {
     final static char SILENCE_NOTE_CHAR = '?';
 
+    static enum Delineator {
+        WAVE_SHAPE_AND_PITCH('>'),
+        PITCH_AND_DURATION('.');
+
+        private final char _charValue;
+
+        private Delineator(char charValue) {
+            this._charValue = charValue;
+        }
+
+        char charValue() {
+            return this._charValue;
+        }
+    }
+
     private final static String SILENCE_PREFIX = SILENCE_NOTE_CHAR + ".";
 
     static Optional<Audio> parse(String aString, Wave defaultWave) {
