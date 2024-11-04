@@ -126,7 +126,7 @@ final class AudioString {
         final int duration = Integer.parseInt(durationString);
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
         final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
-                : Wave.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+                : Wave.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
