@@ -94,7 +94,10 @@ final class AudioString {
         }
     }
 
-    private final static String SILENCE_PREFIX = SILENCE_NOTE_CHAR + ".";
+    private final static String SILENCE_PREFIX = new StringBuilder()
+            .append(SILENCE_NOTE_CHAR)
+            .append(Delineator.PITCH_AND_DURATION.charValue())
+            .toString();
 
     static Optional<Audio> parse(String aString, Wave defaultWave) {
         if (aString == null) {
@@ -125,7 +128,7 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String durationString = aString.substring(aString.indexOf('.') + 1);
+        final String durationString = aString.substring(aString.indexOf(Delineator.PITCH_AND_DURATION.charValue()) + 1);
         final int duration = Integer.parseInt(durationString);
         return Optional.of(Audio.silence(duration));
     }
@@ -189,7 +192,7 @@ final class AudioString {
         return Wave.extractPrefix(aString).map(prefix -> {
             final int prefixLength = prefix.length();
 
-            if (aString.charAt(prefixLength) != '>') {
+            if (aString.charAt(prefixLength) != Delineator.WAVE_SHAPE_AND_PITCH.charValue()) {
                 return false;
             }
 
