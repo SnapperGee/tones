@@ -1,6 +1,7 @@
 package sogott.beep;
 
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.hash;
@@ -19,10 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 final class AudioArgProvider {
 
-    final private static RandomGenerator random = RandomGenerator.getDefault();
+    final static RandomGenerator random = RandomGenerator.getDefault();
 
     final private static List<Wave> waves = unmodifiableList(asList(Wave.values()));
     final private static List<Note> notes = unmodifiableList(asList(Note.values()));
@@ -457,6 +460,14 @@ final class AudioArgProvider {
 
 final class AudioTest {
 
+    static private final IntStream positiveIntArgs() {
+        return AudioArgProvider.random.ints(5, 1, 2000);
+    }
+
+    static private final IntStream nonPositiveIntArgs() {
+        return AudioArgProvider.random.ints(5, -2000, 0);
+    }
+
     ///////////////////////
     // valid constructor //
     ///////////////////////
@@ -487,6 +498,51 @@ final class AudioTest {
     @ArgumentsSource(AudioArgProvider.Invalid.PitchDuration.class)
     void audioConstructorPassedValidPitchInvalidDurationThrows(Pitch pitch, int duration) {
         assertThrows(IllegalArgumentException.class, () -> new Audio(pitch, duration));
+    }
+
+    /////////////////////////
+    // static silence ctor //
+    /////////////////////////
+
+    @ParameterizedTest(name = "Audio.silence({0}) does not throw")
+    @MethodSource("positiveIntArgs")
+    void silenceDoesNotThrow(int duration) {
+        assertDoesNotThrow(() -> Audio.silence(duration));
+    }
+
+    @ParameterizedTest(name = "Audio.silence({0}) throws")
+    @MethodSource("nonPositiveIntArgs")
+    void silencePassedNonPositiveThrows(int duration) {
+        assertThrows(IllegalArgumentException.class, () -> Audio.silence(duration));
+    }
+
+    @ParameterizedTest(name = "Audio.silence({0}).wave() returns null")
+    @MethodSource("positiveIntArgs")
+    void silenceWaveIsNull(int duration) {
+        final Audio silenceAudio = Audio.silence(duration);
+        assertNull(silenceAudio.wave());
+    }
+
+    @ParameterizedTest(name = "Audio.silence({0}).pitch() returns null")
+    @MethodSource("positiveIntArgs")
+    void silencePitchIsNull(int duration) {
+        final Audio silenceAudio = Audio.silence(duration);
+        assertNull(silenceAudio.pitch());
+    }
+
+    @ParameterizedTest(name = "Audio.silence({0}).duration() returns {0}")
+    @MethodSource("positiveIntArgs")
+    void silenceDurationReturnsDuration(int duration) {
+        final Audio silenceAudio = Audio.silence(duration);
+        assertEquals(duration, silenceAudio.duration());
+    }
+
+    @ParameterizedTest(name = "Audio.silence({0}).stringValue() returns \"?.{0}\"")
+    @MethodSource("positiveIntArgs")
+    void silenceStringValueReturnsStringValue(int duration) {
+        final Audio silenceAudio = Audio.silence(duration);
+        final String stringValue = "%c.%d".formatted(AudioString.SILENCE_NOTE_CHAR, duration);
+        assertEquals(stringValue, silenceAudio.stringValue());
     }
 
     ////////////////////////
