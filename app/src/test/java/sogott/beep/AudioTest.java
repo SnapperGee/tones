@@ -542,7 +542,7 @@ final class AudioTest {
     void silenceStringValueReturnsStringValue(int duration) {
         final Audio silenceAudio = Audio.silence(duration);
         final String stringValue = "%c%c%d".formatted(AudioString.SILENCE_NOTE_CHAR,
-                AudioString.Delineator.PITCH_AND_DURATION, duration);
+                AudioString.Delineator.PITCH_AND_DURATION.charValue(), duration);
         assertEquals(stringValue, silenceAudio.stringValue());
     }
 
