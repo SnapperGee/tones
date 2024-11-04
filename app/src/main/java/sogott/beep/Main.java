@@ -120,7 +120,8 @@ final public class Main {
                             case Wave.SAW_DOWN -> GenerateWave.sawDown(Frequency.from(audio.pitch()),
                                     (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
                                     Default.AMPLITUDE);
-                            case null -> GenerateWave.silence(audio.duration(), Default.SAMPLE_RATE);
+                            case null -> GenerateWave.silence(
+                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE);
                             default -> throw new RuntimeException("Unrecognized wave type: %s".formatted(audio.wave()));
                         })
                         .toArray(byte[][]::new);
