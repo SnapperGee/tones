@@ -1,6 +1,11 @@
 package sogott.beep;
 
 final class GenerateWave {
+    static byte[] silence(int duration, float sampleRate) {
+        final int samples = (int) ((duration / 1000.0) * sampleRate);
+        return new byte[samples * 2];
+    }
+
     static byte[] sin(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
             throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
