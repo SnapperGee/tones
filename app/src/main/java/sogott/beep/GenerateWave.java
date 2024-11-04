@@ -16,7 +16,7 @@ final class GenerateWave {
 
     static byte[] sin(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            throw new IllegalArgumentException("Non positive frequency: " + freq);
         }
 
         if (duration <= 0) {
@@ -28,7 +28,7 @@ final class GenerateWave {
         }
 
         if (amplitude <= 0) {
-            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
         final int samples = (int) ((duration / 1000.0) * sampleRate);
@@ -48,7 +48,7 @@ final class GenerateWave {
 
     static byte[] square(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            throw new IllegalArgumentException("Non positive frequency: " + freq);
         }
 
         if (duration <= 0) {
@@ -60,7 +60,7 @@ final class GenerateWave {
         }
 
         if (amplitude <= 0) {
-            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
         final int samples = (int) ((duration / 1000.0) * sampleRate);
@@ -80,7 +80,7 @@ final class GenerateWave {
 
     static byte[] triangle(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            throw new IllegalArgumentException("Non positive frequency: " + freq);
         }
 
         if (duration <= 0) {
@@ -92,7 +92,7 @@ final class GenerateWave {
         }
 
         if (amplitude <= 0) {
-            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
         final int samples = (int) ((duration / 1000.0) * sampleRate);
@@ -114,7 +114,7 @@ final class GenerateWave {
 
     static byte[] sawUp(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            throw new IllegalArgumentException("Non positive frequency: " + freq);
         }
 
         if (duration <= 0) {
@@ -126,7 +126,7 @@ final class GenerateWave {
         }
 
         if (amplitude <= 0) {
-            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
         final int samples = (int) ((duration / 1000.0) * sampleRate);
@@ -148,7 +148,7 @@ final class GenerateWave {
 
     static byte[] sawDown(double freq, int duration, float sampleRate, short amplitude) {
         if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: %f".formatted(freq));
+            throw new IllegalArgumentException("Non positive frequency: " + freq);
         }
 
         if (duration <= 0) {
@@ -160,7 +160,7 @@ final class GenerateWave {
         }
 
         if (amplitude <= 0) {
-            throw new IllegalArgumentException("Non positive amplitude: %f".formatted(amplitude));
+            throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
         final int samples = (int) ((duration / 1000.0) * sampleRate);
