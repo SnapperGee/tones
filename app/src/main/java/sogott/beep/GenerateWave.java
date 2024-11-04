@@ -2,6 +2,14 @@ package sogott.beep;
 
 final class GenerateWave {
     static byte[] silence(int duration, float sampleRate) {
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: " + duration);
+        }
+
+        if (sampleRate <= 0) {
+            throw new IllegalArgumentException("Non positive sample rate: " + sampleRate);
+        }
+
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         return new byte[samples * 2];
     }
@@ -12,11 +20,11 @@ final class GenerateWave {
         }
 
         if (duration <= 0) {
-            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            throw new IllegalArgumentException("Non positive duration: " + duration);
         }
 
         if (sampleRate <= 0) {
-            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            throw new IllegalArgumentException("Non positive sample rate: " + sampleRate);
         }
 
         if (amplitude <= 0) {
@@ -44,11 +52,11 @@ final class GenerateWave {
         }
 
         if (duration <= 0) {
-            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            throw new IllegalArgumentException("Non positive duration: " + duration);
         }
 
         if (sampleRate <= 0) {
-            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            throw new IllegalArgumentException("Non positive sample rate: " + sampleRate);
         }
 
         if (amplitude <= 0) {
@@ -76,11 +84,11 @@ final class GenerateWave {
         }
 
         if (duration <= 0) {
-            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            throw new IllegalArgumentException("Non positive duration: " + duration);
         }
 
         if (sampleRate <= 0) {
-            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            throw new IllegalArgumentException("Non positive sample rate: " + sampleRate);
         }
 
         if (amplitude <= 0) {
@@ -110,11 +118,11 @@ final class GenerateWave {
         }
 
         if (duration <= 0) {
-            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            throw new IllegalArgumentException("Non positive duration: " + duration);
         }
 
         if (sampleRate <= 0) {
-            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            throw new IllegalArgumentException("Non positive sample rate: " + sampleRate);
         }
 
         if (amplitude <= 0) {
@@ -144,11 +152,11 @@ final class GenerateWave {
         }
 
         if (duration <= 0) {
-            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
+            throw new IllegalArgumentException("Non positive duration: " + duration);
         }
 
         if (sampleRate <= 0) {
-            throw new IllegalArgumentException("Non positive sample rate: %f".formatted(sampleRate));
+            throw new IllegalArgumentException("Non positive sample rate: " + sampleRate);
         }
 
         if (amplitude <= 0) {
