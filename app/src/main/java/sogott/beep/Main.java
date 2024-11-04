@@ -142,8 +142,8 @@ final public class Main {
                     line.write(silenceBuffer, 0, silenceBuffer.length);
                 }
 
-                line.stop();
                 line.drain();
+                line.stop();
                 line.close();
             }
         } catch (ParseException e) {
