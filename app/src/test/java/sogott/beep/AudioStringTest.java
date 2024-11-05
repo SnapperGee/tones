@@ -268,7 +268,7 @@ final class AudioStringTest {
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
     @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
-    void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefix(String audioString,
+    void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
             Wave wave, Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isPresent());
