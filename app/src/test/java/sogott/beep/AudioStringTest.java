@@ -26,7 +26,7 @@ final class AudioStringArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
     static final class Valid {
-        final static class AudioStringValueWithWaveShapePrefixAndAudio implements ArgumentsProvider {
+        final static class WaveShapePrefixedAudioStringValueAndAudio implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> {
@@ -133,6 +133,48 @@ final class AudioStringArgProvider {
                 });
             }
         }
+
+        final static class AudioStringValueWithoutWaveShapePrefix implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return notes.stream().flatMap(note -> {
+                    final int octave = random.nextInt(0, 13);
+                    final int duration = random.nextInt(1, 200000);
+                    return waves.stream()
+                            .flatMap(wave -> Stream.concat(
+                                    Stream.of(arguments(
+                                            "%c%d%c%d".formatted(note.charValue(),
+                                                    octave,
+                                                    AudioString.Delineator.PITCH_AND_DURATION.charValue(),
+                                                    duration)),
+                                            arguments(
+                                                    "%c%d%c%d".formatted(
+                                                            Character.toLowerCase(note.charValue()),
+                                                            octave,
+                                                            Character.toLowerCase(
+                                                                    AudioString.Delineator.PITCH_AND_DURATION
+                                                                            .charValue()),
+                                                            duration))),
+                                    accidentals.stream()
+                                            .flatMap(accidental -> Stream.of(arguments(
+                                                    "%c%c%d%c%d".formatted(
+                                                            note.charValue(),
+                                                            accidental.charValue(),
+                                                            octave,
+                                                            AudioString.Delineator.PITCH_AND_DURATION
+                                                                    .charValue(),
+                                                            duration)),
+                                                    arguments(
+                                                            "%c%c%d%c%d".formatted(
+                                                                    Character.toLowerCase(note.charValue()),
+                                                                    accidental.charValue(),
+                                                                    octave,
+                                                                    AudioString.Delineator.PITCH_AND_DURATION
+                                                                            .charValue(),
+                                                                    duration))))));
+                });
+            }
+        }
     }
 
     static final class Invalid {
@@ -214,7 +256,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
-    @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueWithWaveShapePrefixAndAudio.class)
+    @ArgumentsSource(AudioStringArgProvider.Valid.WaveShapePrefixedAudioStringValueAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
             Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
@@ -229,5 +271,12 @@ final class AudioStringTest {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isPresent());
         assertEquals(audio, parsedAudio.get());
+    }
+
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\") returns empty optional")
+    @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueWithoutWaveShapePrefix.class)
+    void audioStringParseReturnsEmptyOptionalForValidAudioStringWithoutPrefix(String audioString) {
+        final Optional<Audio> parsedAudio = AudioString.parse(audioString);
+        assertTrue(parsedAudio.isEmpty());
     }
 }
