@@ -26,7 +26,7 @@ final class AudioStringArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
     static final class Valid {
-        final static class AudioStringValueAndAudio implements ArgumentsProvider {
+        final static class AudioStringValueWithWaveShapePrefixAndAudio implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> {
@@ -81,6 +81,119 @@ final class AudioStringArgProvider {
                 });
             }
         }
+
+        final static class AudioStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return notes.stream().flatMap(note -> {
+                    final int octave = random.nextInt(0, 13);
+                    final int duration = random.nextInt(1, 200000);
+                    return waves.stream()
+                            .flatMap(wave -> Stream.concat(
+                                    Stream.of(arguments(
+                                            "%c%d%c%d".formatted(note.charValue(),
+                                                    octave,
+                                                    AudioString.Delineator.PITCH_AND_DURATION.charValue(),
+                                                    duration),
+                                            wave,
+                                            new Audio(wave, new Pitch(note, null, octave), duration)),
+                                            arguments(
+                                                    "%c%d%c%d".formatted(
+                                                            Character.toLowerCase(note.charValue()),
+                                                            octave,
+                                                            Character.toLowerCase(
+                                                                    AudioString.Delineator.PITCH_AND_DURATION
+                                                                            .charValue()),
+                                                            duration),
+                                                    wave,
+                                                    new Audio(wave, new Pitch(note, null, octave), duration))),
+                                    accidentals.stream()
+                                            .flatMap(accidental -> Stream.of(arguments(
+                                                    "%c%c%d%c%d".formatted(
+                                                            note.charValue(),
+                                                            accidental.charValue(),
+                                                            octave,
+                                                            AudioString.Delineator.PITCH_AND_DURATION
+                                                                    .charValue(),
+                                                            duration),
+                                                    wave,
+                                                    new Audio(wave, new Pitch(note, accidental, octave),
+                                                            duration)),
+                                                    arguments(
+                                                            "%c%c%d%c%d".formatted(
+                                                                    Character.toLowerCase(note.charValue()),
+                                                                    accidental.charValue(),
+                                                                    octave,
+                                                                    AudioString.Delineator.PITCH_AND_DURATION
+                                                                            .charValue(),
+                                                                    duration),
+                                                            wave,
+                                                            new Audio(wave, new Pitch(note, accidental, octave),
+                                                                    duration))))));
+                });
+            }
+        }
+    }
+
+    static final class Invalid {
+        final static class AudioStringValueAndAudio implements ArgumentsProvider {
+            @Override
+            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+                return notes.stream().flatMap(note -> {
+                    final int octave = random.nextInt(0, 13);
+                    final int duration = random.nextInt(1, 200000);
+                    return waves.stream()
+                            .flatMap(wave -> wave.stringValueAliases().stream()
+                                    .flatMap(waveStringAlias -> Stream.concat(
+                                            Stream.of(arguments(
+                                                    "%1$s%2$c%3$c%4$d%5$c%6$d".formatted(waveStringAlias,
+                                                            AudioString.Delineator.WAVE_SHAPE_AND_PITCH.charValue(),
+                                                            note.charValue(),
+                                                            octave,
+                                                            AudioString.Delineator.PITCH_AND_DURATION.charValue(),
+                                                            duration),
+                                                    new Audio(wave, new Pitch(note, null, octave), duration)),
+                                                    arguments(
+                                                            "%1$s%2$c%3$c%4$d%5$c%6$d".formatted(
+                                                                    waveStringAlias.toLowerCase(),
+                                                                    AudioString.Delineator.WAVE_SHAPE_AND_PITCH
+                                                                            .charValue(),
+                                                                    Character.toLowerCase(note.charValue()),
+                                                                    octave,
+                                                                    Character.toLowerCase(
+                                                                            AudioString.Delineator.PITCH_AND_DURATION
+                                                                                    .charValue()),
+                                                                    duration),
+                                                            new Audio(wave, new Pitch(note, null, octave), duration))),
+                                            accidentals.stream()
+                                                    .flatMap(accidental -> Stream.of(arguments(
+                                                            "%1$s%2$c%3$c%4$c%5$d%6$c%7$d".formatted(waveStringAlias,
+                                                                    AudioString.Delineator.WAVE_SHAPE_AND_PITCH
+                                                                            .charValue(),
+                                                                    note.charValue(),
+                                                                    accidental.charValue(),
+                                                                    octave,
+                                                                    AudioString.Delineator.PITCH_AND_DURATION
+                                                                            .charValue(),
+                                                                    duration),
+                                                            new Audio(wave, new Pitch(note, accidental, octave),
+                                                                    duration)),
+                                                            arguments(
+                                                                    "%1$s%2$c%3$c%4$c%5$d%6$c%7$d".formatted(
+                                                                            waveStringAlias.toLowerCase(),
+                                                                            AudioString.Delineator.WAVE_SHAPE_AND_PITCH
+                                                                                    .charValue(),
+                                                                            Character.toLowerCase(note.charValue()),
+                                                                            accidental.charValue(),
+                                                                            octave,
+                                                                            AudioString.Delineator.PITCH_AND_DURATION
+                                                                                    .charValue(),
+                                                                            duration),
+                                                                    new Audio(wave, new Pitch(note, accidental, octave),
+                                                                            duration)))))));
+                });
+            }
+        }
     }
 }
 
@@ -101,10 +214,19 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
-    @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueAndAudio.class)
-    void pitchConstructorWithNoteNonNullAccidentalAndNonNegativeOctaveDoesNotThrow(String audioString,
+    @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueWithWaveShapePrefixAndAudio.class)
+    void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
             Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
+        assertTrue(parsedAudio.isPresent());
+        assertEquals(audio, parsedAudio.get());
+    }
+
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
+    @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
+    void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefix(String audioString,
+            Wave wave, Audio audio) {
+        final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isPresent());
         assertEquals(audio, parsedAudio.get());
     }
