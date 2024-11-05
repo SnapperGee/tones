@@ -150,10 +150,6 @@ final class AudioString {
         return Optional.empty();
     }
 
-    static Optional<Audio> parse(String aString) {
-        return parse(aString, Wave.SIN);
-    }
-
     static Optional<Audio> parseSilence(String aString) {
         if (!isParsableSilence(aString)) {
             return Optional.empty();
