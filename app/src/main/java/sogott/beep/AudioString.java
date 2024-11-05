@@ -143,7 +143,7 @@ final class AudioString {
             return parseSilence(aString);
         }
 
-        if (isParsablePitch(aString)) {
+        if (isParsablePitch(aString, false)) {
             return parsePitch(aString, defaultWave);
         }
 
@@ -165,7 +165,7 @@ final class AudioString {
     }
 
     static Optional<Audio> parsePitch(String aString, Wave defaultWave) {
-        if (!isParsablePitch(aString)) {
+        if (!isParsablePitch(aString, false)) {
             return Optional.empty();
         }
 
@@ -189,10 +189,6 @@ final class AudioString {
                 && (requireWaveShape
                         ? isParsablePitchWithWaveShape(aString)
                         : isParsablePitchWithoutWaveShape(aString));
-    }
-
-    static boolean isParsablePitch(String aString) {
-        return isParsablePitch(aString, false);
     }
 
     private static boolean isParsableSilence(String aString) {
