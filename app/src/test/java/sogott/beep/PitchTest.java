@@ -2,7 +2,6 @@ package sogott.beep;
 
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.random.RandomGenerator;
@@ -15,6 +14,7 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import static java.util.Arrays.asList;
 import static java.util.Objects.hash;
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -26,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class PitchArgProvider {
-    private final static List<Note> notes = unmodifiableList(Arrays.asList(Note.values()));
-    private final static List<Accidental> accidentals = unmodifiableList(Arrays.asList(Accidental.values()));
+    private final static List<Note> notes = unmodifiableList(asList(Note.values()));
+    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
@@ -120,8 +120,6 @@ final class PitchArgProvider {
     }
 
     private static Stream<? extends Arguments> differingNotesAccidentalsAndOctaves(int octaveOrigin, int octaveBound) {
-        final List<Accidental> accidentals = Arrays.asList(Accidental.values());
-
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int indexOfNote = notes.indexOf(note);
