@@ -151,7 +151,19 @@ final class AudioString {
     }
 
     static Optional<Audio> parse(String aString) {
-        return parse(aString, Wave.SIN);
+        if (aString == null) {
+            throw new IllegalArgumentException("Null string.");
+        }
+
+        if (isParsableSilence(aString)) {
+            return parseSilence(aString);
+        }
+
+        if (isParsablePitch(aString, true)) {
+            return parsePitch(aString);
+        }
+
+        return Optional.empty();
     }
 
     static boolean isParsablePitch(String aString, boolean requireWaveShapePrefix) {
@@ -202,6 +214,24 @@ final class AudioString {
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
         final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
                 : Wave.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
+        final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
+                ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
+                : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+
+        return Optional.of(new Audio(wave, pitch, duration));
+    }
+
+    static private Optional<Audio> parsePitch(String aString) {
+        if (!isParsablePitch(aString, true)) {
+            return Optional.empty();
+        }
+
+        final String[] splitString = aString.split("\\.");
+        final String waveShapePrefixAndPitch = splitString[0];
+        final String durationString = splitString[1];
+        final int duration = Integer.parseInt(durationString);
+        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
+        final Wave wave = Wave.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
