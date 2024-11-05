@@ -3,7 +3,6 @@ package sogott.beep;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.EnumSet;
 import java.util.Set;
@@ -46,14 +45,14 @@ enum Wave {
 
     private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc, String stringValue) {
         this._generatorFunc = generatorFunc;
-        this._stringValue = Objects.requireNonNull(stringValue, "Null Wave string value.");
+        this._stringValue = stringValue;
         this._stringValueAliases = Set.of(this._stringValue, this.name());
     }
 
     private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc, String stringValue,
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
-        this._stringValue = Objects.requireNonNull(stringValue, "Null Wave string value.");
+        this._stringValue = stringValue;
         final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, this.name()));
         stringSet.addAll(stringValueAliases);
         this._stringValueAliases = Collections.unmodifiableSet(stringSet);
