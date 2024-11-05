@@ -130,12 +130,12 @@ final class AudioString {
             .append(Delineator.PITCH_AND_DURATION.charValue())
             .toString();
 
-    static Optional<Audio> parse(String aString, Wave defaultWave) {
+    static Optional<Audio> parse(String aString, Wave defaultWaveShape) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
         }
 
-        if (defaultWave == null) {
+        if (defaultWaveShape == null) {
             throw new IllegalArgumentException("Null default wave.");
         }
 
@@ -144,7 +144,7 @@ final class AudioString {
         }
 
         if (isParsablePitch(aString, false)) {
-            return parsePitch(aString, defaultWave);
+            return parsePitch(aString, defaultWaveShape);
         }
 
         return Optional.empty();
@@ -154,7 +154,33 @@ final class AudioString {
         return parse(aString, Wave.SIN);
     }
 
-    static Optional<Audio> parseSilence(String aString) {
+    static boolean isParsablePitch(String aString, boolean requireWaveShapePrefix) {
+        return aString != null
+                && !aString.isBlank()
+                && (requireWaveShapePrefix
+                        ? isParsablePitchWithWaveShape(aString)
+                        : isParsablePitchWithoutWaveShape(aString));
+    }
+
+    static boolean isParsableSilence(String aString) {
+        if (aString == null) {
+            return false;
+        }
+
+        // must be at least a leading silence char, angle bracket, period, and
+        // duration int
+        if (aString.length() < 3) {
+            return false;
+        }
+
+        if (!aString.startsWith(SILENCE_PREFIX)) {
+            return false;
+        }
+
+        return Character.isDigit(aString.charAt(2)) && aString.codePoints().skip(3).allMatch(Character::isDigit);
+    }
+
+    static private Optional<Audio> parseSilence(String aString) {
         if (!isParsableSilence(aString)) {
             return Optional.empty();
         }
@@ -164,7 +190,7 @@ final class AudioString {
         return Optional.of(Audio.silence(duration));
     }
 
-    static Optional<Audio> parsePitch(String aString, Wave defaultWave) {
+    static private Optional<Audio> parsePitch(String aString, Wave defaultWave) {
         if (!isParsablePitch(aString, false)) {
             return Optional.empty();
         }
@@ -181,32 +207,6 @@ final class AudioString {
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
         return Optional.of(new Audio(wave, pitch, duration));
-    }
-
-    static boolean isParsablePitch(String aString, boolean requireWaveShape) {
-        return aString != null
-                && !aString.isBlank()
-                && (requireWaveShape
-                        ? isParsablePitchWithWaveShape(aString)
-                        : isParsablePitchWithoutWaveShape(aString));
-    }
-
-    private static boolean isParsableSilence(String aString) {
-        if (aString == null) {
-            return false;
-        }
-
-        // must be at least a leading silence char, angle bracket, period, and
-        // duration int
-        if (aString.length() < 3) {
-            return false;
-        }
-
-        if (!aString.startsWith(SILENCE_PREFIX)) {
-            return false;
-        }
-
-        return Character.isDigit(aString.charAt(2)) && aString.codePoints().skip(3).allMatch(Character::isDigit);
     }
 
     private static boolean isParsablePitchWithWaveShape(String aString) {
