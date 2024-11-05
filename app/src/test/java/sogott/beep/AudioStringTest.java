@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 final class AudioStringTest {
     @Test
     void AudioStringSilenceNoteCharConstIsQuestionMark() {
-        assertSame('?', AudioString.SILENCE_NOTE_CHAR);
+        assertSame('?', AudioString.SILENCE_CHAR);
     }
 
     @Test

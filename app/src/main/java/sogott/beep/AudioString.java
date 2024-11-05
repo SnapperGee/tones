@@ -3,9 +3,18 @@ package sogott.beep;
 import java.util.Optional;
 
 /**
- * A {@code String} can be parsed to audio if it has the information to define
- * the <i>wave shape</i>, <i>pitch/frequency</i>, and <i>duration</i> of the
- * audio. An {@link AudioString} can be divided into 3 segments, each one
+ * This class consists exclusively of static methods and fields for parsing
+ * {@code String}s to {@link Audio} objects and validating whether
+ * {@code String}s are parsable to {@link Audio} objects or not.
+ *
+ * <p>
+ * A {@code String} can be parsed to either <b><i>audible</i></b> audio or
+ * to <b><i>silence</i></b>.
+ *
+ * <h2>Audible audio</h2>
+ * A {@code String} can be parsed to audible audio if it has the information to
+ * define the <i>wave shape</i>, <i>pitch/frequency</i>, and <i>duration</i> of
+ * the audio. An {@link AudioString} can be divided into 3 segments, each one
  * defining each of these 3 parts:
  *
  * <ol>
@@ -27,10 +36,12 @@ import java.util.Optional;
  * </ul>
  *
  * The right angle bracket/greater than character ({@code '>'}) is then used
- * to separate it from the frequency segment of the string which follows it. An
- * example of a wave shape prefix for a triangle wave would be {@code "TRI>"}
- * with the rest of the string coming after the {@code '>'} character. The types
- * of supported wave shapes are defined in the {@link Wave} enum.
+ * to separate it from the frequency segment of the string which follows it.
+ * This is defined via the {@link AudioString.Delineator#WAVE_SHAPE_AND_PITCH}
+ * enum value. An example of a wave shape prefix for a triangle wave would be
+ * {@code "TRI>"} with the rest of the string coming after the {@code '>'}
+ * character. The types of supported wave shapes are defined in the {@link Wave}
+ * enum.
  *
  * <p>
  * If the leading wave shape prefix is omitted it defaults to a sin wave.
@@ -49,20 +60,22 @@ import java.util.Optional;
  * </ol>
  *
  * The period character ({@code '.'}) is then used to separate it from the
- * duration segment of the string which comes after. An example of a 440hz wave
- * would be natural {@code 'A'} (no sharp or flat) in the 4th octave. This would
- * be defined as {@code "A4"}. To designate a B&flat; (flat) musical note in the
- * 2nd octave would be {@code "B-2"}, with B&sharp; (sharp) in the 2nd octave
- * being {@code "B+2"}. The characters that correspond to musical notes are
- * defined in the {@link Note} enum.
+ * duration segment of the string which comes after. This is defined via the
+ * {@link AudioString.Delineator#PITCH_AND_DURATION} enum value. An example of a
+ * 440hz wave would be natural {@code 'A'} (no sharp or flat) in the 4th octave.
+ * This would be defined as {@code "A4"}. To designate a B&flat; (flat) musical
+ * note in the 2nd octave would be {@code "B-2"}, with B&sharp; (sharp) in the
+ * 2nd octave being {@code "B+2"}. The characters that correspond to musical
+ * notes are defined in the {@link Note} enum.
  *
  * <h3>3.) Duration suffix</h3>
- * The final segment specifies the duration of the audio. This is an integer
- * that designates the length of the audio </strong><b>relative to the
- * tempo/bpm</b></strong>. An easy way to think of it is that if the duration
- * is integer <i>N</i>, then the length of the note will be 1/<i>N</i>. So, if
- * <i>N</i> were 1, then the duration would be 1/1 which would be a whole note.
- * If <i>N</i> were 4, that'd result in 1/4 so it'd be a quarter note etc.
+ * The final segment specifies the duration of the audio. This is a positive
+ * integer that designates the length of the audio </strong><b>relative to the
+ * note beat value and tempo/bpm</b></strong>. An easy way to think of it is
+ * that if the duration is integer <i>N</i>, then the length of the note will be
+ * 1/<i>N</i>. So, if <i>N</i> were 1, then the duration would be 1/1 which
+ * would be a whole note. If <i>N</i> were 4, that'd result in 1/4 so it'd be a
+ * quarter note etc.
  *
  * <p>
  * So putting all this together, a {@code String} to explicitly designate a sin
@@ -71,13 +84,31 @@ import java.util.Optional;
  * no wave shape prefix is included, this could also be written as
  * {@code "F+8.2"}.
  *
+ * <h2>Silence</h2>
+ * A {@code String} can be parsed to silence if it start with the leading
+ * silence character prefix, defined via the
+ * {@link AudioString#SILENCE_CHAR SILENCE_CHAR} const, to designate that it's
+ * silence and then a duration for how long the silence should last. The
+ * duration, just like for audible audio, is a positive integer that designates
+ * the length of the audio </strong><b>relative to the note beat value and
+ * tempo/bpm</b></strong>. And just like for audible audio,
+ * the {@link AudioString.Delineator#PITCH_AND_DURATION} character separates the
+ * duration integer from the {@link AudioString#SILENCE_CHAR SILENCE_CHAR}
+ * character prefix.
+ *
+ * <ol>
+ * <li>Silence/rest char prefix
+ * <li>Duration suffix
+ * </ol>
+ *
  * @author Snap
  * @see Audio
  * @see Wave
  * @see Note
+ * @see AudioString.Delineator
  */
 final class AudioString {
-    final static char SILENCE_NOTE_CHAR = '?';
+    final static char SILENCE_CHAR = '?';
 
     static enum Delineator {
         WAVE_SHAPE_AND_PITCH('>'),
@@ -95,7 +126,7 @@ final class AudioString {
     }
 
     private final static String SILENCE_PREFIX = new StringBuilder()
-            .append(SILENCE_NOTE_CHAR)
+            .append(SILENCE_CHAR)
             .append(Delineator.PITCH_AND_DURATION.charValue())
             .toString();
 
