@@ -26,7 +26,7 @@ final class AudioStringArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
     static final class Valid {
-        final static class WaveNoteAccidentalAndOctave implements ArgumentsProvider {
+        final static class AudioStringValueAndAudio implements ArgumentsProvider {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> {
@@ -101,7 +101,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
-    @ArgumentsSource(AudioStringArgProvider.Valid.WaveNoteAccidentalAndOctave.class)
+    @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueAndAudio.class)
     void pitchConstructorWithNoteNonNullAccidentalAndNonNegativeOctaveDoesNotThrow(String audioString,
             Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
