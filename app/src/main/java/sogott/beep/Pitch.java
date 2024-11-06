@@ -170,6 +170,18 @@ final class Pitch implements Comparable<Pitch> {
         return this._toString;
     }
 
+    /**
+     * Parses a {@code String} to a Pitch object. If the passed string can't be
+     * parsed, then an empty optional is returned, otherwise the returned
+     * optional contains the Pitch object resulting from parsing the string.
+     *
+     * @param aString {@code String} to parse to a Pitch object.
+     *
+     * @return An optional containing the Pitch object resulting from parsing
+     *         the string or an empty optional if it can't be parsed.
+     *
+     * @throws IllegalArgumentException if passed argument is {@code null}.
+     */
     static Optional<Pitch> parse(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
@@ -201,6 +213,16 @@ final class Pitch implements Comparable<Pitch> {
         }).orElse(Optional.empty());
     }
 
+    /**
+     * Returns {@code true} if the passed {@code String} argument can be parsed
+     * to a {@link Pitch} object.
+     *
+     * @param aString {@code String} to check if it can be parsed to a {@link Pitch}
+     *                object.
+     *
+     * @return {@code true} if the passed {@code String} argument can be parsed
+     *         to a {@link Pitch} object.
+     */
     static boolean isParsable(String aString) {
         if (aString == null) {
             return false;
