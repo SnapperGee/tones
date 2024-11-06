@@ -143,8 +143,8 @@ final class AudioString {
             return parseSilence(aString);
         }
 
-        if (isParsablePitch(aString, false)) {
-            return parsePitch(aString, defaultWaveShape);
+        if (isParsableTone(aString, false)) {
+            return parseTone(aString, defaultWaveShape);
         }
 
         return Optional.empty();
@@ -159,19 +159,19 @@ final class AudioString {
             return parseSilence(aString);
         }
 
-        if (isParsablePitch(aString, true)) {
+        if (isParsableTone(aString, true)) {
             return parsePitch(aString);
         }
 
         return Optional.empty();
     }
 
-    static boolean isParsablePitch(String aString, boolean requireWaveShapePrefix) {
+    static boolean isParsableTone(String aString, boolean requireWaveShapePrefix) {
         return aString != null
                 && !aString.isBlank()
                 && (requireWaveShapePrefix
-                        ? isParsablePitchWithWaveShape(aString)
-                        : isParsablePitchWithoutWaveShape(aString));
+                        ? isParsableToneWithWaveShapePrefix(aString)
+                        : isParsableToneWithoutWaveShapePrefix(aString));
     }
 
     static boolean isParsableSilence(String aString) {
@@ -202,8 +202,8 @@ final class AudioString {
         return Optional.of(Audio.silence(duration));
     }
 
-    static private Optional<Audio> parsePitch(String aString, Wave defaultWave) {
-        if (!isParsablePitch(aString, false)) {
+    static private Optional<Audio> parseTone(String aString, Wave defaultWave) {
+        if (!isParsableTone(aString, false)) {
             return Optional.empty();
         }
 
@@ -222,7 +222,7 @@ final class AudioString {
     }
 
     static private Optional<Audio> parsePitch(String aString) {
-        if (!isParsablePitch(aString, true)) {
+        if (!isParsableTone(aString, true)) {
             return Optional.empty();
         }
 
@@ -239,7 +239,7 @@ final class AudioString {
         return Optional.of(new Audio(wave, pitch, duration));
     }
 
-    private static boolean isParsablePitchWithWaveShape(String aString) {
+    private static boolean isParsableToneWithWaveShapePrefix(String aString) {
         // must be at least a leading wav shape, angle bracket, note char,
         // octave int, period, and duration int
         if (aString.length() < 6) {
@@ -260,14 +260,14 @@ final class AudioString {
         }).orElse(false);
     }
 
-    private static boolean isParsablePitchWithoutWaveShape(String aString) {
+    private static boolean isParsableToneWithoutWaveShapePrefix(String aString) {
         // must be at least a note char, octave int, period, and duration int
         if (aString.length() < 4) {
             return false;
         }
 
         if (!Note.isNoteChar(aString.charAt(0))) {
-            return isParsablePitchWithWaveShape(aString);
+            return isParsableToneWithWaveShapePrefix(aString);
         }
 
         final String[] pitchAndDuration = aString.split("\\.", 3);
