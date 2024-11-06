@@ -11,7 +11,7 @@ import static java.util.Objects.hash;
  *
  * <ol>
  * <li>
- * <h3><i>{@link Audio#wave() Wave}</i></h3>
+ * <h2><i>{@link Audio#wave() Wave}</i></h2>
  * The {@link Audio#wave() wave} property designates the shape of the wave of
  * the synthesized audio. This property will be one of the values defined in the
  * {@link Wave} enum. The following wave shapes are:
@@ -23,14 +23,14 @@ import static java.util.Objects.hash;
  * <li><i>sawtooth down</i>
  * </ul>
  * <li>
- * <h3><i>{@link Audio#pitch() Pitch}</i></h3>
+ * <h2><i>{@link Audio#pitch() Pitch}</i></h2>
  * The {@link Audio#pitch() pitch} property designates the frequency of the
  * synthesized audio. This property is constructed from a {@link Pitch} object.
  * <li>
- * <h3><i>{@link Audio#duration() Duration}</i></h3>
+ * <h2><i>{@link Audio#duration() Duration}</i></h2>
  * The {@link Audio#duration() duration} property designates the duration of the
  * synthesized audio. This is a non negative integer that designates the length
- * of the audio </strong><b>relative to the tempo/bpm and note beat
+ * of the audio <strong><b>relative to the tempo/bpm and note beat
  * value</b></strong>. That is, if an {@link Audio} object has a duration of
  * <i>N</i>, it has the duration of 1/<i>N</i>. So if it has a duration value of
  * {@code 4}, then the audio has a time of 1/4 or a quarter note. This

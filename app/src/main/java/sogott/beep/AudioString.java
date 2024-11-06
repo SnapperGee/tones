@@ -3,27 +3,49 @@ package sogott.beep;
 import java.util.Optional;
 
 /**
- * This class consists exclusively of static methods and fields for parsing
- * {@code String}s to {@link Audio} objects and validating whether
- * {@code String}s are parsable to {@link Audio} objects or not.
+ * Class consisting exclusively of static methods and fields for parsing
+ * {@code String}s to {@link Audio} objects.
  *
  * <p>
  * A {@code String} can be parsed to either <b><i>audible</i></b> audio or
- * to <b><i>silence</i></b>.
+ * to <b><i>silence</i></b> and can be divided up into segments that define the
+ * different properties of the audio. Both audible audio and silence need to
+ * contain a segment to define the duration of the audio.
+ *
+ * <h2>Duration suffix segment</h2>
+ * The duration is specified via a suffix consisting of a leading period
+ * character ({@code '.'}) to designate the beginning of the segment and
+ * separate it from the previous segments that precede it and is followed by a
+ * positive integer that defines the duration amount. The duration amount is
+ * <strong><em>relative to the <u>note beat value</u> and
+ * <u>bpm/tempo</u></em></strong>. Without these 2 additional bits of
+ * information (the note beat value and bpm/tempo) the duration amount alone
+ * isn't enough information to know the actual amount of time the audio or
+ * silence should be played.
+ *
+ * <p>
+ * An easy way to think of it is that if the duration is integer <i>N</i>, then
+ * the length of the note will be 1/<i>N</i>. So, if <i>N</i> were 1, then the
+ * duration would be 1/1 which would be a whole note. If <i>N</i> were 4, that'd
+ * result in 1/4 so it'd be a quarter note etc.
+ *
+ * <p>
+ * The character used to designate the start of the duration suffix segment is
+ * defined via the {@link AudioString.Delimiter#PITCH_AND_DURATION} enum value.
  *
  * <h2>Audible audio</h2>
- * A {@code String} can be parsed to audible audio if it has the information to
- * define the <i>wave shape</i>, <i>pitch/frequency</i>, and <i>duration</i> of
- * the audio. An {@link AudioString} can be divided into 3 segments, each one
- * defining each of these 3 parts:
+ * A {@code String} can be parsed to audible audio if preceding the duration
+ * suffix segment are the segments to define the <i>wave shape</i> and
+ * <i>pitch/frequency</i> of the audio. As such, an audible {@link AudioString}
+ * consists of the 3 ordered segments:
  *
  * <ol>
- * <li>Wave shape prefix
+ * <li>Wave Shape prefix
  * <li>Pitch Frequency
  * <li>Duration suffix
  * </ol>
  *
- * <h3>1.) Wave shape prefix</h3>
+ * <h3>1.) Wave Shape prefix segment</h3>
  * The leading segment specifies what kind of wave shape the audio consists of.
  * The types of wave shapes can be designated via:
  *
@@ -44,62 +66,49 @@ import java.util.Optional;
  * enum.
  *
  * <p>
- * If the leading wave shape prefix is omitted it defaults to a sin wave.
+ * The leading wave shape prefix and its delimiter can optionally be omitted
+ * <strong><em>if a default wave shape value to use in its absence is
+ * provided</em></strong>.
  *
- * <h3>2.) Pitch Frequency</h3>
+ *
+ * <h3>2.) Pitch Frequency segment</h3>
  * The segment that follows the wave shape prefix (if it's present) and
  * precedes the duration suffix segment defines the pitch/frequency of the
- * audio. This segment can be divided into 3 parts::
+ * audio. This segment can be divided into 3 parts:
  *
  * <ol>
  * <li>A leading alpha character corresponding to a musical note specifying the
  * pitch.
  * <li>A plus ({@code '+'}) or minus ({@code '-'}) character specifying if the
- * note is a sharp or flat or none if it's a natural.
+ * note is a sharp or flat or no character if it's a natural.
  * <li>And an integer specifying the octave of the note.
  * </ol>
  *
- * The period character ({@code '.'}) is then used to separate it from the
- * duration segment of the string which comes after. This is defined via the
- * {@link AudioString.Delimiter#PITCH_AND_DURATION} enum value. An example of a
- * 440hz wave would be natural {@code 'A'} (no sharp or flat) in the 4th octave.
- * This would be defined as {@code "A4"}. To designate a B&flat; (flat) musical
- * note in the 2nd octave would be {@code "B-2"}, with B&sharp; (sharp) in the
- * 2nd octave being {@code "B+2"}. The characters that correspond to musical
- * notes are defined in the {@link Note} enum.
- *
- * <h3>3.) Duration suffix</h3>
- * The final segment specifies the duration of the audio. This is a positive
- * integer that designates the length of the audio </strong><b>relative to the
- * note beat value and tempo/bpm</b></strong>. An easy way to think of it is
- * that if the duration is integer <i>N</i>, then the length of the note will be
- * 1/<i>N</i>. So, if <i>N</i> were 1, then the duration would be 1/1 which
- * would be a whole note. If <i>N</i> were 4, that'd result in 1/4 so it'd be a
- * quarter note etc.
+ * An example of a 440hz wave would be natural {@code 'A'} (no sharp or flat) in
+ * the 4th octave. This would be defined as {@code "A4"}. To designate a B&flat;
+ * (flat) musical note in the 2nd octave would be {@code "B-2"}, with B&sharp;
+ * (sharp) in the 2nd octave being {@code "B+2"}. The characters that correspond
+ * to musical notes and their accidentals are defined in the {@link Note} and
+ * {@link Accidental} enum respectively.
  *
  * <p>
- * So putting all this together, a {@code String} to explicitly designate a sin
- * wave that is an F&sharp; (sharp) half note in the 8th octave would be
- * {@code "SIN>F+8.2"}. Since an {@link AudioString} defaults to a sin wave if
- * no wave shape prefix is included, this could also be written as
- * {@code "F+8.2"}.
+ * So putting all this together, a {@code String} to designate a sin wave that
+ * is an F&sharp; (sharp) half note in the 8th octave would be
+ * {@code "SIN>F+8.2"}.
  *
  * <h2>Silence</h2>
- * A {@code String} can be parsed to silence if it start with the leading
+ * A {@code String} can be parsed to silence if it starts with the leading
  * silence character prefix, defined via the
- * {@link AudioString#SILENCE_CHAR SILENCE_CHAR} const, to designate that it's
- * silence and then a duration for how long the silence should last. The
- * duration, just like for audible audio, is a positive integer that designates
- * the length of the audio </strong><b>relative to the note beat value and
- * tempo/bpm</b></strong>. And just like for audible audio,
- * the {@link AudioString.Delimiter#PITCH_AND_DURATION} character separates the
- * duration integer from the {@link AudioString#SILENCE_CHAR SILENCE_CHAR}
- * character prefix.
+ * {@link AudioString#SILENCE_CHAR SILENCE_CHAR} const, followed by the duration
+ * suffix segment. As such, an audio string for silence consists of the
+ * following 2 ordered segments:
  *
  * <ol>
  * <li>Silence/rest char prefix
  * <li>Duration suffix
  * </ol>
+ *
+ * An example of a quarter note of silence would be written as {@code "?.4"}.
  *
  * @author Snap
  * @see Audio
