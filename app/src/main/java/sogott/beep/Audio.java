@@ -3,8 +3,8 @@ package sogott.beep;
 import static java.util.Objects.hash;
 
 /**
- * The {@link Audio} class contains the properties necessary needed to
- * synthesize audio.
+ * This class contains the properties necessary needed to synthesize audible
+ * audio or silence.
  *
  * <p>
  * The following properties are:
@@ -14,7 +14,8 @@ import static java.util.Objects.hash;
  * <h2><i>{@link Audio#wave() Wave}</i></h2>
  * The {@link Audio#wave() wave} property designates the shape of the wave of
  * the synthesized audio. This property will be one of the values defined in the
- * {@link Wave} enum. The following wave shapes are:
+ * {@link Wave} enum if it's audible audio or {@code null} if it's silence. The
+ * following wave shapes are:
  * <ul>
  * <li><i>sin</i>
  * <li><i>triangle</i>
