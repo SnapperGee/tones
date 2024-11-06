@@ -170,7 +170,7 @@ final class AudioString {
         return aString != null
                 && !aString.isBlank()
                 && (requireWaveShapePrefix
-                        ? isParsableToneWithWaveShapePrefix(aString)
+                        ? isParsableWaveShapePrefixedTone(aString)
                         : isParsableToneWithoutWaveShapePrefix(aString));
     }
 
@@ -239,7 +239,7 @@ final class AudioString {
         return Optional.of(new Audio(wave, pitch, duration));
     }
 
-    private static boolean isParsableToneWithWaveShapePrefix(String aString) {
+    private static boolean isParsableWaveShapePrefixedTone(String aString) {
         // must be at least a leading wav shape, angle bracket, note char,
         // octave int, period, and duration int
         if (aString.length() < 6) {
@@ -267,7 +267,7 @@ final class AudioString {
         }
 
         if (!Note.isNoteChar(aString.charAt(0))) {
-            return isParsableToneWithWaveShapePrefix(aString);
+            return isParsableWaveShapePrefixedTone(aString);
         }
 
         final String[] pitchAndDuration = aString.split("\\.", 3);
