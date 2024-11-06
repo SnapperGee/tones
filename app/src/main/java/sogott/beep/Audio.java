@@ -30,15 +30,18 @@ import static java.util.Objects.hash;
  * <li>
  * <h2><i>{@link #duration() Duration}</i></h2>
  * The {@link #duration() duration} property designates the duration of the
- * synthesized audio. This is a non negative integer that designates the length
- * of the audio <strong><b>relative to the tempo/bpm and note beat
- * value</b></strong>. That is, if an {@link Audio} object has a duration of
- * <i>N</i>, it has the duration of 1/<i>N</i>. So if it has a duration value of
- * {@code 4}, then the audio has a time of 1/4 or a quarter note. This
- * information on its own isn't enough to extrapolate the actual duration of the
- * note. The tempo/bpm of the audio playing and the value each beat has must
- * also be known to be able to use this value to create the span of time the
- * audio will play.
+ * synthesized audio. This is a positive integer that designates the length of
+ * the audio <strong><b>relative to the tempo/bpm and note beat
+ * value</b></strong>. This information alone isn't enough to extrapolate the
+ * actual span of time the audio will play for. The tempo/bpm of the playback
+ * and the value each beat has must also be known to be able to use this value
+ * to create the span of time the audio will play.
+ *
+ * <p>
+ * If an {@link Audio} object has a duration of <i>N</i>, then its span of time
+ * to play for is 1/<i>N</i> of a whole note. So if it has a duration value of
+ * {@code 4}, then the audio has a time of 1/4 of a whole note or a quarter
+ * note.
  * </ol>
  *
  * An {@link Audio} object can be represented as a {@code String} that can be
@@ -81,8 +84,8 @@ final class Audio implements Comparable<Audio> {
      *
      * @param pitch    The {@link Pitch} of the constructed {@link Audio} object.
      *
-     * @param duration The duration {@code int} of the constructed {@link Audio}
-     *                 object.
+     * @param duration The positive duration {@code int} of the constructed
+     *                 {@link Audio} object.
      *
      * @throws IllegalArgumentException if either of the wave or pitch arguments
      *                                  are {@code null} or the duration is not
@@ -116,22 +119,84 @@ final class Audio implements Comparable<Audio> {
                 this._pitch.stringValue(), this._duration);
     }
 
+    /**
+     * Constructs an {@link Audio} object instance with {@code null} wave and
+     * pitch properties and the duration property set to the passed {@code int}
+     * argument.
+     *
+     * @param duration The positive duration {@code int} of the constructed
+     *                 {@link Audio} object.
+     *
+     * @return an {@link Audio} object instance with {@code null} wave and
+     *         pitch properties and the passed duration property.
+     */
     static Audio silence(int duration) {
         return new Audio(duration);
     }
 
+    /**
+     * The {@link Wave} shape value of this {@link Audio} object is it's audible
+     * or {@code null} if it's silence. The possible wave shape values are
+     * defined in the {@link Wave} enum. The possible wave shapes are:
+     *
+     * <ul>
+     * <li><i>SIN</i>
+     * <li><i>SQUARE</i>
+     * <li><i>TRIANGLE</i>
+     * <li><i>SAW UP</i>
+     * <li><i>SAW DOWN</i>
+     * </ul>
+     *
+     * @return The {@link Wave} value of this {@link Audio} object if it's
+     *         audible or {@code null} if it's silence.
+     *
+     * @see Wave
+     */
     Wave wave() {
         return this._wave;
     }
 
+    /**
+     * The {@link Pitch} frequency value of this {@link Audio} object is it's
+     * audible or {@code null} if it's silence.
+     *
+     * @return The {@link Pitch} frequency value of this {@link Audio} object if
+     *         it's audible or {@code null} if it's silence.
+     */
     Pitch pitch() {
         return this._pitch;
     }
 
+    /**
+     * The positive {@code int} value of this {@link Audio} object's duration.
+     *
+     * <p>
+     * This value is <strong><b>relative to the tempo/bpm and note beat
+     * value</b></strong>. This value alone isn't enough to extrapolate the
+     * actual span of time the audio will play for. The tempo/bpm of the
+     * playback and the value each beat has must also be known to be able to use
+     * this value to create the span of time the audio will play.
+     *
+     * <p>
+     * If an {@link Audio} object has a duration of <i>N</i>, then its span of
+     * time to play for is 1/<i>N</i> of a whole note. So if it has a duration
+     * value of {@code 4}, then the audio has a time of 1/4 of a whole note or a
+     * quarter note.
+     *
+     * @return The positive {@code int} value of this {@link Audio} object's
+     *         duration.
+     */
     int duration() {
         return this._duration;
     }
 
+    /**
+     * A {@code String} representation of this {@link Audio} object. Note that
+     * this is different from the string returned by the {@link #toString()}
+     * method which is more suited for debugging purposes.
+     *
+     * @return a {@code String} representation of this {@link Audio} object.
+     */
     String stringValue() {
         return this._string;
     }
