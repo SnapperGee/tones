@@ -35,7 +35,7 @@ import java.util.Optional;
  * <strong><em>relative to the <u>note beat value</u> and
  * <u>bpm/tempo</u></em></strong>. Without these 2 additional bits of
  * information (the note beat value and bpm/tempo) the duration amount alone
- * isn't enough information to know the actual amount of time the audio or
+ * isn't enough information to extrapolate the actual span of time the audio or
  * silence should be played.
  *
  * <p>
