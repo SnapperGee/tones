@@ -37,7 +37,7 @@ import java.util.Optional;
  *
  * The right angle bracket/greater than character ({@code '>'}) is then used
  * to separate it from the frequency segment of the string which follows it.
- * This is defined via the {@link AudioString.Delineator#WAVE_SHAPE_AND_PITCH}
+ * This is defined via the {@link AudioString.Delimiter#WAVE_SHAPE_AND_PITCH}
  * enum value. An example of a wave shape prefix for a triangle wave would be
  * {@code "TRI>"} with the rest of the string coming after the {@code '>'}
  * character. The types of supported wave shapes are defined in the {@link Wave}
@@ -61,7 +61,7 @@ import java.util.Optional;
  *
  * The period character ({@code '.'}) is then used to separate it from the
  * duration segment of the string which comes after. This is defined via the
- * {@link AudioString.Delineator#PITCH_AND_DURATION} enum value. An example of a
+ * {@link AudioString.Delimiter#PITCH_AND_DURATION} enum value. An example of a
  * 440hz wave would be natural {@code 'A'} (no sharp or flat) in the 4th octave.
  * This would be defined as {@code "A4"}. To designate a B&flat; (flat) musical
  * note in the 2nd octave would be {@code "B-2"}, with B&sharp; (sharp) in the
@@ -92,7 +92,7 @@ import java.util.Optional;
  * duration, just like for audible audio, is a positive integer that designates
  * the length of the audio </strong><b>relative to the note beat value and
  * tempo/bpm</b></strong>. And just like for audible audio,
- * the {@link AudioString.Delineator#PITCH_AND_DURATION} character separates the
+ * the {@link AudioString.Delimiter#PITCH_AND_DURATION} character separates the
  * duration integer from the {@link AudioString#SILENCE_CHAR SILENCE_CHAR}
  * character prefix.
  *
@@ -105,7 +105,7 @@ import java.util.Optional;
  * @see Audio
  * @see Wave
  * @see Note
- * @see AudioString.Delineator
+ * @see AudioString.Delimiter
  */
 final class AudioString {
     /**
@@ -114,13 +114,13 @@ final class AudioString {
      */
     final static char SILENCE_CHAR = '?';
 
-    static enum Delineator {
+    static enum Delimiter {
         WAVE_SHAPE_AND_PITCH('>'),
         PITCH_AND_DURATION('.');
 
         private final char _charValue;
 
-        private Delineator(char charValue) {
+        private Delimiter(char charValue) {
             this._charValue = charValue;
         }
 
@@ -131,7 +131,7 @@ final class AudioString {
 
     private final static String SILENCE_PREFIX = new StringBuilder()
             .append(SILENCE_CHAR)
-            .append(Delineator.PITCH_AND_DURATION.charValue())
+            .append(Delimiter.PITCH_AND_DURATION.charValue())
             .toString();
 
     static Optional<Audio> parse(String aString, Wave defaultWaveShape) {
@@ -201,7 +201,7 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String durationString = aString.substring(aString.indexOf(Delineator.PITCH_AND_DURATION.charValue()) + 1);
+        final String durationString = aString.substring(aString.indexOf(Delimiter.PITCH_AND_DURATION.charValue()) + 1);
         final int duration = Integer.parseInt(durationString);
         return Optional.of(Audio.silence(duration));
     }
@@ -253,7 +253,7 @@ final class AudioString {
         return Wave.extractPrefix(aString).map(prefix -> {
             final int prefixLength = prefix.length();
 
-            if (aString.charAt(prefixLength) != Delineator.WAVE_SHAPE_AND_PITCH.charValue()) {
+            if (aString.charAt(prefixLength) != Delimiter.WAVE_SHAPE_AND_PITCH.charValue()) {
                 return false;
             }
 
