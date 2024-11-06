@@ -166,7 +166,7 @@ final class AudioString {
         return Optional.empty();
     }
 
-    static boolean isParsableTone(String aString, boolean requireWaveShapePrefix) {
+    private static boolean isParsableTone(String aString, boolean requireWaveShapePrefix) {
         return aString != null
                 && !aString.isBlank()
                 && (requireWaveShapePrefix
@@ -174,7 +174,7 @@ final class AudioString {
                         : isParsableToneWithoutWaveShapePrefix(aString));
     }
 
-    static boolean isParsableSilence(String aString) {
+    private static boolean isParsableSilence(String aString) {
         if (aString == null) {
             return false;
         }
@@ -192,7 +192,7 @@ final class AudioString {
         return Character.isDigit(aString.charAt(2)) && aString.codePoints().skip(3).allMatch(Character::isDigit);
     }
 
-    static private Optional<Audio> parseSilence(String aString) {
+    private static Optional<Audio> parseSilence(String aString) {
         if (!isParsableSilence(aString)) {
             return Optional.empty();
         }
@@ -202,7 +202,7 @@ final class AudioString {
         return Optional.of(Audio.silence(duration));
     }
 
-    static private Optional<Audio> parseTone(String aString, Wave defaultWave) {
+    private static Optional<Audio> parseTone(String aString, Wave defaultWave) {
         if (!isParsableTone(aString, false)) {
             return Optional.empty();
         }
@@ -221,7 +221,7 @@ final class AudioString {
         return Optional.of(new Audio(wave, pitch, duration));
     }
 
-    static private Optional<Audio> parsePitch(String aString) {
+    private static Optional<Audio> parsePitch(String aString) {
         if (!isParsableTone(aString, true)) {
             return Optional.empty();
         }
