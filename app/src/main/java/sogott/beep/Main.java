@@ -104,26 +104,13 @@ final public class Main {
                 }
 
                 final byte[][] audioBuffers = validAndInvalidOperands.valid().stream()
-                        .map(audio -> switch (audio.wave()) {
-                            case Wave.SIN -> GenerateWave.sin(Frequency.from(audio.pitch()),
-                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
-                                    Default.AMPLITUDE);
-                            case Wave.SQUARE -> GenerateWave.square(Frequency.from(audio.pitch()),
-                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
-                                    Default.AMPLITUDE);
-                            case Wave.TRIANGLE -> GenerateWave.triangle(Frequency.from(audio.pitch()),
-                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
-                                    Default.AMPLITUDE);
-                            case Wave.SAW_UP -> GenerateWave.sawUp(Frequency.from(audio.pitch()),
-                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
-                                    Default.AMPLITUDE);
-                            case Wave.SAW_DOWN -> GenerateWave.sawDown(Frequency.from(audio.pitch()),
-                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE,
-                                    Default.AMPLITUDE);
-                            case null -> GenerateWave.silence(
-                                    (int) Math.round(1.0 / audio.duration() * wholeNoteDuration), Default.SAMPLE_RATE);
-                            default -> throw new RuntimeException("Unrecognized wave type: %s".formatted(audio.wave()));
-                        })
+                        .map(audio -> audio.wave() != null
+                                ? audio.wave()
+                                        .generate(Frequency.from(audio.pitch()),
+                                                (int) Math.round(1.0 / audio.duration() * wholeNoteDuration))
+                                : GenerateWave.silence(
+                                        (int) Math.round(1.0 / audio.duration() * wholeNoteDuration),
+                                        Default.SAMPLE_RATE))
                         .toArray(byte[][]::new);
 
                 final AudioFormat audioFormat = new AudioFormat(Default.SAMPLE_RATE, Default.SAMPLE_SIZE,
