@@ -116,10 +116,6 @@ final class Audio implements Comparable<Audio> {
                 this._pitch.stringValue(), this._duration);
     }
 
-    Audio(Pitch pitch, int duration) {
-        this(Wave.SIN, pitch, duration);
-    }
-
     static Audio silence(int duration) {
         return new Audio(duration);
     }

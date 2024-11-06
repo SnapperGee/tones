@@ -50,20 +50,6 @@ final class AudioArgProvider {
                         }
                 }
 
-                final static class PitchDuration implements ArgumentsProvider {
-                        @Override
-                        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                                return notes.stream().flatMap(note -> Stream.concat(
-                                                Stream.of(arguments(new Pitch(note, null, random.nextInt(13)),
-                                                                1 << random.nextInt(8))),
-                                                accidentals.stream()
-                                                                .map(accidental -> arguments(
-                                                                                new Pitch(note, accidental,
-                                                                                                random.nextInt(13)),
-                                                                                1 << random.nextInt(8)))));
-                        }
-                }
-
                 final static class AltWavesPitchesDurations implements ArgumentsProvider {
                         @Override
                         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
@@ -438,23 +424,6 @@ final class AudioArgProvider {
                                                                                                                                 8))))))));
                         }
                 }
-
-                final static class PitchDuration implements ArgumentsProvider {
-                        @Override
-                        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-                                return notes.stream().flatMap(note -> Stream.concat(
-                                                Stream.of(
-                                                                arguments(new Pitch(note, null, random.nextInt(13)),
-                                                                                -(1 << random.nextInt(8))),
-                                                                arguments(null, 1 << random.nextInt(8)),
-                                                                arguments(null, -(1 << random.nextInt(8)))),
-                                                accidentals.stream()
-                                                                .map(accidental -> arguments(
-                                                                                new Pitch(note, accidental,
-                                                                                                random.nextInt(13)),
-                                                                                -(1 << random.nextInt(8))))));
-                        }
-                }
         }
 }
 
@@ -478,12 +447,6 @@ final class AudioTest {
                 assertDoesNotThrow(() -> new Audio(wave, pitch, duration));
         }
 
-        @ParameterizedTest(name = "new Pitch({0}, {1}) does not throw")
-        @ArgumentsSource(AudioArgProvider.Valid.PitchDuration.class)
-        void audioConstructorPassedValidPitchDurationDoesNotThrow(Pitch pitch, int duration) {
-                assertDoesNotThrow(() -> new Audio(pitch, duration));
-        }
-
         /////////////////////////
         // invalid constructor //
         /////////////////////////
@@ -492,12 +455,6 @@ final class AudioTest {
         @ArgumentsSource(AudioArgProvider.Invalid.WavePitchDuration.class)
         void audioConstructorPassedInvalidWavesPitchesDurationsThrows(Wave wave, Pitch pitch, int duration) {
                 assertThrows(IllegalArgumentException.class, () -> new Audio(wave, pitch, duration));
-        }
-
-        @ParameterizedTest(name = "new Pitch({0}, {1}) throws")
-        @ArgumentsSource(AudioArgProvider.Invalid.PitchDuration.class)
-        void audioConstructorPassedValidPitchInvalidDurationThrows(Pitch pitch, int duration) {
-                assertThrows(IllegalArgumentException.class, () -> new Audio(pitch, duration));
         }
 
         /////////////////////////
@@ -555,13 +512,6 @@ final class AudioTest {
         void audioWavePropertyReturnsWave(Wave wave, Pitch pitch, int duration) {
                 final Audio audio = new Audio(wave, pitch, duration);
                 assertSame(wave, audio.wave());
-        }
-
-        @ParameterizedTest(name = "new Pitch({0}, {1}).wave() returns Wave.SIN")
-        @ArgumentsSource(AudioArgProvider.Valid.PitchDuration.class)
-        void audioWavePropertyReturnsWave(Pitch pitch, int duration) {
-                final Audio audio = new Audio(pitch, duration);
-                assertSame(Wave.SIN, audio.wave());
         }
 
         @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).pitch() returns pitch")
