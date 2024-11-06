@@ -258,12 +258,4 @@ enum Wave {
     byte[] generate(double freq, int duration) {
         return this._generatorFunc.apply(freq, duration).apply(Default.SAMPLE_RATE, Default.AMPLITUDE);
     }
-
-    byte[] generate(double freq, int duration, short amplitude) {
-        return this._generatorFunc.apply(freq, duration).apply(Default.SAMPLE_RATE, amplitude);
-    }
-
-    byte[] generate(double freq, int duration, float sampleRate, short amplitude) {
-        return this._generatorFunc.apply(freq, duration).apply(sampleRate, amplitude);
-    }
 }
