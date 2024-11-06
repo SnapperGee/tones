@@ -24,8 +24,8 @@ import java.util.Optional;
  * define the duration of the audio. However they differ in the voice segment(s)
  * that precede the duration suffix segment. The character used to designate the
  * start of the duration suffix segment and delineate it from the voice
- * segment(s) is defined via the
- * {@link AudioString.Delimiter#VOICE_AND_DURATION} enum value.
+ * segment(s) is defined via the {@link Delimiter#VOICE_AND_DURATION} enum
+ * value.
  *
  * <h3>Duration suffix segment</h3>
  * The duration is specified via a suffix consisting of a leading period
@@ -47,7 +47,7 @@ import java.util.Optional;
  * <h3>Audible audio</h3>
  * A {@code String} can be parsed to audible audio if its voice consists of the
  * segments to define the <i>wave shape</i> and <i>pitch/frequency</i> of the
- * audio. As such, an audible {@link AudioString} consists of the 3 ordered
+ * audio. As such, an audible audio string consists of the 3 ordered
  * segments:
  *
  * <ol>
@@ -72,11 +72,10 @@ import java.util.Optional;
  *
  * The right angle bracket/greater than character ({@code '>'}) is then used
  * to separate it from the frequency segment of the string which follows it.
- * This is defined via the {@link AudioString.Delimiter#WAVE_SHAPE_AND_PITCH}
- * enum value. An example of a wave shape prefix for a triangle wave would be
- * {@code "TRI>"} with the rest of the string coming after the {@code '>'}
- * character. The types of supported wave shapes are defined in the {@link Wave}
- * enum.
+ * This is defined via the {@link Delimiter#WAVE_SHAPE_AND_PITCH} enum value. An
+ * example of a wave shape prefix for a triangle wave would be {@code "TRI>"}
+ * with the rest of the string coming after the {@code '>'} character. The types
+ * of supported wave shapes are defined in the {@link Wave} enum.
  *
  * <p>
  * The leading wave shape prefix and its delimiter can optionally be omitted
@@ -87,13 +86,15 @@ import java.util.Optional;
  * <h4>2.) Pitch Frequency segment</h4>
  * The segment that follows the wave shape prefix (if it's present) and
  * precedes the duration suffix segment defines the pitch/frequency of the
- * audio. This segment can be divided into 3 parts:
+ * audio. This segment needs to be parsable to a {@link Pitch} object and can be
+ * divided into 3 parts:
  *
  * <ol>
  * <li>A leading alpha character corresponding to a musical note specifying the
  * pitch.
  * <li>A plus ({@code '+'}) or minus ({@code '-'}) character specifying if the
- * note is a sharp or flat or no character if it's a natural.
+ * note is a sharp &sharp; or flat &flat; or no character if it's a natural
+ * &natural;.
  * <li>And an integer specifying the octave of the note.
  * </ol>
  *
@@ -111,13 +112,13 @@ import java.util.Optional;
  *
  * <h3>Silence</h3>
  * A {@code String} can be parsed to silence if it starts with the leading
- * silence character prefix, defined via the
- * {@link AudioString#SILENCE_CHAR SILENCE_CHAR} const, followed by the duration
- * suffix segment. As such, an audio string for silence consists of the
- * following 2 ordered segments:
+ * silence character (a question mark {@code '?'}) prefix, defined via the
+ * {@link #SILENCE_CHAR} const, followed by the duration suffix segment. As
+ * such, an audio string for silence consists of the following 2 ordered
+ * segments:
  *
  * <ol>
- * <li>Silence/rest char prefix
+ * <li>Silence char prefix
  * <li>Duration suffix
  * </ol>
  *
@@ -126,6 +127,7 @@ import java.util.Optional;
  * @author Snap
  * @see Audio
  * @see AudioString.Delimiter
+ * @see Pitch
  * @see Wave
  * @see Note
  */
