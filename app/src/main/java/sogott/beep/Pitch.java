@@ -28,6 +28,16 @@ import java.util.Optional;
  * top of that, this class contains the static {@link Pitch#parse(String) parse}
  * method capable of parsing a string into a {@code Pitch} object.
  *
+ * <p>
+ * An example of a 440hz wave would be natural {@code 'A'} (no sharp or flat) in
+ * the 4th octave. This would be defined as {@code "A4"}. To designate a B&flat;
+ * (flat) musical note in the 2nd octave would be {@code "B-2"}, with B&sharp;
+ * (sharp) in the 2nd octave e being {@code "B+2"}. The characters that
+ * correspond to musical notes and their accidentals are defined in the
+ * {@link Note} and {@link Accidental} enum respectively. A {@link Pitch} object
+ * of the note B&sharp; (sharp) in the 2nd octave would be
+ * <code>Pitch {note=Note.B, accidental=Accidental.SHARP, octave=2}</code>
+ *
  * @see Note
  * @see Accidental
  * @see Audio
