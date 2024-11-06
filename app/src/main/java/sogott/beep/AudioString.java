@@ -213,6 +213,20 @@ final class AudioString {
         return Optional.empty();
     }
 
+    /**
+     * Parses the passed {@code String} argument to an {@link Audio} object. If
+     * the passed string can't be parsed to audio then an empty optional is
+     * returned, otherwise the returned optional contains the resulting audio
+     * object from parsing the string.
+     *
+     * @param aString {@code String} to parse to an {@link Audio} object.
+     *
+     * @return An {@code Optional} containing the {@link Audio} object parsed from
+     *         the passed string or an empty optional if it can't be parsed.
+     *
+     * @throws IllegalArgumentException If the provided argument is
+     *                                  {@code null}.
+     */
     static Optional<Audio> parse(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
