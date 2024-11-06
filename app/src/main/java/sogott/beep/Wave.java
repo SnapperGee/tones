@@ -10,18 +10,61 @@ import java.util.function.BiFunction;
 
 import static java.util.Collections.unmodifiableSet;
 
+/**
+ * Enum of values used to represent the different wave shapes audio can be. The
+ * following wave shapes are:
+ *
+ * <ol>
+ * <li><i>SIN</i>
+ * <li><i>SQUARE</i>
+ * <li><i>TRIANGLE</i>
+ * <li><i>SAW UP</i>
+ * <li><i>SAW DOWN</i>
+ * </ol>
+ *
+ * Each value can be represented via a canonical {@code String} value stored as
+ * a {@link #stringValue() stringValue} property. In addition to that, there's
+ * also a Set of string aliases that can also be used to represent the wave
+ * shape value in addition to the canonical one. This string set is stored in
+ * the {@link #stringValueAliases() stringValueAliases} property. The canonical
+ * string value and enum value {@link #name() name} are always included in this
+ * string Set.
+ *
+ * <p>
+ * This enum also contains various static methods for processing strings in ways
+ * related to wave shapes.
+ */
 enum Wave {
+    /**
+     * Enum value for a <i>SIN</i> wave
+     */
     SIN((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.sin(freq, duration, sampleRate, amplitude)),
+
+    /**
+     * Enum value for a <i>SQUARE</i> wave
+     */
     SQUARE((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.square(freq, duration, sampleRate, amplitude),
             "SQR"),
+
+    /**
+     * Enum value for a <i>TRIANGLE</i> wave
+     */
     TRIANGLE((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.triangle(freq, duration, sampleRate, amplitude),
             "TRI",
             Set.of("TRIANGLE")),
+
+    /**
+     * Enum value for a <i>SAW UP</i> wave
+     */
     SAW_UP((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawUp(freq, duration, sampleRate, amplitude),
             "SUP",
             Set.of("SAWUP")),
+
+    /**
+     * Enum value for a <i>SAW DOWN</i> wave
+     */
     SAW_DOWN((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawDown(freq, duration, sampleRate, amplitude),
             "SDN",
@@ -58,24 +101,89 @@ enum Wave {
         this._stringValueAliases = Collections.unmodifiableSet(stringSet);
     }
 
+    /**
+     * The canonical {@code String} representation of the wave.
+     *
+     * @return The canonical {@code String} representation of the wave.
+     */
     String stringValue() {
         return this._stringValue;
     }
 
+    /**
+     * A string Set of aliases that can also be used to represent the wave in
+     * addition to the canonical {@link #stringValue() stringValue}. This string
+     * Set always contains at least the canonical
+     * {@link #stringValue() stringValue} and enum value {@link #name() name}.
+     *
+     * @return A string Set of aliases that can also be used to represent the wave
+     *         in addition to the canonical {@link #stringValue() stringValue}.
+     */
     Set<String> stringValueAliases() {
         return this._stringValueAliases;
     }
 
+    /**
+     * Returns {@code true} if the passed {@code String} argument is prefixed
+     * with this enum value's {@link #stringValue() stringValue} or any of the
+     * strings in this enum value's
+     * {@link #stringValueAliases() stringValueAliases}. A {@code boolean} value
+     * can optionally be passed to specify whether case is ignored or not. By
+     * default it's case insensitive.
+     *
+     * @param aString    {@code String} to check if it's prefixed with any of
+     *                   this enum value's string values.
+     *
+     * @param ignoreCase Optional {@code boolean} to specify whether case is
+     *                   ignored or not. Defaults to {@code true} making case
+     *                   ignored.
+     *
+     * @return {@code true} if the passed {@code String} argument is prefixed
+     *         with this enum value's {@link #stringValue() stringValue} or any
+     *         of the strings in this enum value's
+     *         {@link #stringValueAliases() stringValueAliases}.
+     */
     boolean prefixes(String aString, boolean ignoreCase) {
         return aString != null && !aString.isEmpty() && this._stringValueAliases.stream()
                 .anyMatch(stringValueAlias -> aString.length() >= stringValueAlias.length()
                         && aString.regionMatches(ignoreCase, 0, stringValueAlias, 0, stringValueAlias.length()));
     }
 
+    /**
+     * Returns {@code true} if the passed {@code String} argument is prefixed
+     * with this enum value's {@link #stringValue() stringValue} or any of the
+     * strings in this enum value's
+     * {@link #stringValueAliases() stringValueAliases}. Case is ignored when
+     * checking for the prefix.
+     *
+     * @param aString {@code String} to case insensitively check if it's
+     *                prefixed with any of this enum value's string values.
+     *
+     * @return {@code true} if the passed {@code String} argument is case
+     *         insensitively prefixed with this enum value's
+     *         {@link #stringValue() stringValue} or any of the strings in this
+     *         enum value's {@link #stringValueAliases() stringValueAliases}.
+     */
     boolean prefixes(String aString) {
         return prefixes(aString, true);
     }
 
+    /**
+     * Returns an optional containing the enum value string the passed string
+     * argument is prefixed with if it is prefixed with one, otherwise returns
+     * an empty optional. A {@code boolean} argument can also optionally be
+     * passed to specify whether to ignore the case when matching the prefix.
+     * Defaults to {@code true} to perform a case insensitive match.
+     *
+     * @param aString    {@code String} to extract enum string value prefix from
+     *                   if present.
+     *
+     * @param ignoreCase {@code boolean} specifying whether to ignore case or not
+     *                   when matching the prefix.
+     *
+     * @return An optional containing the extracted prefix enum string value if
+     *         present or an empty optional if not.
+     */
     static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
         return waves.stream().flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
@@ -83,15 +191,70 @@ enum Wave {
                 .findFirst();
     }
 
+    /**
+     * Returns an optional containing the enum value string the passed string
+     * argument is prefixed with if it is prefixed with one, otherwise returns
+     * an empty optional. Performs a case insensitive match when checking the
+     * prefix string value.
+     *
+     * @param aString {@code String} to extract enum string value prefix from
+     *                if present.
+     *
+     * @return An optional containing the extracted prefix enum string value if
+     *         present or an empty optional if not.
+     */
     static Optional<String> extractPrefix(String aString) {
         return extractPrefix(aString, true);
     }
 
+    /**
+     * Returns an optional containing the {@link Wave} value the passed string
+     * argument can be parsed to. If it can't be parsed to a {@link Wave}, then
+     * an empty optional is returned.
+     *
+     * @param aString    {@code String} to case insensitively parse to a
+     *                   {@link Wave}.
+     *
+     * @param ignoreCase {@code boolean} specifying whether case is ignored or
+     *                   not when parsing the passed {@code String} argument.
+     *
+     * @return An optional containing the {@link Wave} value the passed string
+     *         argument can be parsed to if it can be, otherwise an empty optional.
+     *
+     * @throws IllegalArgumentException If passed {@code String} argument is
+     *                                  {@code null}.
+     */
+    static Optional<Wave> parse(String aString, boolean ignoreCase) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null string argument.");
+        }
+
+        if (aString.isBlank()) {
+            return Optional.empty();
+        }
+
+        if (ignoreCase) {
+            return waves.stream().filter(wave -> wave._stringValueAliases.stream()
+                    .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst();
+        }
+
+        return waves.stream().filter(wave -> wave._stringValueAliases.stream()
+                .anyMatch(waveStringValue -> aString.equals(waveStringValue))).findFirst();
+    }
+
+    /**
+     * Returns an optional containing the {@link Wave} value the passed string
+     * argument can be case insensitively parsed to. If it can't be parsed to a
+     * {@link Wave}, then an empty optional is returned.
+     *
+     * @param aString {@code String} to case insensitively parse to a {@link Wave}.
+     *
+     * @return An optional containing the {@link Wave} value the passed string
+     *         argument can be case insensitively parsed to if it can be,
+     *         otherwise an empty optional.
+     */
     static Optional<Wave> parse(String aString) {
-        return aString != null && !aString.isBlank()
-                ? waves.stream().filter(wave -> wave._stringValueAliases.stream()
-                        .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst()
-                : Optional.empty();
+        return parse(aString, true);
     }
 
     byte[] generate(double freq, int duration) {
