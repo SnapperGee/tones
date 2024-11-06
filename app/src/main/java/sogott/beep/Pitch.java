@@ -3,6 +3,36 @@ package sogott.beep;
 import static java.util.Objects.hash;
 import java.util.Optional;
 
+/**
+ * This class defines an object that can be used to represent the frequency of
+ * audio expressed as a musical note. It consists of 3 primary properties:
+ *
+ * <h2>1.) {@code Note}</h2>
+ * The {@link Pitch#note() note} property consists of a character value
+ * corresponding to one of the musical notes (A-G). These note chars are defined
+ * in the {@link Note} enum.
+ *
+ * <h2>2.) {@code Accidental}</h2>
+ * The {@link Pitch#accidental() accidental} property consists of an character
+ * value if the note is a <i>sharp</i> &sharp; or <i>flat</i> &flat; or
+ * {@code null} if it's a natural &natural; (neither a sharp nor flat). These
+ * accidental chars are defined in the {@link Accidental} enum.
+ *
+ * <h2>3.) {@code Octave}</h2>
+ * The {@link Pitch#octave() octave} property consists of a non negative integer
+ * designating what octave the note of this {@code Pitch} is in.
+ *
+ * <p>
+ * In addition to the above 3 properties, they can also all be combined into
+ * a single {@code String}. This string value is also stored as a property. On
+ * top of that, this class contains the static {@link Pitch#parse(String) parse}
+ * method capable of parsing a string into a {@code Pitch} object.
+ *
+ * @see Note
+ * @see Accidental
+ * @see Audio
+ * @see AudioString
+ */
 final class Pitch implements Comparable<Pitch> {
     final private Note _note;
     final private Accidental _accidental;
@@ -11,6 +41,26 @@ final class Pitch implements Comparable<Pitch> {
     final private int _hashCode;
     final private String _toString;
 
+    /**
+     * Constructs a {@link Pitch} object instance with the following note,
+     * accidental, and octave properties.
+     *
+     * @param note       The {@link Note} of the constructed {@code Pitch} object.
+     *
+     * @param accidental The {@link Accidental} (sharp &sharp; or flat &flat;)
+     *                   of the constructed {@code Pitch} object or {@code null} if
+     *                   it's natural &natural; (neither sharp &sharp; nor flat
+     *                   &flat;).
+     *
+     * @param octave     A non negative {@code int} specifying what octave the note
+     *                   of the constructed {@code Pitch} object is in.
+     *
+     * @throws IllegalArgumentException if the passed note is {@code null} or
+     *                                  the octave is negative (less than 0).
+     *
+     * @see Note
+     * @see Accidental
+     */
     Pitch(Note note, Accidental accidental, int octave) {
         if (note == null) {
             throw new IllegalArgumentException(
@@ -36,22 +86,67 @@ final class Pitch implements Comparable<Pitch> {
                 this._stringValue);
     }
 
+    /**
+     * Constructs a {@link Pitch} object instance with the following note and
+     * octave properties and its {@link #accidental() accidental} property set
+     * to {@code null} designating that its note is natural &natural; (neither
+     * sharp &sharp; nor flat &flat;).
+     *
+     * @param note   The {@link Note} of the constructed {@code Pitch} object.
+     * @param octave A non negative {@code int} specifying what octave the note
+     *               of the constructed {@code Pitch} object is in.
+     *
+     * @throws IllegalArgumentException if the octave is negative (less than 0).
+     *
+     * @see Note
+     */
     Pitch(Note note, int octave) {
         this(note, null, octave);
     }
 
+    /**
+     * The {@link Note} value of this {@link Pitch} object. That is, one of the
+     * char values A-G defined in the {@link Note} enum.
+     *
+     * @return the {@link Note} value of this {@link Pitch} object.
+     *
+     * @see Note
+     */
     Note note() {
         return this._note;
     }
 
+    /**
+     * The {@link Accidental} value of this {@link Pitch} object. That is, one
+     * of the char values {@code '+'} or {@code ''-} if the note of this Pitch
+     * is a sharp &sharp; or flat &flat; respectively or {@code null} if it's
+     * a natural &natural; (neither sharp &sharp; nor flat &flat;).
+     *
+     * @return tThe {@link Accidental} value of this {@link Pitch} object.
+     *
+     * @see Accidental
+     */
     Accidental accidental() {
         return this._accidental;
     }
 
+    /**
+     * A non negative integer specifying what octave this Pitch's note is in.
+     *
+     * @return a non negative integer specifying what octave this Pitch's note is
+     *         in.
+     */
     int octave() {
         return this._octave;
     }
 
+    /**
+     * A {@code String} representation of this Pitch object. Note that this is
+     * different from the string returned by the {@link #toString()} method
+     * which is more suited for debugging purposes.
+     *
+     * @return a {@code String} representation of this Pitch object.
+     */
     String stringValue() {
         return this._stringValue;
     }
