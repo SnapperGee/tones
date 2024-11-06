@@ -172,7 +172,7 @@ final class Pitch implements Comparable<Pitch> {
 
     static Optional<Pitch> parse(String aString) {
         if (aString == null) {
-            return Optional.empty();
+            throw new IllegalArgumentException("Null string.");
         }
 
         // string must be at least a note char and octave int
