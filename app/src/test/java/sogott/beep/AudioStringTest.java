@@ -198,8 +198,7 @@ final class AudioStringArgProvider {
                                                             note.charValue(),
                                                             octave,
                                                             AudioString.Delineator.PITCH_AND_DURATION.charValue(),
-                                                            duration),
-                                                    new Audio(wave, new Pitch(note, null, octave), duration)),
+                                                            duration)),
                                                     arguments(
                                                             "%1$s%2$c%3$c%4$d%5$c%6$d".formatted(
                                                                     waveStringAlias.toLowerCase(),
@@ -210,8 +209,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(
                                                                             AudioString.Delineator.PITCH_AND_DURATION
                                                                                     .charValue()),
-                                                                    duration),
-                                                            new Audio(wave, new Pitch(note, null, octave), duration))),
+                                                                    duration))),
                                             accidentals.stream()
                                                     .flatMap(accidental -> Stream.of(arguments(
                                                             "%1$s%2$c%3$c%4$c%5$d%6$c%7$d".formatted(waveStringAlias,
@@ -222,8 +220,6 @@ final class AudioStringArgProvider {
                                                                     octave,
                                                                     AudioString.Delineator.PITCH_AND_DURATION
                                                                             .charValue(),
-                                                                    duration),
-                                                            new Audio(wave, new Pitch(note, accidental, octave),
                                                                     duration)),
                                                             arguments(
                                                                     "%1$s%2$c%3$c%4$c%5$d%6$c%7$d".formatted(
@@ -235,8 +231,6 @@ final class AudioStringArgProvider {
                                                                             octave,
                                                                             AudioString.Delineator.PITCH_AND_DURATION
                                                                                     .charValue(),
-                                                                            duration),
-                                                                    new Audio(wave, new Pitch(note, accidental, octave),
                                                                             duration)))))));
                 });
             }
