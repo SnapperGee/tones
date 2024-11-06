@@ -253,18 +253,18 @@ final class Pitch implements Comparable<Pitch> {
 
     @Override
     public int compareTo(Pitch other) {
-        int compareResult = this._note.compareTo(other._note);
+        int compareResult = Integer.compare(this._octave, other._octave);
 
         if (compareResult != 0) {
             return compareResult;
         }
 
-        compareResult = this._accidental.compareTo(other._accidental);
+        compareResult = this._note.compareTo(other._note);
 
         if (compareResult != 0) {
             return compareResult;
         }
 
-        return Integer.compare(this._octave, other._octave);
+        return this._accidental.compareTo(other._accidental);
     }
 }
