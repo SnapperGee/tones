@@ -9,10 +9,25 @@ import java.util.Optional;
  * <p>
  * A {@code String} can be parsed to either <b><i>audible</i></b> audio or
  * to <b><i>silence</i></b> and can be divided up into segments that define the
- * different properties of the audio. Both audible audio and silence need to
- * contain a segment to define the duration of the audio.
+ * different properties of the audio.
  *
- * <h2>Duration suffix segment</h2>
+ * <h2>Audio String Segments</h2>
+ * The segments of an audio string can be grouped together into 2 parts. The
+ * first leading part is referred to as the <strong><em>voice</em></strong>.
+ * This contains the information about the timbre of the audio if it's not
+ * silence or information designating that the audio is silence (and therefore
+ * has no timbre). The 2nd part of the audio string that follows the "voice"
+ * segment(s) is the <strong><em>duration suffix segment</em></strong>.
+ *
+ * <p>
+ * Both audible audio and silence need to contain a duration suffix segment to
+ * define the duration of the audio. However they differ in the voice segment(s)
+ * that precede the duration suffix segment. The character used to designate the
+ * start of the duration suffix segment and delineate it from the voice
+ * segment(s) is defined via the
+ * {@link AudioString.Delimiter#VOICE_AND_DURATION} enum value.
+ *
+ * <h3>Duration suffix segment</h3>
  * The duration is specified via a suffix consisting of a leading period
  * character ({@code '.'}) to designate the beginning of the segment and
  * separate it from the previous segments that precede it and is followed by a
@@ -29,15 +44,11 @@ import java.util.Optional;
  * duration would be 1/1 which would be a whole note. If <i>N</i> were 4, that'd
  * result in 1/4 so it'd be a quarter note etc.
  *
- * <p>
- * The character used to designate the start of the duration suffix segment is
- * defined via the {@link AudioString.Delimiter#VOICE_AND_DURATION} enum value.
- *
- * <h2>Audible audio</h2>
- * A {@code String} can be parsed to audible audio if preceding the duration
- * suffix segment are the segments to define the <i>wave shape</i> and
- * <i>pitch/frequency</i> of the audio. As such, an audible {@link AudioString}
- * consists of the 3 ordered segments:
+ * <h3>Audible audio</h3>
+ * A {@code String} can be parsed to audible audio if its voice consists of the
+ * segments to define the <i>wave shape</i> and <i>pitch/frequency</i> of the
+ * audio. As such, an audible {@link AudioString} consists of the 3 ordered
+ * segments:
  *
  * <ol>
  * <li>Wave Shape prefix
@@ -45,7 +56,9 @@ import java.util.Optional;
  * <li>Duration suffix
  * </ol>
  *
- * <h3>1.) Wave Shape prefix segment</h3>
+ * Segments 1 and 2 compose the voice part of an audible audio string.
+ *
+ * <h4>1.) Wave Shape prefix segment</h4>
  * The leading segment specifies what kind of wave shape the audio consists of.
  * The types of wave shapes can be designated via:
  *
@@ -71,7 +84,7 @@ import java.util.Optional;
  * provided</em></strong>.
  *
  *
- * <h3>2.) Pitch Frequency segment</h3>
+ * <h4>2.) Pitch Frequency segment</h4>
  * The segment that follows the wave shape prefix (if it's present) and
  * precedes the duration suffix segment defines the pitch/frequency of the
  * audio. This segment can be divided into 3 parts:
@@ -96,7 +109,7 @@ import java.util.Optional;
  * is an F&sharp; (sharp) half note in the 8th octave would be
  * {@code "SIN>F+8.2"}.
  *
- * <h2>Silence</h2>
+ * <h3>Silence</h3>
  * A {@code String} can be parsed to silence if it starts with the leading
  * silence character prefix, defined via the
  * {@link AudioString#SILENCE_CHAR SILENCE_CHAR} const, followed by the duration
@@ -112,9 +125,9 @@ import java.util.Optional;
  *
  * @author Snap
  * @see Audio
+ * @see AudioString.Delimiter
  * @see Wave
  * @see Note
- * @see AudioString.Delimiter
  */
 final class AudioString {
     /**
