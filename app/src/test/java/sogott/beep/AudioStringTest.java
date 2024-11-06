@@ -143,38 +143,37 @@ final class AudioStringArgProvider {
                 return notes.stream().flatMap(note -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
-                    return waves.stream()
-                            .flatMap(wave -> Stream.concat(
-                                    Stream.of(arguments(
-                                            "%c%d%c%d".formatted(note.charValue(),
+                    return Stream.concat(
+                            Stream.of(arguments(
+                                    "%c%d%c%d".formatted(note.charValue(),
+                                            octave,
+                                            AudioString.Delineator.PITCH_AND_DURATION.charValue(),
+                                            duration)),
+                                    arguments(
+                                            "%c%d%c%d".formatted(
+                                                    Character.toLowerCase(note.charValue()),
                                                     octave,
-                                                    AudioString.Delineator.PITCH_AND_DURATION.charValue(),
+                                                    Character.toLowerCase(
+                                                            AudioString.Delineator.PITCH_AND_DURATION
+                                                                    .charValue()),
+                                                    duration))),
+                            accidentals.stream()
+                                    .flatMap(accidental -> Stream.of(arguments(
+                                            "%c%c%d%c%d".formatted(
+                                                    note.charValue(),
+                                                    accidental.charValue(),
+                                                    octave,
+                                                    AudioString.Delineator.PITCH_AND_DURATION
+                                                            .charValue(),
                                                     duration)),
                                             arguments(
-                                                    "%c%d%c%d".formatted(
-                                                            Character.toLowerCase(note.charValue()),
-                                                            octave,
-                                                            Character.toLowerCase(
-                                                                    AudioString.Delineator.PITCH_AND_DURATION
-                                                                            .charValue()),
-                                                            duration))),
-                                    accidentals.stream()
-                                            .flatMap(accidental -> Stream.of(arguments(
                                                     "%c%c%d%c%d".formatted(
-                                                            note.charValue(),
+                                                            Character.toLowerCase(note.charValue()),
                                                             accidental.charValue(),
                                                             octave,
                                                             AudioString.Delineator.PITCH_AND_DURATION
                                                                     .charValue(),
-                                                            duration)),
-                                                    arguments(
-                                                            "%c%c%d%c%d".formatted(
-                                                                    Character.toLowerCase(note.charValue()),
-                                                                    accidental.charValue(),
-                                                                    octave,
-                                                                    AudioString.Delineator.PITCH_AND_DURATION
-                                                                            .charValue(),
-                                                                    duration))))));
+                                                            duration)))));
                 });
             }
         }
