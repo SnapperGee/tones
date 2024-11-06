@@ -181,6 +181,9 @@ final class AudioString {
      * audio then an empty optional is returned, otherwise the returned optional
      * contains the resulting audio object from parsing the string.
      *
+     * <p>
+     * The parsing is performed case insensitively.
+     *
      * @param aString          {@code String} to parse to an {@link Audio} object.
      *
      * @param defaultWaveShape {@link Wave} to use as a default value if the
@@ -218,6 +221,9 @@ final class AudioString {
      * the passed string can't be parsed to audio then an empty optional is
      * returned, otherwise the returned optional contains the resulting audio
      * object from parsing the string.
+     *
+     * <p>
+     * The parsing is performed case insensitively.
      *
      * @param aString {@code String} to parse to an {@link Audio} object.
      *
