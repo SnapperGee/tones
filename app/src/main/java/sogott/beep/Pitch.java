@@ -143,7 +143,7 @@ final class Pitch implements Comparable<Pitch> {
             return false;
         }
 
-        // only an active int after leading note or second accidental '+' or '-' char
+        // only an octave int after leading note or second accidental '+' or '-' char
         return aString.codePoints().skip(startIndex).allMatch(Character::isDigit);
     }
 
