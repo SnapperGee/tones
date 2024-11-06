@@ -25,7 +25,7 @@ import static java.util.Collections.unmodifiableSet;
  * Each value can be represented via a canonical {@code String} value stored as
  * a {@link #stringValue() stringValue} property. In addition to that, there's
  * also a Set of string aliases that can also be used to represent the wave
- * shape value in addition to the canonical one. This string set is stored in
+ * shape value in addition to the canonical one. This string Set is stored in
  * the {@link #stringValueAliases() stringValueAliases} property. The canonical
  * string value and enum value {@link #name() name} are always included in this
  * string Set.
@@ -36,18 +36,18 @@ import static java.util.Collections.unmodifiableSet;
  */
 enum Wave {
     /**
-     * Enum value for a <i>SIN</i> wave
+     * A <i>SIN</i> wave.
      */
     SIN((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.sin(freq, duration, sampleRate, amplitude)),
 
     /**
-     * Enum value for a <i>SQUARE</i> wave
+     * A <i>SQUARE</i> wave.
      */
     SQUARE((freq, duration) -> (sampleRate, amplitude) -> GenerateWave.square(freq, duration, sampleRate, amplitude),
             "SQR"),
 
     /**
-     * Enum value for a <i>TRIANGLE</i> wave
+     * A <i>TRIANGLE</i> wave.
      */
     TRIANGLE((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.triangle(freq, duration, sampleRate, amplitude),
@@ -55,7 +55,7 @@ enum Wave {
             Set.of("TRIANGLE")),
 
     /**
-     * Enum value for a <i>SAW UP</i> wave
+     * A <i>SAW UP</i> wave.
      */
     SAW_UP((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawUp(freq, duration, sampleRate, amplitude),
@@ -63,7 +63,7 @@ enum Wave {
             Set.of("SAWUP")),
 
     /**
-     * Enum value for a <i>SAW DOWN</i> wave
+     * A <i>SAW DOWN</i> wave.
      */
     SAW_DOWN((freq,
             duration) -> (sampleRate, amplitude) -> GenerateWave.sawDown(freq, duration, sampleRate, amplitude),
