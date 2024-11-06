@@ -8,25 +8,28 @@ import java.util.Optional;
  * audio expressed as a musical note. It consists of 3 primary properties:
  *
  * <h2>1.) {@code Note}</h2>
- * The {@link Pitch#note() note} property consists of a character value
- * corresponding to one of the musical notes (A-G). These note chars are defined
- * in the {@link Note} enum.
+ * The {@link #note() note} property consists of a character value corresponding
+ * to one of the musical notes (A-G). These note chars are defined in the
+ * {@link Note} enum.
  *
  * <h2>2.) {@code Accidental}</h2>
- * The {@link Pitch#accidental() accidental} property consists of a character
- * value if the note is a <i>sharp</i> &sharp; or <i>flat</i> &flat; or
- * {@code null} if it's a natural &natural; (neither a sharp nor flat). These
- * accidental chars are defined in the {@link Accidental} enum.
+ * The {@link #accidental() accidental} property consists of a character value
+ * if the note is a <i>sharp</i> &sharp; or <i>flat</i> &flat; or {@code null}
+ * if it's a natural &natural; (neither a sharp nor a flat). These accidental
+ * chars are defined in the {@link Accidental} enum.
  *
  * <h2>3.) {@code Octave}</h2>
- * The {@link Pitch#octave() octave} property consists of a non negative integer
- * designating what octave the note of this {@code Pitch} is in.
+ * The {@link #octave() octave} property consists of a non negative integer
+ * designating what octave the note of a {@link Pitch} object is in.
  *
- * <p>
- * In addition to the above 3 properties, they can also all be combined into
- * a single {@code String}. This string value is also stored as a property. On
- * top of that, this class contains the static {@link Pitch#parse(String) parse}
- * method capable of parsing a string into a {@code Pitch} object.
+ * <h2>4.) String value</h2>
+ * The above 3 properties can be combined into a single {@code String} that
+ * represents a {@link Pitch} object. It consists of a leading note char,
+ * followed by an accidental char or nothing if it doesn't have one, followed by
+ * an octave integer. A string value of each {@link Pitch} object is stored as a
+ * {@link #stringValue() stringValue} property. On top of that, the
+ * {@link Pitch} class contains the static {@link #parse(String) parse(String)}
+ * method capable of parsing a string into a {@link Pitch} object.
  *
  * <p>
  * An example of a 440hz wave would be natural {@code 'A'} (no sharp or flat) in
@@ -35,8 +38,9 @@ import java.util.Optional;
  * (sharp) in the 2nd octave e being {@code "B+2"}. The characters that
  * correspond to musical notes and their accidentals are defined in the
  * {@link Note} and {@link Accidental} enum respectively. A {@link Pitch} object
- * of the note B&sharp; (sharp) in the 2nd octave would be
- * <code>Pitch {note=Note.B, accidental=Accidental.SHARP, octave=2}</code>
+ * of the note B&sharp; (sharp) in the 2nd octave would be <code>Pitch {
+ * note=Note.B, accidental=Accidental.SHARP, octave=2}</code> with a string
+ * value of {@code "B+2"}.
  *
  * @see Note
  * @see Accidental
@@ -103,6 +107,7 @@ final class Pitch implements Comparable<Pitch> {
      * sharp &sharp; nor flat &flat;).
      *
      * @param note   The {@link Note} of the constructed {@code Pitch} object.
+     *
      * @param octave A non negative {@code int} specifying what octave the note
      *               of the constructed {@code Pitch} object is in.
      *
