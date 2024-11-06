@@ -11,6 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import static java.util.Collections.unmodifiableList;
@@ -19,6 +21,7 @@ import static java.util.Arrays.asList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class AudioStringArgProvider {
@@ -244,20 +247,33 @@ final class AudioStringArgProvider {
 final class AudioStringTest {
     @Test
     @DisplayName("AudioString.SILENCE_CHAR is '?'")
-    void AudioStringSilenceNoteCharConstIsQuestionMark() {
+    void audioStringSilenceNoteCharConstIsQuestionMark() {
         assertSame('?', AudioString.SILENCE_CHAR);
     }
 
     @Test
     @DisplayName("AudioString.Delineator.WAVE_SHAPE_AND_PITCH.charValue() is '>'")
-    void AudioStringDelineatorWaveShapeAndPitchCharConstIsRightAngleBracket() {
+    void audioStringDelineatorWaveShapeAndPitchCharConstIsRightAngleBracket() {
         assertSame('>', AudioString.Delineator.WAVE_SHAPE_AND_PITCH.charValue());
     }
 
     @Test
     @DisplayName("AudioString.Delineator.PITCH_AND_DURATION.charValue() is '.'")
-    void AudioStringDelineatorPitchAndDurationCharConstIsPeriod() {
+    void audioStringDelineatorPitchAndDurationCharConstIsPeriod() {
         assertSame('.', AudioString.Delineator.PITCH_AND_DURATION.charValue());
+    }
+
+    @ParameterizedTest(name = "AudioString.parse(null, {0}) throws")
+    @EnumSource(Wave.class)
+    @NullSource
+    void audioStringParseTwoNullsThrows(Wave wave) {
+        assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null, wave));
+    }
+
+    @Test
+    @DisplayName("AudioString.parse(null) throws")
+    void audioStringParseSingleNullThrows() {
+        assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null));
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
