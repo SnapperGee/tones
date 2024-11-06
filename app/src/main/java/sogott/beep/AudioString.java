@@ -31,7 +31,7 @@ import java.util.Optional;
  *
  * <p>
  * The character used to designate the start of the duration suffix segment is
- * defined via the {@link AudioString.Delimiter#PITCH_AND_DURATION} enum value.
+ * defined via the {@link AudioString.Delimiter#VOICE_AND_DURATION} enum value.
  *
  * <h2>Audible audio</h2>
  * A {@code String} can be parsed to audible audio if preceding the duration
@@ -128,7 +128,7 @@ final class AudioString {
      */
     static enum Delimiter {
         WAVE_SHAPE_AND_PITCH('>'),
-        PITCH_AND_DURATION('.');
+        VOICE_AND_DURATION('.');
 
         private final char _charValue;
 
@@ -143,7 +143,7 @@ final class AudioString {
 
     private final static String SILENCE_PREFIX = new StringBuilder()
             .append(SILENCE_CHAR)
-            .append(Delimiter.PITCH_AND_DURATION.charValue())
+            .append(Delimiter.VOICE_AND_DURATION.charValue())
             .toString();
 
     static Optional<Audio> parse(String aString, Wave defaultWaveShape) {
@@ -213,7 +213,7 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String durationString = aString.substring(aString.indexOf(Delimiter.PITCH_AND_DURATION.charValue()) + 1);
+        final String durationString = aString.substring(aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue()) + 1);
         final int duration = Integer.parseInt(durationString);
         return Optional.of(Audio.silence(duration));
     }

@@ -47,7 +47,7 @@ final class AudioStringArgProvider {
                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue(),
                                                             note.charValue(),
                                                             octave,
-                                                            AudioString.Delimiter.PITCH_AND_DURATION.charValue(),
+                                                            AudioString.Delimiter.VOICE_AND_DURATION.charValue(),
                                                             duration),
                                                     new Audio(wave, new Pitch(note, null, octave), duration)),
                                                     arguments("%s%c%c%d%c%d".formatted(waveStringAlias.toLowerCase(),
@@ -55,7 +55,7 @@ final class AudioStringArgProvider {
                                                             Character.toLowerCase(note.charValue()),
                                                             octave,
                                                             Character.toLowerCase(
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue()),
                                                             duration),
                                                             new Audio(wave, new Pitch(note, null, octave), duration))),
@@ -67,7 +67,7 @@ final class AudioStringArgProvider {
                                                                     note.charValue(),
                                                                     accidental.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             new Audio(wave, new Pitch(note, accidental, octave),
@@ -80,7 +80,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     new Audio(wave, new Pitch(note, accidental, octave),
@@ -100,7 +100,7 @@ final class AudioStringArgProvider {
                                     Stream.of(arguments(
                                             "%c%d%c%d".formatted(note.charValue(),
                                                     octave,
-                                                    AudioString.Delimiter.PITCH_AND_DURATION.charValue(),
+                                                    AudioString.Delimiter.VOICE_AND_DURATION.charValue(),
                                                     duration),
                                             wave,
                                             new Audio(wave, new Pitch(note, null, octave), duration)),
@@ -109,7 +109,7 @@ final class AudioStringArgProvider {
                                                             Character.toLowerCase(note.charValue()),
                                                             octave,
                                                             Character.toLowerCase(
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue()),
                                                             duration),
                                                     wave,
@@ -120,7 +120,7 @@ final class AudioStringArgProvider {
                                                             note.charValue(),
                                                             accidental.charValue(),
                                                             octave,
-                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                     .charValue(),
                                                             duration),
                                                     wave,
@@ -131,7 +131,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     accidental.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             wave,
@@ -151,14 +151,14 @@ final class AudioStringArgProvider {
                             Stream.of(arguments(
                                     "%c%d%c%d".formatted(note.charValue(),
                                             octave,
-                                            AudioString.Delimiter.PITCH_AND_DURATION.charValue(),
+                                            AudioString.Delimiter.VOICE_AND_DURATION.charValue(),
                                             duration)),
                                     arguments(
                                             "%c%d%c%d".formatted(
                                                     Character.toLowerCase(note.charValue()),
                                                     octave,
                                                     Character.toLowerCase(
-                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                     .charValue()),
                                                     duration))),
                             accidentals.stream()
@@ -167,7 +167,7 @@ final class AudioStringArgProvider {
                                                     note.charValue(),
                                                     accidental.charValue(),
                                                     octave,
-                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                             .charValue(),
                                                     duration)),
                                             arguments(
@@ -175,7 +175,7 @@ final class AudioStringArgProvider {
                                                             Character.toLowerCase(note.charValue()),
                                                             accidental.charValue(),
                                                             octave,
-                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                     .charValue(),
                                                             duration)))));
                 });
@@ -201,7 +201,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration)),
                                                     arguments(
@@ -212,7 +212,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration)),
                                                     arguments(
@@ -221,7 +221,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration)),
                                                     arguments(
@@ -232,7 +232,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration)),
                                                     // missing
@@ -242,7 +242,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration)),
                                                     arguments(
@@ -251,14 +251,14 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration)),
                                                     arguments(
                                                             "%1$s%2$c%3$d%4$c%5$d".formatted(waveStringAlias,
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration)),
                                                     arguments(
@@ -268,7 +268,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     Character.toLowerCase(note.charValue()),
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration)),
                                                     arguments(
@@ -286,7 +286,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue())))),
                                             accidentals.stream()
                                                     .flatMap(accidental -> Stream.of(
@@ -299,7 +299,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -310,7 +310,7 @@ final class AudioStringArgProvider {
                                                                             note.charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -321,7 +321,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -332,7 +332,7 @@ final class AudioStringArgProvider {
                                                                             note.charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -343,7 +343,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             // missing
@@ -354,7 +354,7 @@ final class AudioStringArgProvider {
                                                                             note.charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -363,7 +363,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -373,7 +373,7 @@ final class AudioStringArgProvider {
                                                                                     .charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -383,7 +383,7 @@ final class AudioStringArgProvider {
                                                                                     .charValue(),
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration)),
                                                             arguments(
@@ -403,7 +403,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue())))))));
                 });
             }
@@ -426,7 +426,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             wave),
@@ -438,7 +438,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration),
                                                             wave),
@@ -448,7 +448,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             wave),
@@ -460,7 +460,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration),
                                                             wave),
@@ -471,7 +471,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             wave),
@@ -481,7 +481,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration),
                                                             wave),
@@ -489,7 +489,7 @@ final class AudioStringArgProvider {
                                                             "%1$s%2$c%3$d%4$c%5$d".formatted(waveStringAlias,
                                                                     note.charValue(),
                                                                     octave,
-                                                                    AudioString.Delimiter.PITCH_AND_DURATION
+                                                                    AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             wave),
@@ -500,7 +500,7 @@ final class AudioStringArgProvider {
                                                                             .charValue(),
                                                                     Character.toLowerCase(note.charValue()),
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     duration),
                                                             wave),
@@ -520,7 +520,7 @@ final class AudioStringArgProvider {
                                                                     Character.toLowerCase(note.charValue()),
                                                                     octave,
                                                                     Character.toLowerCase(
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue())),
                                                             wave)),
                                             accidentals.stream()
@@ -534,7 +534,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -546,7 +546,7 @@ final class AudioStringArgProvider {
                                                                             note.charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -558,7 +558,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -570,7 +570,7 @@ final class AudioStringArgProvider {
                                                                             note.charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -582,7 +582,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -594,7 +594,7 @@ final class AudioStringArgProvider {
                                                                             note.charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -604,7 +604,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -615,7 +615,7 @@ final class AudioStringArgProvider {
                                                                                     .charValue(),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -626,7 +626,7 @@ final class AudioStringArgProvider {
                                                                                     .charValue(),
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     wave),
@@ -648,7 +648,7 @@ final class AudioStringArgProvider {
                                                                             Character.toLowerCase(note.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
-                                                                            AudioString.Delimiter.PITCH_AND_DURATION
+                                                                            AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue()),
                                                                     wave))))));
                 });
@@ -671,9 +671,9 @@ final class AudioStringTest {
     }
 
     @Test
-    @DisplayName("AudioString.Delimiter.PITCH_AND_DURATION.charValue() is '.'")
-    void audioStringDelimiterPitchAndDurationCharConstIsPeriod() {
-        assertSame('.', AudioString.Delimiter.PITCH_AND_DURATION.charValue());
+    @DisplayName("AudioString.Delimiter.VOICE_AND_DURATION.charValue() is '.'")
+    void audioStringDelimiterVoiceAndDurationCharConstIsPeriod() {
+        assertSame('.', AudioString.Delimiter.VOICE_AND_DURATION.charValue());
     }
 
     @ParameterizedTest(name = "AudioString.parse(null, {0}) throws")
