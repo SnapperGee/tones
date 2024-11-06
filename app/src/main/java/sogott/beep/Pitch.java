@@ -59,15 +59,15 @@ final class Pitch implements Comparable<Pitch> {
      * Constructs a {@link Pitch} object instance with the following note,
      * accidental, and octave properties.
      *
-     * @param note       The {@link Note} of the constructed {@code Pitch} object.
+     * @param note       The {@link Note} of the constructed {@link Pitch} object.
      *
      * @param accidental The {@link Accidental} (sharp &sharp; or flat &flat;)
-     *                   of the constructed {@code Pitch} object or {@code null} if
+     *                   of the constructed {@link Pitch} object or {@code null} if
      *                   it's natural &natural; (neither sharp &sharp; nor flat
      *                   &flat;).
      *
      * @param octave     A non negative {@code int} specifying what octave the note
-     *                   of the constructed {@code Pitch} object is in.
+     *                   of the constructed {@link Pitch} object is in.
      *
      * @throws IllegalArgumentException if the passed note is {@code null} or
      *                                  the octave is negative (less than 0).
@@ -106,10 +106,10 @@ final class Pitch implements Comparable<Pitch> {
      * to {@code null} designating that its note is natural &natural; (neither
      * sharp &sharp; nor flat &flat;).
      *
-     * @param note   The {@link Note} of the constructed {@code Pitch} object.
+     * @param note   The {@link Note} of the constructed {@link Pitch} object.
      *
      * @param octave A non negative {@code int} specifying what octave the note
-     *               of the constructed {@code Pitch} object is in.
+     *               of the constructed {@link Pitch} object is in.
      *
      * @throws IllegalArgumentException if the octave is negative (less than 0).
      *
