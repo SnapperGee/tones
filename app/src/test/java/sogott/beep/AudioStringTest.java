@@ -5,6 +5,7 @@ import java.util.random.RandomGenerator;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -243,16 +244,19 @@ final class AudioStringArgProvider {
 
 final class AudioStringTest {
     @Test
+    @DisplayName("AudioString.SILENCE_CHAR is '?'")
     void AudioStringSilenceNoteCharConstIsQuestionMark() {
         assertSame('?', AudioString.SILENCE_CHAR);
     }
 
     @Test
+    @DisplayName("AudioString.Delineator.WAVE_SHAPE_AND_PITCH.charValue() is '>'")
     void AudioStringDelineatorWaveShapeAndPitchCharConstIsRightAngleBracket() {
         assertSame('>', AudioString.Delineator.WAVE_SHAPE_AND_PITCH.charValue());
     }
 
     @Test
+    @DisplayName("AudioString.Delineator.PITCH_AND_DURATION.charValue() is '.'")
     void AudioStringDelineatorPitchAndDurationCharConstIsPeriod() {
         assertSame('.', AudioString.Delineator.PITCH_AND_DURATION.charValue());
     }
