@@ -156,11 +156,11 @@ final class Pitch implements Comparable<Pitch> {
     }
 
     /**
-     * A {@code String} representation of this Pitch object. Note that this is
-     * different from the string returned by the {@link #toString()} method
-     * which is more suited for debugging purposes.
+     * A {@code String} representation of this {@link Pitch} object. Note that
+     * this is different from the string returned by the {@link #toString()}
+     * method which is more suited for debugging purposes.
      *
-     * @return a {@code String} representation of this Pitch object.
+     * @return a {@code String} representation of this {@link Pitch} object.
      */
     String stringValue() {
         return this._stringValue;
