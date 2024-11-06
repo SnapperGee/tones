@@ -255,7 +255,7 @@ enum Wave {
         return parse(aString, true);
     }
 
-    byte[] generate(double freq, int duration) {
-        return this._generatorFunc.apply(freq, duration).apply(Default.SAMPLE_RATE, Default.AMPLITUDE);
+    byte[] generate(double frequency, int duration) {
+        return this._generatorFunc.apply(frequency, duration).apply(Default.SAMPLE_RATE, Default.AMPLITUDE);
     }
 }
