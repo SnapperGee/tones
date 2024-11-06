@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.EmptySource;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.hash;
@@ -479,10 +480,16 @@ final class PitchTest {
 
     @ParameterizedTest(name = "Pitch.parse(\"{0}\") returns empty Optional")
     @ArgumentsSource(PitchArgProvider.Invalid.PitchStringValues.class)
-    @NullAndEmptySource
+    @EmptySource
     void staticPitchParseMethodReturnsEmptyOptionalIfPassedInvalidString(String invalidStringValue) {
         final Optional<Pitch> pitchOptional = Pitch.parse(invalidStringValue);
         assertTrue(pitchOptional.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Pitch.parse(null) throws IllegalArgumentException")
+    void staticPitchParseMethodThrowsWhenPassedNull() {
+        assertThrows(IllegalArgumentException.class, () -> Pitch.parse(null));
     }
 
     //////////////
