@@ -114,6 +114,9 @@ final class AudioString {
      */
     final static char SILENCE_CHAR = '?';
 
+    /**
+     * Enum of char values used to separate the segments of an audio string.
+     */
     static enum Delimiter {
         WAVE_SHAPE_AND_PITCH('>'),
         PITCH_AND_DURATION('.');
