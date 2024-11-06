@@ -13,7 +13,7 @@ import java.util.Optional;
  * in the {@link Note} enum.
  *
  * <h2>2.) {@code Accidental}</h2>
- * The {@link Pitch#accidental() accidental} property consists of an character
+ * The {@link Pitch#accidental() accidental} property consists of a character
  * value if the note is a <i>sharp</i> &sharp; or <i>flat</i> &flat; or
  * {@code null} if it's a natural &natural; (neither a sharp nor flat). These
  * accidental chars are defined in the {@link Accidental} enum.
