@@ -108,6 +108,10 @@ import java.util.Optional;
  * @see AudioString.Delineator
  */
 final class AudioString {
+    /**
+     * The character used as a leading prefix to designate that a string should
+     * be parsed as silence (as opposed to a tone).
+     */
     final static char SILENCE_CHAR = '?';
 
     static enum Delineator {
