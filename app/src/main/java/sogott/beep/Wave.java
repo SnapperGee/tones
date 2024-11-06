@@ -72,8 +72,6 @@ enum Wave {
 
     final private static Set<Wave> waves = unmodifiableSet(EnumSet.allOf(Wave.class));
 
-    final private static float DEFAULT_SAMPLE_RATE = 44100;
-
     final private BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> _generatorFunc;
 
     final private String _stringValue;
@@ -258,11 +256,11 @@ enum Wave {
     }
 
     byte[] generate(double freq, int duration) {
-        return this._generatorFunc.apply(freq, duration).apply(DEFAULT_SAMPLE_RATE, Short.MAX_VALUE);
+        return this._generatorFunc.apply(freq, duration).apply(Default.SAMPLE_RATE, Default.AMPLITUDE);
     }
 
     byte[] generate(double freq, int duration, short amplitude) {
-        return this._generatorFunc.apply(freq, duration).apply(DEFAULT_SAMPLE_RATE, amplitude);
+        return this._generatorFunc.apply(freq, duration).apply(Default.SAMPLE_RATE, amplitude);
     }
 
     byte[] generate(double freq, int duration, float sampleRate, short amplitude) {

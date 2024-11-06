@@ -15,19 +15,6 @@ import org.apache.commons.cli.ParseException;
 import static java.util.Collections.unmodifiableList;
 
 final public class Main {
-    private final static class Default {
-        final static int BPM = 140;
-        final static int NOTE_BEAT_VALUE = 4;
-        final static Wave WAVE = Wave.SIN;
-        final static float SAMPLE_RATE = 44100;
-        final static short AMPLITUDE = Short.MAX_VALUE;
-        final static int SAMPLE_SIZE = 16; // in bits
-        final static int CHANNELS = 1;
-        final static boolean SIGNED = true;
-        final static boolean BIG_ENDIAN = false;
-        final static double SILENCE_RATIO = 0.85;
-    }
-
     public static void main(String[] args) {
         final Options options = new Options()
                 .addOption(CliOption.BPM.value())
