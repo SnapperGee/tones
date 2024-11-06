@@ -73,6 +73,24 @@ final class Audio implements Comparable<Audio> {
                 Audio.class.getSimpleName(), this._duration);
     }
 
+    /**
+     * Constructs an {@link Audio} object instance with the following wave,
+     * pitch, and duration properties.
+     *
+     * @param wave     The {@link Wave} of the constructed {@link Audio} object.
+     *
+     * @param pitch    The {@link Pitch} of the constructed {@link Audio} object.
+     *
+     * @param duration The duration {@code int} of the constructed {@link Audio}
+     *                 object.
+     *
+     * @throws IllegalArgumentException if either of the wave or pitch arguments
+     *                                  are {@code null} or the duration is not
+     *                                  positive (less than or equal to 0).
+     *
+     * @see Wave
+     * @see Pitch
+     */
     Audio(Wave wave, Pitch pitch, int duration) {
         if (wave == null) {
             throw new IllegalArgumentException(
@@ -84,8 +102,8 @@ final class Audio implements Comparable<Audio> {
                     "Null %s %s.".formatted(Audio.class.getSimpleName(), Pitch.class.getSimpleName()));
         }
 
-        if (duration < 0) {
-            throw new IllegalArgumentException("Negative duration: %d".formatted(duration));
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
         }
 
         this._wave = wave;
