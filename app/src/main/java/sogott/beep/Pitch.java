@@ -123,7 +123,7 @@ final class Pitch implements Comparable<Pitch> {
      * The {@link Note} value of this {@link Pitch} object. That is, one of the
      * char values A-G defined in the {@link Note} enum.
      *
-     * @return the {@link Note} value of this {@link Pitch} object.
+     * @return The {@link Note} value of this {@link Pitch} object.
      *
      * @see Note
      */
@@ -137,7 +137,7 @@ final class Pitch implements Comparable<Pitch> {
      * is a sharp &sharp; or flat &flat; respectively or {@code null} if it's
      * a natural &natural; (neither sharp &sharp; nor flat &flat;).
      *
-     * @return tThe {@link Accidental} value of this {@link Pitch} object.
+     * @return The {@link Accidental} value of this {@link Pitch} object.
      *
      * @see Accidental
      */
@@ -148,7 +148,7 @@ final class Pitch implements Comparable<Pitch> {
     /**
      * A non negative integer specifying what octave this Pitch's note is in.
      *
-     * @return a non negative integer specifying what octave this Pitch's note is
+     * @return A non negative integer specifying what octave this Pitch's note is
      *         in.
      */
     int octave() {
