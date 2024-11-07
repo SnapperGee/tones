@@ -1,9 +1,13 @@
 package sogott.beep;
 
 import java.util.NoSuchElementException;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.ParseException;
 
 import static java.util.Arrays.stream;
 
@@ -43,6 +47,8 @@ enum CliOption {
             .desc("Ignores all other arguments and prints this help message.")
             .build());
 
+    final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
+
     final static String CMD_LINE_SYNTAX = "Usage: beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE>]NOTE.INTEGER..."
             .formatted(CliOption.BPM.value().getLongOpt(),
                     CliOption.BPM.value().getOpt(),
@@ -63,6 +69,10 @@ enum CliOption {
             new Options(),
             (options, option) -> options.addOption(option.value()),
             (options1, options2) -> options1.addOptions(options2));
+
+    final static CommandLine parse(String[] args) throws ParseException {
+        return DEFAULT_PARSER.parse(ALL_OPTIONS, args);
+    }
 
     final static void printHelp() {
         final HelpFormatter helpFormatter = new HelpFormatter();

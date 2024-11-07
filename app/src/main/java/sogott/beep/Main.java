@@ -7,18 +7,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.LineUnavailableException;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
 import static java.util.Collections.unmodifiableList;
 
 final public class Main {
     public static void main(String[] args) {
 
-        final CommandLineParser cliParser = new DefaultParser(false);
-
         try {
-            final CommandLine cliArgs = cliParser.parse(CliOption.ALL_OPTIONS, args);
+            final CommandLine cliArgs = CliOption.parse(args);
 
             if (cliArgs.hasOption(CliOption.HELP.value())) {
                 CliOption.printHelp();
