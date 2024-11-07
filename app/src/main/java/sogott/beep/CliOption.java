@@ -1,8 +1,11 @@
 package sogott.beep;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.HelpFormatter;
+
+import static java.util.Arrays.stream;
 
 enum CliOption {
     BPM(Option.builder("b")
@@ -22,7 +25,7 @@ enum CliOption {
             .argName("WAVE")
             .longOpt("wave")
             .hasArg()
-            .converter(aString -> Arrays.stream(Wave.values())
+            .converter(aString -> stream(Wave.values())
                     .filter(wave -> wave.stringValueAliases().stream()
                             .anyMatch(waveStringValue -> aString
                                     .equalsIgnoreCase(waveStringValue)))
@@ -55,6 +58,18 @@ enum CliOption {
                     CliOption.HELP.value().getLongOpt(),
                     CliOption.HELP.value().getOpt())
             + "\nPlay musical note based beeps.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
+
+    final static Options ALL = stream(CliOption.values()).reduce(
+            new Options(),
+            (options, option) -> options.addOption(option.value()),
+            (options1, options2) -> options1.addOptions(options2));
+
+    final static void printHelp() {
+        final HelpFormatter helpFormatter = new HelpFormatter();
+        helpFormatter.printHelp(
+                CliOption.CMD_LINE_SYNTAX,
+                ALL);
+    }
 
     final private Option _value;
 

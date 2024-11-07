@@ -9,31 +9,19 @@ import javax.sound.sampled.LineUnavailableException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import static java.util.Collections.unmodifiableList;
 
 final public class Main {
     public static void main(String[] args) {
-        final Options options = new Options()
-                .addOption(CliOption.BPM.value())
-                .addOption(CliOption.NOTE_BEAT_VALUE.value())
-                .addOption(CliOption.WAVE.value())
-                .addOption(CliOption.VERSION.value())
-                .addOption(CliOption.HELP.value());
 
         final CommandLineParser cliParser = new DefaultParser(false);
 
         try {
-            final CommandLine cliArgs = cliParser.parse(options, args);
+            final CommandLine cliArgs = cliParser.parse(CliOption.ALL, args);
 
             if (cliArgs.hasOption(CliOption.HELP.value())) {
-                final HelpFormatter helpFormatter = new HelpFormatter();
-
-                helpFormatter.printHelp(
-                        CliOption.CMD_LINE_SYNTAX,
-                        options);
+                CliOption.printHelp();
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");
             } else {
