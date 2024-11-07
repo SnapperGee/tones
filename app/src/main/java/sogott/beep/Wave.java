@@ -255,6 +255,18 @@ enum Wave {
         return parse(aString, true);
     }
 
+    /**
+     * Generates an array of {@code byte}s that can be used as an audio buffer
+     * to generate audio.
+     *
+     * @param frequency The frequency of the generated audio {@code byte} buffer.
+     *
+     * @param duration  The duration of the time span the generated audio
+     *                  {@code byte} buffer will playback for.
+     *
+     * @return An array of {@code byte}s that can be used as an audio buffer
+     *         to generate audio.
+     */
     byte[] generate(double frequency, int duration) {
         return this._generatorFunc.apply(frequency, duration).apply(Default.SAMPLE_RATE, Default.AMPLITUDE);
     }
