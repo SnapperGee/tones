@@ -1,6 +1,9 @@
 package sogott.beep;
 
 import java.util.NoSuchElementException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.FileAlreadyExistsException;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -10,8 +13,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 
 import static java.util.Arrays.stream;
-
-import java.nio.file.Path;
 
 enum CliOption {
     BPM(Option.builder("b")
@@ -44,7 +45,14 @@ enum CliOption {
             .argName("PATH")
             .longOpt("out")
             .hasArg()
-            .type(Path.class)
+            .converter(aString -> {
+                final Path outputFilePath = Path.of(aString).toAbsolutePath().normalize();
+                if (Files.exists(outputFilePath)) {
+                    throw new FileAlreadyExistsException(
+                            "Output path already exists: \"%s\"".formatted(outputFilePath.toString()));
+                }
+                return outputFilePath;
+            })
             .desc("Outputs the generated audio to a 44.1khz/16 bit wav file at PATH.")
             .build()),
     VERSION(Option.builder("v")
