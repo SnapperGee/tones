@@ -59,7 +59,7 @@ enum CliOption {
                     CliOption.HELP.value().getOpt())
             + "\nPlay musical note based beeps.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
 
-    final static Options ALL = stream(CliOption.values()).reduce(
+    final static Options ALL_OPTIONS = stream(CliOption.values()).reduce(
             new Options(),
             (options, option) -> options.addOption(option.value()),
             (options1, options2) -> options1.addOptions(options2));
@@ -68,7 +68,7 @@ enum CliOption {
         final HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.printHelp(
                 CliOption.CMD_LINE_SYNTAX,
-                ALL);
+                ALL_OPTIONS);
     }
 
     final private Option _value;

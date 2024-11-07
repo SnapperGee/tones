@@ -18,7 +18,7 @@ final public class Main {
         final CommandLineParser cliParser = new DefaultParser(false);
 
         try {
-            final CommandLine cliArgs = cliParser.parse(CliOption.ALL, args);
+            final CommandLine cliArgs = cliParser.parse(CliOption.ALL_OPTIONS, args);
 
             if (cliArgs.hasOption(CliOption.HELP.value())) {
                 CliOption.printHelp();
