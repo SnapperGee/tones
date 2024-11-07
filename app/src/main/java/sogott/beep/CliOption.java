@@ -45,7 +45,7 @@ enum CliOption {
             .longOpt("out")
             .hasArg()
             .type(Path.class)
-            .desc("Outputs the generated audio to a wave file at PATH.")
+            .desc("Outputs the generated audio to a 44.1khz/16 bit wav file at PATH.")
             .build()),
     VERSION(Option.builder("v")
             .longOpt("version")
