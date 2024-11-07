@@ -33,6 +33,8 @@ import static java.util.Collections.unmodifiableSet;
  * <p>
  * This enum also contains various static methods for processing strings in ways
  * related to wave shapes.
+ *
+ * @see GenerateWave
  */
 enum Wave {
     /**
