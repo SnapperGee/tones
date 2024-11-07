@@ -75,10 +75,10 @@ enum CliOption {
     }
 
     final static void printHelp() {
-        final HelpFormatter helpFormatter = new HelpFormatter();
-        helpFormatter.printHelp(
+        new HelpFormatter().printHelp(
                 CliOption.CMD_LINE_SYNTAX,
                 ALL_OPTIONS);
+        ;
     }
 
     final private Option _value;
