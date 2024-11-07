@@ -11,6 +11,8 @@ import org.apache.commons.cli.ParseException;
 
 import static java.util.Arrays.stream;
 
+import java.nio.file.Path;
+
 enum CliOption {
     BPM(Option.builder("b")
             .argName("INTEGER")
@@ -38,6 +40,13 @@ enum CliOption {
                             "Invalid WAVE command line option argument.")))
             .desc("Set default wave shape to WAVE (defaults to SIN).")
             .build()),
+    OUT(Option.builder("o")
+            .argName("PATH")
+            .longOpt("out")
+            .hasArg()
+            .type(Path.class)
+            .desc("Outputs the generated audio to a wave file at PATH.")
+            .build()),
     VERSION(Option.builder("v")
             .longOpt("version")
             .desc("Prints currently installed version (ignores all other arguments except the help option).")
@@ -49,7 +58,7 @@ enum CliOption {
 
     private final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
 
-    private final static String CMD_LINE_SYNTAX = "Usage: beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [WAVE>]NOTE.INTEGER..."
+    private final static String CMD_LINE_SYNTAX = "Usage: beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [%s>]NOTE.INTEGER..."
             .formatted(CliOption.BPM.value().getLongOpt(),
                     CliOption.BPM.value().getOpt(),
                     CliOption.BPM.value().getArgName(),
@@ -62,7 +71,11 @@ enum CliOption {
                     CliOption.WAVE.value().getOpt(),
                     CliOption.WAVE.value().getArgName(),
                     CliOption.HELP.value().getLongOpt(),
-                    CliOption.HELP.value().getOpt())
+                    CliOption.HELP.value().getOpt(),
+                    CliOption.OUT.value().getLongOpt(),
+                    CliOption.OUT.value().getOpt(),
+                    CliOption.OUT.value().getArgName(),
+                    CliOption.WAVE.value().getArgName())
             + "\nPlay musical note based beeps.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
 
     private final static Options ALL_OPTIONS = stream(CliOption.values()).reduce(
