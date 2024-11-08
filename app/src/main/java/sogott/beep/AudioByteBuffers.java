@@ -1,17 +1,26 @@
 package sogott.beep;
 
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.SequenceInputStream;
+import java.nio.file.Path;
 
-import static java.util.Arrays.copyOfRange;
+import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import static java.util.Arrays.copyOfRange;
+import static java.util.Collections.enumeration;
+
 final class AudioByteBuffers {
-    private final static AudioFormat audioFormat = new AudioFormat(Default.SAMPLE_RATE,
+    private final static AudioFormat AUDIO_FORMAT = new AudioFormat(Default.SAMPLE_RATE,
             Default.SAMPLE_SIZE,
             Default.CHANNELS, Default.SIGNED, Default.BIG_ENDIAN);
 
@@ -39,12 +48,12 @@ final class AudioByteBuffers {
                                                 * wholeNoteDuration));
 
                         final int soundBytes = ((int) (Default.SILENCE_RATIO * audioByteBuffer.length))
-                                / audioFormat.getFrameSize()
-                                * audioFormat.getFrameSize();
+                                / AUDIO_FORMAT.getFrameSize()
+                                * AUDIO_FORMAT.getFrameSize();
 
                         final byte[] silenceBuffer = new byte[(audioByteBuffer.length - soundBytes)
-                                / audioFormat.getFrameSize()
-                                * audioFormat.getFrameSize()];
+                                / AUDIO_FORMAT.getFrameSize()
+                                * AUDIO_FORMAT.getFrameSize()];
 
                         buffers.add(copyOfRange(audioByteBuffer, 0, soundBytes));
                         buffers.add(silenceBuffer);
@@ -63,7 +72,7 @@ final class AudioByteBuffers {
                     return buffers;
                 });
 
-        this._line = AudioSystem.getSourceDataLine(audioFormat);
+        this._line = AudioSystem.getSourceDataLine(AUDIO_FORMAT);
     }
 
     static AudioByteBuffers create(Collection<Audio> audioCollection, double wholeNoteDuration) {
@@ -79,7 +88,7 @@ final class AudioByteBuffers {
 
     void outputToAudio() {
         try {
-            this._line.open(audioFormat);
+            this._line.open(AUDIO_FORMAT);
             this._line.start();
 
             for (final byte[] buffer : this._audioByteBuffers) {
@@ -95,6 +104,27 @@ final class AudioByteBuffers {
             System.err.format("\n%s", e.getMessage());
             System.exit(311);
         }
+    }
+
+    Path outputToFile(Path outputFilePath) {
+        final List<ByteArrayInputStream> inputStreams = this._audioByteBuffers.stream().map(ByteArrayInputStream::new)
+                .toList();
+
+        final Enumeration<ByteArrayInputStream> inputStreamsEnumeration = enumeration(inputStreams);
+        final SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStreamsEnumeration);
+
+        final AudioInputStream audioInputStream = new AudioInputStream(sequenceInputStream, AUDIO_FORMAT,
+                AudioSystem.NOT_SPECIFIED);
+
+        try {
+            AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, outputFilePath.toFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println('\n' + e.getMessage());
+            System.exit(322);
+        }
+
+        return outputFilePath;
     }
 
     @Override
