@@ -1,6 +1,8 @@
 package sogott.beep;
 
 import java.util.Collection;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
@@ -23,17 +25,50 @@ final class AudioList {
         }
 
         this._audioList = List.copyOf(audioCollection);
-        this._audioByteBuffers = this._audioList.stream().map(audio -> audio.wave() != null
-                ? audio.wave()
-                        .generate(Frequency.from(audio.pitch()),
-                                (int) Math.round(1.0
-                                        / audio.duration()
-                                        * wholeNoteDuration))
-                : GenerateAudioByteBuffer.silence(
-                        (int) Math.round(1.0 / audio.duration()
-                                * wholeNoteDuration),
-                        Default.SAMPLE_RATE))
-                .toList();
+        this._audioByteBuffers = this._audioList.stream().reduce(
+                new ArrayList<byte[]>(),
+                (buffers, audio) -> {
+                    if (audio.wave() != null) {
+                        final byte[] byteBufferToAdd = audio.wave()
+                                .generate(Frequency.from(audio.pitch()),
+                                        (int) Math.round(1.0
+                                                / audio.duration()
+                                                * wholeNoteDuration));
+
+                        final int soundBytes = ((int) (Default.SILENCE_RATIO * byteBufferToAdd.length))
+                                / audioFormat.getFrameSize()
+                                * audioFormat.getFrameSize();
+
+                        final byte[] silenceBuffer = new byte[(byteBufferToAdd.length - soundBytes)
+                                / audioFormat.getFrameSize()
+                                * audioFormat.getFrameSize()];
+
+                        buffers.add(Arrays.copyOfRange(byteBufferToAdd, 0, soundBytes));
+                        buffers.add(silenceBuffer);
+                    } else {
+                        final byte[] byteBufferToAdd = GenerateAudioByteBuffer.silence(
+                                (int) Math.round(1.0 / audio.duration()
+                                        * wholeNoteDuration),
+                                Default.SAMPLE_RATE);
+                        buffers.add(byteBufferToAdd);
+                    }
+                    // audio.wave() != null
+                    // ? audio.wave()
+                    // .generate(Frequency.from(audio.pitch()),
+                    // (int) Math.round(1.0
+                    // / audio.duration()
+                    // * wholeNoteDuration))
+                    // : GenerateAudioByteBuffer.silence(
+                    // (int) Math.round(1.0 / audio.duration()
+                    // * wholeNoteDuration),
+                    // Default.SAMPLE_RATE);
+                    return buffers;
+                },
+                (buffers, moreBuffers) -> {
+                    buffers.addAll(moreBuffers);
+                    return buffers;
+                });
+
         this._line = AudioSystem.getSourceDataLine(audioFormat);
     }
 
@@ -54,14 +89,7 @@ final class AudioList {
             this._line.start();
 
             for (final byte[] buffer : this._audioByteBuffers) {
-                final int soundBytes = ((int) (Default.SILENCE_RATIO * buffer.length))
-                        / audioFormat.getFrameSize()
-                        * audioFormat.getFrameSize();
-                this._line.write(buffer, 0, soundBytes);
-                final byte[] silenceBuffer = new byte[(buffer.length - soundBytes)
-                        / audioFormat.getFrameSize()
-                        * audioFormat.getFrameSize()];
-                this._line.write(silenceBuffer, 0, silenceBuffer.length);
+                this._line.write(buffer, 0, buffer.length);
             }
 
             this._line.drain();
