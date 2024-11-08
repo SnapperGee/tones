@@ -64,13 +64,13 @@ final public class Main {
                 final AudioByteBuffers audioCollection = AudioByteBuffers
                         .create(validAndInvalidOperands.valid(), wholeNoteDuration);
 
-                audioCollection.outputToAudio();
-
                 if (cliArgs.hasOption(CliOption.OUT.value())) {
                     final Path outputFilePath = cliArgs.getParsedOptionValue(CliOption.OUT.value());
                     audioCollection.outputToFile(outputFilePath);
                     System.out.println("Audio file written to: \"%s\"".formatted(outputFilePath));
                 }
+
+                audioCollection.outputToAudio();
             }
         } catch (ParseException e) {
             e.printStackTrace();
