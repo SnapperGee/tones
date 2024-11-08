@@ -70,7 +70,7 @@ final public class Main {
                                                 (int) Math.round(1.0
                                                         / audio.duration()
                                                         * wholeNoteDuration))
-                                : GenerateWave.silence(
+                                : GenerateAudioByteBuffer.silence(
                                         (int) Math.round(1.0 / audio.duration()
                                                 * wholeNoteDuration),
                                         Default.SAMPLE_RATE))
