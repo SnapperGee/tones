@@ -10,7 +10,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-final class AudioList {
+final class AudioByteBuffers {
     private final static AudioFormat audioFormat = new AudioFormat(Default.SAMPLE_RATE,
             Default.SAMPLE_SIZE,
             Default.CHANNELS, Default.SIGNED, Default.BIG_ENDIAN);
@@ -19,7 +19,8 @@ final class AudioList {
     private final List<byte[]> _audioByteBuffers;
     private final SourceDataLine _line;
 
-    AudioList(Collection<Audio> audioCollection, double wholeNoteDuration) throws LineUnavailableException {
+    AudioByteBuffers(Collection<Audio> audioCollection, double wholeNoteDuration)
+            throws LineUnavailableException {
         if (audioCollection == null) {
             throw new IllegalArgumentException("Null audio collection.");
         }
@@ -28,29 +29,31 @@ final class AudioList {
         this._audioByteBuffers = this._audioList.stream().reduce(
                 new ArrayList<byte[]>(),
                 (buffers, audio) -> {
+                    // if audio is not silence, trim tail of audio to prevent
+                    // same notes from blending together
                     if (audio.wave() != null) {
-                        final byte[] byteBufferToAdd = audio.wave()
+                        final byte[] audioByteBuffer = audio.wave()
                                 .generate(Frequency.from(audio.pitch()),
                                         (int) Math.round(1.0
                                                 / audio.duration()
                                                 * wholeNoteDuration));
 
-                        final int soundBytes = ((int) (Default.SILENCE_RATIO * byteBufferToAdd.length))
+                        final int soundBytes = ((int) (Default.SILENCE_RATIO * audioByteBuffer.length))
                                 / audioFormat.getFrameSize()
                                 * audioFormat.getFrameSize();
 
-                        final byte[] silenceBuffer = new byte[(byteBufferToAdd.length - soundBytes)
+                        final byte[] silenceBuffer = new byte[(audioByteBuffer.length - soundBytes)
                                 / audioFormat.getFrameSize()
                                 * audioFormat.getFrameSize()];
 
-                        buffers.add(copyOfRange(byteBufferToAdd, 0, soundBytes));
+                        buffers.add(copyOfRange(audioByteBuffer, 0, soundBytes));
                         buffers.add(silenceBuffer);
                     } else {
-                        final byte[] byteBufferToAdd = GenerateAudioByteBuffer.silence(
+                        final byte[] audioByteBuffer = GenerateWaveByteBuffer.silence(
                                 (int) Math.round(1.0 / audio.duration()
                                         * wholeNoteDuration),
                                 Default.SAMPLE_RATE);
-                        buffers.add(byteBufferToAdd);
+                        buffers.add(audioByteBuffer);
                     }
 
                     return buffers;
@@ -63,9 +66,9 @@ final class AudioList {
         this._line = AudioSystem.getSourceDataLine(audioFormat);
     }
 
-    static AudioList create(Collection<Audio> audioCollection, double wholeNoteDuration) {
+    static AudioByteBuffers create(Collection<Audio> audioCollection, double wholeNoteDuration) {
         try {
-            return new AudioList(audioCollection, wholeNoteDuration);
+            return new AudioByteBuffers(audioCollection, wholeNoteDuration);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
@@ -94,12 +97,9 @@ final class AudioList {
         }
     }
 
-    void outputToFile(double wholeNoteDuration) {
-    }
-
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof AudioList other && this._audioList.equals(other._audioList);
+        return obj instanceof AudioByteBuffers other && this._audioList.equals(other._audioList);
     }
 
     @Override

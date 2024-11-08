@@ -34,20 +34,20 @@ import static java.util.Collections.unmodifiableSet;
  * This enum also contains various static methods for processing strings in ways
  * related to wave shapes.
  *
- * @see GenerateAudioByteBuffer
+ * @see GenerateWaveByteBuffer
  */
 enum Wave {
     /**
      * A <i>SIN</i> wave.
      */
     SIN((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateAudioByteBuffer.sin(freq, duration, sampleRate, amplitude)),
+            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.sin(freq, duration, sampleRate, amplitude)),
 
     /**
      * A <i>SQUARE</i> wave.
      */
     SQUARE((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateAudioByteBuffer.square(freq, duration, sampleRate,
+            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.square(freq, duration, sampleRate,
                     amplitude),
             "SQR"),
 
@@ -55,7 +55,7 @@ enum Wave {
      * A <i>TRIANGLE</i> wave.
      */
     TRIANGLE((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateAudioByteBuffer.triangle(freq, duration, sampleRate,
+            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.triangle(freq, duration, sampleRate,
                     amplitude),
             "TRI",
             Set.of("TRIANGLE")),
@@ -64,7 +64,7 @@ enum Wave {
      * A <i>SAW UP</i> wave.
      */
     SAW_UP((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateAudioByteBuffer.sawUp(freq, duration, sampleRate,
+            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.sawUp(freq, duration, sampleRate,
                     amplitude),
             "SUP",
             Set.of("SAWUP")),
@@ -73,7 +73,7 @@ enum Wave {
      * A <i>SAW DOWN</i> wave.
      */
     SAW_DOWN((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateAudioByteBuffer.sawDown(freq, duration, sampleRate,
+            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.sawDown(freq, duration, sampleRate,
                     amplitude),
             "SDN",
             Set.of("SAWDOWN"));

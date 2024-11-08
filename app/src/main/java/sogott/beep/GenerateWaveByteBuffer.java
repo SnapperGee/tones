@@ -1,6 +1,6 @@
 package sogott.beep;
 
-final class GenerateAudioByteBuffer {
+final class GenerateWaveByteBuffer {
     static byte[] silence(int duration, float sampleRate) {
         if (duration <= 0) {
             throw new IllegalArgumentException("Non positive duration: " + duration);
@@ -180,9 +180,9 @@ final class GenerateAudioByteBuffer {
         return output;
     }
 
-    private GenerateAudioByteBuffer() {
+    private GenerateWaveByteBuffer() {
         throw new UnsupportedOperationException(
                 "%s is a static class and cannot be instantiated."
-                        .formatted(GenerateAudioByteBuffer.class.getSimpleName()));
+                        .formatted(GenerateWaveByteBuffer.class.getSimpleName()));
     }
 }

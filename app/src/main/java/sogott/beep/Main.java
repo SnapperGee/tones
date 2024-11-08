@@ -59,7 +59,8 @@ final public class Main {
                     System.exit(200);
                 }
 
-                final AudioList audioCollection = AudioList.create(validAndInvalidOperands.valid(), wholeNoteDuration);
+                final AudioByteBuffers audioCollection = AudioByteBuffers
+                        .create(validAndInvalidOperands.valid(), wholeNoteDuration);
 
                 audioCollection.outputToAudio();
             }
