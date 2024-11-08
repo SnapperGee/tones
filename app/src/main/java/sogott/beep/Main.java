@@ -65,7 +65,7 @@ final public class Main {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            System.err.format("\n%s", e.getMessage());
+            System.err.println('\n' + e.getMessage());
         }
     }
 }
