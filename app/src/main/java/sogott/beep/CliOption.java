@@ -70,7 +70,7 @@ enum CliOption {
 
     private final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
 
-    private final static String CMD_LINE_SYNTAX = "Usage: beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [%s>]NOTE.INTEGER..."
+    private final static String CMD_LINE_SYNTAX = "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [%s>]NOTE.INTEGER..."
             .formatted(CliOption.BPM.value().getLongOpt(),
                     CliOption.BPM.value().getOpt(),
                     CliOption.BPM.value().getArgName(),
