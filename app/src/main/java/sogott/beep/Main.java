@@ -59,7 +59,7 @@ final public class Main {
                     System.exit(222);
                 }
 
-                final AudioCollection audioCollection = new AudioCollection(validAndInvalidOperands.valid());
+                final AudioList audioCollection = AudioList.create(validAndInvalidOperands.valid(), wholeNoteDuration);
 
                 audioCollection.outputToAudio(wholeNoteDuration);
             }
