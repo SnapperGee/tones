@@ -6,6 +6,8 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 import static java.util.Collections.unmodifiableList;
 
+import java.nio.file.Path;
+
 final public class Main {
     public static void main(String[] args) {
 
@@ -63,6 +65,12 @@ final public class Main {
                         .create(validAndInvalidOperands.valid(), wholeNoteDuration);
 
                 audioCollection.outputToAudio();
+
+                if (cliArgs.hasOption(CliOption.OUT.value())) {
+                    final Path outputFilePath = cliArgs.getParsedOptionValue(CliOption.OUT.value());
+                    audioCollection.outputToFile(outputFilePath);
+                    System.out.println("Audio file written to: \"%s\"".formatted(outputFilePath));
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();
