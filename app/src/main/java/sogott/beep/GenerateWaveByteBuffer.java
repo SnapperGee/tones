@@ -31,12 +31,44 @@ final class GenerateWaveByteBuffer {
             throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
+        final double sustainLevel = .9;
+
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
+        // ADSR defined in milliseconds
+        final int attackDuration = 50;
+        final int decayDuration = 50;
+        final int releaseDuration = 50;
+
+        final int attackSamples = (int) ((attackDuration / 1000.0) * sampleRate);
+        final int decaySamples = (int) ((decayDuration / 1000.0) * sampleRate);
+        final int releaseSamples = (int) ((releaseDuration / 1000.0) * sampleRate);
+
+        final int sustainSamples = samples - (attackSamples + decaySamples + releaseSamples);
+
         for (int currentSample = 0; currentSample < samples; ++currentSample) {
             final double angle = 2.0 * Math.PI * freq * currentSample / sampleRate;
-            final short sample = (short) (Math.sin(angle) * amplitude);
+
+            double envelope;
+
+            if (currentSample < attackSamples) {
+                // Attack phase: gradually increase from 0 to 1
+                envelope = (double) currentSample / attackSamples;
+            } else if (currentSample < attackSamples + decaySamples) {
+                // Decay phase: decrease from 1 to sustain level
+                int decaySample = currentSample - attackSamples;
+                envelope = 1.0 - (1.0 - sustainLevel) * ((double) decaySample / decaySamples);
+            } else if (currentSample < attackSamples + decaySamples + sustainSamples) {
+                // Sustain phase: maintain sustain level
+                envelope = sustainLevel;
+            } else {
+                // Release phase: decrease from sustain level to 0
+                int releaseSample = currentSample - (attackSamples + decaySamples + sustainSamples);
+                envelope = sustainLevel * (1.0 - (double) releaseSample / releaseSamples);
+            }
+
+            final short sample = (short) (Math.sin(angle) * amplitude * envelope);
 
             // Little endian
             output[2 * currentSample] = (byte) (sample & 0xFF);
