@@ -1,10 +1,10 @@
 package sogott.beep;
 
 import java.util.Collection;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.copyOfRange;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
@@ -43,7 +43,7 @@ final class AudioList {
                                 / audioFormat.getFrameSize()
                                 * audioFormat.getFrameSize()];
 
-                        buffers.add(Arrays.copyOfRange(byteBufferToAdd, 0, soundBytes));
+                        buffers.add(copyOfRange(byteBufferToAdd, 0, soundBytes));
                         buffers.add(silenceBuffer);
                     } else {
                         final byte[] byteBufferToAdd = GenerateAudioByteBuffer.silence(
@@ -52,16 +52,7 @@ final class AudioList {
                                 Default.SAMPLE_RATE);
                         buffers.add(byteBufferToAdd);
                     }
-                    // audio.wave() != null
-                    // ? audio.wave()
-                    // .generate(Frequency.from(audio.pitch()),
-                    // (int) Math.round(1.0
-                    // / audio.duration()
-                    // * wholeNoteDuration))
-                    // : GenerateAudioByteBuffer.silence(
-                    // (int) Math.round(1.0 / audio.duration()
-                    // * wholeNoteDuration),
-                    // Default.SAMPLE_RATE);
+
                     return buffers;
                 },
                 (buffers, moreBuffers) -> {
