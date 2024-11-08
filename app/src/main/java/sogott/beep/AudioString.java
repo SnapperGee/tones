@@ -82,7 +82,6 @@ import java.util.Optional;
  * <strong><em>if a default wave shape value to use in its absence is
  * provided</em></strong>.
  *
- *
  * <h4>2.) Pitch Frequency segment</h4>
  * The segment that follows the wave shape prefix (if it's present) and
  * precedes the duration suffix segment defines the pitch/frequency of the
