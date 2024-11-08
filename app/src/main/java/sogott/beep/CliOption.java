@@ -46,7 +46,11 @@ enum CliOption {
             .longOpt("out")
             .hasArg()
             .converter(aString -> {
-                final Path outputFilePath = Path.of(aString).toAbsolutePath().normalize();
+                final Path filePathArg = Path.of(aString);
+
+                final Path outputFilePath = filePathArg.isAbsolute() ? filePathArg.normalize()
+                        : Path.of(Path.of("").toString(), filePathArg.toString()).toAbsolutePath().normalize();
+
                 if (Files.exists(outputFilePath)) {
                     throw new FileAlreadyExistsException(
                             "Output path already exists: \"%s\"".formatted(outputFilePath.toString()));
