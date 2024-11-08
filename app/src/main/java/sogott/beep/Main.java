@@ -61,7 +61,7 @@ final public class Main {
 
                 final AudioList audioCollection = AudioList.create(validAndInvalidOperands.valid(), wholeNoteDuration);
 
-                audioCollection.outputToAudio(wholeNoteDuration);
+                audioCollection.outputToAudio();
             }
         } catch (ParseException e) {
             e.printStackTrace();

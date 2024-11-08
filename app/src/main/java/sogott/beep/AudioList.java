@@ -14,7 +14,6 @@ final class AudioList {
             Default.CHANNELS, Default.SIGNED, Default.BIG_ENDIAN);
 
     private final List<Audio> _audioList;
-    private final double _wholeNoteDuration;
     private final List<byte[]> _audioByteBuffers;
     private final SourceDataLine _line;
 
@@ -24,7 +23,6 @@ final class AudioList {
         }
 
         this._audioList = List.copyOf(audioCollection);
-        this._wholeNoteDuration = wholeNoteDuration;
         this._audioByteBuffers = this._audioList.stream().map(audio -> audio.wave() != null
                 ? audio.wave()
                         .generate(Frequency.from(audio.pitch()),
@@ -50,7 +48,7 @@ final class AudioList {
         }
     }
 
-    void outputToAudio(double wholeNoteDuration) {
+    void outputToAudio() {
         try {
             this._line.open(audioFormat);
             this._line.start();
