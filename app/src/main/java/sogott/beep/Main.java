@@ -56,7 +56,7 @@ final public class Main {
                             validAndInvalidOperands.invalid().size() == 1 ? "argument"
                                     : "arguments",
                             String.join("\", \"", validAndInvalidOperands.invalid()));
-                    System.exit(222);
+                    System.exit(200);
                 }
 
                 final AudioList audioCollection = AudioList.create(validAndInvalidOperands.valid(), wholeNoteDuration);

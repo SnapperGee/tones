@@ -43,7 +43,7 @@ final class AudioList {
         } catch (LineUnavailableException e) {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
-            System.exit(333);
+            System.exit(300);
             return null;
         }
     }
@@ -71,7 +71,7 @@ final class AudioList {
         } catch (LineUnavailableException e) {
             e.printStackTrace();
             System.err.format("\n%s", e.getMessage());
-            System.exit(333);
+            System.exit(311);
         }
     }
 
