@@ -9,6 +9,12 @@ import static java.util.Collections.unmodifiableList;
 import java.nio.file.Path;
 
 final public class Main {
+    private static final class Default {
+        final static int BPM = 140;
+        final static int NOTE_BEAT_VALUE = 4;
+        final static Wave WAVE = Wave.SIN;
+    }
+
     public static void main(String[] args) {
 
         try {
