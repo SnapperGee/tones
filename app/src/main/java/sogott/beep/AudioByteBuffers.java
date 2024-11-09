@@ -20,9 +20,17 @@ import static java.util.Arrays.copyOfRange;
 import static java.util.Collections.enumeration;
 
 final class AudioByteBuffers {
-    private final static AudioFormat AUDIO_FORMAT = new AudioFormat(Default.SAMPLE_RATE,
-            Default.SAMPLE_SIZE,
-            Default.CHANNELS, Default.SIGNED, Default.BIG_ENDIAN);
+
+    final static float SAMPLE_RATE = 44100;
+    final static short AMPLITUDE = Short.MAX_VALUE;
+    final static int SAMPLE_SIZE = 16; // in bits
+    final static int CHANNELS = 1;
+    final static boolean SIGNED = true;
+    final static boolean BIG_ENDIAN = false;
+    final static double SILENCE_RATIO = 0.85;
+
+    private final static AudioFormat AUDIO_FORMAT = new AudioFormat(SAMPLE_RATE,
+            SAMPLE_SIZE, CHANNELS, SIGNED, BIG_ENDIAN);
 
     private final List<Audio> _audioList;
     private final List<byte[]> _audioByteBuffers;
@@ -47,7 +55,7 @@ final class AudioByteBuffers {
                                                 / audio.duration()
                                                 * wholeNoteDuration));
 
-                        final int soundBytes = ((int) (Default.SILENCE_RATIO * audioByteBuffer.length))
+                        final int soundBytes = ((int) (SILENCE_RATIO * audioByteBuffer.length))
                                 / AUDIO_FORMAT.getFrameSize()
                                 * AUDIO_FORMAT.getFrameSize();
 
@@ -61,7 +69,7 @@ final class AudioByteBuffers {
                         final byte[] audioByteBuffer = GenerateWaveByteBuffer.silence(
                                 (int) Math.round(1.0 / audio.duration()
                                         * wholeNoteDuration),
-                                Default.SAMPLE_RATE);
+                                SAMPLE_RATE);
                         buffers.add(audioByteBuffer);
                     }
 
