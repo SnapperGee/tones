@@ -2,6 +2,15 @@ package sogott.beep;
 
 import java.util.OptionalDouble;
 
+/**
+ * Class consisting exclusively of static methods used for converting
+ * {@link Pitch} and {@link Pitch} properties ({@link Note}, {@link Accidental},
+ * and {@code int} octave) to {@code double} frequencies.
+ *
+ * @see Note
+ * @see Accidental
+ * @see Pitch
+ */
 final class Frequency {
     static double from(Note note, Accidental accidental, int octave) {
         if (note == null) {
