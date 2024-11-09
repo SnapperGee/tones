@@ -4,7 +4,7 @@ final class GenerateWaveByteBuffer {
     // ADR defined in milliseconds
     private final static int ATTACK = 50;
     private final static int DECAY = 50;
-    private final static int RELEASE = 50;
+    private final static int RELEASE = 150;
 
     private final static double SUSTAIN = 0.9; // sustain level of max volume (amplitude)
 
