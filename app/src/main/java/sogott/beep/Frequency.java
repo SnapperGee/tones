@@ -158,7 +158,6 @@ final class Frequency {
      *         {@link Accidental} {@code char}, and {@code int} octave.
      *
      * @see Note
-     * @see Accidental
      */
     static OptionalDouble from(char noteChar, int octave) {
         return Note.fromChar(noteChar)
@@ -177,8 +176,7 @@ final class Frequency {
      *
      * @return A {@code double} frequency derived from the passed {@code String}.
      *
-     * @see Note
-     * @see Accidental
+     * @see Pitch
      */
     static OptionalDouble parse(String aString) {
         return Pitch.parse(aString)
