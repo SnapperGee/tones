@@ -40,65 +40,56 @@ enum Wave {
     /**
      * A <i>SIN</i> wave.
      */
-    SIN((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.sin(freq, duration, sampleRate, amplitude)),
+    SIN((freq, duration) -> GenerateWaveByteBuffer.sin(freq, duration)),
 
     /**
      * A <i>SQUARE</i> wave.
      */
-    SQUARE((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.square(freq, duration, sampleRate,
-                    amplitude),
+    SQUARE((freq, duration) -> GenerateWaveByteBuffer.square(freq, duration),
             "SQR"),
 
     /**
      * A <i>TRIANGLE</i> wave.
      */
-    TRIANGLE((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.triangle(freq, duration, sampleRate,
-                    amplitude),
+    TRIANGLE((freq, duration) -> GenerateWaveByteBuffer.triangle(freq, duration),
             "TRI",
             Set.of("TRIANGLE")),
 
     /**
      * A <i>SAW UP</i> wave.
      */
-    SAW_UP((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.sawUp(freq, duration, sampleRate,
-                    amplitude),
+    SAW_UP((freq, duration) -> GenerateWaveByteBuffer.sawUp(freq, duration),
             "SUP",
             Set.of("SAWUP")),
 
     /**
      * A <i>SAW DOWN</i> wave.
      */
-    SAW_DOWN((freq,
-            duration) -> (sampleRate, amplitude) -> GenerateWaveByteBuffer.sawDown(freq, duration, sampleRate,
-                    amplitude),
+    SAW_DOWN((freq, duration) -> GenerateWaveByteBuffer.sawDown(freq, duration),
             "SDN",
             Set.of("SAWDOWN"));
 
     final private static Set<Wave> waves = unmodifiableSet(EnumSet.allOf(Wave.class));
 
-    final private BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> _generatorFunc;
+    final private BiFunction<Double, Integer, byte[]> _generatorFunc;
 
     final private String _stringValue;
 
     final private Set<String> _stringValueAliases;
 
-    private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc) {
+    private Wave(BiFunction<Double, Integer, byte[]> generatorFunc) {
         this._generatorFunc = generatorFunc;
         this._stringValue = this.name();
         this._stringValueAliases = Collections.singleton(this._stringValue);
     }
 
-    private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc, String stringValue) {
+    private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
         this._stringValueAliases = Set.of(this._stringValue, this.name());
     }
 
-    private Wave(BiFunction<Double, Integer, BiFunction<Float, Short, byte[]>> generatorFunc, String stringValue,
+    private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue,
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
@@ -276,7 +267,6 @@ enum Wave {
      *         to generate audio.
      */
     byte[] generate(double frequency, int duration) {
-        return this._generatorFunc.apply(frequency, duration).apply(
-                AudioByteBuffers.SAMPLE_RATE, AudioByteBuffers.AMPLITUDE);
+        return this._generatorFunc.apply(frequency, duration);
     }
 }

@@ -22,12 +22,12 @@ import static java.util.Collections.enumeration;
 final class AudioByteBuffers {
 
     final static float SAMPLE_RATE = 44100;
-    final static short AMPLITUDE = Short.MAX_VALUE;
-    final static int SAMPLE_SIZE = 16; // in bits
-    final static int CHANNELS = 1;
-    final static boolean SIGNED = true;
-    final static boolean BIG_ENDIAN = false;
-    final static double SILENCE_RATIO = 0.85;
+
+    private final static int SAMPLE_SIZE = 16; // in bits
+    private final static int CHANNELS = 1;
+    private final static boolean SIGNED = true;
+    private final static boolean BIG_ENDIAN = false;
+    private final static double SILENCE_RATIO = 0.85;
 
     private final static AudioFormat AUDIO_FORMAT = new AudioFormat(SAMPLE_RATE,
             SAMPLE_SIZE, CHANNELS, SIGNED, BIG_ENDIAN);
@@ -79,8 +79,7 @@ final class AudioByteBuffers {
                     } else {
                         final byte[] audioByteBuffer = GenerateWaveByteBuffer.silence(
                                 (int) Math.round(1.0 / audio.duration()
-                                        * wholeNoteDuration),
-                                SAMPLE_RATE);
+                                        * wholeNoteDuration));
                         buffers.add(audioByteBuffer);
                     }
 
