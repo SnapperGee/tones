@@ -1,6 +1,13 @@
 package sogott.beep;
 
 final class GenerateWaveByteBuffer {
+    // ADR defined in milliseconds
+    private final static int ATTACK = 50;
+    private final static int DECAY = 50;
+    private final static int RELEASE = 50;
+
+    private final static double SUSTAIN = 0.9; // sustain level of max volume (amplitude)
+
     static byte[] silence(int duration, float sampleRate) {
         if (duration <= 0) {
             throw new IllegalArgumentException("Non positive duration: " + duration);
@@ -31,19 +38,12 @@ final class GenerateWaveByteBuffer {
             throw new IllegalArgumentException("Non positive amplitude: " + amplitude);
         }
 
-        final double sustainLevel = .9;
-
         final int samples = (int) ((duration / 1000.0) * sampleRate);
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
-        // ADSR defined in milliseconds
-        final int attackDuration = 50;
-        final int decayDuration = 50;
-        final int releaseDuration = 50;
-
-        final int attackSamples = (int) ((attackDuration / 1000.0) * sampleRate);
-        final int decaySamples = (int) ((decayDuration / 1000.0) * sampleRate);
-        final int releaseSamples = (int) ((releaseDuration / 1000.0) * sampleRate);
+        final int attackSamples = (int) ((ATTACK / 1000.0) * sampleRate);
+        final int decaySamples = (int) ((DECAY / 1000.0) * sampleRate);
+        final int releaseSamples = (int) ((RELEASE / 1000.0) * sampleRate);
 
         final int sustainSamples = samples - (attackSamples + decaySamples + releaseSamples);
 
@@ -58,14 +58,14 @@ final class GenerateWaveByteBuffer {
             } else if (currentSample < attackSamples + decaySamples) {
                 // Decay phase: decrease from 1 to sustain level
                 int decaySample = currentSample - attackSamples;
-                envelope = 1.0 - (1.0 - sustainLevel) * ((double) decaySample / decaySamples);
+                envelope = 1.0 - (1.0 - SUSTAIN) * ((double) decaySample / decaySamples);
             } else if (currentSample < attackSamples + decaySamples + sustainSamples) {
                 // Sustain phase: maintain sustain level
-                envelope = sustainLevel;
+                envelope = SUSTAIN;
             } else {
                 // Release phase: decrease from sustain level to 0
                 int releaseSample = currentSample - (attackSamples + decaySamples + sustainSamples);
-                envelope = sustainLevel * (1.0 - (double) releaseSample / releaseSamples);
+                envelope = SUSTAIN * (1.0 - (double) releaseSample / releaseSamples);
             }
 
             final short sample = (short) (Math.sin(angle) * amplitude * envelope);
