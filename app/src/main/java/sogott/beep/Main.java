@@ -9,11 +9,10 @@ import static java.util.Collections.unmodifiableList;
 import java.nio.file.Path;
 
 final public class Main {
-    private static final class Default {
-        final static int BPM = 140;
-        final static int NOTE_BEAT_VALUE = 4;
-        final static Wave WAVE = Wave.SIN;
-    }
+
+    private final static int BPM = 140;
+    private final static int NOTE_BEAT_VALUE = 4;
+    private final static Wave WAVE = Wave.SIN;
 
     public static void main(String[] args) {
 
@@ -25,13 +24,13 @@ final public class Main {
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");
             } else {
-                final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), Default.BPM);
+                final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), BPM);
 
                 final int noteBeatValue = cliArgs.getParsedOptionValue(
                         CliOption.NOTE_BEAT_VALUE.value(),
-                        Default.NOTE_BEAT_VALUE);
+                        NOTE_BEAT_VALUE);
 
-                final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), Default.WAVE);
+                final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), WAVE);
 
                 final double beatDuration = 60000.0 / bpm;
 
