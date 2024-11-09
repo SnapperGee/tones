@@ -131,10 +131,34 @@ final class GenerateWaveByteBuffer {
         final double period = sampleRate / freq;
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
+        final int attackSamples = (int) ((ATTACK / 1000.0) * sampleRate);
+        final int decaySamples = (int) ((DECAY / 1000.0) * sampleRate);
+        final int releaseSamples = (int) ((RELEASE / 1000.0) * sampleRate);
+        final int sustainSamples = samples - (attackSamples + decaySamples + releaseSamples);
+
         for (int currentSample = 0; currentSample < samples; ++currentSample) {
             final double position = currentSample % period;
             final double value = 2 * Math.abs(2 * (position / period) - 1) - 1;
-            final short sample = (short) (value * amplitude);
+            final short triangleSample = (short) (value * amplitude);
+
+            double envelope;
+            if (currentSample < attackSamples) {
+                // Attack phase: gradually increase from 0 to 1
+                envelope = (double) currentSample / attackSamples;
+            } else if (currentSample < attackSamples + decaySamples) {
+                // Decay phase: decrease from 1 to sustain level
+                int decaySample = currentSample - attackSamples;
+                envelope = 1.0 - (1.0 - SUSTAIN) * ((double) decaySample / decaySamples);
+            } else if (currentSample < attackSamples + decaySamples + sustainSamples) {
+                // Sustain phase: maintain sustain level
+                envelope = SUSTAIN;
+            } else {
+                // Release phase: decrease from sustain level to 0
+                int releaseSample = currentSample - (attackSamples + decaySamples + sustainSamples);
+                envelope = SUSTAIN * (1.0 - (double) releaseSample / releaseSamples);
+            }
+
+            final short sample = (short) (triangleSample * envelope);
 
             // Little endian
             output[2 * currentSample] = (byte) (sample & 0xFF);
