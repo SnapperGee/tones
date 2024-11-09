@@ -8,12 +8,30 @@ import static java.util.Collections.unmodifiableList;
 
 import java.nio.file.Path;
 
+/**
+ * Command line processing takes place here and the an operation dependent on
+ * the command line arguments is executed. If invalid command line arguments are
+ * passed, an exception is thrown.
+ *
+ * @see CliOption
+ */
 final public class Main {
 
     private final static int BPM = 140;
     private final static int NOTE_BEAT_VALUE = 4;
     private final static Wave WAVE = Wave.SIN;
 
+    /**
+     * The entry point of this application where command line processing takes
+     * place and an operation dependent on the command line arguments is
+     * executed. If invalid command line arguments are passed, an exception is
+     * thrown.
+     *
+     * @param args The passed command line argument strings.
+     *
+     * @throws ParseException If an invalid command line argument is passed or
+     *                        another command line parsing related error occurs.
+     */
     public static void main(String[] args) {
 
         try {
