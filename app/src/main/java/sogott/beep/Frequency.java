@@ -106,13 +106,16 @@ final class Frequency {
     }
 
     /**
-     * Attempts to convert a {@link Note} {@code char}, {@link Accidental}
-     * {@code char}, and an {@code int} octave to a {@code double} frequency. If
-     * the passed arguments can't be converted to a frequency, then an empty
+     * Attempts to derive {@code double} frequency from a {@link Note}
+     * {@code char}, {@link Accidental} {@code char}, and an {@code int} octave.
+     * If the passed arguments can't be converted to a frequency, then an empty
      * {@link OptionalDouble} is returned, otherwise it contains the frequency
      * {@code double} value. The passed {@link Accidental} {@code char} argument
      * is used to make the note a <i>sharp</i> &sharp; or <i>flat</i> &flat; or
-     * can be omitted if it's a <i>natural</i> &natural;.
+     * can be omitted if it's a <i>natural</i> &natural;. The
+     * {@code accidentalChar} argument is optional and can be omitted if the
+     * note is <i>natural</i> &natural; with no {@link Accidental} (neither a
+     * <i>sharp</i> &sharp; nor <i>flat</i> &flat;).
      *
      * @param noteChar       The {@link Note} {@code char} of the frequency to
      *                       create.
@@ -145,10 +148,10 @@ final class Frequency {
      * assumed to be <i>natural</i> &natural; with no {@link Accidental} (a note
      * that's neither a <i>sharp</i> &sharp; nor <i>flat</i> &flat;).
      *
-     * @param note   The {@link Note} {@code char} of the frequency to create.
+     * @param noteChar The {@link Note} {@code char} of the frequency to create.
      *
-     * @param octave The {@code int} octave of the note of the frequency to
-     *               create.
+     * @param octave   The {@code int} octave of the note of the frequency to
+     *                 create.
      *
      * @return An {@link OptionalDouble} containing the {@code double} frequency
      *         derived from the passed {@link Note} {@code char},
