@@ -276,6 +276,7 @@ enum Wave {
      *         to generate audio.
      */
     byte[] generate(double frequency, int duration) {
-        return this._generatorFunc.apply(frequency, duration).apply(Default.SAMPLE_RATE, Default.AMPLITUDE);
+        return this._generatorFunc.apply(frequency, duration).apply(
+                AudioByteBuffers.SAMPLE_RATE, AudioByteBuffers.AMPLITUDE);
     }
 }
