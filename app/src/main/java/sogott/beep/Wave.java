@@ -11,8 +11,9 @@ import java.util.function.BiFunction;
 import static java.util.Collections.unmodifiableSet;
 
 /**
- * Enum of values used to represent the different wave shapes audio can be. The
- * following wave shapes are:
+ * Enum of values used to represent the different wave shapes audio can be and
+ * static methods for processing strings in ways related to these wave shape
+ * enum values. The following wave shapes are:
  *
  * <ol>
  * <li><i>SIN</i>
@@ -29,10 +30,6 @@ import static java.util.Collections.unmodifiableSet;
  * the {@link #stringValueAliases() stringValueAliases} property. The canonical
  * string value and enum value {@link #name() name} are always included in this
  * string Set.
- *
- * <p>
- * This enum also contains various static methods for processing strings in ways
- * related to wave shapes.
  *
  * @see GenerateWaveByteBuffer
  */
