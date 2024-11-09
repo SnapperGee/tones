@@ -114,13 +114,14 @@ final class Frequency {
      * is used to make the note a <i>sharp</i> &sharp; or <i>flat</i> &flat; or
      * can be omitted if it's a <i>natural</i> &natural;.
      *
-     * @param note       The {@link Note} {@code char} of the frequency to create.
+     * @param noteChar       The {@link Note} {@code char} of the frequency to
+     *                       create.
      *
-     * @param accidental The {@link Accidental} {@code char} of the note of the
-     *                   frequency to create.
+     * @param accidentalChar The {@link Accidental} {@code char} of the note of the
+     *                       frequency to create.
      *
-     * @param octave     The {@code int} octave of the note of the frequency to
-     *                   create.
+     * @param octave         The {@code int} octave of the note of the frequency to
+     *                       create.
      *
      * @return A {@code double} frequency derived from the passed {@link Note}
      *         {@code char}, {@link Accidental} {@code char}, and {@code int}

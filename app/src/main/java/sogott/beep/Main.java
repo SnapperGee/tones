@@ -28,9 +28,6 @@ final public class Main {
      * thrown.
      *
      * @param args The passed command line argument strings.
-     *
-     * @throws ParseException If an invalid command line argument is passed or
-     *                        another command line parsing related error occurs.
      */
     public static void main(String[] args) {
 
