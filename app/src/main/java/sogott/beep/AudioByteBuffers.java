@@ -46,7 +46,7 @@ final class AudioByteBuffers {
 
     /**
      * Constructs an {@link AudioByteBuffers} instance from the passed
-     * collection of {@link AUdio} objects using the passed {@code double}
+     * collection of {@link Audio} objects using the passed {@code double}
      * argument to calculate the duration of each audio byte buffer.
      *
      * @param audioCollection   {@link Audio} objects to convert to {@code byte}
