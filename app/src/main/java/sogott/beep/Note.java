@@ -6,11 +6,11 @@ import java.util.Optional;
 import static java.util.Collections.unmodifiableSet;
 
 /**
- * Enum of values to represent musical notes, characters A-G, and static methods
- * for processing characters in ways related to these musical note enum values.
- * Each note value consists of an {@link #offset() offset} {@code int} value
- * used by the static methods of the {@link Frequency} class to convert it into
- * a frequency.
+ * Enum of values to represent musical <strong><em>note</em></strong>s,
+ * characters A-G, and static methods for processing characters in ways related
+ * to these musical note enum values. Each note value consists of an
+ * {@link #offset() offset} {@code int} value used by the static methods of the
+ * {@link Frequency} class to convert it into a frequency.
  *
  * @see AudioString
  * @see Frequency
