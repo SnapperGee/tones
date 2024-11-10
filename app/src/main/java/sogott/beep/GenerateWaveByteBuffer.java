@@ -127,9 +127,9 @@ final class GenerateWaveByteBuffer {
      *                                  {@code duration} argument isn't positive (0
      *                                  or less).
      */
-    static byte[] square(double freq, int duration) {
-        if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: " + freq);
+    static byte[] square(double frequency, int duration) {
+        if (frequency <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: " + frequency);
         }
 
         if (duration <= 0) {
@@ -140,7 +140,7 @@ final class GenerateWaveByteBuffer {
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
         for (int currentSample = 0; currentSample < samples; ++currentSample) {
-            final double angle = 2.0 * Math.PI * freq * currentSample / SAMPLE_RATE;
+            final double angle = 2.0 * Math.PI * frequency * currentSample / SAMPLE_RATE;
             final short sample = (short) ((Math.sin(angle) >= 0 ? 1 : -1) * AMPLITUDE);
 
             // Little endian
@@ -167,9 +167,9 @@ final class GenerateWaveByteBuffer {
      *                                  {@code duration} argument isn't positive (0
      *                                  or less).
      */
-    static byte[] triangle(double freq, int duration) {
-        if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: " + freq);
+    static byte[] triangle(double frequency, int duration) {
+        if (frequency <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: " + frequency);
         }
 
         if (duration <= 0) {
@@ -177,7 +177,7 @@ final class GenerateWaveByteBuffer {
         }
 
         final int samples = (int) ((duration / 1000.0) * SAMPLE_RATE);
-        final double period = SAMPLE_RATE / freq;
+        final double period = SAMPLE_RATE / frequency;
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
         final int attackSamples = (int) ((ATTACK / 1000.0) * SAMPLE_RATE);
@@ -233,9 +233,9 @@ final class GenerateWaveByteBuffer {
      *                                  {@code duration} argument isn't positive (0
      *                                  or less).
      */
-    static byte[] sawUp(double freq, int duration) {
-        if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: " + freq);
+    static byte[] sawUp(double frequency, int duration) {
+        if (frequency <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: " + frequency);
         }
 
         if (duration <= 0) {
@@ -243,7 +243,7 @@ final class GenerateWaveByteBuffer {
         }
 
         final int samples = (int) ((duration / 1000.0) * SAMPLE_RATE);
-        final double period = SAMPLE_RATE / freq;
+        final double period = SAMPLE_RATE / frequency;
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
         for (int currentSample = 0; currentSample < samples; ++currentSample) {
@@ -275,9 +275,9 @@ final class GenerateWaveByteBuffer {
      *                                  {@code duration} argument isn't positive (0
      *                                  or less).
      */
-    static byte[] sawDown(double freq, int duration) {
-        if (freq <= 0) {
-            throw new IllegalArgumentException("Non positive frequency: " + freq);
+    static byte[] sawDown(double frequency, int duration) {
+        if (frequency <= 0) {
+            throw new IllegalArgumentException("Non positive frequency: " + frequency);
         }
 
         if (duration <= 0) {
@@ -285,7 +285,7 @@ final class GenerateWaveByteBuffer {
         }
 
         final int samples = (int) ((duration / 1000.0) * SAMPLE_RATE);
-        final double period = SAMPLE_RATE / freq;
+        final double period = SAMPLE_RATE / frequency;
         final byte[] output = new byte[samples * 2]; // 16-bit audio
 
         for (int currentSample = 0; currentSample < samples; ++currentSample) {
