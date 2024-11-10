@@ -15,14 +15,26 @@ import java.util.Optional;
  *
  * <p>
  * Its {@link #charValue() charValue} is also used for parsing {@code String}s
- * to a {@link Pitch} object.
+ * to a {@link Pitch} object by the {@link AudioString} and {@link Pitch} class.
  *
  * @see AudioString
  * @see Frequency
  * @see Pitch
  */
 enum Accidental {
+
+    /**
+     * The value for the <strong><em>sharp</em></strong> &sharp; accidental
+     * represented via the plus, {@code '+'}, {@code char} value with an offset
+     * of {@code 1}.
+     */
     SHARP('+', 1),
+
+    /**
+     * The value for the <strong><em>flat</em></strong> &flat; accidental
+     * represented via the minus, {@code '-'}, {@code char} value with an offset
+     * of {@code -1}.
+     */
     FLAT('-', -1);
 
     final private char _char;
@@ -33,18 +45,61 @@ enum Accidental {
         this._offset = offset;
     }
 
+    /**
+     * The {@code int} value of this {@link Accidental} used by the static
+     * methods of the {@link Frequency} class to generate a {@code double}
+     * frequency.
+     *
+     * @return {@code int} value of this {@link Accidental} used by the static
+     *         methods of the {@link Frequency} class to generate a {@code double}
+     *         frequency.
+     */
     int offset() {
         return this._offset;
     }
 
+    /**
+     * The {@code char} value of this {@link Accidental} used by the
+     * the {@link AudioString} class to parse {@code String}s to
+     * {@link Pitch} objects.
+     *
+     * @return The {@code char} value of this {@link Accidental} used by the
+     *         the {@link AudioString} class to parse {@code String}s to
+     *         {@link Pitch}.
+     *
+     * @see AudioString
+     * @see Pitch
+     */
     char charValue() {
         return this._char;
     }
 
+    /**
+     * Returns {@code true} if the passed {@code char} argument matches either
+     * of the {@link #SHARP} or {@link #FLAT} {@link #charValue() charValue}s
+     * and can therefore be interpreted as such.
+     *
+     * @param aChar {@code char} to check if it can be interpreted as an
+     *              {@link Accidental} value.
+     *
+     * @return {@code true} if the passed {@code char} argument can be
+     *         interpreted as an {@link Accidental} value.
+     */
     static boolean isAccidentalChar(char aChar) {
         return Accidental.SHARP.charValue() == aChar || Accidental.FLAT.charValue() == aChar;
     }
 
+    /**
+     * Attempts to convert the passed {@code char} value to an
+     * {@link Accidental}. If the passed character can't be interpreted as an
+     * {@link Accidental}, then an empty Optional is returned, otherwise an
+     * Optional containing the resulting {@link Accidental} is returned.
+     *
+     * @param aChar {@code char} to attempt to convert to an {@link Accidental}.
+     *
+     * @return an Optional containing the {@link Accidental} if the passed
+     *         {@code char} can be converted to one, otherwise an empty Optional.
+     */
     static Optional<Accidental> fromChar(char aChar) {
         return SHARP.charValue() == aChar
                 ? Optional.of(SHARP)
