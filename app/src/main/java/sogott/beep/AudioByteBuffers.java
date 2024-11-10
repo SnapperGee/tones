@@ -62,13 +62,14 @@ final class AudioByteBuffers {
                         // Create a fade-out effect on the last portion of the retained sound
                         final int fadeOutBytes = audioByteBuffer.length - soundBytes;
                         for (int i = 0; i < fadeOutBytes; i += 2) {
-                            double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1 to 0
-                            int sampleIndex = soundBytes + i;
+                            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1
+                                                                                         // to 0
+                            final int sampleIndex = soundBytes + i;
                             if (sampleIndex + 1 < audioByteBuffer.length) {
                                 // Apply fade-out to each sample in little-endian order
-                                short originalSample = (short) ((audioByteBuffer[sampleIndex + 1] << 8)
+                                final short originalSample = (short) ((audioByteBuffer[sampleIndex + 1] << 8)
                                         | (audioByteBuffer[sampleIndex] & 0xFF));
-                                short fadedSample = (short) (originalSample * fadeFactor);
+                                final short fadedSample = (short) (originalSample * fadeFactor);
                                 audioByteBuffer[sampleIndex] = (byte) (fadedSample & 0xFF);
                                 audioByteBuffer[sampleIndex + 1] = (byte) ((fadedSample >> 8) & 0xFF);
                             }
