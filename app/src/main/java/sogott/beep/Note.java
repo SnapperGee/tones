@@ -24,7 +24,47 @@ import static java.util.Collections.unmodifiableSet;
  * @see Pitch
  */
 enum Note {
-    A(0), B(2), C(-9), D(-7), E(-5), F(-4), G(-2);
+    /**
+     * The enum value for the <strong><em>A</em></strong> note with an offset
+     * value of {@code 0}.
+     */
+    A(0),
+
+    /**
+     * The enum value for the <strong><em>B</em></strong> note with an offset
+     * value of {@code 2}.
+     */
+    B(2),
+
+    /**
+     * The enum value for the <strong><em>C</em></strong> note with an offset
+     * value of {@code -9}.
+     */
+    C(-9),
+
+    /**
+     * The enum value for the <strong><em>D</em></strong> note with an offset
+     * value of {@code -7}.
+     */
+    D(-7),
+
+    /**
+     * The enum value for the <strong><em>E</em></strong> note with an offset
+     * value of {@code -5}.
+     */
+    E(-5),
+
+    /**
+     * The enum value for the <strong><em>F</em></strong> note with an offset
+     * value of {@code -4}.
+     */
+    F(-4),
+
+    /**
+     * The enum value for the <strong><em>G</em></strong> note with an offset
+     * value of {@code -2}.
+     */
+    G(-2);
 
     final private static Set<Note> _notes = unmodifiableSet(EnumSet.allOf(Note.class));
 
@@ -57,7 +97,7 @@ enum Note {
     }
 
     /**
-     * Attempts to convert a {@code char} to a {@link Note} value. Returns an
+     * Attempts to convert a {@code char} to its {@link Note} value. Returns an
      * optional containing the {@link Note} value of the char if it can be
      * converted, otherwise an empty optional is returned.
      *
