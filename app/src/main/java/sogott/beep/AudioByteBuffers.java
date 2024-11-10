@@ -19,9 +19,17 @@ import javax.sound.sampled.SourceDataLine;
 import static java.util.Arrays.copyOfRange;
 import static java.util.Collections.enumeration;
 
+/**
+ * This class converts a collection of {@link Audio} objects into audio byte
+ * buffers that can be written to a file and/or outputted as audible audio. This
+ * class initializes an internal {@link SourceDataLine} suitable for
+ * {@link SourceDataLine#drain() drain}ing to playback the audio byte buffers.
+ *
+ * @see Audio
+ */
 final class AudioByteBuffers {
 
-    final static float SAMPLE_RATE = 44100;
+    private final static float SAMPLE_RATE = 44100;
 
     private final static int SAMPLE_SIZE = 16; // in bits
     private final static int CHANNELS = 1;
@@ -36,6 +44,22 @@ final class AudioByteBuffers {
     private final List<byte[]> _audioByteBuffers;
     private final SourceDataLine _line;
 
+    /**
+     * Constructs an {@link AudioByteBuffers} instance from the passed
+     * collection of {@link AUdio} objects using the passed {@code double}
+     * argument to calculate the duration of each audio byte buffer.
+     *
+     * @param audioCollection   {@link Audio} objects to convert to {@code byte}
+     *                          buffers.
+     *
+     * @param wholeNoteDuration A {@code double} value used to calculate the
+     *                          duration of the audio {@code byte} buffers.
+     *
+     * @throws LineUnavailableException If an error occurs when obtaining the
+     *                                  {@link SourceDataLine}.
+     *
+     * @see Audio
+     */
     AudioByteBuffers(Collection<Audio> audioCollection, double wholeNoteDuration)
             throws LineUnavailableException {
         if (audioCollection == null) {
