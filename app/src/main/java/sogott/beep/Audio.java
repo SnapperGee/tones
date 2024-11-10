@@ -4,7 +4,7 @@ import static java.util.Objects.hash;
 
 /**
  * This class contains the properties necessary needed to synthesize audible
- * audio or silence.
+ * audio, such as the wave shape, frequency, and duration, or silence.
  *
  * <p>
  * The following properties are:
