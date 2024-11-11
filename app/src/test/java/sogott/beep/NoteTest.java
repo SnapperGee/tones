@@ -30,9 +30,6 @@ final class NoteArgProvider {
                     arguments(Note.F, -4),
                     arguments(Note.G, -2));
         }
-
-        private EnumValuesWithOffset() {
-        }
     }
 
     final static class EnumValuesWithUpperCaseChar implements ArgumentsProvider {
@@ -46,9 +43,6 @@ final class NoteArgProvider {
                     arguments(Note.E, 'E'),
                     arguments(Note.F, 'F'),
                     arguments(Note.G, 'G'));
-        }
-
-        private EnumValuesWithUpperCaseChar() {
         }
     }
 
@@ -64,12 +58,6 @@ final class NoteArgProvider {
                     arguments(Note.F, 'f'),
                     arguments(Note.G, 'g'));
         }
-
-        private EnumValuesWithLowerCaseChar() {
-        }
-    }
-
-    private NoteArgProvider() {
     }
 }
 
