@@ -9,6 +9,7 @@ repositories {
 dependencies {
     implementation("commons-cli:commons-cli:1.9.0")
     testImplementation(libs.junit.jupiter)
+    testImplementation("org.hamcrest:hamcrest:3.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
