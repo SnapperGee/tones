@@ -1,6 +1,5 @@
 package sogott.beep;
 
-import java.util.NoSuchElementException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.FileAlreadyExistsException;
@@ -36,7 +35,16 @@ enum CliOption {
             .longOpt("bpm")
             .hasArg()
             .desc("Set speed of playback to INTEGER beats per minute (defaults to 140).")
-            .converter(Integer::parseInt)
+            .type(Integer.class)
+            .converter(arg -> {
+                if (arg.isBlank() || !arg.codePoints().allMatch(Character::isDigit)) {
+                    throw new IllegalArgumentException(
+                            "BPM requires positive (greater than 0) integer but got: \"%s\""
+                                    .formatted(arg));
+                }
+
+                return Integer.parseInt(arg);
+            })
             .build()),
 
     /**
@@ -50,7 +58,16 @@ enum CliOption {
             .longOpt("note-beat-value")
             .hasArg()
             .desc("Set the note value of a beat (defaults to 4).")
-            .converter(Integer::parseInt)
+            .type(Integer.class)
+            .converter(arg -> {
+                if (arg.isBlank() || !arg.codePoints().allMatch(Character::isDigit)) {
+                    throw new IllegalArgumentException(
+                            "Note beat value requires positive (greater than 0) integer but got: \"%s\""
+                                    .formatted(arg));
+                }
+
+                return Integer.parseInt(arg);
+            })
             .build()),
 
     /**
@@ -68,7 +85,7 @@ enum CliOption {
                             .anyMatch(waveStringValue -> aString
                                     .equalsIgnoreCase(waveStringValue)))
                     .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException(
+                    .orElseThrow(() -> new IllegalArgumentException(
                             "Invalid WAVE command line option argument.")))
             .desc("Set default wave shape to WAVE (defaults to SIN).")
             .build()),
@@ -82,6 +99,7 @@ enum CliOption {
             .argName("PATH")
             .longOpt("out")
             .hasArg()
+            .type(Path.class)
             .converter(aString -> {
                 final Path filePathArg = Path.of(aString);
 
@@ -92,7 +110,8 @@ enum CliOption {
                     throw new FileAlreadyExistsException(
                             "Output path already exists: \"%s\"".formatted(outputFilePath.toString()));
                 }
-                return outputFilePath;
+                return outputFilePath.getFileName().toString().contains(".") ? outputFilePath
+                        : Path.of(outputFilePath + ".wav");
             })
             .desc("Outputs the generated audio to a 44.1khz/16 bit wav file at PATH.")
             .build()),
