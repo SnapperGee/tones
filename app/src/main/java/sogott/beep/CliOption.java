@@ -103,6 +103,7 @@ enum CliOption {
     VERSION(Option.builder("v")
             .longOpt("version")
             .desc("Prints currently installed version (ignores all other arguments except the help option).")
+            .numberOfArgs(0)
             .build()),
 
     /**
@@ -113,6 +114,7 @@ enum CliOption {
     HELP(Option.builder("h")
             .longOpt("help")
             .desc("Ignores all other arguments and prints this help message.")
+            .numberOfArgs(0)
             .build());
 
     private final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
