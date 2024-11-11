@@ -142,10 +142,10 @@ final class CliOptionTest {
     @EnumSource(CliOption.class)
     void cliOptionDescriptionIsNonBlankString(CliOption cliOption) {
         assertNotNull(cliOption.value().getDescription(),
-                () -> "CliOption.%s.value().getDescirption() returns null"
-                        .formatted(cliOption.name()));
+                () -> "%s.%s.value().getDescirption() returns null"
+                        .formatted(cliOption.getDeclaringClass().getSimpleName(), cliOption.name()));
         assertFalse(cliOption.value().getDescription().isBlank(),
-                () -> "CliOption.%s.value().getDescirption() does not return non blank String"
-                        .formatted(cliOption.name()));
+                () -> "%s.%s.value().getDescirption() does not return non blank String"
+                        .formatted(cliOption.getDeclaringClass().getSimpleName(), cliOption.name()));
     }
 }
