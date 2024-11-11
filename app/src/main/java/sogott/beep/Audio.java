@@ -55,8 +55,8 @@ import static java.util.Objects.hash;
  * @see AudioString
  */
 final class Audio implements Comparable<Audio> {
-    final Wave _wave;
-    final Pitch _pitch;
+    final private Wave _wave;
+    final private Pitch _pitch;
     final private int _duration;
     final private String _string;
     final private int _hashCode;
