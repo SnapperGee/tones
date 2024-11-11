@@ -37,32 +37,32 @@ enum Wave {
     /**
      * A <i>SIN</i> wave.
      */
-    SIN((freq, duration) -> GenerateWaveByteBuffer.sin(freq, duration)),
+    SIN(GenerateWaveByteBuffer::sin),
 
     /**
      * A <i>SQUARE</i> wave.
      */
-    SQUARE((freq, duration) -> GenerateWaveByteBuffer.square(freq, duration),
+    SQUARE(GenerateWaveByteBuffer::square,
             "SQR"),
 
     /**
      * A <i>TRIANGLE</i> wave.
      */
-    TRIANGLE((freq, duration) -> GenerateWaveByteBuffer.triangle(freq, duration),
+    TRIANGLE(GenerateWaveByteBuffer::triangle,
             "TRI",
             Set.of("TRIANGLE")),
 
     /**
      * A <i>SAW UP</i> wave.
      */
-    SAW_UP((freq, duration) -> GenerateWaveByteBuffer.sawUp(freq, duration),
+    SAW_UP(GenerateWaveByteBuffer::sawUp,
             "SUP",
             Set.of("SAWUP")),
 
     /**
      * A <i>SAW DOWN</i> wave.
      */
-    SAW_DOWN((freq, duration) -> GenerateWaveByteBuffer.sawDown(freq, duration),
+    SAW_DOWN(GenerateWaveByteBuffer::sawDown,
             "SDN",
             Set.of("SAWDOWN"));
 
