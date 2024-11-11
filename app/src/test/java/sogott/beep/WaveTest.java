@@ -31,9 +31,6 @@ final class WaveArgProvider {
                     arguments(Wave.SAW_UP, "SUP"),
                     arguments(Wave.SAW_DOWN, "SDN"));
         }
-
-        private EnumValuesWithUpperCaseStringValue() {
-        }
     }
 
     final static class EnumValuesWithLowerCaseStringValue implements ArgumentsProvider {
@@ -46,9 +43,6 @@ final class WaveArgProvider {
                     arguments(Wave.SAW_UP, "sup"),
                     arguments(Wave.SAW_DOWN, "sdn"));
         }
-
-        private EnumValuesWithLowerCaseStringValue() {
-        }
     }
 
     final static class EnumValuesWithUpperCaseStringAliases implements ArgumentsProvider {
@@ -60,9 +54,6 @@ final class WaveArgProvider {
                     arguments(Wave.TRIANGLE, Set.of(Wave.TRIANGLE.name(), Wave.TRIANGLE.stringValue())),
                     arguments(Wave.SAW_UP, Set.of(Wave.SAW_UP.name(), Wave.SAW_UP.stringValue(), "SAWUP")),
                     arguments(Wave.SAW_DOWN, Set.of(Wave.SAW_DOWN.name(), Wave.SAW_DOWN.stringValue(), "SAWDOWN")));
-        }
-
-        private EnumValuesWithUpperCaseStringAliases() {
         }
     }
 
@@ -79,9 +70,6 @@ final class WaveArgProvider {
                             Set.of(Wave.SAW_UP.name().toLowerCase(), Wave.SAW_UP.stringValue().toLowerCase(), "sawup")),
                     arguments(Wave.SAW_DOWN, Set.of(Wave.SAW_DOWN.name().toLowerCase(),
                             Wave.SAW_DOWN.stringValue().toLowerCase(), "sawdown")));
-        }
-
-        private EnumValuesWithLowerCaseStringAliases() {
         }
     }
 
@@ -101,9 +89,6 @@ final class WaveArgProvider {
                     arguments("SDN", Wave.SAW_DOWN),
                     arguments("SAWDOWN", Wave.SAW_DOWN));
         }
-
-        private EnumValuesWithUpperCaseStringAlias() {
-        }
     }
 
     final static class EnumValuesWithLowerCaseStringAlias implements ArgumentsProvider {
@@ -122,9 +107,6 @@ final class WaveArgProvider {
                     arguments("sdn", Wave.SAW_DOWN),
                     arguments("sawdown", Wave.SAW_DOWN));
         }
-
-        private EnumValuesWithLowerCaseStringAlias() {
-        }
     }
 
     final static class PrefixedStrings implements ArgumentsProvider {
@@ -140,9 +122,6 @@ final class WaveArgProvider {
                                                             StringBuilder::append, StringBuilder::append)
                                                     .toString())))));
         }
-    }
-
-    private WaveArgProvider() {
     }
 }
 
