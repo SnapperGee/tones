@@ -97,4 +97,7 @@ final public class Main {
             System.err.println('\n' + e.getMessage());
         }
     }
+
+    private Main() {
+    }
 }
