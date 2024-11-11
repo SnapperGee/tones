@@ -136,7 +136,7 @@ final class AudioByteBuffers {
      * @param wholeNoteDuration A {@code double} value used to calculate the
      *                          duration of the audio {@code byte} buffers.
      *
-     * @return An {@link AdioByteBuffers} object constructed from the passed
+     * @return An {@link AudioByteBuffers} object constructed from the passed
      *         {@link Audio} objects collection and {@code double}
      *         `wholeNoteDuration` arguments.
      */
@@ -152,7 +152,7 @@ final class AudioByteBuffers {
     }
 
     /**
-     * Outputs this {@link AudioBytesBuffers} object byte buffers as audible
+     * Outputs this {@link AudioByteBuffers} object byte buffers as audible
      * output. It uses the default {@link SourceDataLine} output device/mixer
      * which should be whatever the output device the operating system is set to
      * use.
@@ -178,7 +178,7 @@ final class AudioByteBuffers {
     }
 
     /**
-     * Writes this {@link AudioBytesBuffers} object byte buffers to a WAV file
+     * Writes this {@link AudioByteBuffers} object byte buffers to a WAV file
      * to the provided path. If an {@link IOException} occurs, then the
      * stacktrace and exception message is printed to stderr and the application
      * is exited.
