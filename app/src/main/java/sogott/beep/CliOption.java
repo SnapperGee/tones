@@ -50,6 +50,7 @@ enum CliOption {
             .longOpt("note-beat-value")
             .hasArg()
             .desc("Set the note value of a beat (defaults to 4).")
+            .converter(Integer::parseInt)
             .build()),
 
     /**
