@@ -47,7 +47,8 @@ final class AudioByteBuffers {
     /**
      * Constructs an {@link AudioByteBuffers} instance from the passed
      * collection of {@link Audio} objects using the passed {@code double}
-     * argument to calculate the duration of each audio byte buffer.
+     * `wholeNoteDuration` argument to calculate the duration of each audio byte
+     * buffer.
      *
      * @param audioCollection   {@link Audio} objects to convert to {@code byte}
      *                          buffers.
@@ -118,6 +119,27 @@ final class AudioByteBuffers {
         this._line = AudioSystem.getSourceDataLine(AUDIO_FORMAT);
     }
 
+    /**
+     * Constructs an {@link AudioByteBuffers} instance from the passed
+     * collection of {@link Audio} objects using the passed {@code double}
+     * `wholeNoteDuration` argument to calculate the duration of each audio byte
+     * buffer. This instantiation method differs from the
+     * {@link #AudioByteBuffers(Collection, double) constructor} in that it
+     * internally handles the {@link LineUnavailableException} that can be
+     * thrown so it doesn't have to be handled externally. It does this by
+     * printing the stacktrace and exception message to stderr and exiting if
+     * the exception gets thrown.
+     *
+     * @param audioCollection   {@link Audio} objects to convert to {@code byte}
+     *                          buffers.
+     *
+     * @param wholeNoteDuration A {@code double} value used to calculate the
+     *                          duration of the audio {@code byte} buffers.
+     *
+     * @return An {@link AdioByteBuffers} object constructed from the passed
+     *         {@link Audio} objects collection and {@code double}
+     *         `wholeNoteDuration` arguments.
+     */
     static AudioByteBuffers create(Collection<Audio> audioCollection, double wholeNoteDuration) {
         try {
             return new AudioByteBuffers(audioCollection, wholeNoteDuration);
@@ -129,6 +151,12 @@ final class AudioByteBuffers {
         }
     }
 
+    /**
+     * Outputs this {@link AudioBytesBuffers} object byte buffers as audible
+     * output. It uses the default {@link SourceDataLine} output device/mixer
+     * which should be whatever the output device the operating system is set to
+     * use.
+     */
     void outputToAudio() {
         try {
             this._line.open(AUDIO_FORMAT);
@@ -149,6 +177,16 @@ final class AudioByteBuffers {
         }
     }
 
+    /**
+     * Writes this {@link AudioBytesBuffers} object byte buffers to a WAV file
+     * to the provided path. If an {@link IOException} occurs, then the
+     * stacktrace and exception message is printed to stderr and the application
+     * is exited.
+     *
+     * @param outputFilePath The {@link Path} to write the WAV file to.
+     *
+     * @return The path the WAV file was written to.
+     */
     Path outputToFile(Path outputFilePath) {
         final List<ByteArrayInputStream> inputStreams = this._audioByteBuffers.stream().map(ByteArrayInputStream::new)
                 .toList();
@@ -165,6 +203,7 @@ final class AudioByteBuffers {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
             System.exit(322);
+            return null;
         }
 
         return outputFilePath;
