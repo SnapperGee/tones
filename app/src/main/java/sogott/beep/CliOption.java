@@ -80,13 +80,9 @@ enum CliOption {
             .argName("WAVE")
             .longOpt("wave")
             .hasArg()
-            .converter(aString -> stream(Wave.values())
-                    .filter(wave -> wave.stringValueAliases().stream()
-                            .anyMatch(waveStringValue -> aString
-                                    .equalsIgnoreCase(waveStringValue)))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(
-                            "Invalid WAVE command line option argument.")))
+            .type(Wave.class)
+            .converter(arg -> Wave.parse(arg).orElseThrow(() -> new IllegalArgumentException(
+                    "Invalid WAVE command line option argument: \"%s\"".formatted(arg))))
             .desc("Set default wave shape to WAVE (defaults to SIN).")
             .build()),
 
