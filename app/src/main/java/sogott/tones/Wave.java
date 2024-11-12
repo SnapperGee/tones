@@ -4,11 +4,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.EnumSet;
 import java.util.Set;
+import java.util.List;
 import java.util.function.BiFunction;
 
-import static java.util.Collections.unmodifiableSet;
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 
 /**
  * Enum of values used to represent the different wave shapes audio can be and
@@ -66,7 +67,7 @@ enum Wave {
             "SDN",
             Set.of("SAWDOWN"));
 
-    final private static Set<Wave> waves = unmodifiableSet(EnumSet.allOf(Wave.class));
+    final private static List<Wave> _waves = unmodifiableList(asList(Wave.values()));
 
     final private BiFunction<Double, Integer, byte[]> _generatorFunc;
 
@@ -179,7 +180,7 @@ enum Wave {
      *         present or an empty optional if not.
      */
     static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
-        return waves.stream().flatMap(wave -> wave.stringValueAliases().stream())
+        return _waves.stream().flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                         && aString.regionMatches(ignoreCase, 0, waveStringAlias, 0, waveStringAlias.length()))
                 .findFirst();
@@ -228,11 +229,11 @@ enum Wave {
         }
 
         if (ignoreCase) {
-            return waves.stream().filter(wave -> wave._stringValueAliases.stream()
+            return _waves.stream().filter(wave -> wave._stringValueAliases.stream()
                     .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst();
         }
 
-        return waves.stream().filter(wave -> wave._stringValueAliases.stream()
+        return _waves.stream().filter(wave -> wave._stringValueAliases.stream()
                 .anyMatch(waveStringValue -> aString.equals(waveStringValue))).findFirst();
     }
 

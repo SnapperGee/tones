@@ -1,9 +1,10 @@
 package sogott.tones;
 
-import java.util.Set;
-import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
-import static java.util.Collections.unmodifiableSet;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 
 /**
  * Enum of values to represent musical <strong><em>note</em></strong>s,
@@ -66,7 +67,7 @@ enum Note {
      */
     G(-2);
 
-    final private static Set<Note> _notes = unmodifiableSet(EnumSet.allOf(Note.class));
+    final private static List<Note> _notes = unmodifiableList(asList(Note.values()));
 
     final private char _char;
     final private int _offset;
