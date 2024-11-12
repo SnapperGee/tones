@@ -87,8 +87,8 @@ final public class Main {
 
                 if (cliArgs.hasOption(CliOption.OUT.value())) {
                     final Path outputFilePath = cliArgs.getParsedOptionValue(CliOption.OUT.value());
-                    audioCollection.outputToFile(outputFilePath);
-                    System.out.println("Audio file written to: \"%s\"".formatted(outputFilePath));
+                    final Path pathWrittenTo = audioCollection.outputToFile(outputFilePath);
+                    System.out.println("Audio file written to: \"%s\"".formatted(pathWrittenTo));
                 }
 
                 audioCollection.outputToAudio();
