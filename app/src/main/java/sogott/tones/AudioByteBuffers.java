@@ -176,12 +176,12 @@ final class AudioByteBuffers {
         return audioList.stream().reduce(
                 new ArrayList<byte[]>(),
                 (buffers, audio) -> {
-                    // if audio is not silence, trim tail of audio to prevent
+                    // if audio is not silence, fadeout tail of audio to prevent
                     // same notes from blending together
                     if (audio.wave() != null) {
                         final byte[] audioByteBuffer = audio.wave()
                                 .generate(Frequency.from(audio.pitch()),
-                                        (int) Math.round(1.0
+                                        (int) Math.ceil(1.0
                                                 / audio.duration()
                                                 * wholeNoteDuration));
 
