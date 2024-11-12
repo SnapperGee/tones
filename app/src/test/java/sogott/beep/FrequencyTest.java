@@ -404,6 +404,76 @@ final class FrequencyArgProvider {
                     arguments(new Pitch(Note.G, Accidental.SHARP, 8), 6644.88));
         }
     }
+
+    final static class NoteOctaveFrequency implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    arguments(Note.A, 0, 27.5),
+                    arguments(Note.A, 1, 55),
+                    arguments(Note.A, 2, 110),
+                    arguments(Note.A, 3, 220),
+                    arguments(Note.A, 4, 440),
+                    arguments(Note.A, 5, 880),
+                    arguments(Note.A, 6, 1760),
+                    arguments(Note.A, 7, 3520),
+                    arguments(Note.A, 8, 7040),
+                    arguments(Note.B, 0, 30.87),
+                    arguments(Note.B, 1, 61.74),
+                    arguments(Note.B, 2, 123.47),
+                    arguments(Note.B, 3, 246.95),
+                    arguments(Note.B, 4, 493.88),
+                    arguments(Note.B, 5, 987.77),
+                    arguments(Note.B, 6, 1975.53),
+                    arguments(Note.B, 7, 3951.07),
+                    arguments(Note.B, 8, 7902.13),
+                    arguments(Note.C, 0, 16.35),
+                    arguments(Note.C, 1, 32.7),
+                    arguments(Note.C, 2, 65.41),
+                    arguments(Note.C, 3, 130.81),
+                    arguments(Note.C, 4, 261.63),
+                    arguments(Note.C, 5, 523.25),
+                    arguments(Note.C, 6, 1046.5),
+                    arguments(Note.C, 7, 2093),
+                    arguments(Note.C, 8, 4186.01),
+                    arguments(Note.D, 0, 18.35),
+                    arguments(Note.D, 1, 36.71),
+                    arguments(Note.D, 2, 73.42),
+                    arguments(Note.D, 3, 146.83),
+                    arguments(Note.D, 4, 293.66),
+                    arguments(Note.D, 5, 587.33),
+                    arguments(Note.D, 6, 1174.66),
+                    arguments(Note.D, 7, 2349.32),
+                    arguments(Note.D, 8, 4698.63),
+                    arguments(Note.E, 0, 20.6),
+                    arguments(Note.E, 1, 41.2),
+                    arguments(Note.E, 2, 82.41),
+                    arguments(Note.E, 3, 164.81),
+                    arguments(Note.E, 4, 329.63),
+                    arguments(Note.E, 5, 659.25),
+                    arguments(Note.E, 6, 1318.51),
+                    arguments(Note.E, 7, 2637.02),
+                    arguments(Note.E, 8, 5274.04),
+                    arguments(Note.F, 0, 21.83),
+                    arguments(Note.F, 1, 43.65),
+                    arguments(Note.F, 2, 87.31),
+                    arguments(Note.F, 3, 174.61),
+                    arguments(Note.F, 4, 349.23),
+                    arguments(Note.F, 5, 698.46),
+                    arguments(Note.F, 6, 1396.91),
+                    arguments(Note.F, 7, 2793.83),
+                    arguments(Note.F, 8, 5587.65),
+                    arguments(Note.G, 0, 24.5),
+                    arguments(Note.G, 1, 49),
+                    arguments(Note.G, 2, 98),
+                    arguments(Note.G, 3, 196),
+                    arguments(Note.G, 4, 392),
+                    arguments(Note.G, 5, 783.99),
+                    arguments(Note.G, 6, 1567.98),
+                    arguments(Note.G, 7, 3135.96),
+                    arguments(Note.G, 8, 6271.93));
+        }
+    }
 }
 
 final class FrequencyTest {
@@ -418,6 +488,13 @@ final class FrequencyTest {
     @ArgumentsSource(FrequencyArgProvider.PitchFrequency.class)
     void frequencyFromPitch(Pitch pitch, double expectedFrequency) {
         final double frequency = Frequency.from(pitch);
+        assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
+    }
+
+    @ParameterizedTest(name = "Frequency.from({0}, {1}) ≅ {2}")
+    @ArgumentsSource(FrequencyArgProvider.NoteOctaveFrequency.class)
+    void frequencyFromNoteOctave(Note note, int octave, double expectedFrequency) {
+        final double frequency = Frequency.from(note, octave);
         assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
     }
 }
