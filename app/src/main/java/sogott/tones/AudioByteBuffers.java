@@ -125,7 +125,7 @@ final class AudioByteBuffers {
 
         } catch (LineUnavailableException e) {
             e.printStackTrace();
-            System.err.format("\n%s", e.getMessage());
+            System.err.println('\n' + e.getMessage());
             System.exit(311);
         }
     }
