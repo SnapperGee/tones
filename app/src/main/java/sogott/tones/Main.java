@@ -9,9 +9,10 @@ import static java.util.Collections.unmodifiableList;
 import java.nio.file.Path;
 
 /**
- * Command line processing takes place here and the an operation dependent on
- * the command line arguments is executed. If invalid command line arguments are
- * passed, an exception is thrown.
+ * Command line processing takes place here and an operation dependent on the
+ * parsed command line arguments is executed. If invalid command line arguments
+ * are passed, an exception stacktrace and message is printed to stderr and
+ * the application is exited.
  *
  * @see CliOption
  */
