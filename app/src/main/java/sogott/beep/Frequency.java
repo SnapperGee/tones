@@ -1,7 +1,5 @@
 package sogott.beep;
 
-import java.util.OptionalDouble;
-
 /**
  * Class consisting exclusively of static methods used for converting
  * {@link Pitch} and {@link Pitch} properties ({@link Note}, {@link Accidental},
