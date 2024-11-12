@@ -1,16 +1,21 @@
 package sogott.beep;
 
 import java.util.stream.Stream;
+import java.util.random.RandomGenerator;
+
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.closeTo;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class FrequencyArgProvider {
     final static class NoteAccidentalOctaveFrequency implements ArgumentsProvider {
@@ -477,6 +482,8 @@ final class FrequencyArgProvider {
 }
 
 final class FrequencyTest {
+    final static RandomGenerator random = RandomGenerator.getDefault();
+
     @ParameterizedTest(name = "Frequency.from({0}, {1}, {2}) ≅ {3}")
     @ArgumentsSource(FrequencyArgProvider.NoteAccidentalOctaveFrequency.class)
     void frequencyFromNoteAccidentalOctave(Note note, Accidental accidental, int octave, double expectedFrequency) {
@@ -496,5 +503,18 @@ final class FrequencyTest {
     void frequencyFromNoteOctave(Note note, int octave, double expectedFrequency) {
         final double frequency = Frequency.from(note, octave);
         assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
+    }
+
+    @Test
+    @DisplayName("Frequency.from(Note.C, null, # < 0) throws")
+    void frequencyFromNegativeOctaveThrows() {
+        assertThrows(IllegalArgumentException.class, () -> Frequency.from(Note.C, null, random.nextInt(-12, 0)));
+    }
+
+    @Test
+    @DisplayName("Frequency.from(null, Accidental, # >= 0) throws")
+    void frequencyFromNullNoteThrows() {
+        assertThrows(IllegalArgumentException.class, () -> Frequency.from(null,
+                random.nextBoolean() ? Accidental.SHARP : Accidental.FLAT, random.nextInt(13)));
     }
 }
