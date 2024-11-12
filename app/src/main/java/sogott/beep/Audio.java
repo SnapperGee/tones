@@ -54,7 +54,7 @@ import static java.util.Objects.hash;
  * @see Pitch
  * @see AudioString
  */
-final class Audio implements Comparable<Audio> {
+final class Audio {
     final private Wave _wave;
     final private Pitch _pitch;
     final private int _duration;
@@ -218,22 +218,5 @@ final class Audio implements Comparable<Audio> {
     @Override
     public String toString() {
         return this._toString;
-    }
-
-    @Override
-    public int compareTo(Audio other) {
-        int compareResults = this._wave.compareTo(other._wave);
-
-        if (compareResults != 0) {
-            return compareResults;
-        }
-
-        compareResults = this._pitch.compareTo(other._pitch);
-
-        if (compareResults != 0) {
-            return compareResults;
-        }
-
-        return Integer.compare(this._duration, other._duration);
     }
 }

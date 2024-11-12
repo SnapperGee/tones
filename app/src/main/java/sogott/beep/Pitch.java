@@ -47,7 +47,7 @@ import java.util.Optional;
  * @see Audio
  * @see AudioString
  */
-final class Pitch implements Comparable<Pitch> {
+final class Pitch {
     final private Note _note;
     final private Accidental _accidental;
     final private int _octave;
@@ -264,22 +264,5 @@ final class Pitch implements Comparable<Pitch> {
 
         // only an octave int after leading note or second accidental '+' or '-' char
         return aString.codePoints().skip(startIndex).allMatch(Character::isDigit);
-    }
-
-    @Override
-    public int compareTo(Pitch other) {
-        int compareResult = Integer.compare(this._octave, other._octave);
-
-        if (compareResult != 0) {
-            return compareResult;
-        }
-
-        compareResult = this._note.compareTo(other._note);
-
-        if (compareResult != 0) {
-            return compareResult;
-        }
-
-        return this._accidental.compareTo(other._accidental);
     }
 }
