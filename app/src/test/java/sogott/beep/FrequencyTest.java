@@ -484,10 +484,17 @@ final class FrequencyArgProvider {
 final class FrequencyTest {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    @ParameterizedTest(name = "Frequency.from({0}, {1}, {2}) ≅ {3}")
+    @ParameterizedTest(name = "Frequency.from(Note.{0}, {1}, {2}) ≅ {3}")
     @ArgumentsSource(FrequencyArgProvider.NoteAccidentalOctaveFrequency.class)
     void frequencyFromNoteAccidentalOctave(Note note, Accidental accidental, int octave, double expectedFrequency) {
         final double frequency = Frequency.from(note, accidental, octave);
+        assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
+    }
+
+    @ParameterizedTest(name = "Frequency.from(Note.{0}, {1}) ≅ {2}")
+    @ArgumentsSource(FrequencyArgProvider.NoteOctaveFrequency.class)
+    void frequencyFromNoteOctave(Note note, int octave, double expectedFrequency) {
+        final double frequency = Frequency.from(note, octave);
         assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
     }
 
@@ -495,13 +502,6 @@ final class FrequencyTest {
     @ArgumentsSource(FrequencyArgProvider.PitchFrequency.class)
     void frequencyFromPitch(Pitch pitch, double expectedFrequency) {
         final double frequency = Frequency.from(pitch);
-        assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
-    }
-
-    @ParameterizedTest(name = "Frequency.from({0}, {1}) ≅ {2}")
-    @ArgumentsSource(FrequencyArgProvider.NoteOctaveFrequency.class)
-    void frequencyFromNoteOctave(Note note, int octave, double expectedFrequency) {
-        final double frequency = Frequency.from(note, octave);
         assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
     }
 
