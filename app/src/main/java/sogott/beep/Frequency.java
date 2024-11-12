@@ -105,25 +105,6 @@ final class Frequency {
         return from(pitch.note(), pitch.accidental(), pitch.octave());
     }
 
-    /**
-     * Attempts to derive a {@code double} frequency from a {@link Pitch}
-     * {@code String}. If the passed {@code String} can't be converted to a
-     * frequency, then an empty {@link OptionalDouble} is returned, otherwise it
-     * contains the frequency {@code double} value.
-     *
-     * @param aString The {@code String} to attempt to derive a
-     *                {@code double} frequency from.
-     *
-     * @return A {@code double} frequency derived from the passed {@code String}.
-     *
-     * @see Pitch
-     */
-    static OptionalDouble parse(String aString) {
-        return Pitch.parse(aString)
-                .map(pitch -> OptionalDouble.of(from(pitch)))
-                .orElse(OptionalDouble.empty());
-    }
-
     private Frequency() {
         throw new UnsupportedOperationException(
                 "%s is a static class and cannot be instantiated.".formatted(Frequency.class.getSimpleName()));
