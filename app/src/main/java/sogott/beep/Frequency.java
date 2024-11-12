@@ -106,66 +106,6 @@ final class Frequency {
     }
 
     /**
-     * Attempts to derive {@code double} frequency from a {@link Note}
-     * {@code char}, {@link Accidental} {@code char}, and an {@code int} octave.
-     * If the passed arguments can't be converted to a frequency, then an empty
-     * {@link OptionalDouble} is returned, otherwise it contains the frequency
-     * {@code double} value. The passed {@link Accidental} {@code char} argument
-     * is used to make the note a <i>sharp</i> &sharp; or <i>flat</i> &flat; or
-     * can be omitted if it's a <i>natural</i> &natural;. The
-     * {@code accidentalChar} argument is optional and can be omitted if the
-     * note is <i>natural</i> &natural; with no {@link Accidental} (neither a
-     * <i>sharp</i> &sharp; nor <i>flat</i> &flat;).
-     *
-     * @param noteChar       The {@link Note} {@code char} of the frequency to
-     *                       create.
-     *
-     * @param accidentalChar The {@link Accidental} {@code char} of the note of the
-     *                       frequency to create.
-     *
-     * @param octave         The {@code int} octave of the note of the frequency to
-     *                       create.
-     *
-     * @return A {@code double} frequency derived from the passed {@link Note}
-     *         {@code char}, {@link Accidental} {@code char}, and {@code int}
-     *         octave.
-     *
-     * @see Note
-     * @see Accidental
-     */
-    static OptionalDouble from(char noteChar, char accidentalChar, int octave) {
-        return Note.fromChar(noteChar)
-                .flatMap(note -> Accidental.fromChar(accidentalChar)
-                        .map(accidental -> OptionalDouble.of(from(note, accidental, octave))))
-                .orElse(OptionalDouble.empty());
-    }
-
-    /**
-     * Attempts to derive a {@code double} frequency from a {@link Note}
-     * {@code char} and {@code int} octave. If the passed arguments can't be
-     * converted to a frequency, then an empty {@link OptionalDouble} is returned,
-     * otherwise it contains the frequency {@code double} value. The note is
-     * assumed to be <i>natural</i> &natural; with no {@link Accidental} (a note
-     * that's neither a <i>sharp</i> &sharp; nor <i>flat</i> &flat;).
-     *
-     * @param noteChar The {@link Note} {@code char} of the frequency to create.
-     *
-     * @param octave   The {@code int} octave of the note of the frequency to
-     *                 create.
-     *
-     * @return An {@link OptionalDouble} containing the {@code double} frequency
-     *         derived from the passed {@link Note} {@code char},
-     *         {@link Accidental} {@code char}, and {@code int} octave.
-     *
-     * @see Note
-     */
-    static OptionalDouble from(char noteChar, int octave) {
-        return Note.fromChar(noteChar)
-                .map(note -> OptionalDouble.of(from(note, octave)))
-                .orElse(OptionalDouble.empty());
-    }
-
-    /**
      * Attempts to derive a {@code double} frequency from a {@link Pitch}
      * {@code String}. If the passed {@code String} can't be converted to a
      * frequency, then an empty {@link OptionalDouble} is returned, otherwise it
