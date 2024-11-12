@@ -68,54 +68,7 @@ final class AudioByteBuffers {
         }
 
         this._audioList = List.copyOf(audioCollection);
-        this._audioByteBuffers = this._audioList.stream().reduce(
-                new ArrayList<byte[]>(),
-                (buffers, audio) -> {
-                    // if audio is not silence, trim tail of audio to prevent
-                    // same notes from blending together
-                    if (audio.wave() != null) {
-                        final byte[] audioByteBuffer = audio.wave()
-                                .generate(Frequency.from(audio.pitch()),
-                                        (int) Math.round(1.0
-                                                / audio.duration()
-                                                * wholeNoteDuration));
-
-                        final int soundBytes = ((int) (SILENCE_RATIO * audioByteBuffer.length))
-                                / AUDIO_FORMAT.getFrameSize()
-                                * AUDIO_FORMAT.getFrameSize();
-
-                        // Create a fade-out effect on the last portion of the retained sound
-                        final int fadeOutBytes = audioByteBuffer.length - soundBytes;
-                        for (int i = 0; i < fadeOutBytes; i += 2) {
-                            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1
-                                                                                         // to 0
-                            final int sampleIndex = soundBytes + i;
-                            if (sampleIndex + 1 < audioByteBuffer.length) {
-                                // Apply fade-out to each sample in little-endian order
-                                final short originalSample = (short) ((audioByteBuffer[sampleIndex + 1] << 8)
-                                        | (audioByteBuffer[sampleIndex] & 0xFF));
-                                final short fadedSample = (short) (originalSample * fadeFactor);
-                                audioByteBuffer[sampleIndex] = (byte) (fadedSample & 0xFF);
-                                audioByteBuffer[sampleIndex + 1] = (byte) ((fadedSample >> 8) & 0xFF);
-                            }
-                        }
-
-                        // Add the faded audio buffer to the output
-                        buffers.add(copyOfRange(audioByteBuffer, 0, soundBytes + fadeOutBytes));
-                    } else {
-                        final byte[] audioByteBuffer = GenerateWaveByteBuffer.silence(
-                                (int) Math.round(1.0 / audio.duration()
-                                        * wholeNoteDuration));
-                        buffers.add(audioByteBuffer);
-                    }
-
-                    return buffers;
-                },
-                (buffers, moreBuffers) -> {
-                    buffers.addAll(moreBuffers);
-                    return buffers;
-                });
-
+        this._audioByteBuffers = insertFadeOutToBuffers(this._audioList, wholeNoteDuration);
         this._line = AudioSystem.getSourceDataLine(AUDIO_FORMAT);
     }
 
@@ -217,5 +170,55 @@ final class AudioByteBuffers {
     @Override
     public int hashCode() {
         return this._audioList.hashCode();
+    }
+
+    private static List<byte[]> insertFadeOutToBuffers(List<Audio> audioList, double wholeNoteDuration) {
+        return audioList.stream().reduce(
+                new ArrayList<byte[]>(),
+                (buffers, audio) -> {
+                    // if audio is not silence, trim tail of audio to prevent
+                    // same notes from blending together
+                    if (audio.wave() != null) {
+                        final byte[] audioByteBuffer = audio.wave()
+                                .generate(Frequency.from(audio.pitch()),
+                                        (int) Math.round(1.0
+                                                / audio.duration()
+                                                * wholeNoteDuration));
+
+                        final int soundBytes = ((int) (SILENCE_RATIO * audioByteBuffer.length))
+                                / AUDIO_FORMAT.getFrameSize()
+                                * AUDIO_FORMAT.getFrameSize();
+
+                        // Create a fade-out effect on the last portion of the retained sound
+                        final int fadeOutBytes = audioByteBuffer.length - soundBytes;
+                        for (int i = 0; i < fadeOutBytes; i += 2) {
+                            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1
+                                                                                         // to 0
+                            final int sampleIndex = soundBytes + i;
+                            if (sampleIndex + 1 < audioByteBuffer.length) {
+                                // Apply fade-out to each sample in little-endian order
+                                final short originalSample = (short) ((audioByteBuffer[sampleIndex + 1] << 8)
+                                        | (audioByteBuffer[sampleIndex] & 0xFF));
+                                final short fadedSample = (short) (originalSample * fadeFactor);
+                                audioByteBuffer[sampleIndex] = (byte) (fadedSample & 0xFF);
+                                audioByteBuffer[sampleIndex + 1] = (byte) ((fadedSample >> 8) & 0xFF);
+                            }
+                        }
+
+                        // Add the faded audio buffer to the output
+                        buffers.add(copyOfRange(audioByteBuffer, 0, soundBytes + fadeOutBytes));
+                    } else {
+                        final byte[] audioByteBuffer = GenerateWaveByteBuffer.silence(
+                                (int) Math.round(1.0 / audio.duration()
+                                        * wholeNoteDuration));
+                        buffers.add(audioByteBuffer);
+                    }
+
+                    return buffers;
+                },
+                (buffers, moreBuffers) -> {
+                    buffers.addAll(moreBuffers);
+                    return buffers;
+                });
     }
 }
