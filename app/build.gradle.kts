@@ -20,7 +20,7 @@ java {
 }
 
 application {
-    mainClass = "sogott.beep.Main"
+    mainClass = "sogott.tones.Main"
 }
 
 tasks.named<Test>("test") {

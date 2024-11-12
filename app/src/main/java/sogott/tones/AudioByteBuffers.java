@@ -1,4 +1,4 @@
-package sogott.beep;
+package sogott.tones;
 
 import java.util.Collection;
 import java.util.Enumeration;

@@ -1,4 +1,4 @@
-package sogott.beep;
+package sogott.tones;
 
 import static java.util.Objects.hash;
 import java.util.Optional;

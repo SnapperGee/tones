@@ -1,4 +1,4 @@
-package sogott.beep;
+package sogott.tones;
 
 /**
  * Class consisting exclusively of static methods used to generate {@code byte}

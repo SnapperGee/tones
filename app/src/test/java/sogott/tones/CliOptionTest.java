@@ -1,4 +1,4 @@
-package sogott.beep;
+package sogott.tones;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;
