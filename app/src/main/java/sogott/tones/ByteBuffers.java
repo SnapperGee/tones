@@ -107,33 +107,38 @@ final class ByteBuffers {
                                     / audio.duration()
                                     * wholeNoteDuration));
 
-            final int soundBytes = ((int) (SILENCE_RATIO * audioByteBuffer.length))
-                    / AUDIO_FORMAT.getFrameSize()
-                    * AUDIO_FORMAT.getFrameSize();
-
-            // Create a fade-out effect on the last portion of the retained sound
-            final int fadeOutBytes = audioByteBuffer.length - soundBytes;
-            for (int i = 0; i < fadeOutBytes; i += 2) {
-                final double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1
-                                                                             // to 0
-                final int sampleIndex = soundBytes + i;
-                if (sampleIndex + 1 < audioByteBuffer.length) {
-                    // Apply fade-out to each sample in little-endian order
-                    final short originalSample = (short) ((audioByteBuffer[sampleIndex + 1] << 8)
-                            | (audioByteBuffer[sampleIndex] & 0xFF));
-                    final short fadedSample = (short) (originalSample * fadeFactor);
-                    audioByteBuffer[sampleIndex] = (byte) (fadedSample & 0xFF);
-                    audioByteBuffer[sampleIndex + 1] = (byte) ((fadedSample >> 8) & 0xFF);
-                }
-            }
-
             // Add the faded audio buffer to the output
-            return copyOfRange(audioByteBuffer, 0, soundBytes + fadeOutBytes);
+            return appendFadeout(audioByteBuffer, SILENCE_RATIO, AUDIO_FORMAT);
         } else {
             return GenerateWaveByteBuffer.silence(
                     (int) Math.round(1.0 / audio.duration()
                             * wholeNoteDuration));
         }
+    }
+
+    static byte[] appendFadeout(byte[] audioBytes, double silenceRatio, AudioFormat audioFormat) {
+        final int soundBytes = ((int) (silenceRatio * audioBytes.length))
+                / audioFormat.getFrameSize()
+                * audioFormat.getFrameSize();
+
+        // Create a fade-out effect on the last portion of the retained sound
+        final int fadeOutBytes = audioBytes.length - soundBytes;
+        for (int i = 0; i < fadeOutBytes; i += 2) {
+            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1
+                                                                         // to 0
+            final int sampleIndex = soundBytes + i;
+            if (sampleIndex + 1 < audioBytes.length) {
+                // Apply fade-out to each sample in little-endian order
+                final short originalSample = (short) ((audioBytes[sampleIndex + 1] << 8)
+                        | (audioBytes[sampleIndex] & 0xFF));
+                final short fadedSample = (short) (originalSample * fadeFactor);
+                audioBytes[sampleIndex] = (byte) (fadedSample & 0xFF);
+                audioBytes[sampleIndex + 1] = (byte) ((fadedSample >> 8) & 0xFF);
+            }
+        }
+
+        // Add the faded audio buffer to the output
+        return copyOfRange(audioBytes, 0, soundBytes + fadeOutBytes);
     }
 
     @Override
