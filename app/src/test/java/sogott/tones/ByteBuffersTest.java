@@ -3,11 +3,13 @@ package sogott.tones;
 import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
 import java.util.List;
+import javax.sound.sampled.AudioFormat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -29,20 +31,12 @@ final class ByteBuffersArgProvider {
 
 final class ByteBuffersTest {
 
-    ///////////////////////
-    // valid constructor //
-    ///////////////////////
-
     @Test
     @DisplayName("new ByteBuffers(Collection<Audio>, # > 0) does not throw")
     void byteBuffersConstructorPassedValidArgumentsDoesNotThrow() {
         assertDoesNotThrow(() -> new ByteBuffers(ByteBuffersArgProvider.audioObjects,
                 ByteBuffersArgProvider.random.nextDouble(1, 200)));
     }
-
-    /////////////////////////
-    // invalid constructor //
-    /////////////////////////
 
     @Test
     @DisplayName("new ByteBuffers(null, # > 0) throws")
@@ -56,5 +50,13 @@ final class ByteBuffersTest {
     void byteBuffersConstructorPassedNegativeWholeNoteDurationThrows() {
         assertThrows(IllegalArgumentException.class, () -> new ByteBuffers(null,
                 ByteBuffersArgProvider.random.nextDouble(-200, 0)));
+    }
+
+    @Test
+    @DisplayName("ByteBuffers.AUDIO_FORMAT matches new AudioFormat(44100, 16, 1, true, false)")
+    void byteBuffersAudioFormatConstIsValid() {
+        final AudioFormat expectedAudioFormat = new AudioFormat(44100, 16, 1, true, false);
+        assertTrue(expectedAudioFormat.matches(ByteBuffers.AUDIO_FORMAT),
+                () -> "ByteBuffers.AUDIO_FORMAT matches new AudioFormat(44100, 16, 1, true, false)");
     }
 }
