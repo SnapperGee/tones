@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import javax.sound.sampled.AudioFormat;
 
-import static java.util.Arrays.copyOfRange;
-
 /**
  * This class converts a {@code Collection} of {@link Audio} objects to a
  * {@code List} of their PCM byte array buffers appropriate for playback and
@@ -217,8 +215,8 @@ final class ByteBuffers {
             }
         }
 
-        // return array with attenuated bytes appended to end of it
-        return copyOfRange(audioBytes, 0, numOfBytesToNotAttenuate + numOfBytesToAttenuate);
+        // return byte array with attenuated fadeout tail bytes applied to end of it
+        return audioBytes;
     }
 
     @Override
