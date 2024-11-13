@@ -99,7 +99,7 @@ final class ByteBuffers {
         return this._byteBuffers.stream();
     }
 
-    static byte[] audioObjectToByteArrayBuffer(Audio audio, double wholeNoteDuration) {
+    private static byte[] audioObjectToByteArrayBuffer(Audio audio, double wholeNoteDuration) {
         if (audio.wave() != null) {
             final byte[] audioByteBuffer = audio.wave()
                     .generate(Frequency.from(audio.pitch()),
@@ -116,7 +116,7 @@ final class ByteBuffers {
         }
     }
 
-    static byte[] appendFadeout(byte[] audioBytes, double silenceRatio, AudioFormat audioFormat) {
+    private static byte[] appendFadeout(byte[] audioBytes, double silenceRatio, AudioFormat audioFormat) {
         final int soundBytes = ((int) (silenceRatio * audioBytes.length))
                 / audioFormat.getFrameSize()
                 * audioFormat.getFrameSize();
@@ -124,8 +124,8 @@ final class ByteBuffers {
         // Create a fade-out effect on the last portion of the retained sound
         final int fadeOutBytes = audioBytes.length - soundBytes;
         for (int i = 0; i < fadeOutBytes; i += 2) {
-            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes); // Gradually decreases from 1
-                                                                         // to 0
+            // Gradually decreases from 1 to 0
+            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes);
             final int sampleIndex = soundBytes + i;
             if (sampleIndex + 1 < audioBytes.length) {
                 // Apply fade-out to each sample in little-endian order
