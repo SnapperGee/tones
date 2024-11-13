@@ -180,7 +180,7 @@ final class ByteBuffers {
 
         for (int i = 0; i < numOfBytesToAttenuate; i += 2) {
 
-            // Gradually decreases from 1 to 0 applying more attenuation
+            // gradually decreases from 1 to 0 applying more attenuation
             final double attenuateFactor = 1.0 - ((double) i / numOfBytesToAttenuate);
 
             // index of byte to attenuate relative to last index of byte to not
