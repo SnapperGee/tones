@@ -188,11 +188,31 @@ final class ByteBuffers {
             final int sampleIndex = numOfBytesToNotAttenuate + i;
 
             if (sampleIndex + 1 < audioBytes.length) {
-                // Apply fade-out to each sample in little-endian order
-                final short originalSample = (short) ((audioBytes[sampleIndex + 1] << 8)
-                        | (audioBytes[sampleIndex] & 0xFF));
+                final byte leastSignificantByte = audioBytes[sampleIndex];
+                final byte mostSignificantByte = audioBytes[sampleIndex + 1];
+
+                // convert least significant byte from value between -128 to 127
+                // to value between 0 and 255
+                final int leastSignificantByteAsUInt = leastSignificantByte & 0xFF;
+
+                // shift most significant bits to least significant bits
+                // position so they can then be recombined with original
+                // least significant bits.
+                final int mostSignificantByteShiftedToLeastSignificant = mostSignificantByte << 8;
+
+                // combine intermediate byte values into single value
+                final short originalSample = (short) (mostSignificantByteShiftedToLeastSignificant
+                        | leastSignificantByteAsUInt);
+
+                // apply attenuation to sample
                 final short attenuatedSample = (short) (originalSample * attenuateFactor);
+
+                // extract least significant byte of attenuated sample and put
+                // it back into array
                 audioBytes[sampleIndex] = (byte) (attenuatedSample & 0xFF);
+
+                // extract most significant byte of attenuated sample and put
+                // it back into array
                 audioBytes[sampleIndex + 1] = (byte) ((attenuatedSample >> 8) & 0xFF);
             }
         }
