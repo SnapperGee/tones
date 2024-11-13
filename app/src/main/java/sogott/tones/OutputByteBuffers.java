@@ -16,6 +16,10 @@ import static java.util.Collections.enumeration;
 
 final class OutputByteBuffers {
     final static void toAudio(ByteBuffers byteBuffers) {
+        if (byteBuffers == null) {
+            throw new IllegalArgumentException("Null byte buffers");
+        }
+
         try {
             final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
             sourceDataLine.open(ByteBuffers.AUDIO_FORMAT);
@@ -37,6 +41,14 @@ final class OutputByteBuffers {
     }
 
     final static Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath) {
+        if (byteBuffers == null) {
+            throw new IllegalArgumentException("Null byte buffers");
+        }
+
+        if (outputFilePath == null) {
+            throw new IllegalArgumentException("Null output file path");
+        }
+
         final List<ByteArrayInputStream> inputStreams = byteBuffers.stream().map(ByteArrayInputStream::new)
                 .toList();
 
