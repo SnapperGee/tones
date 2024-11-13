@@ -108,7 +108,7 @@ final class ByteBuffers {
                                     / audio.duration()
                                     * wholeNoteDuration));
 
-            return appendFadeout(audioByteBuffer, SILENCE_RATIO, AUDIO_FORMAT);
+            return applyFadeoutTail(audioByteBuffer, SILENCE_RATIO, AUDIO_FORMAT);
         } else {
             return GenerateWaveByteBuffer.silence(
                     (int) Math.round(1.0 / audio.duration()
@@ -151,7 +151,7 @@ final class ByteBuffers {
      *                                  passed {@link AudioFormat} is in
      *                                  big endian.
      */
-    private static byte[] appendFadeout(
+    private static byte[] applyFadeoutTail(
             byte[] audioBytes,
             double fadeoutStartFactor,
             AudioFormat audioFormat) {
