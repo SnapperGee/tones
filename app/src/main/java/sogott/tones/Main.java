@@ -102,5 +102,7 @@ final public class Main {
     }
 
     private Main() {
+        throw new UnsupportedOperationException(
+                Main.class.getSimpleName() + " cannot be instantiated.");
     }
 }
