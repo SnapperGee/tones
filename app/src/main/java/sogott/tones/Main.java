@@ -15,6 +15,8 @@ import java.nio.file.Path;
  * the application is exited.
  *
  * @see CliOption
+ * @see OutputByteBuffers
+ * @see ByteBuffers
  */
 final public class Main {
 
@@ -95,6 +97,7 @@ final public class Main {
         } catch (ParseException e) {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
+            System.exit(100);
         }
     }
 
