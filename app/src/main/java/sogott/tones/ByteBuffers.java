@@ -117,16 +117,21 @@ final class ByteBuffers {
     }
 
     private static byte[] appendFadeout(byte[] audioBytes, double silenceRatio, AudioFormat audioFormat) {
+
+        // number of bytes to not attenuate
         final int soundBytes = ((int) (silenceRatio * audioBytes.length))
                 / audioFormat.getFrameSize()
                 * audioFormat.getFrameSize();
 
-        // Create a fade-out effect on the last portion of the retained sound
+        // number of bytes to attenuate
         final int fadeOutBytes = audioBytes.length - soundBytes;
+
         for (int i = 0; i < fadeOutBytes; i += 2) {
+
             // Gradually decreases from 1 to 0
             final double fadeFactor = 1.0 - ((double) i / fadeOutBytes);
             final int sampleIndex = soundBytes + i;
+
             if (sampleIndex + 1 < audioBytes.length) {
                 // Apply fade-out to each sample in little-endian order
                 final short originalSample = (short) ((audioBytes[sampleIndex + 1] << 8)
@@ -137,7 +142,7 @@ final class ByteBuffers {
             }
         }
 
-        // Add the faded audio buffer to the output
+        // return array with attenuated bytes appended to end of it
         return copyOfRange(audioBytes, 0, soundBytes + fadeOutBytes);
     }
 
