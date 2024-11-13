@@ -14,7 +14,24 @@ import javax.sound.sampled.SourceDataLine;
 
 import static java.util.Collections.enumeration;
 
+/**
+ * Class consisting exclusively of static methods for outputting the byte
+ * buffers of {@link ByteBuffers} objects to a WAV file or audio output.
+ *
+ * @see ByteBuffers
+ */
 final class OutputByteBuffers {
+
+    /**
+     * Outputs the byte buffers as audible output. It uses the default
+     * {@link SourceDataLine} output device/mixer which should be whatever the
+     * output device the operating system is set to use.
+     *
+     * @param byteBuffers The byte buffers to output as audio.
+     *
+     * @throws IllegalArgumentException If the passed {@link ByteBuffers}
+     *                                  argument is {@code null}.
+     */
     final static void toAudio(ByteBuffers byteBuffers) {
         if (byteBuffers == null) {
             throw new IllegalArgumentException("Null byte buffers");
@@ -40,6 +57,22 @@ final class OutputByteBuffers {
         }
     }
 
+    /**
+     * Writes the passed byte buffers to a WAV file at the provided {@link Path}.
+     * If an {@link IOException} occurs, then the stacktrace and exception message
+     * is printed to stderr and the application is exited with code {@code 322}.
+     * It either argument is null, then a {@link IllegalArgumentException} is
+     * thrown.
+     *
+     * @param byteBuffers    The byte buffers to write to the WAV file.
+     *
+     * @param outputFilePath The path to write the WAV file to.
+     *
+     * @return The {@link Path} the WAV file was written to.
+     *
+     * @throws IllegalArgumentException If either of the passed arguments are
+     *                                  {@code null}.
+     */
     final static Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath) {
         if (byteBuffers == null) {
             throw new IllegalArgumentException("Null byte buffers");
