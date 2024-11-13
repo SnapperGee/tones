@@ -303,7 +303,6 @@ final class GenerateWaveByteBuffer {
 
     private GenerateWaveByteBuffer() {
         throw new UnsupportedOperationException(
-                "%s is a static class and cannot be instantiated."
-                        .formatted(GenerateWaveByteBuffer.class.getSimpleName()));
+                GenerateWaveByteBuffer.class.getSimpleName() + " is a static class and cannot be instantiated.");
     }
 }
