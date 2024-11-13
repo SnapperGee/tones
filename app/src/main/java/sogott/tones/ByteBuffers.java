@@ -116,34 +116,89 @@ final class ByteBuffers {
         }
     }
 
-    private static byte[] appendFadeout(byte[] audioBytes, double silenceRatio, AudioFormat audioFormat) {
+    /**
+     * Takes in a byte array buffer of PCM audio and applies a fadeout to its
+     * tail.
+     *
+     * <p>
+     * Where to begin the fade out tail is determined by the
+     * {@code double fadeoutStartFactor} parameter. This should be a value
+     * between exclusive 0 and inclusive 1 and determines the point in the byte
+     * buffer array to begin the fadeout. So if this value is {@code 0.8}, then
+     * the fadeout will begin at 80% of the audio byte buffer array.
+     *
+     * <p>
+     * This method is designed to process PCM audio that is formatted a specific
+     * way. Particularly, it expects the audio to be 16bit and little endian.
+     *
+     * @param audioBytes         The byte array buffer of PCM audio to apply the
+     *                           fadeout tail to.
+     *
+     * @param fadeoutStartFactor The point in the audio byte buffer array,
+     *                           designated as a percentage of it, to begin the
+     *                           fadeout tail.
+     *
+     * @param audioFormat        The {@link AudioFormat} that will be used to
+     *                           format the byte buffer array.
+     *
+     * @return The byte buffer array with its tail updated with the attenuated
+     *         fadeout.
+     *
+     * @throws IllegalArgumentException If any of the passed arguments are
+     *                                  {@code null}, the fadeout start factor
+     *                                  isn't in the range of 0 <
+     *                                  {@code fadeoutStartFactor} <= 1 or the
+     *                                  passed {@link AudioFormat} is in
+     *                                  big endian.
+     */
+    private static byte[] appendFadeout(
+            byte[] audioBytes,
+            double fadeoutStartFactor,
+            AudioFormat audioFormat) {
 
-        // number of bytes to not attenuate
-        final int soundBytes = ((int) (silenceRatio * audioBytes.length))
-                / audioFormat.getFrameSize()
-                * audioFormat.getFrameSize();
+        if (audioBytes == null) {
+            throw new IllegalArgumentException("Null byte array.");
+        }
 
-        // number of bytes to attenuate
-        final int fadeOutBytes = audioBytes.length - soundBytes;
+        if (fadeoutStartFactor <= 0 || fadeoutStartFactor > 1) {
+            throw new IllegalArgumentException(
+                    "Fade out factor not between exclusive 0 and inclusive 1: " + fadeoutStartFactor);
+        }
 
-        for (int i = 0; i < fadeOutBytes; i += 2) {
+        if (audioFormat == null) {
+            throw new IllegalArgumentException("Null audio format.");
+        }
 
-            // Gradually decreases from 1 to 0
-            final double fadeFactor = 1.0 - ((double) i / fadeOutBytes);
-            final int sampleIndex = soundBytes + i;
+        if (audioFormat.isBigEndian()) {
+            throw new IllegalArgumentException("Audio format is big endian and needs to be little endian.");
+        }
+
+        final int numOfBytesToNotAttenuate = ((int) (fadeoutStartFactor * audioBytes.length))
+                / audioFormat.getFrameSize() * audioFormat.getFrameSize();
+
+        final int numOfBytesToAttenuate = audioBytes.length - numOfBytesToNotAttenuate;
+
+        for (int i = 0; i < numOfBytesToAttenuate; i += 2) {
+
+            // Gradually decreases from 1 to 0 applying more attenuation
+            final double attenuateFactor = 1.0 - ((double) i / numOfBytesToAttenuate);
+
+            // index of byte to attenuate relative to last index of byte to not
+            // attenuate
+            final int sampleIndex = numOfBytesToNotAttenuate + i;
 
             if (sampleIndex + 1 < audioBytes.length) {
                 // Apply fade-out to each sample in little-endian order
                 final short originalSample = (short) ((audioBytes[sampleIndex + 1] << 8)
                         | (audioBytes[sampleIndex] & 0xFF));
-                final short fadedSample = (short) (originalSample * fadeFactor);
-                audioBytes[sampleIndex] = (byte) (fadedSample & 0xFF);
-                audioBytes[sampleIndex + 1] = (byte) ((fadedSample >> 8) & 0xFF);
+                final short attenuatedSample = (short) (originalSample * attenuateFactor);
+                audioBytes[sampleIndex] = (byte) (attenuatedSample & 0xFF);
+                audioBytes[sampleIndex + 1] = (byte) ((attenuatedSample >> 8) & 0xFF);
             }
         }
 
         // return array with attenuated bytes appended to end of it
-        return copyOfRange(audioBytes, 0, soundBytes + fadeOutBytes);
+        return copyOfRange(audioBytes, 0, numOfBytesToNotAttenuate + numOfBytesToAttenuate);
     }
 
     @Override
