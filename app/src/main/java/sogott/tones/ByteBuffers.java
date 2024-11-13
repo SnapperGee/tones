@@ -116,7 +116,8 @@ final class ByteBuffers {
 
     /**
      * Takes in a byte array buffer of PCM audio and applies a fadeout to its
-     * tail.
+     * tail. <strong><em>This method modifies the passed byte array in
+     * place.</em></strong>
      *
      * <p>
      * Where to begin the fade out tail is determined by the
