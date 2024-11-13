@@ -9,6 +9,18 @@ import javax.sound.sampled.AudioFormat;
 import static java.util.Arrays.copyOfRange;
 import static java.util.Collections.unmodifiableList;
 
+/**
+ * This class converts a {@code Collection} of {@link Audio} objects to a
+ * {@code List} of their PCM byte array buffers appropriate for playback and
+ * writing to files.
+ *
+ * <p>
+ * Note that while the {@code List} of byte arrays is unmodifiable, the byte
+ * arrays themselves can be modified.
+ *
+ * @see Audio
+ * @see OutputByteBuffers
+ */
 final class ByteBuffers {
     private final static float SAMPLE_RATE = 44100;
 
@@ -18,16 +30,40 @@ final class ByteBuffers {
     private final static boolean BIG_ENDIAN = false;
     private final static double SILENCE_RATIO = 0.85;
 
+    /**
+     * {@link AudioFormat} used by this class when converting the {@link Audio}
+     * objects to their PCM byte array buffers and internally by the
+     * {@link OutputByteBuffers} static methods when outputting the byte array
+     * buffers.
+     */
     final static AudioFormat AUDIO_FORMAT = new AudioFormat(SAMPLE_RATE,
             SAMPLE_SIZE, CHANNELS, SIGNED, BIG_ENDIAN);
 
     private final List<Audio> _audioObjects;
     private final List<byte[]> _byteBuffers;
-    private final int _hashCode;
 
+    /**
+     * Constructs a {@link ByteBuffers} object instance from the passed
+     * {@link Audio} Collection using the whole note duration {@code double} to
+     * calculate the duration of the PCM byte array buffers the {@link Audio}
+     * objects are converted to. If the {@link Audio} Collection is {@code null}
+     * or the whole note duration is not positive (0 or less) then an
+     * {@link IllegalArgumentException} is thrown.
+     *
+     * @param audioObjects      Collection of {@link Audio} objects to convert
+     *                          to a List of their PCM byte array buffers.
+     *
+     * @param wholeNoteDuration A positive {@code double} (greater than 0) used
+     *                          to calculate the duration of the PCM byte array
+     *                          buffers the {@link Audio} objects are converted to.
+     *
+     * @throws IllegalArgumentException If the {@link Audio} Collection is
+     *                                  {@code null} or the whole note duration
+     *                                  is not positive (0 or less).
+     */
     ByteBuffers(Collection<Audio> audioObjects, double wholeNoteDuration) {
         if (audioObjects == null) {
-            throw new IllegalArgumentException("Null audio objects");
+            throw new IllegalArgumentException("Null audio objects collection.");
         }
 
         if (wholeNoteDuration <= 0) {
@@ -82,14 +118,30 @@ final class ByteBuffers {
                     buffers.addAll(moreBuffers);
                     return buffers;
                 }));
-
-        this._hashCode = this._byteBuffers.hashCode();
     }
 
+    /**
+     * Returns an unmodifiable List of the PCM byte array buffers from the
+     * converted {@link Audio} objects.
+     *
+     * <p>
+     * Note that while the {@code List} of byte arrays is unmodifiable, the byte
+     * arrays themselves can be modified.
+     *
+     * @return An unmodifiable List of the PCM byte array buffers from the
+     *         converted {@link Audio} objects.
+     */
     List<byte[]> asList() {
         return this._byteBuffers;
     }
 
+    /**
+     * Returns a {@code Stream} of the PCM byte array buffers from the converted
+     * {@link Audio} objects.
+     *
+     * @return A {@code Stream} of the PCM byte array buffers from the converted
+     *         {@link Audio} objects.
+     */
     Stream<byte[]> stream() {
         return this._byteBuffers.stream();
     }
@@ -101,6 +153,6 @@ final class ByteBuffers {
 
     @Override
     public int hashCode() {
-        return this._hashCode;
+        return this._byteBuffers.hashCode();
     }
 }
