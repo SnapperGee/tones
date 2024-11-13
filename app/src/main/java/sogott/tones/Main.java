@@ -82,16 +82,15 @@ final public class Main {
                     System.exit(200);
                 }
 
-                final AudioByteBuffers audioCollection = AudioByteBuffers
-                        .create(validAndInvalidOperands.valid(), wholeNoteDuration);
+                final ByteBuffers byteBuffers = new ByteBuffers(validAndInvalidOperands.valid(), wholeNoteDuration);
 
                 if (cliArgs.hasOption(CliOption.OUT.value())) {
                     final Path outputFilePath = cliArgs.getParsedOptionValue(CliOption.OUT.value());
-                    final Path pathWrittenTo = audioCollection.outputToFile(outputFilePath);
+                    final Path pathWrittenTo = OutputByteBuffers.toWavFile(byteBuffers, outputFilePath);
                     System.out.println("Audio file written to: \"%s\"".formatted(pathWrittenTo));
                 }
 
-                audioCollection.outputToAudio();
+                OutputByteBuffers.toAudio(byteBuffers);
             }
         } catch (ParseException e) {
             e.printStackTrace();
