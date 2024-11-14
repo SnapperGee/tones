@@ -4,8 +4,8 @@ import static java.util.Objects.hash;
 
 /**
  * This class contains the properties necessary needed to generate byte arrays
- * that are suitable for synthesizing audio. The following properties these
- * objects contain are:
+ * that are suitable for being used as buffers to synthesize audio. The
+ * following properties these objects contain are:
  *
  * <ol>
  * <li>
