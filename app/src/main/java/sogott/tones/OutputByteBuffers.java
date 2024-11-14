@@ -27,10 +27,16 @@ final class OutputByteBuffers {
      * {@link SourceDataLine} output device/mixer which should be whatever the
      * output device the operating system is set to use.
      *
-     * @param byteBuffers The byte buffers to output as audio.
+     * @param byteBuffers    The byte buffers to output as audio.
      *
-     * @throws IllegalArgumentException If the passed {@link ByteBuffers}
-     *                                  argument is {@code null}.
+     * @param sourceDataLine The {@link SourceDataLine} to use to write and drain
+     *                       the byte buffer arrays to.
+     *
+     * @throws LineUnavailableException If there's an exception opening the passed
+     *                                  {@link SourceDataLine}.
+     *
+     * @throws IllegalArgumentException If either of the passed arguments are
+     *                                  {@code null}.
      */
     final static void toAudio(
             ByteBuffers byteBuffers,
