@@ -3,11 +3,9 @@ package sogott.tones;
 import static java.util.Objects.hash;
 
 /**
- * This class contains the properties necessary needed to synthesize audible
- * audio, such as the wave shape, frequency, and duration, or silence.
- *
- * <p>
- * The following properties are:
+ * This class contains the properties necessary needed to generate byte arrays
+ * that are suitable for synthesizing audio. The following properties these
+ * objects contain are:
  *
  * <ol>
  * <li>
