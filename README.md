@@ -1,6 +1,6 @@
-# Beep
+# Tones
 
-Make beeps with the CLI.
+Generate tones musically with the CLI.
 
 [![Java][java shield]][java website]
 [![Apache Commons Cli][apache commons cli shield]][apache commons cli website]
