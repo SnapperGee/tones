@@ -3,6 +3,7 @@ package sogott.tones;
 import java.util.List;
 import java.util.random.RandomGenerator;
 import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -27,22 +28,13 @@ final class OutputByteBuffersTest {
 
     @Test
     @DisplayName("OutputByteBuffers.toAudio(null, SourceDataLine) throws")
-    void outputByteBuffersToAudioPassedNullByteBuffersThrows() {
-        final SourceDataLine sourceDataLine = mock();
+    void outputByteBuffersToAudioPassedNullByteBuffersThrows() throws LineUnavailableException {
+        final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
         assertThrows(IllegalArgumentException.class, () -> OutputByteBuffers.toAudio(null, sourceDataLine));
     }
 
     @Test
-    @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, SourceDataLine) calls asList() on ByteBuffers")
-    void outputByteBuffersToAudioCallsByteBuffersAsList() throws LineUnavailableException {
-        final ByteBuffers byteBuffers = mock();
-        final SourceDataLine sourceDataLine = mock();
-        OutputByteBuffers.toAudio(byteBuffers, sourceDataLine);
-        verify(byteBuffers).asList();
-    }
-
-    @Test
-    @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, SourceDataLine) calls asList() on ByteBuffers")
+    @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, SourceDataLine) opens, starts, writes to, drains, stops, and closes SourceDataLine")
     void outputByteBuffersToAudioCallsOpenStartDrainStopClose() throws LineUnavailableException {
         final ByteBuffers byteBuffers = mock();
         final SourceDataLine sourceDataLine = mock();
@@ -55,6 +47,7 @@ final class OutputByteBuffersTest {
 
         verify(sourceDataLine).open(sourceDataLine.getFormat());
         verify(sourceDataLine).start();
+        verify(byteBuffers).asList();
         verify(sourceDataLine).write(eq(byteArrayList.get(0)), eq(0), anyInt());
         verify(sourceDataLine).write(eq(byteArrayList.get(1)), eq(0), anyInt());
         verify(sourceDataLine).drain();
