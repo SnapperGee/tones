@@ -5,6 +5,8 @@ Generate tones musically with the CLI.
 [![Java][java shield]][java website]
 [![Apache Commons Cli][apache commons cli shield]][apache commons cli website]
 [![JUnit5 Jupiter][junit5 jupiter shield]][junit5 jupiter website]
+[![Hamcrest][hamcrest shield]][hamcrest website]
+[![Mockito][mockito shield]][mockito website]
 [![Gradle][gradle shield]][gradle website]
 [![Kotlin][kotlin shield]][kotlin website]
 ![Git][git shield]
@@ -17,6 +19,10 @@ Generate tones musically with the CLI.
 [apache commons cli website]: https://commons.apache.org/proper/commons-cli/ "Apache Commons CLI"
 [junit5 jupiter shield]: https://img.shields.io/badge/JUnit%205%20Jupiter-blue?style=for-the-badge "JUnit5 Jupiter"
 [junit5 jupiter website]: https://junit.org/junit5/docs/current/user-guide/ "JUnit5 Jupiter"
+[hamcrest shield]: https://img.shields.io/badge/Hamcrest-teal?style=for-the-badge "Hamcrest"
+[hamcrest website]: https://hamcrest.org/JavaHamcrest/ "Hamcrest"
+[mockito shield]: https://img.shields.io/badge/Mockito-yellow?style=for-the-badge "Mockito"
+[mockito website]: https://site.mockito.org/ "Mockito"
 [gradle shield]: https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white "Gradle"
 [gradle website]: https://gradle.org/ "Gradle"
 [kotlin shield]: https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white "Kotlin"
