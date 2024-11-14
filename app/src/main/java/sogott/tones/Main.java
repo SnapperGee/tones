@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.ArrayList;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+
 import static java.util.Collections.unmodifiableList;
 
 import java.nio.file.Path;
@@ -92,12 +97,17 @@ final public class Main {
                     System.out.println("Audio file written to: \"%s\"".formatted(pathWrittenTo));
                 }
 
-                OutputByteBuffers.toAudio(byteBuffers);
+                final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
+                OutputByteBuffers.toAudio(byteBuffers, sourceDataLine);
             }
         } catch (ParseException e) {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
             System.exit(100);
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+            System.err.println('\n' + e.getMessage());
+            System.exit(311);
         }
     }
 

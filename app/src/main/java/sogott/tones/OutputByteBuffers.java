@@ -32,29 +32,27 @@ final class OutputByteBuffers {
      * @throws IllegalArgumentException If the passed {@link ByteBuffers}
      *                                  argument is {@code null}.
      */
-    final static void toAudio(ByteBuffers byteBuffers) {
+    final static void toAudio(
+            ByteBuffers byteBuffers,
+            SourceDataLine sourceDataLine) throws LineUnavailableException {
         if (byteBuffers == null) {
-            throw new IllegalArgumentException("Null byte buffers");
+            throw new IllegalArgumentException("Null byte buffers.");
         }
 
-        try {
-            final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
-            sourceDataLine.open(ByteBuffers.AUDIO_FORMAT);
-            sourceDataLine.start();
-
-            for (final byte[] buffer : byteBuffers.asList()) {
-                sourceDataLine.write(buffer, 0, buffer.length);
-            }
-
-            sourceDataLine.drain();
-            sourceDataLine.stop();
-            sourceDataLine.close();
-
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-            System.err.println('\n' + e.getMessage());
-            System.exit(311);
+        if (sourceDataLine == null) {
+            throw new IllegalArgumentException("Null source data line.");
         }
+
+        sourceDataLine.open(sourceDataLine.getFormat());
+        sourceDataLine.start();
+
+        for (final byte[] buffer : byteBuffers.asList()) {
+            sourceDataLine.write(buffer, 0, buffer.length);
+        }
+
+        sourceDataLine.drain();
+        sourceDataLine.stop();
+        sourceDataLine.close();
     }
 
     /**
