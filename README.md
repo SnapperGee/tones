@@ -1,6 +1,8 @@
 # Tones
 
-Generate tones musically with the CLI.
+Generate tones musically with the CLI. With this package, you can pass musical
+notes via command line arguments and output them as audio and optionally write
+them to a WAV file.
 
 [![Java][java shield]][java website]
 [![Apache Commons Cli][apache commons cli shield]][apache commons cli website]
@@ -12,6 +14,16 @@ Generate tones musically with the CLI.
 ![Git][git shield]
 [![Github][github shield]][github repo]
 [![MIT][mit shield]][mit website]
+
+## Usage
+
+```bash
+$tones --bpm 135 --wave SIN C4.4 D4.4 E-4.8 F4.8 G4.8 F4.8 E-4.8 D4.8 C4.8
+```
+
+## Installation
+
+(coming soon)
 
 [java shield]: https://img.shields.io/badge/java%20JDK%2021-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java JDK 21"
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
