@@ -98,6 +98,14 @@ final class ByteBuffers {
     }
 
     private static byte[] audioObjectToByteArrayBuffer(Audio audio, double wholeNoteDuration) {
+        if (audio == null) {
+            throw new IllegalArgumentException("Null byte audio.");
+        }
+
+        if (wholeNoteDuration <= 0) {
+            throw new IllegalArgumentException("Non positive whole note duration: " + wholeNoteDuration);
+        }
+
         // if audio has a Wave shape and is therefore not silence add a fadeout to it
         if (audio.wave() != null) {
             final byte[] audioByteBuffer = audio.wave()
