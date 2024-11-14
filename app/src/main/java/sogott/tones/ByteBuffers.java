@@ -97,6 +97,29 @@ final class ByteBuffers {
         return this._byteBuffers.stream();
     }
 
+    /**
+     * Converts the passed {@link Audio} object to a byte array buffer using
+     * the {@code double wholeNoteDuration} to convert the duration of the
+     * {@link Audio} object to the actual span of time the byte buffer should
+     * be.
+     *
+     * @param audio             The {@link Audio} object to convert to a byte array
+     *                          buffer.
+     *
+     * @param wholeNoteDuration {@code double} used to convert the duration of the
+     *                          {@link Audio} object to the actual span of time the
+     *                          byte buffer should be.
+     *
+     * @return The byte array buffer resulting from converting the {@link Audio}
+     *         object.
+     *
+     * @throws IllegalArgumentException If the passed {@link Audio} object is
+     *                                  {@code null} or the
+     *                                  {@code wholeNoteDuration} isn't positive
+     *                                  (0 or less).
+     *
+     * @see Audio
+     */
     private static byte[] audioObjectToByteArrayBuffer(Audio audio, double wholeNoteDuration) {
         if (audio == null) {
             throw new IllegalArgumentException("Null byte audio.");
