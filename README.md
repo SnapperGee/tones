@@ -15,7 +15,7 @@ Generate tones musically with the CLI.
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
 [apache commons cli shield]: https://img.shields.io/badge/Apache%20Commons%20CLI-D42029?style=for-the-badge&logo=apache&logoColor=white "Apache Commons CLI"
 [apache commons cli website]: https://commons.apache.org/proper/commons-cli/ "Apache Commons CLI"
-[junit5 jupiter shield]: https://img.shields.io/badge/JUnit5%20Jupiter-blue?style=for-the-badge "JUnit5 Jupiter"
+[junit5 jupiter shield]: https://img.shields.io/badge/JUnit%205%20Jupiter-blue?style=for-the-badge "JUnit5 Jupiter"
 [junit5 jupiter website]: https://junit.org/junit5/docs/current/user-guide/ "JUnit5 Jupiter"
 [gradle shield]: https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white "Gradle"
 [gradle website]: https://gradle.org/ "Gradle"
