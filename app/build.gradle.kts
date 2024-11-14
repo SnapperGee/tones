@@ -26,7 +26,6 @@ application {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
-    jvmArgs("-Xshare:off")
 }
 
 tasks.named<Javadoc>("javadoc") {
