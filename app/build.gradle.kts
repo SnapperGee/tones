@@ -8,13 +8,15 @@ repositories {
 
 val mockitoAgent = configurations.create("mockitoAgent")
 
+val mockitoMavePackageStr = "org.mockito:mockito-core:5.14.2"
+
 dependencies {
     implementation("commons-cli:commons-cli:1.9.0")
     testImplementation(libs.junit.jupiter)
     testImplementation("org.hamcrest:hamcrest:3.0")
-    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation(mockitoMavePackageStr)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    mockitoAgent("org.mockito:mockito-core:5.14.2") { isTransitive = false }
+    mockitoAgent(mockitoMavePackageStr) { isTransitive = false }
 }
 
 java {
