@@ -1,15 +1,18 @@
 package sogott.tones;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.random.RandomGenerator;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.DisplayName;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -19,8 +22,12 @@ import static org.mockito.Mockito.when;
 final class OutputByteBuffersTest {
     private final RandomGenerator random = RandomGenerator.getDefault();
 
+    /////////////
+    // toAudio //
+    /////////////
+
     @Test
-    @DisplayName("OutputByteBuffers.toAudio(ByteBuffer, null) throws")
+    @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, null) throws")
     void outputByteBuffersToAudioPassedNullSourceDataLineThrows() {
         final ByteBuffers byteBuffers = new ByteBuffers(emptyList(), random.nextInt(1, 1000));
         assertThrows(IllegalArgumentException.class, () -> OutputByteBuffers.toAudio(byteBuffers, null));
@@ -53,5 +60,44 @@ final class OutputByteBuffersTest {
         verify(sourceDataLine).drain();
         verify(sourceDataLine).stop();
         verify(sourceDataLine).close();
+    }
+
+    ///////////////
+    // toWavFile //
+    ///////////////
+
+    @Test
+    @DisplayName("OutputByteBuffers.toWaveFile(ByteBuffers, null) throws")
+    void outputByteBuffersToWaveFilePassedNullPathThrows() {
+        final ByteBuffers byteBuffers = new ByteBuffers(emptyList(), random.nextInt(1, 1000));
+        assertThrows(IllegalArgumentException.class, () -> OutputByteBuffers.toWavFile(byteBuffers, null));
+    }
+
+    @Test
+    @DisplayName("OutputByteBuffers.toWaveFile(null, Path) throws")
+    void outputByteBuffersToWavFilePassedNullByteBuffers(@TempDir Path tempDir) {
+        final Path filePath = tempDir.resolve("TEST_FILE.wav");
+        assertThrows(IllegalArgumentException.class, () -> OutputByteBuffers.toWavFile(null, filePath));
+    }
+
+    @Test
+    @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, Path with \".wav\" extension) creates file at Path")
+    void outputByteBuffersToWavFilePassedPathWithWavExtensionCreatesFileAtPath(@TempDir Path tempDir) {
+        final ByteBuffers byteBuffers = new ByteBuffers(emptyList(), random.nextInt(1, 1000));
+        final Path filePath = tempDir.resolve("TEST_FILE.wav");
+        OutputByteBuffers.toWavFile(byteBuffers, filePath);
+        assertTrue(filePath.toFile().exists(), () -> "File \"%s\" not created".formatted(filePath.toString()));
+    }
+
+    @Test
+    @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, Path with out \".wav\" extension) creates file at Path with \".wav\" extension")
+    void outputByteBuffersToWavFilePassedPathWithoutWavExtensionCreatesFileAtPathWithWavExtension(
+            @TempDir Path tempDir) {
+        final ByteBuffers byteBuffers = new ByteBuffers(emptyList(), random.nextInt(1, 1000));
+        final Path filePathArg = tempDir.resolve("TEST_FILE");
+        final Path expectedFilePath = Path.of(filePathArg.toString() + ".wav");
+        OutputByteBuffers.toWavFile(byteBuffers, expectedFilePath);
+        assertTrue(expectedFilePath.toFile().exists(),
+                () -> "File \"%s\" not created".formatted(expectedFilePath.toString()));
     }
 }
