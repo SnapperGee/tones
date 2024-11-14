@@ -1,6 +1,5 @@
 package sogott.tones;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.random.RandomGenerator;
 import javax.sound.sampled.SourceDataLine;
