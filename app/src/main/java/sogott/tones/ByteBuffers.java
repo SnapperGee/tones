@@ -127,8 +127,7 @@ final class ByteBuffers {
      * the fadeout will begin at 80% of the audio byte buffer array.
      *
      * <p>
-     * This method is designed to process PCM audio that is formatted a specific
-     * way. Particularly, it expects the audio to be 16bit and little endian.
+     * This method is designed to process PCM audio that is formatted to be 16bit.
      *
      * @param audioBytes         The byte array buffer of PCM audio to apply the
      *                           fadeout tail to.
@@ -144,11 +143,9 @@ final class ByteBuffers {
      *         fadeout.
      *
      * @throws IllegalArgumentException If any of the passed arguments are
-     *                                  {@code null}, the fadeout start factor
+     *                                  {@code null} or the fadeout start factor
      *                                  isn't in the range of 0 <
-     *                                  {@code fadeoutStartFactor} <= 1 or the
-     *                                  passed {@link AudioFormat} is in
-     *                                  big endian.
+     *                                  {@code fadeoutStartFactor} <= 1.
      */
     private static byte[] applyFadeoutTail(
             byte[] audioBytes,
@@ -168,14 +165,13 @@ final class ByteBuffers {
             throw new IllegalArgumentException("Null audio format.");
         }
 
-        if (audioFormat.isBigEndian()) {
-            throw new IllegalArgumentException("Audio format is big endian and needs to be little endian.");
-        }
-
         final int numOfBytesToNotAttenuate = ((int) (fadeoutStartFactor * audioBytes.length))
                 / audioFormat.getFrameSize() * audioFormat.getFrameSize();
 
         final int numOfBytesToAttenuate = audioBytes.length - numOfBytesToNotAttenuate;
+
+        final int leastSignificantByteIndexOffSet = audioFormat.isBigEndian() ? 1 : 0;
+        final int mostSignificantByteIndexOffSet = audioFormat.isBigEndian() ? 0 : 1;
 
         for (int i = 0; i < numOfBytesToAttenuate; i += 2) {
 
@@ -187,8 +183,8 @@ final class ByteBuffers {
             final int sampleIndex = numOfBytesToNotAttenuate + i;
 
             if (sampleIndex + 1 < audioBytes.length) {
-                final byte leastSignificantByte = audioBytes[sampleIndex];
-                final byte mostSignificantByte = audioBytes[sampleIndex + 1];
+                final byte leastSignificantByte = audioBytes[sampleIndex + leastSignificantByteIndexOffSet];
+                final byte mostSignificantByte = audioBytes[sampleIndex + mostSignificantByteIndexOffSet];
 
                 // convert least significant byte from value between -128 to 127
                 // to value between 0 and 255
@@ -208,11 +204,11 @@ final class ByteBuffers {
 
                 // extract least significant byte of attenuated sample and put
                 // it back into array
-                audioBytes[sampleIndex] = (byte) (attenuatedSample & 0xFF);
+                audioBytes[sampleIndex + leastSignificantByteIndexOffSet] = (byte) (attenuatedSample & 0xFF);
 
                 // extract most significant byte of attenuated sample and put
                 // it back into array
-                audioBytes[sampleIndex + 1] = (byte) ((attenuatedSample >> 8) & 0xFF);
+                audioBytes[sampleIndex + mostSignificantByteIndexOffSet] = (byte) ((attenuatedSample >> 8) & 0xFF);
             }
         }
 
