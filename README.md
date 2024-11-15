@@ -20,18 +20,18 @@ them to a WAV file.
 The simplest usage is shown in the example below:
 
 ```bash
-$tones C4.4 D4.4 E-4.2 E-4.2 D4.2 C4.1
+$tones C4.4 D3.4 E-5.2 E-4.2 D4.2 C3.1
 ```
 
-This would output a tone consisting of the following notes all in the 4th octave
-to whatever the current OS's audio output is set to:
+This would output a tone consisting of the following notes to whatever the
+current OS's audio output is set to:
 
-- C&#9833;&Tab;-> (C quarter note)
-- D&#9833;&Tab;-> (D quarter note)
-- E&flat;&#119134;&Tab;-> (E flat half note)
-- E&flat;&#119134;&Tab;-> (E flat half note)
-- D&#119134;&Tab;-> (D half note)
-- C&#119133;&Tab;-> (C whole note)
+- C quarter note in the 4th octave &rightarrow; C&#9833;
+- D quarter note in the 3rd octave &rightarrow; D&#9833;
+- E flat half note in the 5th octave &rightarrow; E&flat;&#119134;
+- E flat half note in the 4th octave &rightarrow; E&flat;&#119134;
+- D half note in the 4th octave &rightarrow; D&#119134;
+- C whole note in the 3rd octave &rightarrow; C&#119133;
 
 ## Installation
 
