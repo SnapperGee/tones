@@ -17,9 +17,21 @@ them to a WAV file.
 
 ## Usage
 
+The simplest usage is shown in the example below:
+
 ```bash
-$tones --bpm 135 --wave SIN C4.4 D4.4 E-4.8 F4.8 G4.8 F4.8 E-4.8 D4.8 C4.8
+$tones C4.4 D4.4 E-4.2 E-4.2 D4.2 C4.1
 ```
+
+This would output a tone consisting of the following notes all in the 4th octave
+to whatever the current OS's audio output is set to:
+
+- C&#9833;&Tab;-> (C quarter note)
+- D&#9833;&Tab;-> (D quarter note)
+- E&flat;&#119134;&Tab;-> (E flat half note)
+- E&flat;&#119134;&Tab;-> (E flat half note)
+- D&#119134;&Tab;-> (D half note)
+- C&#119133;&Tab;-> (C whole note)
 
 ## Installation
 
