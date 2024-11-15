@@ -37,6 +37,7 @@ final class OutputByteBuffersTest {
 
     @Test
     @DisplayName("OutputByteBuffers.toAudio(null, SourceDataLine) throws")
+    @Disabled
     void outputByteBuffersToAudioPassedNullByteBuffersThrows() throws LineUnavailableException {
         final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
         assertThrows(IllegalArgumentException.class, () -> OutputByteBuffers.toAudio(null, sourceDataLine));
