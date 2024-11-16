@@ -9,7 +9,6 @@ import java.util.function.BiFunction;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.singleton;
 import static java.util.Collections.unmodifiableSet;
 
 /**
@@ -72,14 +71,14 @@ enum Wave {
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
-        this._stringValueAliases = Set.of(this._stringValue, super.name());
+        this._stringValueAliases = Set.of(this._stringValue, this.name());
     }
 
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue,
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
-        final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, super.name()));
+        final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, this.name()));
         stringSet.addAll(stringValueAliases);
         this._stringValueAliases = unmodifiableSet(stringSet);
     }
