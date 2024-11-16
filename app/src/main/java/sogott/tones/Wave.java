@@ -36,7 +36,7 @@ import static java.util.Collections.unmodifiableSet;
  */
 enum Wave {
     /**
-     * A <i>SIN</i> wave.
+     * A <i>SINE</i> wave.
      */
     SINE(GenerateWaveByteBuffer::sine, "SIN"),
 
