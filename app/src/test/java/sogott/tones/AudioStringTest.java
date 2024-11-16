@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 import java.util.random.RandomGenerator;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import static java.util.Collections.unmodifiableList;
 import static java.util.Arrays.asList;
-
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
