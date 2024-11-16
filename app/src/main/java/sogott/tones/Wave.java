@@ -1,6 +1,7 @@
 package sogott.tones;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -48,7 +49,7 @@ enum Wave {
     /**
      * A <i>TRIANGLE</i> wave.
      */
-    TRIANGLE(GenerateWaveByteBuffer::triangle, "TRI", Set.of("TRIANGLE")),
+    TRIANGLE(GenerateWaveByteBuffer::triangle, "TRI"),
 
     /**
      * A <i>SAW UP</i> wave.
@@ -167,10 +168,11 @@ enum Wave {
      *         present or an empty optional if not.
      */
     static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
-        return _waves.stream().flatMap(wave -> wave.stringValueAliases().stream())
+        return _waves.stream()
+                .flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                         && aString.regionMatches(ignoreCase, 0, waveStringAlias, 0, waveStringAlias.length()))
-                .findFirst();
+                .max(Comparator.comparingInt(String::length));
     }
 
     /**
