@@ -25,6 +25,7 @@ final class CliOptionArgProvider {
                     arguments(CliOption.WAVE, "wave"),
                     arguments(CliOption.OUT, "out"),
                     arguments(CliOption.VERSION, "version"),
+                    arguments(CliOption.SILENT, "silent"),
                     arguments(CliOption.HELP, "help"));
         }
     }
@@ -38,6 +39,7 @@ final class CliOptionArgProvider {
                     arguments(CliOption.WAVE, "w"),
                     arguments(CliOption.OUT, "o"),
                     arguments(CliOption.VERSION, "v"),
+                    arguments(CliOption.SILENT, "s"),
                     arguments(CliOption.HELP, "h"));
         }
     }
@@ -51,6 +53,7 @@ final class CliOptionArgProvider {
                     arguments(CliOption.WAVE, 1),
                     arguments(CliOption.OUT, 1),
                     arguments(CliOption.VERSION, 0),
+                    arguments(CliOption.SILENT, 0),
                     arguments(CliOption.HELP, 0));
         }
     }
@@ -64,6 +67,7 @@ final class CliOptionArgProvider {
                     arguments(CliOption.WAVE, "WAVE"),
                     arguments(CliOption.OUT, "PATH"),
                     arguments(CliOption.VERSION, null),
+                    arguments(CliOption.SILENT, null),
                     arguments(CliOption.HELP, null));
         }
     }
@@ -77,6 +81,7 @@ final class CliOptionArgProvider {
                     arguments(CliOption.WAVE, Wave.class),
                     arguments(CliOption.OUT, Path.class),
                     arguments(CliOption.VERSION, String.class),
+                    arguments(CliOption.SILENT, String.class),
                     arguments(CliOption.HELP, String.class));
         }
     }
@@ -90,6 +95,7 @@ final class CliOptionArgProvider {
                     arguments(CliOption.WAVE, Wave.class),
                     arguments(CliOption.OUT, Path.class),
                     arguments(CliOption.VERSION, String.class),
+                    arguments(CliOption.SILENT, String.class),
                     arguments(CliOption.HELP, String.class));
         }
     }
