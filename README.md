@@ -68,23 +68,34 @@ current OS's audio output is set to:
 
   Sets the default wave shape to use for notes that don't have a wave shape
   specified. Expects a valid wave shape and defaults to `SINE`. The valid wave
-  shapes are case insensitive and are:
-
-  - `SINE`
-  - `TRIANGLE` (or `TRI`)
-  - `SQUARE` (or `SQR`)
-  - `SAW_UP` (or `SUP`, `SAWUP`)
-  - `SAW_DOWN` (or `SDN`, `SAWDN`)
+  shapes can be found in the [Wave Shapes section](#wave-shapes) of this
+  document.
 
 ## Wave Shapes
 
-It's possible to generate tones with 5 different wave shapes:
+It's possible to generate tones with 5 different wave shapes. Each wave shape
+can be represented via one or more case insensitive `String`s. The following
+wave shapes and their strings are:
 
 - Sine &acd;
+
+  The `String`s for this wave shape are: `SINE`.
+
 - Square &#9101;
+
+  The `String`s for this wave shape are: `SQR` and `SQUARE`.
+
 - Triangle &wedge;
+
+  The `String`s for this wave shape are: `TRI` and `TRIANGLE`.
+
 - Saw Up &#9727;
+
+  The `String`s for this wave shape are: `SUP`, `SAWUP` and `SAW_UP`.
+
 - Saw Down &#9722;
+
+  The `String`s for this wave shape are: `SDN`, `SAWDOWN` and `SAW_DOWN`.
 
 ## Installation
 
