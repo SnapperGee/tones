@@ -23,8 +23,8 @@ The simplest usage is shown in the example below:
 $tones C4.4 D3.4 E-5.2 E-4.2 D4.2 C3.1
 ```
 
-This would output a tone consisting of the following notes to whatever the
-current OS's audio output is set to:
+This would output a sine wave tone consisting of the following notes to whatever
+the current OS's audio output is set to:
 
 - C quarter note in the 4th octave &rightarrow; C&#9833;
 - D quarter note in the 3rd octave &rightarrow; D&#9833;
