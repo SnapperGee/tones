@@ -76,9 +76,11 @@ enum CliOption {
 
     /**
      * Contains the {@link Option} for setting the default wave shape. It
-     * expects a valid wave String value defined in the {@link Wave} enum
-     * values. This is the wave shape of a note if it's omitted. Defaults to a
-     * SIN wave if not specified.
+     * expects a valid wave {@code String} value defined in the {@link Wave}
+     * enum values. This is the wave shape of a note if it's omitted. Defaults
+     * to a SINE wave if not specified.
+     *
+     * @see Wave
      */
     WAVE(Option.builder("w")
             .argName("WAVE")
@@ -116,6 +118,14 @@ enum CliOption {
                         : Path.of(outputFilePath + ".wav");
             })
             .desc("Outputs the generated audio to a 44.1khz/16 bit wav file at PATH.")
+            .build()),
+
+    /**
+     * Contains the {@link Option} for preventing audible output from being played.
+     */
+    SILENT(Option.builder("s")
+            .longOpt("silent")
+            .desc("Prevents audible output from being played.")
             .build()),
 
     /**
