@@ -1,6 +1,5 @@
 package sogott.tones;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -79,7 +78,7 @@ enum Wave {
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
-        final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, this.name()));
+        final Set<String> stringSet = new HashSet<String>(asList(this._stringValue, this.name()));
         stringSet.addAll(stringValueAliases);
         this._stringValueAliases = unmodifiableSet(stringSet);
     }
