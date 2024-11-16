@@ -126,6 +126,7 @@ enum CliOption {
     SILENT(Option.builder("s")
             .longOpt("silent")
             .desc("Prevents audible output from being played.")
+            .numberOfArgs(0)
             .build()),
 
     /**
