@@ -43,29 +43,22 @@ enum Wave {
     /**
      * A <i>SQUARE</i> wave.
      */
-    SQUARE(GenerateWaveByteBuffer::square,
-            "SQR"),
+    SQUARE(GenerateWaveByteBuffer::square, "SQR"),
 
     /**
      * A <i>TRIANGLE</i> wave.
      */
-    TRIANGLE(GenerateWaveByteBuffer::triangle,
-            "TRI",
-            Set.of("TRIANGLE")),
+    TRIANGLE(GenerateWaveByteBuffer::triangle, "TRI", Set.of("TRIANGLE")),
 
     /**
      * A <i>SAW UP</i> wave.
      */
-    SAW_UP(GenerateWaveByteBuffer::sawUp,
-            "SUP",
-            Set.of("SAWUP")),
+    SAW_UP(GenerateWaveByteBuffer::sawUp, "SUP", Set.of("SAWUP")),
 
     /**
      * A <i>SAW DOWN</i> wave.
      */
-    SAW_DOWN(GenerateWaveByteBuffer::sawDown,
-            "SDN",
-            Set.of("SAWDOWN"));
+    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAWDOWN"));
 
     final private static List<Wave> _waves = unmodifiableList(asList(Wave.values()));
 
