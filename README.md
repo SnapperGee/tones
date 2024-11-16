@@ -33,6 +33,59 @@ current OS's audio output is set to:
 - D half note in the 4th octave &rightarrow; D&#119134;
 - C whole note in the 3rd octave &rightarrow; C&#119133;
 
+### Command Line Options
+
+- `--bpm`, `b`
+
+  Sets the bpm (beats per minute)/tempo of the audio. Expects a positive integer
+  argument and defaults to `140`.
+
+- `--help`, `-h`
+
+  Ignores all other arguments and prints a help message about usage and the
+  command line options and flags.
+
+- `--note-beat-value`, `-n`
+
+  Sets the beat value of a note. Expects a positive integer argument and
+  defaults to `4`. The simplest way to think of this value is the bottom value
+  of a time signature. So if there's a time signature of
+  <sup>3</sup>&frasl;<sub>4</sub>, then `4` is the beat value of a note. This
+  affects how the duration get's applied to a note and probably doesn't have to
+  be manually set in most cases.
+
+- `--out`, `-o`
+
+  Outputs the audio to a 44.1khz/16bit WAV file. Expects a path (or filename)
+  that doesn't point to a pre-existing file or directory. `.wav` is appended to
+  the outputted file if it doesn't already contain a file extension.
+
+- `--version`, `-v`
+
+  Prints the version of the package.
+
+- `--wave`, `-w`
+
+  Sets the default wave shape to use for notes that don't have a wave shape
+  specified. Expects a valid wave shape and defaults to `SIN`. The valid wave
+  shapes are case insensitive and are:
+
+  - `SIN`
+  - `TRIANGLE` (or `TRI`)
+  - `SQUARE` (or `SQR`)
+  - `SAW_UP` (or `SUP`, `SAWUP`)
+  - `SAW_DOWN` (or `SDN`, `SAWDN`)
+
+## Wave Shapes
+
+It's possible to generate tones with 5 different wave shapes:
+
+- Sine &acd;
+- Triangle &wedge;
+- Square &#9101;
+- Saw Up &#9727;
+- Saw Down &#9722;
+
 ## Installation
 
 (coming soon)
