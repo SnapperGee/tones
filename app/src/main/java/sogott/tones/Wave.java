@@ -1,7 +1,6 @@
 package sogott.tones;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -11,6 +10,7 @@ import java.util.function.BiFunction;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
+import static java.util.Comparator.comparingInt;
 
 /**
  * Enum of values used to represent the different wave shapes audio can be and
@@ -172,7 +172,7 @@ enum Wave {
                 .flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                         && aString.regionMatches(ignoreCase, 0, waveStringAlias, 0, waveStringAlias.length()))
-                .max(Comparator.comparingInt(String::length));
+                .max(comparingInt(String::length));
     }
 
     /**
