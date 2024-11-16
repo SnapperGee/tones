@@ -49,7 +49,8 @@ final class GenerateWaveByteBuffer {
     }
 
     /**
-     * Generates a SINE wave with the given {@code frequency} and {@code duration}.
+     * Generates a SINE &acd; wave with the given {@code frequency} and
+     * {@code duration}.
      *
      * @param frequency A positive {@code double} to specify the frequency of
      *                  the generated SINE wave.
@@ -113,7 +114,7 @@ final class GenerateWaveByteBuffer {
     }
 
     /**
-     * Generates a SQUARE wave with the given {@code frequency} and
+     * Generates a SQUARE &#9101; wave with the given {@code frequency} and
      * {@code duration}.
      *
      * @param frequency A positive {@code double} to specify the frequency of
@@ -153,7 +154,7 @@ final class GenerateWaveByteBuffer {
     }
 
     /**
-     * Generates a TRIANGLE wave with the given {@code frequency} and
+     * Generates a TRIANGLE &wedge; wave with the given {@code frequency} and
      * {@code duration}.
      *
      * @param frequency A positive {@code double} to specify the frequency of
@@ -219,7 +220,7 @@ final class GenerateWaveByteBuffer {
     }
 
     /**
-     * Generates a SAWTOOTH UP wave with the given {@code frequency} and
+     * Generates a SAW UP &#9727; wave with the given {@code frequency} and
      * {@code duration}.
      *
      * @param frequency A positive {@code double} to specify the frequency of
@@ -261,7 +262,7 @@ final class GenerateWaveByteBuffer {
     }
 
     /**
-     * Generates a SAWTOOTH DOWN wave with the given {@code frequency} and
+     * Generates a SAW DOWN &#9722; wave with the given {@code frequency} and
      * {@code duration}.
      *
      * @param frequency A positive {@code double} to specify the frequency of

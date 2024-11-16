@@ -18,11 +18,11 @@ import static java.util.Collections.unmodifiableSet;
  * enum values. The following wave shapes are:
  *
  * <ol>
- * <li><i>SINE</i>
- * <li><i>SQUARE</i>
- * <li><i>TRIANGLE</i>
- * <li><i>SAW UP</i>
- * <li><i>SAW DOWN</i>
+ * <li><i>SINE</i> &acd;
+ * <li><i>SQUARE</i> &#9101;
+ * <li><i>TRIANGLE</i> &wedge;
+ * <li><i>SAW UP</i> &#9727;
+ * <li><i>SAW DOWN</i> &#9722;
  * </ol>
  *
  * Each value can be represented via a canonical {@code String} value stored as
