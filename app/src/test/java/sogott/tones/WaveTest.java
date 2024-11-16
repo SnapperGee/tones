@@ -1,22 +1,23 @@
 package sogott.tones;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.Arrays;
-import java.util.stream.Stream;
-import java.util.stream.IntStream;
-import java.util.random.RandomGenerator;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.params.provider.ArgumentsSource;
-
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
+import java.util.random.RandomGenerator;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 final class WaveArgProvider {
 
@@ -145,14 +146,14 @@ final class WaveTest {
     @ArgumentsSource(WaveArgProvider.EnumValuesWithUpperCaseStringAlias.class)
     void waveParseUpperCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
         final Optional<Wave> optionalWave = Wave.parse(waveString);
-        assertThat(optionalWave.get(), is(expectedWave));
+        assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
     @ArgumentsSource(WaveArgProvider.EnumValuesWithLowerCaseStringAlias.class)
     void waveParseLowerCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
         final Optional<Wave> optionalWave = Wave.parse(waveString);
-        assertThat(optionalWave.get(), is(expectedWave));
+        assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
     @ParameterizedTest(name = "Wave.{0}.prefixes(\"{1}\") returns true")
