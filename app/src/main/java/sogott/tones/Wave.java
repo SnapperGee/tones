@@ -69,23 +69,17 @@ enum Wave {
 
     final private Set<String> _stringValueAliases;
 
-    private Wave(BiFunction<Double, Integer, byte[]> generatorFunc) {
-        this._generatorFunc = generatorFunc;
-        this._stringValue = this.name();
-        this._stringValueAliases = singleton(this._stringValue);
-    }
-
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
-        this._stringValueAliases = Set.of(this._stringValue, this.name());
+        this._stringValueAliases = Set.of(this._stringValue, super.name());
     }
 
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue,
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
-        final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, this.name()));
+        final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, super.name()));
         stringSet.addAll(stringValueAliases);
         this._stringValueAliases = unmodifiableSet(stringSet);
     }
