@@ -67,10 +67,10 @@ current OS's audio output is set to:
 - `--wave`, `-w`
 
   Sets the default wave shape to use for notes that don't have a wave shape
-  specified. Expects a valid wave shape and defaults to `SIN`. The valid wave
+  specified. Expects a valid wave shape and defaults to `SINE`. The valid wave
   shapes are case insensitive and are:
 
-  - `SIN`
+  - `SINE`
   - `TRIANGLE` (or `TRI`)
   - `SQUARE` (or `SQR`)
   - `SAW_UP` (or `SUP`, `SAWUP`)
@@ -81,8 +81,8 @@ current OS's audio output is set to:
 It's possible to generate tones with 5 different wave shapes:
 
 - Sine &acd;
-- Triangle &wedge;
 - Square &#9101;
+- Triangle &wedge;
 - Saw Up &#9727;
 - Saw Down &#9722;
 
