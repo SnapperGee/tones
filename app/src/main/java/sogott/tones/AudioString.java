@@ -40,9 +40,11 @@ import java.util.Optional;
  *
  * <p>
  * An easy way to think of it is that if the duration is integer <i>N</i>, then
- * the length of the note will be 1/<i>N</i>. So, if <i>N</i> were 1, then the
- * duration would be 1/1 which would be a whole note. If <i>N</i> were 4, that'd
- * result in 1/4 so it'd be a quarter note etc.
+ * the length of the note will be <sup>1</sup>&frasl;<sub><i>N</i></sub>. So,
+ * if <i>N</i> were 1, then the duration would be
+ * <sup>1</sup>&frasl;<sub>1</sub> which would be a whole note. If <i>N</i> were
+ * 4, that'd result in <sup>1</sup>&frasl;<sub>4</sub> so it'd be a quarter note
+ * etc.
  *
  * <h3>Audible audio</h3>
  * A {@code String} can be parsed to audible audio if its voice consists of the
