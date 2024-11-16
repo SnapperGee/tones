@@ -97,8 +97,12 @@ final public class Main {
                     System.out.println("Audio file written to: \"%s\"".formatted(pathWrittenTo));
                 }
 
-                final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
-                OutputByteBuffers.toAudio(byteBuffers, sourceDataLine);
+                if (!cliArgs.hasOption(CliOption.SILENT.value())) {
+                    final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
+                    OutputByteBuffers.toAudio(byteBuffers, sourceDataLine);
+                } else {
+                    System.out.println("Silent option passed. Not audibly outputting audio...");
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();
