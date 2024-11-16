@@ -100,7 +100,7 @@ wave shapes and their strings are:
   that doesn't point to a pre-existing file or directory. `.wav` is appended to
   the outputted file if it doesn't already contain a file extension.
 
-- `--silent`, `-s`
+- `--quiet`, `-q`
 
   Prevents audible output from being played.
 
