@@ -2,7 +2,6 @@ package sogott.tones;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.function.BiFunction;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.singleton;
+import static java.util.Collections.unmodifiableSet;
 
 /**
  * Enum of values used to represent the different wave shapes audio can be and
@@ -71,7 +72,7 @@ enum Wave {
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc) {
         this._generatorFunc = generatorFunc;
         this._stringValue = this.name();
-        this._stringValueAliases = Collections.singleton(this._stringValue);
+        this._stringValueAliases = singleton(this._stringValue);
     }
 
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue) {
@@ -86,7 +87,7 @@ enum Wave {
         this._stringValue = stringValue;
         final Set<String> stringSet = new HashSet<String>(Arrays.asList(this._stringValue, this.name()));
         stringSet.addAll(stringValueAliases);
-        this._stringValueAliases = Collections.unmodifiableSet(stringSet);
+        this._stringValueAliases = unmodifiableSet(stringSet);
     }
 
     /**
