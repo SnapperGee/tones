@@ -15,9 +15,22 @@ them to a WAV file.
 [![Github][github shield]][github repo]
 [![MIT][mit shield]][mit website]
 
+## Table of Contents
+
+1. [Installation](#installation)
+1. [Usage](#usage)
+1. [Wave Shapes](#wave-shapes)
+1. [Command Line Options](#command-line-options)
+1. [Usage Example](#usage-example)
+
+## Installation
+
+(coming soon)
+
 ## Usage
 
-The simplest usage is shown in the example below:
+The simplest usage is shown in the example below. A more intricate example is
+shown in the [Usage Example section](#usage-example):
 
 ```bash
 $tones C4.4 D3.4 E-5.2 E-4.2 D4.2 C3.1
@@ -32,44 +45,6 @@ the current OS's audio output is set to:
 - E flat half note in the 4th octave &rightarrow; E&flat;&#119134;
 - D half note in the 4th octave &rightarrow; D&#119134;
 - C whole note in the 3rd octave &rightarrow; C&#119133;
-
-### Command Line Options
-
-- `--bpm`, `b`
-
-  Sets the bpm (beats per minute)/tempo of the audio. Expects a positive integer
-  argument and defaults to `140`.
-
-- `--help`, `-h`
-
-  Ignores all other arguments and prints a help message about usage and the
-  command line options and flags.
-
-- `--note-beat-value`, `-n`
-
-  Sets the beat value of a note. Expects a positive integer argument and
-  defaults to `4`. The simplest way to think of this value is the bottom value
-  of a time signature. So if there's a time signature of
-  <sup>3</sup>&frasl;<sub>4</sub>, then `4` is the beat value of a note. This
-  affects how the duration get's applied to a note and probably doesn't have to
-  be manually set in most cases.
-
-- `--out`, `-o`
-
-  Outputs the audio to a 44.1khz/16bit WAV file. Expects a path (or filename)
-  that doesn't point to a pre-existing file or directory. `.wav` is appended to
-  the outputted file if it doesn't already contain a file extension.
-
-- `--version`, `-v`
-
-  Prints the version of the package.
-
-- `--wave`, `-w`
-
-  Sets the default wave shape to use for notes that don't have a wave shape
-  specified. Expects a valid wave shape and defaults to `SINE`. The valid wave
-  shapes can be found in the [Wave Shapes section](#wave-shapes) of this
-  document.
 
 ## Wave Shapes
 
@@ -97,9 +72,66 @@ wave shapes and their strings are:
 
   The `String`s for this wave shape are: `SDN`, `SAWDOWN` and `SAW_DOWN`.
 
-## Installation
+## Command Line Options
 
-(coming soon)
+- `--bpm`, `b`
+
+  Sets the bpm (beats per minute)/tempo of the audio. Expects a positive integer
+  argument and defaults to `140`.
+
+- `--help`, `-h`
+
+  Ignores all other arguments and prints a help message about usage and the
+  command line options and flags.
+
+- `--note-beat-value`, `-n`
+
+  Sets the beat value of a note. Expects a positive integer argument and
+  defaults to `4`. The simplest way to think of this value is the bottom value
+  of a time signature. So if there's a time signature of
+  <sup>3</sup>&frasl;<sub>4</sub>, then `4` is the beat value of a note. This
+  affects how the duration get's applied to a note and probably doesn't have to
+  be manually set in most cases.
+
+- `--out`, `-o`
+
+  Outputs the audio to a 44.1khz/16bit WAV file. Expects a path (or filename)
+  that doesn't point to a pre-existing file or directory. `.wav` is appended to
+  the outputted file if it doesn't already contain a file extension.
+
+- `--silent`, `-s`
+
+  Prevents audible output from being played.
+
+- `--version`, `-v`
+
+  Prints the version of the package.
+
+- `--wave`, `-w`
+
+  Sets the default wave shape to use for notes that don't have a wave shape
+  specified. Expects a valid wave shape and defaults to `SINE`. The valid wave
+  shapes can be found in the [Wave Shapes section](#wave-shapes) of this
+  document.
+
+## Usage Example
+
+Below is a more intricate example relative to the simple example above:
+
+```bash
+$tones --bpm 135 --wave sup --silent --o sandstorm C4.4 tri>D3.4 SQR>E-5.2 E-4.2 sdn>D4.2 C3.1
+```
+
+This writes the audio of the following notes at 135 bpm to a 44.1khz/16bit WAV
+file named `sandstorm.wav` in the current working directory without audibly
+playing any audio:
+
+- C quarter note sawtooth up wave in the 4th octave &rightarrow; C&#9833;
+- D quarter note triangle wave in the 3rd octave &rightarrow; D&#9833;
+- E flat half note square wave in the 5th octave &rightarrow; E&flat;&#119134;
+- E flat half note sawtooth up wave in the 4th octave &rightarrow; E&flat;&#119134;
+- D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
+- C whole note sawtooth up wave in the 3rd octave &rightarrow; C&#119133;
 
 [java shield]: https://img.shields.io/badge/java%20JDK%2021-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java JDK 21"
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
