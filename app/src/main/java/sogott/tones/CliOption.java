@@ -151,7 +151,7 @@ enum CliOption {
 
     private final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
 
-    private final static String CMD_LINE_SYNTAX = "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [%s>]NOTE.INTEGER..."
+    private final static String CMD_LINE_SYNTAX = "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [%s>]NOTE.INTEGER..."
             .formatted(CliOption.BPM.value().getLongOpt(),
                     CliOption.BPM.value().getOpt(),
                     CliOption.BPM.value().getArgName(),
@@ -168,6 +168,8 @@ enum CliOption {
                     CliOption.OUT.value().getLongOpt(),
                     CliOption.OUT.value().getOpt(),
                     CliOption.OUT.value().getArgName(),
+                    CliOption.SILENT.value().getOpt(),
+                    CliOption.SILENT.value().getLongOpt(),
                     CliOption.WAVE.value().getArgName())
             + "\nPlay musical note based beeps.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
 
