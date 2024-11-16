@@ -18,7 +18,7 @@ import static java.util.Collections.unmodifiableSet;
  * enum values. The following wave shapes are:
  *
  * <ol>
- * <li><i>SIN</i>
+ * <li><i>SINE</i>
  * <li><i>SQUARE</i>
  * <li><i>TRIANGLE</i>
  * <li><i>SAW UP</i>
@@ -27,11 +27,11 @@ import static java.util.Collections.unmodifiableSet;
  *
  * Each value can be represented via a canonical {@code String} value stored as
  * a {@link #stringValue() stringValue} property. In addition to that, there's
- * also a Set of string aliases that can also be used to represent the wave
- * shape value in addition to the canonical one. This string Set is stored in
- * the {@link #stringValueAliases() stringValueAliases} property. The canonical
- * string value and enum value {@link #name() name} are always included in this
- * string Set.
+ * also a {@code Set} of {@code string} aliases that can also be used to
+ * represent the wave shape value in addition to the canonical one. This
+ * {@code String} Set is stored in the {@link #stringValueAliases()
+ * stringValueAliases} property. The canonical {@code String} value and enum
+ * value {@link #name() name} are always included in this {@code String Set}.
  *
  * @see GenerateWaveByteBuffer
  */
@@ -39,7 +39,7 @@ enum Wave {
     /**
      * A <i>SIN</i> wave.
      */
-    SIN(GenerateWaveByteBuffer::sin),
+    SINE(GenerateWaveByteBuffer::sine),
 
     /**
      * A <i>SQUARE</i> wave.

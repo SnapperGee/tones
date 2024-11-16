@@ -27,7 +27,7 @@ final public class Main {
 
     private final static int BPM = 140;
     private final static int NOTE_BEAT_VALUE = 4;
-    private final static Wave WAVE = Wave.SIN;
+    private final static Wave WAVE = Wave.SINE;
 
     /**
      * The entry point of this application where command line processing takes

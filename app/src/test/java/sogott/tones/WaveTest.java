@@ -26,7 +26,7 @@ final class WaveArgProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    arguments(Wave.SIN, Wave.SIN.name()),
+                    arguments(Wave.SINE, Wave.SINE.name()),
                     arguments(Wave.SQUARE, "SQR"),
                     arguments(Wave.TRIANGLE, "TRI"),
                     arguments(Wave.SAW_UP, "SUP"),
@@ -38,7 +38,7 @@ final class WaveArgProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    arguments(Wave.SIN, Wave.SIN.name().toLowerCase()),
+                    arguments(Wave.SINE, Wave.SINE.name().toLowerCase()),
                     arguments(Wave.SQUARE, "sqr"),
                     arguments(Wave.TRIANGLE, "tri"),
                     arguments(Wave.SAW_UP, "sup"),
@@ -50,7 +50,7 @@ final class WaveArgProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    arguments(Wave.SIN, Set.of(Wave.SIN.name())),
+                    arguments(Wave.SINE, Set.of(Wave.SINE.name())),
                     arguments(Wave.SQUARE, Set.of(Wave.SQUARE.name(), Wave.SQUARE.stringValue())),
                     arguments(Wave.TRIANGLE, Set.of(Wave.TRIANGLE.name(), Wave.TRIANGLE.stringValue())),
                     arguments(Wave.SAW_UP, Set.of(Wave.SAW_UP.name(), Wave.SAW_UP.stringValue(), "SAWUP")),
@@ -62,7 +62,7 @@ final class WaveArgProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    arguments(Wave.SIN, Set.of(Wave.SIN.name().toLowerCase())),
+                    arguments(Wave.SINE, Set.of(Wave.SINE.name().toLowerCase())),
                     arguments(Wave.SQUARE,
                             Set.of(Wave.SQUARE.name().toLowerCase(), Wave.SQUARE.stringValue().toLowerCase())),
                     arguments(Wave.TRIANGLE,
@@ -78,7 +78,7 @@ final class WaveArgProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    arguments(Wave.SIN.name(), Wave.SIN),
+                    arguments(Wave.SINE.name(), Wave.SINE),
                     arguments(Wave.SQUARE.name(), Wave.SQUARE),
                     arguments("SQR", Wave.SQUARE),
                     arguments(Wave.TRIANGLE.name(), Wave.TRIANGLE),
@@ -96,7 +96,7 @@ final class WaveArgProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
-                    arguments(Wave.SIN.name().toLowerCase(), Wave.SIN),
+                    arguments(Wave.SINE.name().toLowerCase(), Wave.SINE),
                     arguments(Wave.SQUARE.name().toLowerCase(), Wave.SQUARE),
                     arguments("sqr", Wave.SQUARE),
                     arguments(Wave.TRIANGLE.name().toLowerCase(), Wave.TRIANGLE),

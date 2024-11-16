@@ -20,17 +20,17 @@ final class GenerateWaveByteBufferTest {
     @Test
     @DisplayName("GenerateWaveByteBufferTest.sin(0 and # < 0, # > 0) throws")
     void generateWaveByteBufferSinPassedAndNonPositiveFrequencyThrows() {
-        assertThrows(IllegalArgumentException.class, () -> GenerateWaveByteBuffer.sin(0, random.nextInt(1500)));
+        assertThrows(IllegalArgumentException.class, () -> GenerateWaveByteBuffer.sine(0, random.nextInt(1500)));
         assertThrows(IllegalArgumentException.class,
-                () -> GenerateWaveByteBuffer.sin(random.nextInt(Integer.MIN_VALUE, 0), random.nextInt(1500)));
+                () -> GenerateWaveByteBuffer.sine(random.nextInt(Integer.MIN_VALUE, 0), random.nextInt(1500)));
     }
 
     @Test
     @DisplayName("GenerateWaveByteBufferTest.sin(# > 0, 0 and # < 0) throws")
     void generateWaveByteBufferSinPassedAndNonPositiveDurationThrows() {
-        assertThrows(IllegalArgumentException.class, () -> GenerateWaveByteBuffer.sin(random.nextInt(1500), 0));
+        assertThrows(IllegalArgumentException.class, () -> GenerateWaveByteBuffer.sine(random.nextInt(1500), 0));
         assertThrows(IllegalArgumentException.class,
-                () -> GenerateWaveByteBuffer.sin(random.nextInt(1500), random.nextInt(Integer.MIN_VALUE, 0)));
+                () -> GenerateWaveByteBuffer.sine(random.nextInt(1500), random.nextInt(Integer.MIN_VALUE, 0)));
     }
 
     @Test
