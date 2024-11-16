@@ -22,6 +22,7 @@ them to a WAV file.
 1. [Wave Shapes](#wave-shapes)
 1. [Command Line Options](#command-line-options)
 1. [Usage Example](#usage-example)
+1. [Audio Operand Components](#audio-operand-components)
 
 ## Installation
 
@@ -132,6 +133,13 @@ playing any audio:
 - E flat half note sawtooth up wave in the 4th octave &rightarrow; E&flat;&#119134;
 - D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
 - C whole note sawtooth up wave in the 3rd octave &rightarrow; C&#119133;
+
+## Audio Operand Components
+
+<details>
+<summary>Audio Operand Components diagram</summary>
+<img src="./img/audio_string.png" alt="Audio Operand Components diagram">
+</details>
 
 [java shield]: https://img.shields.io/badge/java%20JDK%2021-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java JDK 21"
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
