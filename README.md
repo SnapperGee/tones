@@ -159,8 +159,8 @@ frequency of the synthesized audio:
 ### Pitch (or silence)
 
 The pitch segment dictates the ***frequency*** the audio will be if it has
-a timbre or if the audio is silence (and therefore has no timbre). This segment
-itself is further composed of 3 components:
+a timbre or if the audio is silence (and therefore has no timbre). If this
+segment has a timbre, it composed of 3 components:
 
 1. The leading ***note*** character consisting of one of the alpha characters A-G.
 1. followed by the ***accidental***. The accidental character makes it so a note
