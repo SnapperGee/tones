@@ -39,7 +39,7 @@ enum Wave {
     /**
      * A <i>SIN</i> wave.
      */
-    SINE(GenerateWaveByteBuffer::sine),
+    SINE(GenerateWaveByteBuffer::sine, "SIN"),
 
     /**
      * A <i>SQUARE</i> wave.

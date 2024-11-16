@@ -55,7 +55,7 @@ wave shapes and their strings are:
 
 - Sine &acd;
 
-  The `String`s for this wave shape are: `SINE`.
+  The `String`s for this wave shape are: `SIN` and `SINE`.
 
 - Square &#9101;
 
@@ -120,7 +120,7 @@ wave shapes and their strings are:
 Below is a more intricate example relative to the simple example above:
 
 ```bash
-$tones --bpm 135 --wave sup --silent --o sandstorm C4.4 tri>D3.4 SQR>E-5.2 E-4.2 sdn>D4.2 C3.1
+$tones --bpm 135 --wave sup --silent --o sandstorm C4.4 tri>D3.4 SQR>E-5.2 E-4.2 sdn>D4.2 SIN>C3.1
 ```
 
 This writes the audio of the following notes at 135 bpm to a 44.1khz/16bit WAV
@@ -132,7 +132,7 @@ playing any audio:
 - E flat half note square wave in the 5th octave &rightarrow; E&flat;&#119134;
 - E flat half note sawtooth up wave in the 4th octave &rightarrow; E&flat;&#119134;
 - D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
-- C whole note sawtooth up wave in the 3rd octave &rightarrow; C&#119133;
+- C whole note sine wave in the 3rd octave &rightarrow; C&#119133;
 
 ## Audio Operand Components
 
