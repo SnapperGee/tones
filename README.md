@@ -6,7 +6,7 @@ them to a WAV file.
 
 [![Java][java shield]][java website]
 [![Apache Commons Cli][apache commons cli shield]][apache commons cli website]
-[![JUnit5 Jupiter][junit5 jupiter shield]][junit5 jupiter website]
+[![JUnit5 Jupiter][junit 5 jupiter shield]][junit 5 jupiter website]
 [![Hamcrest][hamcrest shield]][hamcrest website]
 [![Mockito][mockito shield]][mockito website]
 [![Gradle][gradle shield]][gradle website]
@@ -34,7 +34,7 @@ The simplest usage is shown in the example below. A more intricate example is
 shown in the [Usage Example section](#usage-example):
 
 ```bash
-$tones C4.4 D3.4 E-5.2 E-4.2 D4.2 C3.1
+$tones C4.4 D3.4 E-5.2 ?.2 D4.2 C3.1
 ```
 
 This would output a sine wave tone consisting of the following notes to whatever
@@ -43,7 +43,7 @@ the current OS's audio output is set to:
 - C quarter note in the 4th octave &rightarrow; C&#9833;
 - D quarter note in the 3rd octave &rightarrow; D&#9833;
 - E flat half note in the 5th octave &rightarrow; E&flat;&#119134;
-- E flat half note in the 4th octave &rightarrow; E&flat;&#119134;
+- a half rest (silence for duration of a half note) &rightarrow; &#119100;
 - D half note in the 4th octave &rightarrow; D&#119134;
 - C whole note in the 3rd octave &rightarrow; C&#119133;
 
@@ -130,23 +130,69 @@ playing any audio:
 - C quarter note sawtooth up wave in the 4th octave &rightarrow; C&#9833;
 - D quarter note triangle wave in the 3rd octave &rightarrow; D&#9833;
 - E flat half note square wave in the 5th octave &rightarrow; E&flat;&#119134;
-- E flat half note sawtooth up wave in the 4th octave &rightarrow; E&flat;&#119134;
+- a half rest (silence for duration of a half note) &rightarrow; &#119100;
 - D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
 - C whole note sine wave in the 3rd octave &rightarrow; C&#119133;
 
 ## Audio Operand Components
+
+The primary command line operand arguments that are required to set the
+synthesized sound are referred to as *audio string*s. An *audio string* is a
+`String` that contains all the information needed to synthesize audio.
+
+The below diagram breaks down the segments that an *audio string* is composed of.
+The diagram also further breaks down the *pitch* segment of an audio string. The
+*pitch* segment is the component of an *audio string* used to dictate the
+frequency of the synthesized audio:
 
 <details>
 <summary>Audio Operand Components diagram</summary>
 <img src="./img/audio_string.png" alt="Audio Operand Components diagram">
 </details>
 
+### Wave Shape prefix
+
+  The first segment of an *audio string* sets what ***wave shape*** the audio
+  will be. This segment can be omitted to use the default wave shape. Refer to the
+  [Wave Shapes section](#wave-shapes) for the different wave shapes audio cna be.
+
+### Pitch (or silence)
+
+The pitch segment dictates the ***frequency*** the audio will be if it has
+a timbre or if the audio is silence (and therefore has no timbre). This segment
+itself is further composed of 3 components:
+
+1. The leading ***note*** character consisting of one of the alpha characters A-G.
+1. followed by the ***accidental***. The accidental character makes it so a note
+can be a *sharp* &sharp; or *flat* &flat;. Or if it's a *natural* &natural;
+(neither a *sharp* &sharp; nor a *flat* &flat;), then this character can be
+omitted.
+1. And then finally followed by the ***octave***. The octave is simply a non
+negative integer (0 or greater) to set the octave the note that precedes is
+in.
+
+To create a silence, the pitch segment is simply a question mark character, `'?'`.
+
+### Duration suffix
+
+The final segment of an audio string is the ***duration***. The duration amount
+is ***relative to the <u>note beat value</u> and <u>bpm/tempo</u>***. Without
+these 2 additional bits of information (the note beat value and bpm/tempo) the
+duration amount alone isn't enough information to extrapolate the actual span of
+time the audio or silence should be played.
+
+An easy way to think of it is that if the duration is integer *N*, then the
+length of the note will be <sup>1</sup>&frasl;<sub>*N*</sub>. So, if *N* were 1,
+then the duration would be <sup>1</sup>&frasl;<sub>1</sub> which would be a
+whole note. If *N* were 4, that'd result in <sup>1</sup>&frasl;<sub>4</sub> so
+it'd be a quarter note etc.
+
 [java shield]: https://img.shields.io/badge/java%20JDK%2021-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java JDK 21"
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
 [apache commons cli shield]: https://img.shields.io/badge/Apache%20Commons%20CLI-D42029?style=for-the-badge&logo=apache&logoColor=white "Apache Commons CLI"
 [apache commons cli website]: https://commons.apache.org/proper/commons-cli/ "Apache Commons CLI"
-[junit5 jupiter shield]: https://img.shields.io/badge/JUnit%205%20Jupiter-blue?style=for-the-badge "JUnit5 Jupiter"
-[junit5 jupiter website]: https://junit.org/junit5/docs/current/user-guide/ "JUnit5 Jupiter"
+[junit 5 jupiter shield]: https://img.shields.io/badge/JUnit%205%20Jupiter-blue?style=for-the-badge "JUnit 5 Jupiter"
+[junit 5 jupiter website]: https://junit.org/junit5/docs/current/user-guide/ "JUnit 5 Jupiter"
 [hamcrest shield]: https://img.shields.io/badge/Hamcrest-teal?style=for-the-badge "Hamcrest"
 [hamcrest website]: https://hamcrest.org/JavaHamcrest/ "Hamcrest"
 [mockito shield]: https://img.shields.io/badge/Mockito-yellow?style=for-the-badge "Mockito"
