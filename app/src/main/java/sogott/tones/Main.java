@@ -46,7 +46,7 @@ final public class Main {
                 CliOption.printHelp();
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");
-            } else if (cliArgs.hasOption(CliOption.SILENT.value())
+            } else if (cliArgs.hasOption(CliOption.QUIET.value())
                     && !cliArgs.hasOption(CliOption.OUT.value())) {
                 System.out.println(
                         "No audio output specified (audible playback disabled and no file output selected). Exiting...");
@@ -101,7 +101,7 @@ final public class Main {
                     System.out.println("Audio file written to: \"%s\"".formatted(pathWrittenTo));
                 }
 
-                if (!cliArgs.hasOption(CliOption.SILENT.value())) {
+                if (!cliArgs.hasOption(CliOption.QUIET.value())) {
                     final SourceDataLine sourceDataLine = AudioSystem.getSourceDataLine(ByteBuffers.AUDIO_FORMAT);
                     OutputByteBuffers.toAudio(byteBuffers, sourceDataLine);
                 } else {
