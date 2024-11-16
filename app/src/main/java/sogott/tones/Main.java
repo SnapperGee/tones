@@ -46,6 +46,10 @@ final public class Main {
                 CliOption.printHelp();
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
                 System.out.println("beep 0.0.1");
+            } else if (cliArgs.hasOption(CliOption.SILENT.value())
+                    && !cliArgs.hasOption(CliOption.OUT.value())) {
+                System.out.println(
+                        "No audio output specified (audible playback disabled and no file output selected). Exiting...");
             } else {
                 final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), BPM);
 
