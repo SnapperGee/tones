@@ -117,6 +117,6 @@ wave shapes and their strings are:
 [kotlin website]: https://kotlinlang.org/ "Kotlin"
 [git shield]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white "Git"
 [github shield]: https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white "Github"
-[github repo]: https://github.com/SnapperGee/beep "Github"
+[github repo]: https://github.com/SnapperGee/tones "Github"
 [mit shield]: https://img.shields.io/badge/license-MIT-green?style=for-the-badge "MIT"
 [mit website]: https://opensource.org/license/mit "MIT"
