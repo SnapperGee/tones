@@ -144,7 +144,8 @@ final class WaveTest {
     @ArgumentsSource(WaveArgProvider.EnumValuesWithUpperCaseStringAlias.class)
     void waveParseUpperCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
         final Optional<Wave> optionalWave = Wave.parse(waveString);
-        assertTrue(optionalWave.isPresent());
+        assertTrue(optionalWave.isPresent(),
+                () -> "Wave.parse(\"%s\") returned non present optional.".formatted(waveString));
         assertSame(expectedWave, optionalWave.get());
     }
 
@@ -152,13 +153,15 @@ final class WaveTest {
     @ArgumentsSource(WaveArgProvider.EnumValuesWithLowerCaseStringAlias.class)
     void waveParseLowerCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
         final Optional<Wave> optionalWave = Wave.parse(waveString);
-        assertTrue(optionalWave.isPresent());
+        assertTrue(optionalWave.isPresent(),
+                () -> "Wave.parse(\"%s\") returned non present optional.".formatted(waveString));
         assertSame(expectedWave, optionalWave.get());
     }
 
     @ParameterizedTest(name = "Wave.{0}.prefixes(\"{1}\") returns true")
     @ArgumentsSource(WaveArgProvider.PrefixedStrings.class)
     void prefixesReturnsTrueForPrefixedStrings(Wave wave, String prefixedString) {
-        assertTrue(wave.prefixes(prefixedString));
+        assertTrue(wave.prefixes(prefixedString),
+                () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(wave.name(), prefixedString));
     }
 }
