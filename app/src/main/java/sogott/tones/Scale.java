@@ -9,9 +9,11 @@ final record PitchWithoutOctave(Note note, Optional<Accidental> accidental) {
     }
 }
 
-final class Scale {
+interface Scale {
+    List<PitchWithoutOctave> notes();
+
     final static class Major {
-        static enum Natural {
+        static enum Natural implements Scale {
             A(List.of(
                     new PitchWithoutOctave(Note.A, Optional.empty()),
                     new PitchWithoutOctave(Note.B, Optional.empty()),
@@ -75,7 +77,7 @@ final class Scale {
                 this._notes = notes;
             }
 
-            List<PitchWithoutOctave> notes() {
+            public List<PitchWithoutOctave> notes() {
                 return this._notes;
             }
         }
@@ -136,7 +138,7 @@ final class Scale {
                 this._notes = notes;
             }
 
-            List<PitchWithoutOctave> notes() {
+            public List<PitchWithoutOctave> notes() {
                 return this._notes;
             }
         }
@@ -165,7 +167,7 @@ final class Scale {
                 this._notes = notes;
             }
 
-            List<PitchWithoutOctave> notes() {
+            public List<PitchWithoutOctave> notes() {
                 return this._notes;
             }
         }
@@ -177,7 +179,7 @@ final class Scale {
     }
 
     final static class Minor {
-        static enum Natural {
+        static enum Natural implements Scale {
             A(List.of(
                     new PitchWithoutOctave(Note.A, Optional.empty()),
                     new PitchWithoutOctave(Note.B, Optional.empty()),
@@ -241,7 +243,7 @@ final class Scale {
                 this._notes = notes;
             }
 
-            List<PitchWithoutOctave> notes() {
+            public List<PitchWithoutOctave> notes() {
                 return this._notes;
             }
         }
@@ -286,7 +288,7 @@ final class Scale {
                 this._notes = notes;
             }
 
-            List<PitchWithoutOctave> notes() {
+            public List<PitchWithoutOctave> notes() {
                 return this._notes;
             }
         }
@@ -307,7 +309,7 @@ final class Scale {
                 this._notes = notes;
             }
 
-            List<PitchWithoutOctave> notes() {
+            public List<PitchWithoutOctave> notes() {
                 return this._notes;
             }
         }
