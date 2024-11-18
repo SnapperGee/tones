@@ -24,7 +24,7 @@ final class WaveArgProvider {
 
     final static class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(Wave.SINE, "SIN"),
                     arguments(Wave.SQUARE, "SQR"),
@@ -36,7 +36,7 @@ final class WaveArgProvider {
 
     final static class EnumValuesWithLowerCaseStringValue implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(Wave.SINE, "sin"),
                     arguments(Wave.SQUARE, "sqr"),
@@ -48,7 +48,7 @@ final class WaveArgProvider {
 
     final static class EnumValuesWithUpperCaseStringAliases implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(Wave.SINE, Set.of(Wave.SINE.name(), Wave.SINE.stringValue())),
                     arguments(Wave.SQUARE, Set.of(Wave.SQUARE.name(), Wave.SQUARE.stringValue())),
@@ -60,7 +60,7 @@ final class WaveArgProvider {
 
     final static class EnumValuesWithLowerCaseStringAliases implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(Wave.SINE, Set.of(Wave.SINE.name().toLowerCase(), Wave.SINE.stringValue().toLowerCase())),
                     arguments(Wave.SQUARE,
@@ -76,7 +76,7 @@ final class WaveArgProvider {
 
     final static class EnumValuesWithUpperCaseStringAlias implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(Wave.SINE.name(), Wave.SINE),
                     arguments(Wave.SINE.stringValue(), Wave.SINE),
@@ -95,7 +95,7 @@ final class WaveArgProvider {
 
     final static class EnumValuesWithLowerCaseStringAlias implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(Wave.SINE.name().toLowerCase(), Wave.SINE),
                     arguments(Wave.SINE.stringValue().toLowerCase(), Wave.SINE),
@@ -114,7 +114,7 @@ final class WaveArgProvider {
 
     final static class PrefixedStrings implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Arrays.stream(Wave.values()).flatMap(wave -> Stream.concat(
                     wave.stringValueAliases().stream().map(stringValueAlias -> arguments(wave, stringValueAlias)),
                     wave.stringValueAliases().stream()

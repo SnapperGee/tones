@@ -18,7 +18,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 final class CliOptionArgProvider {
     final static class EnumValuesWithLongOpt implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(CliOption.BPM, "bpm"),
                     arguments(CliOption.NOTE_BEAT_VALUE, "note-beat-value"),
@@ -32,7 +32,7 @@ final class CliOptionArgProvider {
 
     final static class EnumValuesWithFlag implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(CliOption.BPM, "b"),
                     arguments(CliOption.NOTE_BEAT_VALUE, "n"),
@@ -46,7 +46,7 @@ final class CliOptionArgProvider {
 
     final static class EnumValuesWithArgCount implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(CliOption.BPM, 1),
                     arguments(CliOption.NOTE_BEAT_VALUE, 1),
@@ -60,7 +60,7 @@ final class CliOptionArgProvider {
 
     final static class EnumValuesWithArgName implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(CliOption.BPM, "INTEGER"),
                     arguments(CliOption.NOTE_BEAT_VALUE, "INTEGER"),
@@ -74,7 +74,7 @@ final class CliOptionArgProvider {
 
     final static class EnumValuesWithType implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(CliOption.BPM, Integer.class),
                     arguments(CliOption.NOTE_BEAT_VALUE, Integer.class),
@@ -88,7 +88,7 @@ final class CliOptionArgProvider {
 
     final static class EnumValuesWithDescription implements ArgumentsProvider {
         @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(CliOption.BPM, Integer.class),
                     arguments(CliOption.NOTE_BEAT_VALUE, Integer.class),
