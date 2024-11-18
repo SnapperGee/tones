@@ -174,7 +174,7 @@ interface Scale {
 
         private Major() {
             throw new UnsupportedOperationException(
-                    "%s is static an cannot be instantiated.".formatted(Major.class.getSimpleName()));
+                    Major.class.getSimpleName() + " is static an cannot be instantiated.");
         }
     }
 
@@ -316,7 +316,7 @@ interface Scale {
 
         private Minor() {
             throw new UnsupportedOperationException(
-                    "%s is static an cannot be instantiated.".formatted(Minor.class.getSimpleName()));
+                    Minor.class.getSimpleName() + " is static an cannot be instantiated.");
         }
     }
 }
