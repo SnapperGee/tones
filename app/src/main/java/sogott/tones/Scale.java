@@ -82,7 +82,7 @@ interface Scale {
             }
         }
 
-        static enum Flat {
+        static enum Flat implements Scale {
             A(List.of(
                     new PitchWithoutOctave(Note.A, Accidental.FLAT),
                     new PitchWithoutOctave(Note.B, Accidental.FLAT),
@@ -143,7 +143,7 @@ interface Scale {
             }
         }
 
-        static enum Sharp {
+        static enum Sharp implements Scale {
             C(List.of(
                     new PitchWithoutOctave(Note.C, Accidental.SHARP),
                     new PitchWithoutOctave(Note.D, Accidental.SHARP),
@@ -248,7 +248,7 @@ interface Scale {
             }
         }
 
-        static enum Flat {
+        static enum Flat implements Scale {
             A(List.of(
                     new PitchWithoutOctave(Note.A, Accidental.FLAT),
                     new PitchWithoutOctave(Note.B, Accidental.FLAT),
@@ -293,7 +293,7 @@ interface Scale {
             }
         }
 
-        static enum Sharp {
+        static enum Sharp implements Scale {
             F(List.of(
                     new PitchWithoutOctave(Note.F, Accidental.SHARP),
                     new PitchWithoutOctave(Note.G, Accidental.SHARP),
