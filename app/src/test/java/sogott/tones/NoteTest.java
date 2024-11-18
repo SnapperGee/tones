@@ -20,7 +20,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 final class NoteArgProvider {
     final static class EnumValuesWithOffset implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
                     arguments(Note.A, 0),
                     arguments(Note.B, 2),
@@ -34,7 +34,7 @@ final class NoteArgProvider {
 
     final static class EnumValuesWithUpperCaseChar implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
                     arguments(Note.A, 'A'),
                     arguments(Note.B, 'B'),
@@ -48,7 +48,7 @@ final class NoteArgProvider {
 
     final static class EnumValuesWithLowerCaseChar implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
                     arguments(Note.A, 'a'),
                     arguments(Note.B, 'b'),

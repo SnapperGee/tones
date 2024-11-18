@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.closeTo;
 final class FrequencyArgProvider {
     final static class NoteAccidentalOctaveFrequency implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
                     arguments(Note.A, Accidental.FLAT, 0, 25.96),
                     arguments(Note.A, null, 0, 27.5),
@@ -216,7 +216,7 @@ final class FrequencyArgProvider {
 
     final static class PitchFrequency implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
                     arguments(new Pitch(Note.A, Accidental.FLAT, 0), 25.96),
                     arguments(new Pitch(Note.A, null, 0), 27.5),
@@ -412,7 +412,7 @@ final class FrequencyArgProvider {
 
     final static class NoteOctaveFrequency implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
             return Stream.of(
                     arguments(Note.A, 0, 27.5),
                     arguments(Note.A, 1, 55),
