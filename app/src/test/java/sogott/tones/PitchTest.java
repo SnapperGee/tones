@@ -31,7 +31,7 @@ final class PitchArgProvider {
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    private static Stream<? extends Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
+    private static Stream<Arguments> noteAccidentalAndOctave(int octaveOrigin, int octaveBound) {
         return notes.stream().flatMap(note -> {
             final int octave = random.nextInt(octaveOrigin, octaveBound);
             return Stream.concat(
@@ -41,7 +41,7 @@ final class PitchArgProvider {
         });
     }
 
-    private static Stream<? extends Arguments> differingNotesAccidentalsAndOctaves(int octaveOrigin, int octaveBound) {
+    private static Stream<Arguments> differingNotesAccidentalsAndOctaves(int octaveOrigin, int octaveBound) {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int indexOfNote = notes.indexOf(note);
@@ -58,7 +58,7 @@ final class PitchArgProvider {
                 }));
     }
 
-    private static Stream<? extends Arguments> differingNotesWithAccidentalAndOctave(int octaveOrigin,
+    private static Stream<Arguments> differingNotesWithAccidentalAndOctave(int octaveOrigin,
             int octaveBound) {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
@@ -71,7 +71,7 @@ final class PitchArgProvider {
                 }));
     }
 
-    private static Stream<? extends Arguments> noteWithDifferingAccidentalsAndOctave(int octaveOrigin,
+    private static Stream<Arguments> noteWithDifferingAccidentalsAndOctave(int octaveOrigin,
             int octaveBound) {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
@@ -82,7 +82,7 @@ final class PitchArgProvider {
                 }));
     }
 
-    private static Stream<? extends Arguments> noteAccidentalWithDifferingOctaves(int octaveOrigin, int octaveBound) {
+    private static Stream<Arguments> noteAccidentalWithDifferingOctaves(int octaveOrigin, int octaveBound) {
         return notes.stream().flatMap(note -> accidentals.stream()
                 .map(accidental -> {
                     final int randomInt = random.nextInt(octaveOrigin, octaveBound);
@@ -92,28 +92,28 @@ final class PitchArgProvider {
                 }));
     }
 
-    private static Stream<? extends Arguments> noteAndOctave(int octaveOrigin, int octaveBound) {
+    private static Stream<Arguments> noteAndOctave(int octaveOrigin, int octaveBound) {
         return notes.stream().map(note -> arguments(note, random.nextInt(octaveOrigin, octaveBound)));
     }
 
     final static class Valid {
         final static class NoteAccidentalAndOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteAccidentalAndOctave(0, 13);
             }
         }
 
         final static class NoteAndOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteAndOctave(0, 13);
             }
         }
 
         final static class AccidentalAndOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return Stream.of(
                         arguments(Accidental.SHARP, random.nextInt(13)),
                         arguments(Accidental.FLAT, random.nextInt(13)));
@@ -122,7 +122,7 @@ final class PitchArgProvider {
 
         final static class NoteAccidentalAndOctaveStringValue implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> {
                     final int octave = random.nextInt(13);
                     final String stringValueNoAccidental = "%c%d".formatted(note.charValue(),
@@ -143,7 +143,7 @@ final class PitchArgProvider {
 
         final static class PitchStringValues implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> {
                     final int octave = random.nextInt(13);
                     final String stringValueNoAccidental = "%c%d".formatted(note.charValue(),
@@ -163,35 +163,35 @@ final class PitchArgProvider {
 
         final static class DifferingNotesAccidentalsAndOctaves implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return differingNotesAccidentalsAndOctaves(0, 12);
             }
         }
 
         final static class DifferingNotesWithAccidentalAndOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return differingNotesWithAccidentalAndOctave(0, 12);
             }
         }
 
         final static class NoteWithDifferingAccidentalsAndOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteWithDifferingAccidentalsAndOctave(0, 12);
             }
         }
 
         final static class NoteAccidentalWithDifferingOctaves implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteAccidentalWithDifferingOctaves(0, 12);
             }
         }
 
         final static class NoteAndOctaveStringValue implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().map(note -> {
                     final int octave = random.nextInt(13);
                     final String stringValue = "%c%d".formatted(note.charValue(), octave);
@@ -204,21 +204,21 @@ final class PitchArgProvider {
     final static class Invalid {
         final static class NoteAccidentalAndNegativeOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteAccidentalAndOctave(-12, 0);
             }
         }
 
         final static class NoteAndNegativeOctave implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return noteAndOctave(-12, 0);
             }
         }
 
         final static class PitchStringValues implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            public Stream<Arguments> provideArguments(ExtensionContext context) throws Exception {
                 return notes.stream().flatMap(note -> accidentals.stream()
                         .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
