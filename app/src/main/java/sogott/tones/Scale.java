@@ -110,7 +110,7 @@ interface Scale {
             D(List.of(
                     new PitchWithoutOctave(Note.D, Accidental.FLAT),
                     new PitchWithoutOctave(Note.E, Accidental.FLAT),
-                    new PitchWithoutOctave(Note.F, Optional.empty()),
+                    new PitchWithoutOctave(Note.F, Accidental.FLAT),
                     new PitchWithoutOctave(Note.G, Accidental.FLAT),
                     new PitchWithoutOctave(Note.A, Accidental.FLAT),
                     new PitchWithoutOctave(Note.B, Accidental.FLAT),
