@@ -153,6 +153,122 @@ final class ScaleArgProvider {
             }
         }
     }
+
+    static final class Minor {
+        static final class Natural implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return Stream.of(
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchWithoutOctave(Note.B, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchWithoutOctave(Note.E, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.A),
+
+                        arguments(new PitchWithoutOctave(Note.B, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchWithoutOctave(Note.C, Accidental.SHARP), Scale.Minor.Natural.B),
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchWithoutOctave(Note.E, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchWithoutOctave(Note.F, Accidental.SHARP), Scale.Minor.Natural.B),
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Natural.B),
+
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Natural.C),
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchWithoutOctave(Note.A, Accidental.FLAT), Scale.Minor.Natural.C),
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Natural.C),
+
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchWithoutOctave(Note.E, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Natural.D),
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Natural.D),
+
+                        arguments(new PitchWithoutOctave(Note.E, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchWithoutOctave(Note.F, Accidental.SHARP), Scale.Minor.Natural.E),
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchWithoutOctave(Note.B, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Natural.E),
+
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Natural.F),
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.F),
+                        arguments(new PitchWithoutOctave(Note.A, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Natural.F),
+                        arguments(new PitchWithoutOctave(Note.D, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Natural.F),
+
+                        arguments(new PitchWithoutOctave(Note.G, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Natural.G),
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Natural.G),
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Natural.G));
+            }
+        }
+
+        static final class Flat implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return Stream.of(
+                        arguments(new PitchWithoutOctave(Note.A, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchWithoutOctave(Note.C, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchWithoutOctave(Note.D, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchWithoutOctave(Note.F, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchWithoutOctave(Note.G, Accidental.FLAT), Scale.Minor.Flat.A),
+
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchWithoutOctave(Note.C, Optional.empty()), Scale.Minor.Flat.B),
+                        arguments(new PitchWithoutOctave(Note.D, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Flat.B),
+                        arguments(new PitchWithoutOctave(Note.G, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchWithoutOctave(Note.A, Accidental.FLAT), Scale.Minor.Flat.B),
+
+                        arguments(new PitchWithoutOctave(Note.D, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchWithoutOctave(Note.F, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchWithoutOctave(Note.G, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchWithoutOctave(Note.A, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Flat.D),
+                        arguments(new PitchWithoutOctave(Note.C, Accidental.FLAT), Scale.Minor.Flat.D),
+
+                        arguments(new PitchWithoutOctave(Note.E, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchWithoutOctave(Note.F, Optional.empty()), Scale.Minor.Flat.E),
+                        arguments(new PitchWithoutOctave(Note.G, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchWithoutOctave(Note.A, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchWithoutOctave(Note.B, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchWithoutOctave(Note.C, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchWithoutOctave(Note.D, Accidental.FLAT), Scale.Minor.Flat.E));
+            }
+        }
+
+        static final class Sharp implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return Stream.of(
+                        arguments(new PitchWithoutOctave(Note.F, Accidental.SHARP), Scale.Minor.Sharp.F),
+                        arguments(new PitchWithoutOctave(Note.G, Accidental.SHARP), Scale.Minor.Sharp.F),
+                        arguments(new PitchWithoutOctave(Note.A, Optional.empty()), Scale.Minor.Sharp.F),
+                        arguments(new PitchWithoutOctave(Note.B, Optional.empty()), Scale.Minor.Sharp.F),
+                        arguments(new PitchWithoutOctave(Note.C, Accidental.SHARP), Scale.Minor.Sharp.F),
+                        arguments(new PitchWithoutOctave(Note.D, Optional.empty()), Scale.Minor.Sharp.F),
+                        arguments(new PitchWithoutOctave(Note.E, Optional.empty()), Scale.Minor.Sharp.F));
+            }
+        }
+    }
 }
 
 final class ScaleTest {
@@ -185,6 +301,39 @@ final class ScaleTest {
             void scaleMajorSharpCorrectNotes(PitchWithoutOctave note,
                     Scale.Major.Sharp majorSharpScale) {
                 assertThat(majorSharpScale.notes(), hasItem(note));
+            }
+        }
+    }
+
+    @Suite
+    final static class Minor {
+        @Suite
+        final static class Natural {
+            @ParameterizedTest(name = "Scale.Minor.Natural.{1} contains {0}")
+            @ArgumentsSource(ScaleArgProvider.Minor.Natural.class)
+            void scaleMinorNaturalCorrectNotes(PitchWithoutOctave note,
+                    Scale.Minor.Natural minorNaturalScale) {
+                assertThat(minorNaturalScale.notes(), hasItem(note));
+            }
+        }
+
+        @Suite
+        final static class Flat {
+            @ParameterizedTest(name = "Scale.Minor.Flat.{1} contains {0}")
+            @ArgumentsSource(ScaleArgProvider.Minor.Flat.class)
+            void scaleMinorFlatCorrectNotes(PitchWithoutOctave note,
+                    Scale.Minor.Flat minorFlatScale) {
+                assertThat(minorFlatScale.notes(), hasItem(note));
+            }
+        }
+
+        @Suite
+        final static class Sharp {
+            @ParameterizedTest(name = "Scale.Minor.Sharp.{1} contains {0}")
+            @ArgumentsSource(ScaleArgProvider.Minor.Sharp.class)
+            void scaleMinorSharpCorrectNotes(PitchWithoutOctave note,
+                    Scale.Minor.Sharp minorSharpScale) {
+                assertThat(minorSharpScale.notes(), hasItem(note));
             }
         }
     }

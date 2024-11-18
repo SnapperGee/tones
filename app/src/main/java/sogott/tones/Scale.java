@@ -231,11 +231,11 @@ interface Scale {
             G(List.of(
                     new PitchWithoutOctave(Note.G, Optional.empty()),
                     new PitchWithoutOctave(Note.A, Optional.empty()),
-                    new PitchWithoutOctave(Note.B, Optional.empty()),
+                    new PitchWithoutOctave(Note.B, Accidental.FLAT),
                     new PitchWithoutOctave(Note.C, Optional.empty()),
                     new PitchWithoutOctave(Note.D, Optional.empty()),
-                    new PitchWithoutOctave(Note.E, Optional.empty()),
-                    new PitchWithoutOctave(Note.F, Accidental.SHARP)));
+                    new PitchWithoutOctave(Note.E, Accidental.FLAT),
+                    new PitchWithoutOctave(Note.F, Optional.empty())));
 
             final private List<PitchWithoutOctave> _notes;
 
@@ -271,7 +271,7 @@ interface Scale {
                     new PitchWithoutOctave(Note.F, Accidental.FLAT),
                     new PitchWithoutOctave(Note.G, Accidental.FLAT),
                     new PitchWithoutOctave(Note.A, Accidental.FLAT),
-                    new PitchWithoutOctave(Note.B, Accidental.FLAT),
+                    new PitchWithoutOctave(Note.A, Optional.empty()),
                     new PitchWithoutOctave(Note.C, Accidental.FLAT))),
             E(List.of(
                     new PitchWithoutOctave(Note.E, Accidental.FLAT),
