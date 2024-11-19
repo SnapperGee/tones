@@ -22,7 +22,7 @@ WAV file.
 1. [Wave Shapes](#wave-shapes)
 1. [Command Line Options](#command-line-options)
 1. [Usage Example](#usage-example)
-1. [Audio Operand Components](#audio-operand-components)
+1. [Note Operand Components](#note-operand-components)
 
 ## Installation
 
