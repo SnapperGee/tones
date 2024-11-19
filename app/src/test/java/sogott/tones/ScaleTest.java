@@ -280,7 +280,7 @@ final class ScaleTest {
             @ArgumentsSource(ScaleArgProvider.Major.Natural.class)
             void scaleMajorNaturalCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Major.Natural majorNaturalScale) {
-                assertThat(majorNaturalScale.notes(), hasItem(pitchClassAndAccidental));
+                assertThat(majorNaturalScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -290,7 +290,7 @@ final class ScaleTest {
             @ArgumentsSource(ScaleArgProvider.Major.Flat.class)
             void scaleMajorFlatCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Major.Flat majorFlatScale) {
-                assertThat(majorFlatScale.notes(), hasItem(pitchClassAndAccidental));
+                assertThat(majorFlatScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -300,7 +300,7 @@ final class ScaleTest {
             @ArgumentsSource(ScaleArgProvider.Major.Sharp.class)
             void scaleMajorSharpCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Major.Sharp majorSharpScale) {
-                assertThat(majorSharpScale.notes(), hasItem(pitchClassAndAccidental));
+                assertThat(majorSharpScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
             }
         }
     }
@@ -313,7 +313,7 @@ final class ScaleTest {
             @ArgumentsSource(ScaleArgProvider.Minor.Natural.class)
             void scaleMinorNaturalCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Minor.Natural minorNaturalScale) {
-                assertThat(minorNaturalScale.notes(), hasItem(pitchClassAndAccidental));
+                assertThat(minorNaturalScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -323,7 +323,7 @@ final class ScaleTest {
             @ArgumentsSource(ScaleArgProvider.Minor.Flat.class)
             void scaleMinorFlatCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Minor.Flat minorFlatScale) {
-                assertThat(minorFlatScale.notes(), hasItem(pitchClassAndAccidental));
+                assertThat(minorFlatScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -333,7 +333,7 @@ final class ScaleTest {
             @ArgumentsSource(ScaleArgProvider.Minor.Sharp.class)
             void scaleMinorSharpCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Minor.Sharp minorSharpScale) {
-                assertThat(minorSharpScale.notes(), hasItem(pitchClassAndAccidental));
+                assertThat(minorSharpScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
             }
         }
     }
