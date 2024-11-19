@@ -1,8 +1,8 @@
 # Tones
 
 Generate tones musically with the CLI. With this package, you can pass musical
-notes via command line arguments and output them as audio and optionally write
-them to a WAV file.
+notes via command line arguments and output them as audio and/or write them to a
+WAV file.
 
 [![Java][java shield]][java website]
 [![Apache Commons Cli][apache commons cli shield]][apache commons cli website]
