@@ -134,10 +134,10 @@ playing any audio:
 - D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
 - C whole note sine wave in the 3rd octave &rightarrow; C&#119133;
 
-## Audio Operand Components
+## Note Operand Components
 
 The primary command line operand arguments that are required to set the
-synthesized sound are referred to as *note string*s. A *note string* is a
+synthesized sound are referred to as ***note string***s. A *note string* is a
 `String` that contains all the information needed to synthesize audio.
 
 The below diagram breaks down the segments that a *note string* is composed of.
@@ -146,7 +146,7 @@ The diagram also further breaks down the *pitch* segment of an note string. The
 frequency of the synthesized audio:
 
 <details>
-<summary>Audio Operand Components diagram</summary>
+<summary>Note Operand Component diagram (click to show)</summary>
 <img src="./img/audio_string.png" alt="Audio Operand Components diagram">
 </details>
 
@@ -160,7 +160,7 @@ frequency of the synthesized audio:
 
 The pitch segment dictates the ***frequency*** the audio will be if it has
 a timbre or if the audio is silence (and therefore has no timbre). If this
-segment has a timbre, it composed of 3 components:
+segment has a timbre, it is composed of 3 components:
 
 1. The leading ***pitch letter*** character consisting of one of the alpha
 characters A-G.
