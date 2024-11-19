@@ -822,7 +822,7 @@ final class NoteStringTest {
     void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
             Note audio) {
         final Optional<Note> parsedAudio = NoteString.parse(audioString);
-        assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
+        assertTrue(parsedAudio.isPresent(), () -> "NoteString.parse(\"%s\") returned non present optional."
                 .formatted(audioString));
         assertEquals(audio, parsedAudio.get());
     }
@@ -832,7 +832,7 @@ final class NoteStringTest {
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
             Wave wave, Note audio) {
         final Optional<Note> parsedAudio = NoteString.parse(audioString, wave);
-        assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
+        assertTrue(parsedAudio.isPresent(), () -> "NoteString.parse(\"%s\") returned non present optional."
                 .formatted(audioString));
         assertEquals(audio, parsedAudio.get());
     }
@@ -842,7 +842,7 @@ final class NoteStringTest {
     @EmptySource
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
         final Optional<Note> parsedAudio = NoteString.parse(audioString);
-        assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
+        assertTrue(parsedAudio.isEmpty(), () -> "NoteString.parse(\"%s\") returned non empty optional."
                 .formatted(audioString));
     }
 
@@ -850,7 +850,7 @@ final class NoteStringTest {
     @ArgumentsSource(NoteStringsArgProvider.Invalid.NoteStringValueAndWave.class)
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, Wave wave) {
         final Optional<Note> parsedAudio = NoteString.parse(audioString, wave);
-        assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
+        assertTrue(parsedAudio.isEmpty(), () -> "NoteString.parse(\"%s\") returned non empty optional."
                 .formatted(audioString));
     }
 }
