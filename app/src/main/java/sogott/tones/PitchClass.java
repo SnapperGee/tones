@@ -99,10 +99,9 @@ enum PitchClass {
     }
 
     /**
-     * Attempts to convert a {@code char} to its {@link PitchClass} value. Returns
-     * an
-     * optional containing the {@link PitchClass} value of the char if it can be
-     * converted, otherwise an empty optional is returned.
+     * Attempts to convert a {@code char} to its {@link PitchClass} value.
+     * Returns an optional containing the {@link PitchClass} value of the char
+     * if it can be converted, otherwise an empty optional is returned.
      *
      * @param aChar {@code char} to attempt to convert to a {@link PitchClass}
      *              value.
