@@ -19,61 +19,61 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.SHARP), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Natural.A),
 
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.SHARP), Scale.Major.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.SHARP), Scale.Major.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.SHARP), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP), Scale.Major.Natural.B),
 
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Major.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Natural.C),
 
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.D),
 
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.SHARP), Scale.Major.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.SHARP), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP), Scale.Major.Natural.E),
 
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Major.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.F),
 
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Major.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.G));
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Major.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Natural.G));
             }
         }
 
@@ -81,53 +81,53 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Major.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Major.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Flat.A),
 
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Major.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Major.Flat.B),
 
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.FLAT), Scale.Major.Flat.C),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.C),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.C),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.FLAT), Scale.Major.Flat.C),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Major.Flat.C),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.C),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.C),
 
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.FLAT), Scale.Major.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Major.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Flat.D),
 
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Major.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Major.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Major.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Major.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Major.Flat.E),
 
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Major.Flat.G),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.G),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.G),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.FLAT), Scale.Major.Flat.G),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.G),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.G),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Major.Flat.G));
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Major.Flat.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Major.Flat.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Major.Flat.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Major.Flat.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Major.Flat.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Major.Flat.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Major.Flat.G));
             }
         }
 
@@ -135,21 +135,21 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.SHARP), Scale.Major.Sharp.C),
 
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Major.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.SHARP), Scale.Major.Sharp.F));
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP), Scale.Major.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP), Scale.Major.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP), Scale.Major.Sharp.F));
             }
         }
     }
@@ -159,61 +159,61 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.A),
 
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Minor.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Minor.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.B),
 
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Minor.Natural.C),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Natural.C),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.C),
 
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.D),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.D),
 
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Minor.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.E),
 
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Minor.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Minor.Natural.F),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.F),
 
-                        arguments(new PitchWithoutOctave(PitchClass.G, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.G),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Natural.G));
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.G),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.G));
             }
         }
 
@@ -221,37 +221,37 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.A),
 
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Optional.empty()), Scale.Minor.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.B),
 
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Flat.D),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Flat.D),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.D),
 
-                        arguments(new PitchWithoutOctave(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.F, Optional.empty()), Scale.Minor.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.E));
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.E),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.E));
             }
         }
 
@@ -259,13 +259,13 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchWithoutOctave(PitchClass.F, Accidental.SHARP), Scale.Minor.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.G, Accidental.SHARP), Scale.Minor.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.A, Optional.empty()), Scale.Minor.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.B, Optional.empty()), Scale.Minor.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.C, Accidental.SHARP), Scale.Minor.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.D, Optional.empty()), Scale.Minor.Sharp.F),
-                        arguments(new PitchWithoutOctave(PitchClass.E, Optional.empty()), Scale.Minor.Sharp.F));
+                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Minor.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Minor.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Minor.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Sharp.F),
+                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Sharp.F));
             }
         }
     }
@@ -278,9 +278,9 @@ final class ScaleTest {
         final static class Natural {
             @ParameterizedTest(name = "Scale.Major.Natural.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Major.Natural.class)
-            void scaleMajorNaturalCorrectNotes(PitchWithoutOctave note,
+            void scaleMajorNaturalCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Major.Natural majorNaturalScale) {
-                assertThat(majorNaturalScale.notes(), hasItem(note));
+                assertThat(majorNaturalScale.notes(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -288,9 +288,9 @@ final class ScaleTest {
         final static class Flat {
             @ParameterizedTest(name = "Scale.Major.Flat.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Major.Flat.class)
-            void scaleMajorFlatCorrectNotes(PitchWithoutOctave note,
+            void scaleMajorFlatCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Major.Flat majorFlatScale) {
-                assertThat(majorFlatScale.notes(), hasItem(note));
+                assertThat(majorFlatScale.notes(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -298,9 +298,9 @@ final class ScaleTest {
         final static class Sharp {
             @ParameterizedTest(name = "Scale.Major.Sharp.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Major.Sharp.class)
-            void scaleMajorSharpCorrectNotes(PitchWithoutOctave note,
+            void scaleMajorSharpCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Major.Sharp majorSharpScale) {
-                assertThat(majorSharpScale.notes(), hasItem(note));
+                assertThat(majorSharpScale.notes(), hasItem(pitchClassAndAccidental));
             }
         }
     }
@@ -311,9 +311,9 @@ final class ScaleTest {
         final static class Natural {
             @ParameterizedTest(name = "Scale.Minor.Natural.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Minor.Natural.class)
-            void scaleMinorNaturalCorrectNotes(PitchWithoutOctave note,
+            void scaleMinorNaturalCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Minor.Natural minorNaturalScale) {
-                assertThat(minorNaturalScale.notes(), hasItem(note));
+                assertThat(minorNaturalScale.notes(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -321,9 +321,9 @@ final class ScaleTest {
         final static class Flat {
             @ParameterizedTest(name = "Scale.Minor.Flat.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Minor.Flat.class)
-            void scaleMinorFlatCorrectNotes(PitchWithoutOctave note,
+            void scaleMinorFlatCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Minor.Flat minorFlatScale) {
-                assertThat(minorFlatScale.notes(), hasItem(note));
+                assertThat(minorFlatScale.notes(), hasItem(pitchClassAndAccidental));
             }
         }
 
@@ -331,9 +331,9 @@ final class ScaleTest {
         final static class Sharp {
             @ParameterizedTest(name = "Scale.Minor.Sharp.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Minor.Sharp.class)
-            void scaleMinorSharpCorrectNotes(PitchWithoutOctave note,
+            void scaleMinorSharpCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
                     Scale.Minor.Sharp minorSharpScale) {
-                assertThat(minorSharpScale.notes(), hasItem(note));
+                assertThat(minorSharpScale.notes(), hasItem(pitchClassAndAccidental));
             }
         }
     }

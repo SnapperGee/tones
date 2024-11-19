@@ -3,320 +3,331 @@ package sogott.tones;
 import java.util.List;
 import java.util.Optional;
 
-final record PitchWithoutOctave(PitchClass note, Optional<Accidental> accidental) {
-        PitchWithoutOctave(PitchClass note, Accidental accidental) {
-                this(note, Optional.of(accidental));
+final record PitchClassAndAccidental(PitchClass pitchClass, Optional<Accidental> accidental) {
+    PitchClassAndAccidental {
+        if (pitchClass == null) {
+            throw new IllegalArgumentException("Null " + PitchClass.class.getSimpleName());
         }
+
+        if (accidental == null) {
+            throw new IllegalArgumentException(
+                    "Null %s<%s>".formatted(Optional.class.getSimpleName(), Accidental.class.getSimpleName()));
+        }
+    }
+
+    PitchClassAndAccidental(PitchClass pitchClass, Accidental accidental) {
+        this(pitchClass, Optional.of(accidental));
+    }
 }
 
 interface Scale {
-        List<PitchWithoutOctave> notes();
+    List<PitchClassAndAccidental> notes();
 
-        final static class Major {
-                static enum Natural implements Scale {
-                        A(List.of(
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.SHARP))),
-                        B(List.of(
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.SHARP))),
-                        C(List.of(
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()))),
-                        D(List.of(
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP))),
-                        E(List.of(
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.SHARP))),
-                        F(List.of(
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()))),
-                        G(List.of(
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP)));
+    final static class Major {
+        static enum Natural implements Scale {
+            A(List.of(
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP))),
+            B(List.of(
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP))),
+            C(List.of(
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()))),
+            D(List.of(
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP))),
+            E(List.of(
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP))),
+            F(List.of(
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()))),
+            G(List.of(
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP)));
 
-                        final private List<PitchWithoutOctave> _notes;
+            final private List<PitchClassAndAccidental> _notes;
 
-                        private Natural(List<PitchWithoutOctave> notes) {
-                                this._notes = notes;
-                        }
+            private Natural(List<PitchClassAndAccidental> notes) {
+                this._notes = notes;
+            }
 
-                        public List<PitchWithoutOctave> notes() {
-                                return this._notes;
-                        }
-                }
-
-                static enum Flat implements Scale {
-                        A(List.of(
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()))),
-                        B(List.of(
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()))),
-                        C(List.of(
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT))),
-                        D(List.of(
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()))),
-                        E(List.of(
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()))),
-                        G(List.of(
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty())));
-
-                        final private List<PitchWithoutOctave> _notes;
-
-                        private Flat(List<PitchWithoutOctave> notes) {
-                                this._notes = notes;
-                        }
-
-                        public List<PitchWithoutOctave> notes() {
-                                return this._notes;
-                        }
-                }
-
-                static enum Sharp implements Scale {
-                        C(List.of(
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.SHARP))),
-                        F(List.of(
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.SHARP)));
-
-                        final private List<PitchWithoutOctave> _notes;
-
-                        private Sharp(List<PitchWithoutOctave> notes) {
-                                this._notes = notes;
-                        }
-
-                        public List<PitchWithoutOctave> notes() {
-                                return this._notes;
-                        }
-                }
-
-                private Major() {
-                        throw new UnsupportedOperationException(
-                                        Major.class.getSimpleName() + " is static an cannot be instantiated.");
-                }
+            public List<PitchClassAndAccidental> notes() {
+                return this._notes;
+            }
         }
 
-        final static class Minor {
-                static enum Natural implements Scale {
-                        A(List.of(
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()))),
-                        B(List.of(
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()))),
-                        C(List.of(
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT))),
-                        D(List.of(
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()))),
-                        E(List.of(
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()))),
-                        F(List.of(
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT))),
-                        G(List.of(
-                                        new PitchWithoutOctave(PitchClass.G, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty())));
+        static enum Flat implements Scale {
+            A(List.of(
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()))),
+            B(List.of(
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()))),
+            C(List.of(
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT))),
+            D(List.of(
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()))),
+            E(List.of(
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()))),
+            G(List.of(
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty())));
 
-                        final private List<PitchWithoutOctave> _notes;
+            final private List<PitchClassAndAccidental> _notes;
 
-                        private Natural(List<PitchWithoutOctave> notes) {
-                                this._notes = notes;
-                        }
+            private Flat(List<PitchClassAndAccidental> notes) {
+                this._notes = notes;
+            }
 
-                        public List<PitchWithoutOctave> notes() {
-                                return this._notes;
-                        }
-                }
-
-                static enum Flat implements Scale {
-                        A(List.of(
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT))),
-                        B(List.of(
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT))),
-                        D(List.of(
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.FLAT))),
-                        E(List.of(
-                                        new PitchWithoutOctave(PitchClass.E, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.F, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.A, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.B, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.FLAT),
-                                        new PitchWithoutOctave(PitchClass.D, Accidental.FLAT)));
-
-                        final private List<PitchWithoutOctave> _notes;
-
-                        private Flat(List<PitchWithoutOctave> notes) {
-                                this._notes = notes;
-                        }
-
-                        public List<PitchWithoutOctave> notes() {
-                                return this._notes;
-                        }
-                }
-
-                static enum Sharp implements Scale {
-                        F(List.of(
-                                        new PitchWithoutOctave(PitchClass.F, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.G, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.A, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.B, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.C, Accidental.SHARP),
-                                        new PitchWithoutOctave(PitchClass.D, Optional.empty()),
-                                        new PitchWithoutOctave(PitchClass.E, Optional.empty())));
-
-                        final private List<PitchWithoutOctave> _notes;
-
-                        private Sharp(List<PitchWithoutOctave> notes) {
-                                this._notes = notes;
-                        }
-
-                        public List<PitchWithoutOctave> notes() {
-                                return this._notes;
-                        }
-                }
-
-                private Minor() {
-                        throw new UnsupportedOperationException(
-                                        Minor.class.getSimpleName() + " is static an cannot be instantiated.");
-                }
+            public List<PitchClassAndAccidental> notes() {
+                return this._notes;
+            }
         }
+
+        static enum Sharp implements Scale {
+            C(List.of(
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.SHARP))),
+            F(List.of(
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP)));
+
+            final private List<PitchClassAndAccidental> _notes;
+
+            private Sharp(List<PitchClassAndAccidental> notes) {
+                this._notes = notes;
+            }
+
+            public List<PitchClassAndAccidental> notes() {
+                return this._notes;
+            }
+        }
+
+        private Major() {
+            throw new UnsupportedOperationException(
+                    Major.class.getSimpleName() + " is static an cannot be instantiated.");
+        }
+    }
+
+    final static class Minor {
+        static enum Natural implements Scale {
+            A(List.of(
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()))),
+            B(List.of(
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()))),
+            C(List.of(
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT))),
+            D(List.of(
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()))),
+            E(List.of(
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()))),
+            F(List.of(
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT))),
+            G(List.of(
+                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty())));
+
+            final private List<PitchClassAndAccidental> _notes;
+
+            private Natural(List<PitchClassAndAccidental> notes) {
+                this._notes = notes;
+            }
+
+            public List<PitchClassAndAccidental> notes() {
+                return this._notes;
+            }
+        }
+
+        static enum Flat implements Scale {
+            A(List.of(
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT))),
+            B(List.of(
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT))),
+            D(List.of(
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT))),
+            E(List.of(
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT)));
+
+            final private List<PitchClassAndAccidental> _notes;
+
+            private Flat(List<PitchClassAndAccidental> notes) {
+                this._notes = notes;
+            }
+
+            public List<PitchClassAndAccidental> notes() {
+                return this._notes;
+            }
+        }
+
+        static enum Sharp implements Scale {
+            F(List.of(
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Optional.empty())));
+
+            final private List<PitchClassAndAccidental> _notes;
+
+            private Sharp(List<PitchClassAndAccidental> notes) {
+                this._notes = notes;
+            }
+
+            public List<PitchClassAndAccidental> notes() {
+                return this._notes;
+            }
+        }
+
+        private Minor() {
+            throw new UnsupportedOperationException(
+                    Minor.class.getSimpleName() + " is static an cannot be instantiated.");
+        }
+    }
 }
