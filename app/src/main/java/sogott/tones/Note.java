@@ -36,15 +36,15 @@ import static java.util.Objects.hash;
  * to create the span of time the audio will play.
  *
  * <p>
- * If an {@link Audio} object has a duration of <i>N</i>, then its span of time
+ * If an {@link Note} object has a duration of <i>N</i>, then its span of time
  * to play for is 1/<i>N</i> of a whole note. So if it has a duration value of
  * {@code 4}, then the audio has a time of 1/4 of a whole note or a quarter
  * note.
  * </ol>
  *
- * An {@link Audio} object can be represented as a {@code String} that can be
+ * An {@link Note} object can be represented as a {@code String} that can be
  * divided up into 3 segments, each segment corresponding to each of the 3
- * properties that an {@link Audio} object is composed of. Refer to the
+ * properties that an {@link Note} object is composed of. Refer to the
  * {@link AudioString} class for more info.
  *
  * @author Snap
@@ -52,7 +52,7 @@ import static java.util.Objects.hash;
  * @see Pitch
  * @see AudioString
  */
-final class Audio {
+final class Note {
     final private Wave _wave;
     final private Pitch _pitch;
     final private int _duration;
@@ -60,7 +60,7 @@ final class Audio {
     final private int _hashCode;
     final private String _toString;
 
-    private Audio(int duration) {
+    private Note(int duration) {
         if (duration < 0) {
             throw new IllegalArgumentException("Negative duration: %d".formatted(duration));
         }
@@ -71,19 +71,19 @@ final class Audio {
         this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
         this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
-                Audio.class.getSimpleName(), this._duration);
+                Note.class.getSimpleName(), this._duration);
     }
 
     /**
-     * Constructs an {@link Audio} object instance with the following wave,
+     * Constructs an {@link Note} object instance with the following wave,
      * pitch, and duration properties.
      *
-     * @param wave     The {@link Wave} of the constructed {@link Audio} object.
+     * @param wave     The {@link Wave} of the constructed {@link Note} object.
      *
-     * @param pitch    The {@link Pitch} of the constructed {@link Audio} object.
+     * @param pitch    The {@link Pitch} of the constructed {@link Note} object.
      *
      * @param duration The positive duration {@code int} of the constructed
-     *                 {@link Audio} object.
+     *                 {@link Note} object.
      *
      * @throws IllegalArgumentException if either of the wave or pitch arguments
      *                                  are {@code null} or the duration is not
@@ -92,15 +92,15 @@ final class Audio {
      * @see Wave
      * @see Pitch
      */
-    Audio(Wave wave, Pitch pitch, int duration) {
+    Note(Wave wave, Pitch pitch, int duration) {
         if (wave == null) {
             throw new IllegalArgumentException(
-                    "Null %s %s.".formatted(Audio.class.getSimpleName(), Wave.class.getSimpleName()));
+                    "Null %s %s.".formatted(Note.class.getSimpleName(), Wave.class.getSimpleName()));
         }
 
         if (pitch == null) {
             throw new IllegalArgumentException(
-                    "Null %s %s.".formatted(Audio.class.getSimpleName(), Pitch.class.getSimpleName()));
+                    "Null %s %s.".formatted(Note.class.getSimpleName(), Pitch.class.getSimpleName()));
         }
 
         if (duration <= 0) {
@@ -112,28 +112,28 @@ final class Audio {
         this._duration = duration;
         this._string = "%s>%s.%d".formatted(this._wave.stringValue(), this._pitch.stringValue(), this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
-        this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(Audio.class.getSimpleName(),
+        this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(Note.class.getSimpleName(),
                 this._wave.name(),
                 this._pitch.stringValue(), this._duration);
     }
 
     /**
-     * Constructs an {@link Audio} object instance with {@code null} wave and
+     * Constructs an {@link Note} object instance with {@code null} wave and
      * pitch properties and the duration property set to the passed {@code int}
      * argument.
      *
      * @param duration The positive duration {@code int} of the constructed
-     *                 {@link Audio} object.
+     *                 {@link Note} object.
      *
-     * @return an {@link Audio} object instance with {@code null} wave and
+     * @return an {@link Note} object instance with {@code null} wave and
      *         pitch properties and the passed duration property.
      */
-    static Audio silence(int duration) {
-        return new Audio(duration);
+    static Note silence(int duration) {
+        return new Note(duration);
     }
 
     /**
-     * The {@link Wave} shape value of this {@link Audio} object is it's audible
+     * The {@link Wave} shape value of this {@link Note} object is it's audible
      * or {@code null} if it's silence. The possible wave shape values are
      * defined in the {@link Wave} enum. The possible wave shapes are:
      *
@@ -145,7 +145,7 @@ final class Audio {
      * <li><i>SAW DOWN</i>
      * </ul>
      *
-     * @return The {@link Wave} value of this {@link Audio} object if it's
+     * @return The {@link Wave} value of this {@link Note} object if it's
      *         audible or {@code null} if it's silence.
      *
      * @see Wave
@@ -155,10 +155,10 @@ final class Audio {
     }
 
     /**
-     * The {@link Pitch} frequency value of this {@link Audio} object is it's
+     * The {@link Pitch} frequency value of this {@link Note} object is it's
      * audible or {@code null} if it's silence.
      *
-     * @return The {@link Pitch} frequency value of this {@link Audio} object if
+     * @return The {@link Pitch} frequency value of this {@link Note} object if
      *         it's audible or {@code null} if it's silence.
      */
     Pitch pitch() {
@@ -166,7 +166,7 @@ final class Audio {
     }
 
     /**
-     * The positive {@code int} value of this {@link Audio} object's duration.
+     * The positive {@code int} value of this {@link Note} object's duration.
      *
      * <p>
      * This value is <strong><b>relative to the tempo/bpm and note beat
@@ -176,12 +176,12 @@ final class Audio {
      * this value to create the span of time the audio will play.
      *
      * <p>
-     * If an {@link Audio} object has a duration of <i>N</i>, then its span of
+     * If an {@link Note} object has a duration of <i>N</i>, then its span of
      * time to play for is 1/<i>N</i> of a whole note. So if it has a duration
      * value of {@code 4}, then the audio has a time of 1/4 of a whole note or a
      * quarter note.
      *
-     * @return The positive {@code int} value of this {@link Audio} object's
+     * @return The positive {@code int} value of this {@link Note} object's
      *         duration.
      */
     int duration() {
@@ -189,11 +189,11 @@ final class Audio {
     }
 
     /**
-     * A {@code String} representation of this {@link Audio} object. Note that
+     * A {@code String} representation of this {@link Note} object. Note that
      * this is different from the string returned by the {@link #toString()}
      * method which is more suited for debugging purposes.
      *
-     * @return a {@code String} representation of this {@link Audio} object.
+     * @return a {@code String} representation of this {@link Note} object.
      */
     String stringValue() {
         return this._string;
@@ -202,7 +202,7 @@ final class Audio {
     @Override
     public boolean equals(Object obj) {
         return this == obj ||
-                obj instanceof Audio other
+                obj instanceof Note other
                         && this._wave == other._wave
                         && this._pitch.equals(other._pitch)
                         && this._duration == other._duration;

@@ -19,12 +19,12 @@ final class ByteBuffersArgProvider {
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
     private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
 
-    final static List<Audio> audioObjects = notes.stream().flatMap(note -> {
+    final static List<Note> audioObjects = notes.stream().flatMap(note -> {
         final Pitch naturalPitch = new Pitch(note, null, random.nextInt(0, 13));
         return accidentals.stream().flatMap(accidental -> {
             final Pitch accidentalPitch = new Pitch(note, accidental, random.nextInt(0, 13));
             return waves.stream()
-                    .flatMap(wave -> Stream.of(new Audio(wave, naturalPitch, 5), new Audio(wave, accidentalPitch, 5)));
+                    .flatMap(wave -> Stream.of(new Note(wave, naturalPitch, 5), new Note(wave, accidentalPitch, 5)));
         });
     }).toList();
 }

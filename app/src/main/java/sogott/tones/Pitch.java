@@ -49,7 +49,7 @@ import java.util.Optional;
  *
  * @see PitchClass
  * @see Accidental
- * @see Audio
+ * @see Note
  * @see AudioString
  */
 final class Pitch {

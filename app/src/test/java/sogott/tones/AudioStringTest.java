@@ -50,7 +50,7 @@ final class AudioStringArgProvider {
                                                                                                                         AudioString.Delimiter.VOICE_AND_DURATION
                                                                                                                                         .charValue(),
                                                                                                                         duration),
-                                                                                                        new Audio(wave, new Pitch(
+                                                                                                        new Note(wave, new Pitch(
                                                                                                                         note,
                                                                                                                         null,
                                                                                                                         octave),
@@ -67,7 +67,7 @@ final class AudioStringArgProvider {
                                                                                                                                                         AudioString.Delimiter.VOICE_AND_DURATION
                                                                                                                                                                         .charValue()),
                                                                                                                                         duration),
-                                                                                                                        new Audio(wave, new Pitch(
+                                                                                                                        new Note(wave, new Pitch(
                                                                                                                                         note,
                                                                                                                                         null,
                                                                                                                                         octave),
@@ -85,7 +85,7 @@ final class AudioStringArgProvider {
                                                                                                                                                         AudioString.Delimiter.VOICE_AND_DURATION
                                                                                                                                                                         .charValue(),
                                                                                                                                                         duration),
-                                                                                                                                        new Audio(wave, new Pitch(
+                                                                                                                                        new Note(wave, new Pitch(
                                                                                                                                                         note,
                                                                                                                                                         accidental,
                                                                                                                                                         octave),
@@ -102,7 +102,7 @@ final class AudioStringArgProvider {
                                                                                                                                                                         AudioString.Delimiter.VOICE_AND_DURATION
                                                                                                                                                                                         .charValue(),
                                                                                                                                                                         duration),
-                                                                                                                                                        new Audio(wave, new Pitch(
+                                                                                                                                                        new Note(wave, new Pitch(
                                                                                                                                                                         note,
                                                                                                                                                                         accidental,
                                                                                                                                                                         octave),
@@ -127,7 +127,7 @@ final class AudioStringArgProvider {
                                                                                                                         .charValue(),
                                                                                                         duration),
                                                                                         wave,
-                                                                                        new Audio(wave, new Pitch(note,
+                                                                                        new Note(wave, new Pitch(note,
                                                                                                         null, octave),
                                                                                                         duration)),
                                                                                         arguments(
@@ -140,7 +140,7 @@ final class AudioStringArgProvider {
                                                                                                                                                         .charValue()),
                                                                                                                         duration),
                                                                                                         wave,
-                                                                                                        new Audio(wave, new Pitch(
+                                                                                                        new Note(wave, new Pitch(
                                                                                                                         note,
                                                                                                                         null,
                                                                                                                         octave),
@@ -156,7 +156,7 @@ final class AudioStringArgProvider {
                                                                                                                                                         .charValue(),
                                                                                                                                         duration),
                                                                                                                         wave,
-                                                                                                                        new Audio(wave, new Pitch(
+                                                                                                                        new Note(wave, new Pitch(
                                                                                                                                         note,
                                                                                                                                         accidental,
                                                                                                                                         octave),
@@ -171,7 +171,7 @@ final class AudioStringArgProvider {
                                                                                                                                                                         .charValue(),
                                                                                                                                                         duration),
                                                                                                                                         wave,
-                                                                                                                                        new Audio(wave, new Pitch(
+                                                                                                                                        new Note(wave, new Pitch(
                                                                                                                                                         note,
                                                                                                                                                         accidental,
                                                                                                                                                         octave),
@@ -812,8 +812,8 @@ final class AudioStringTest {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
         @ArgumentsSource(AudioStringArgProvider.Valid.WaveShapePrefixedAudioStringValueAndAudio.class)
         void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
-                        Audio audio) {
-                final Optional<Audio> parsedAudio = AudioString.parse(audioString);
+                        Note audio) {
+                final Optional<Note> parsedAudio = AudioString.parse(audioString);
                 assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
                                 .formatted(audioString));
                 assertEquals(audio, parsedAudio.get());
@@ -822,8 +822,8 @@ final class AudioStringTest {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
         @ArgumentsSource(AudioStringArgProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
         void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
-                        Wave wave, Audio audio) {
-                final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
+                        Wave wave, Note audio) {
+                final Optional<Note> parsedAudio = AudioString.parse(audioString, wave);
                 assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
                                 .formatted(audioString));
                 assertEquals(audio, parsedAudio.get());
@@ -833,7 +833,7 @@ final class AudioStringTest {
         @ArgumentsSource(AudioStringArgProvider.Invalid.AudioStringValue.class)
         @EmptySource
         void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
-                final Optional<Audio> parsedAudio = AudioString.parse(audioString);
+                final Optional<Note> parsedAudio = AudioString.parse(audioString);
                 assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
                                 .formatted(audioString));
         }
@@ -841,7 +841,7 @@ final class AudioStringTest {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty optional")
         @ArgumentsSource(AudioStringArgProvider.Invalid.AudioStringValueAndWave.class)
         void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, Wave wave) {
-                final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
+                final Optional<Note> parsedAudio = AudioString.parse(audioString, wave);
                 assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
                                 .formatted(audioString));
         }

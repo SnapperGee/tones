@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import javax.sound.sampled.AudioFormat;
 
 /**
- * This class converts a {@code Collection} of {@link Audio} objects to a
+ * This class converts a {@code Collection} of {@link Note} objects to a
  * {@code List} of their PCM byte array buffers appropriate for playback and
  * writing to files.
  *
@@ -14,7 +14,7 @@ import javax.sound.sampled.AudioFormat;
  * Note that while the {@code List} of byte arrays is unmodifiable, the byte
  * arrays themselves can be modified.
  *
- * @see Audio
+ * @see Note
  * @see OutputByteBuffers
  */
 final class ByteBuffers {
@@ -27,7 +27,7 @@ final class ByteBuffers {
     private final static double SILENCE_RATIO = 0.85;
 
     /**
-     * {@link AudioFormat} used by this class when converting the {@link Audio}
+     * {@link AudioFormat} used by this class when converting the {@link Note}
      * objects to their PCM byte array buffers and internally by the
      * {@link OutputByteBuffers} static methods when outputting the byte array
      * buffers.
@@ -35,29 +35,29 @@ final class ByteBuffers {
     final static AudioFormat AUDIO_FORMAT = new AudioFormat(SAMPLE_RATE,
             SAMPLE_SIZE, CHANNELS, SIGNED, BIG_ENDIAN);
 
-    private final List<Audio> _audioObjects;
+    private final List<Note> _audioObjects;
     private final List<byte[]> _byteBuffers;
 
     /**
      * Constructs a {@link ByteBuffers} object instance from the passed
-     * {@link Audio} Collection using the whole note duration {@code double} to
-     * calculate the duration of the PCM byte array buffers the {@link Audio}
-     * objects are converted to. If the {@link Audio} Collection is {@code null}
+     * {@link Note} Collection using the whole note duration {@code double} to
+     * calculate the duration of the PCM byte array buffers the {@link Note}
+     * objects are converted to. If the {@link Note} Collection is {@code null}
      * or the whole note duration is not positive (0 or less) then an
      * {@link IllegalArgumentException} is thrown.
      *
-     * @param audioObjects      Collection of {@link Audio} objects to convert
+     * @param audioObjects      Collection of {@link Note} objects to convert
      *                          to a List of their PCM byte array buffers.
      *
      * @param wholeNoteDuration A positive {@code double} (greater than 0) used
      *                          to calculate the duration of the PCM byte array
-     *                          buffers the {@link Audio} objects are converted to.
+     *                          buffers the {@link Note} objects are converted to.
      *
-     * @throws IllegalArgumentException If the {@link Audio} Collection is
+     * @throws IllegalArgumentException If the {@link Note} Collection is
      *                                  {@code null} or the whole note duration
      *                                  is not positive (0 or less).
      */
-    ByteBuffers(Collection<Audio> audioObjects, double wholeNoteDuration) {
+    ByteBuffers(Collection<Note> audioObjects, double wholeNoteDuration) {
         if (audioObjects == null) {
             throw new IllegalArgumentException("Null audio objects collection.");
         }
@@ -73,14 +73,14 @@ final class ByteBuffers {
 
     /**
      * Returns an unmodifiable List of the PCM byte array buffers from the
-     * converted {@link Audio} objects.
+     * converted {@link Note} objects.
      *
      * <p>
      * Note that while the {@code List} of byte arrays is unmodifiable, the byte
      * arrays themselves can be modified.
      *
      * @return An unmodifiable List of the PCM byte array buffers from the
-     *         converted {@link Audio} objects.
+     *         converted {@link Note} objects.
      */
     List<byte[]> asList() {
         return this._byteBuffers;
@@ -88,39 +88,39 @@ final class ByteBuffers {
 
     /**
      * Returns a {@code Stream} of the PCM byte array buffers from the converted
-     * {@link Audio} objects.
+     * {@link Note} objects.
      *
      * @return A {@code Stream} of the PCM byte array buffers from the converted
-     *         {@link Audio} objects.
+     *         {@link Note} objects.
      */
     Stream<byte[]> stream() {
         return this._byteBuffers.stream();
     }
 
     /**
-     * Converts the passed {@link Audio} object to a byte array buffer using
+     * Converts the passed {@link Note} object to a byte array buffer using
      * the {@code double wholeNoteDuration} to convert the duration of the
-     * {@link Audio} object to the actual span of time the byte buffer should
+     * {@link Note} object to the actual span of time the byte buffer should
      * be.
      *
-     * @param audio             The {@link Audio} object to convert to a byte array
+     * @param audio             The {@link Note} object to convert to a byte array
      *                          buffer.
      *
      * @param wholeNoteDuration {@code double} used to convert the duration of the
-     *                          {@link Audio} object to the actual span of time the
+     *                          {@link Note} object to the actual span of time the
      *                          byte buffer should be.
      *
-     * @return The byte array buffer resulting from converting the {@link Audio}
+     * @return The byte array buffer resulting from converting the {@link Note}
      *         object.
      *
-     * @throws IllegalArgumentException If the passed {@link Audio} object is
+     * @throws IllegalArgumentException If the passed {@link Note} object is
      *                                  {@code null} or the
      *                                  {@code wholeNoteDuration} isn't positive
      *                                  (0 or less).
      *
-     * @see Audio
+     * @see Note
      */
-    private static byte[] audioObjectToByteArrayBuffer(Audio audio, double wholeNoteDuration) {
+    private static byte[] audioObjectToByteArrayBuffer(Note audio, double wholeNoteDuration) {
         if (audio == null) {
             throw new IllegalArgumentException("Null byte audio.");
         }

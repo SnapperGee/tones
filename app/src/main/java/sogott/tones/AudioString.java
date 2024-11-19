@@ -4,7 +4,7 @@ import java.util.Optional;
 
 /**
  * Class consisting exclusively of static methods and fields for parsing
- * {@code String}s to {@link Audio} objects.
+ * {@code String}s to {@link Note} objects.
  *
  * <p>
  * A {@code String} can be parsed to either <b><i>audible</i></b> audio or
@@ -127,7 +127,7 @@ import java.util.Optional;
  * An example of a quarter note of silence would be written as {@code "?.4"}.
  *
  * @author Snap
- * @see Audio
+ * @see Note
  * @see AudioString.Delimiter
  * @see Pitch
  * @see Wave
@@ -178,7 +178,7 @@ final class AudioString {
             .toString();
 
     /**
-     * Parses the passed {@code String} argument to an {@link Audio} object,
+     * Parses the passed {@code String} argument to an {@link Note} object,
      * using the passed {@link Wave} argument as the default wave shape if the
      * passed string is audible audio with a timbre (and not silence) and has
      * no wave shape prefix segment. If the passed string can't be parsed to
@@ -188,19 +188,19 @@ final class AudioString {
      * <p>
      * The parsing is performed case insensitively.
      *
-     * @param aString          {@code String} to parse to an {@link Audio} object.
+     * @param aString          {@code String} to parse to an {@link Note} object.
      *
      * @param defaultWaveShape {@link Wave} to use as a default value if the
      *                         passed string argument is audible audio with a timbre
      *                         (not silence) with no wave shape prefix.
      *
-     * @return An {@code Optional} containing the {@link Audio} object parsed from
+     * @return An {@code Optional} containing the {@link Note} object parsed from
      *         the passed string or an empty optional if it can't be parsed.
      *
      * @throws IllegalArgumentException If either of the provided arguments are
      *                                  {@code null}.
      */
-    static Optional<Audio> parse(String aString, Wave defaultWaveShape) {
+    static Optional<Note> parse(String aString, Wave defaultWaveShape) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
         }
@@ -221,7 +221,7 @@ final class AudioString {
     }
 
     /**
-     * Parses the passed {@code String} argument to an {@link Audio} object. If
+     * Parses the passed {@code String} argument to an {@link Note} object. If
      * the passed string can't be parsed to audio then an empty optional is
      * returned, otherwise the returned optional contains the resulting audio
      * object from parsing the string.
@@ -229,15 +229,15 @@ final class AudioString {
      * <p>
      * The parsing is performed case insensitively.
      *
-     * @param aString {@code String} to parse to an {@link Audio} object.
+     * @param aString {@code String} to parse to an {@link Note} object.
      *
-     * @return An {@code Optional} containing the {@link Audio} object parsed from
+     * @return An {@code Optional} containing the {@link Note} object parsed from
      *         the passed string or an empty optional if it can't be parsed.
      *
      * @throws IllegalArgumentException If the provided argument is
      *                                  {@code null}.
      */
-    static Optional<Audio> parse(String aString) {
+    static Optional<Note> parse(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
         }
@@ -279,17 +279,17 @@ final class AudioString {
         return Character.isDigit(aString.charAt(2)) && aString.codePoints().skip(3).allMatch(Character::isDigit);
     }
 
-    private static Optional<Audio> parseSilence(String aString) {
+    private static Optional<Note> parseSilence(String aString) {
         if (!isParsableSilence(aString)) {
             return Optional.empty();
         }
 
         final String durationString = aString.substring(aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue()) + 1);
         final int duration = Integer.parseInt(durationString);
-        return Optional.of(Audio.silence(duration));
+        return Optional.of(Note.silence(duration));
     }
 
-    private static Optional<Audio> parseTone(String aString, Wave defaultWave) {
+    private static Optional<Note> parseTone(String aString, Wave defaultWave) {
         if (!isParsableTimbre(aString, false)) {
             return Optional.empty();
         }
@@ -305,10 +305,10 @@ final class AudioString {
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
-        return Optional.of(new Audio(wave, pitch, duration));
+        return Optional.of(new Note(wave, pitch, duration));
     }
 
-    private static Optional<Audio> parsePitch(String aString) {
+    private static Optional<Note> parsePitch(String aString) {
         if (!isParsableTimbre(aString, true)) {
             return Optional.empty();
         }
@@ -323,7 +323,7 @@ final class AudioString {
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
-        return Optional.of(new Audio(wave, pitch, duration));
+        return Optional.of(new Note(wave, pitch, duration));
     }
 
     private static boolean isParsableWaveShapePrefixedTimbre(String aString) {
