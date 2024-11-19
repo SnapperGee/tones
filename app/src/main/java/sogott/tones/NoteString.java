@@ -128,12 +128,12 @@ import java.util.Optional;
  *
  * @author Snap
  * @see Note
- * @see AudioString.Delimiter
+ * @see NoteString.Delimiter
  * @see Pitch
  * @see Wave
  * @see PitchClass
  */
-final class AudioString {
+final class NoteString {
     /**
      * The character used as a leading prefix to designate that an audio string
      * should be parsed as silence (as opposed to a timbre).
@@ -363,8 +363,8 @@ final class AudioString {
                 && pitchAndDuration[1].codePoints().allMatch(Character::isDigit);
     }
 
-    private AudioString() {
+    private NoteString() {
         throw new UnsupportedOperationException(
-                "%s is a static class and cannot be instantiated.".formatted(AudioString.class.getSimpleName()));
+                "%s is a static class and cannot be instantiated.".formatted(NoteString.class.getSimpleName()));
     }
 }
