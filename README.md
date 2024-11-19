@@ -1,6 +1,6 @@
 # Tones
 
-Generate tones musically with the CLI. With this package, you can pass musical
+Generate tones musically from the CLI. With this package, you can pass musical
 notes via command line arguments and output them as audio and/or write them to a
 WAV file.
 
