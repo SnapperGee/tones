@@ -2,17 +2,18 @@ package sogott.tones;
 
 /**
  * Class consisting exclusively of static methods used for converting
- * {@link Pitch} and {@link Pitch} properties ({@link Note}, {@link Accidental},
+ * {@link Pitch} and {@link Pitch} properties ({@link PitchClass},
+ * {@link Accidental},
  * and {@code int} octave) to {@code double} frequencies.
  *
- * @see Note
+ * @see PitchClass
  * @see Accidental
  * @see Pitch
  */
 final class Frequency {
 
     /**
-     * Returns a {@code double} frequency derived from a {@link Note},
+     * Returns a {@code double} frequency derived from a {@link PitchClass},
      * {@link Accidental} or {@code null}, and an {@code int} octave. If
      * {@code null} is passed as the {@link Accidental} argument, then that
      * represents a <i>natural</i> &natural; note (a note that's neither a
@@ -20,7 +21,7 @@ final class Frequency {
      * argument is optional can be omitted to default it to {@code null} and
      * treat the note as a <i>natural</i> &natural;.
      *
-     * @param note       The {@link Note} of the frequency to create.
+     * @param note       The {@link PitchClass} of the frequency to create.
      *
      * @param accidental The {@link Accidental} of the note of the frequency to
      *                   create.
@@ -28,20 +29,21 @@ final class Frequency {
      * @param octave     The {@code int} octave of the note of the frequency to
      *                   create.
      *
-     * @return A {@code double} frequency derived from the passed {@link Note},
+     * @return A {@code double} frequency derived from the passed
+     *         {@link PitchClass},
      *         {@link Accidental} or {@code null}, and {@code int} octave.
      *
-     * @throws IllegalArgumentException If the passed {@link Note} argument is
+     * @throws IllegalArgumentException If the passed {@link PitchClass} argument is
      *                                  {@code null} or the {@code int} octave
      *                                  argument is negative (less than 0).
      *
-     * @see Note
+     * @see PitchClass
      * @see Accidental
      */
-    static double from(Note note, Accidental accidental, int octave) {
+    static double from(PitchClass note, Accidental accidental, int octave) {
         if (note == null) {
             throw new IllegalArgumentException(
-                    "Null %s.".formatted(Note.class.getSimpleName()));
+                    "Null %s.".formatted(PitchClass.class.getSimpleName()));
         }
 
         if (octave < 0) {
@@ -57,26 +59,27 @@ final class Frequency {
     }
 
     /**
-     * Returns a {@code double} frequency derived from a {@link Note} and an
+     * Returns a {@code double} frequency derived from a {@link PitchClass} and an
      * {@code int} octave to a {@code double}. The note is assumed to be
      * <i>natural</i> &natural; with no {@link Accidental} (a note that's
      * neither a <i>sharp</i> &sharp; nor <i>flat</i> &flat;).
      *
-     * @param note   The {@link Note} of the frequency to create.
+     * @param note   The {@link PitchClass} of the frequency to create.
      *
      * @param octave The {@code int} octave of the note of the frequency to
      *               create.
      *
-     * @return A {@code double} frequency derived from the passed {@link Note},
+     * @return A {@code double} frequency derived from the passed
+     *         {@link PitchClass},
      *         and {@code int} octave.
      *
-     * @throws IllegalArgumentException If the passed {@link Note} argument is
+     * @throws IllegalArgumentException If the passed {@link PitchClass} argument is
      *                                  {@code null} or the {@code int} octave
      *                                  argument is negative (less than 0).
      *
-     * @see Note
+     * @see PitchClass
      */
-    static double from(Note note, int octave) {
+    static double from(PitchClass note, int octave) {
         return from(note, null, octave);
     }
 

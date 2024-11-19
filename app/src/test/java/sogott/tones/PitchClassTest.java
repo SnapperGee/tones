@@ -17,18 +17,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-final class NoteArgProvider {
+final class PitchClassTestArgsProvider {
     final static class EnumValuesWithOffset implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Note.A, 0),
-                    arguments(Note.B, 2),
-                    arguments(Note.C, -9),
-                    arguments(Note.D, -7),
-                    arguments(Note.E, -5),
-                    arguments(Note.F, -4),
-                    arguments(Note.G, -2));
+                    arguments(PitchClass.A, 0),
+                    arguments(PitchClass.B, 2),
+                    arguments(PitchClass.C, -9),
+                    arguments(PitchClass.D, -7),
+                    arguments(PitchClass.E, -5),
+                    arguments(PitchClass.F, -4),
+                    arguments(PitchClass.G, -2));
         }
     }
 
@@ -36,13 +36,13 @@ final class NoteArgProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Note.A, 'A'),
-                    arguments(Note.B, 'B'),
-                    arguments(Note.C, 'C'),
-                    arguments(Note.D, 'D'),
-                    arguments(Note.E, 'E'),
-                    arguments(Note.F, 'F'),
-                    arguments(Note.G, 'G'));
+                    arguments(PitchClass.A, 'A'),
+                    arguments(PitchClass.B, 'B'),
+                    arguments(PitchClass.C, 'C'),
+                    arguments(PitchClass.D, 'D'),
+                    arguments(PitchClass.E, 'E'),
+                    arguments(PitchClass.F, 'F'),
+                    arguments(PitchClass.G, 'G'));
         }
     }
 
@@ -50,19 +50,19 @@ final class NoteArgProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Note.A, 'a'),
-                    arguments(Note.B, 'b'),
-                    arguments(Note.C, 'c'),
-                    arguments(Note.D, 'd'),
-                    arguments(Note.E, 'e'),
-                    arguments(Note.F, 'f'),
-                    arguments(Note.G, 'g'));
+                    arguments(PitchClass.A, 'a'),
+                    arguments(PitchClass.B, 'b'),
+                    arguments(PitchClass.C, 'c'),
+                    arguments(PitchClass.D, 'd'),
+                    arguments(PitchClass.E, 'e'),
+                    arguments(PitchClass.F, 'f'),
+                    arguments(PitchClass.G, 'g'));
         }
     }
 }
 
-final class NoteTest {
-    static private char[] nonNoteChars() {
+final class PitchClassTest {
+    static private char[] nonPitchLetterChars() {
         return IntStream.concat(
                 IntStream.concat(
                         IntStream.rangeClosed(32, 64),
@@ -77,61 +77,61 @@ final class NoteTest {
                 .toCharArray();
     }
 
-    @ParameterizedTest(name = "Note.{0}.offSet() is {1}")
-    @ArgumentsSource(NoteArgProvider.EnumValuesWithOffset.class)
-    void noteOffsetValueIsValid(Note note, int offset) {
+    @ParameterizedTest(name = "PitchClass.{0}.offSet() is {1}")
+    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithOffset.class)
+    void noteOffsetValueIsValid(PitchClass note, int offset) {
         final int noteOffset = note.offset();
         assertSame(offset, noteOffset);
     }
 
-    @ParameterizedTest(name = "Note.{0}.charValue() is ''{1}''")
-    @ArgumentsSource(NoteArgProvider.EnumValuesWithUpperCaseChar.class)
-    void noteCharValueIsValid(Note note, char expectedCarValue) {
+    @ParameterizedTest(name = "PitchClass.{0}.charValue() is ''{1}''")
+    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithUpperCaseChar.class)
+    void noteCharValueIsValid(PitchClass note, char expectedCarValue) {
         final char charValue = note.charValue();
         assertSame(expectedCarValue, charValue);
     }
 
-    @ParameterizedTest(name = "Note.fromChar(''{1}'') is Note.{0}")
-    @ArgumentsSource(NoteArgProvider.EnumValuesWithUpperCaseChar.class)
-    void noteFromUpperCaseChar(Note note, char upperCaseChar) {
-        final Optional<Note> noteOptional = Note.fromChar(upperCaseChar);
+    @ParameterizedTest(name = "PitchClass.fromChar(''{1}'') is Note.{0}")
+    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithUpperCaseChar.class)
+    void noteFromUpperCaseChar(PitchClass note, char upperCaseChar) {
+        final Optional<PitchClass> noteOptional = PitchClass.fromChar(upperCaseChar);
         assertTrue(noteOptional.isPresent());
         assertSame(note, noteOptional.get());
     }
 
-    @ParameterizedTest(name = "Note.fromChar(''{1}'') is Note.{0}")
-    @ArgumentsSource(NoteArgProvider.EnumValuesWithLowerCaseChar.class)
-    void noteFromLowerCaseChar(Note note, char lowerCaseChar) {
-        final Optional<Note> noteOptional = Note.fromChar(lowerCaseChar);
+    @ParameterizedTest(name = "PitchClass.fromChar(''{1}'') is Note.{0}")
+    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithLowerCaseChar.class)
+    void noteFromLowerCaseChar(PitchClass note, char lowerCaseChar) {
+        final Optional<PitchClass> noteOptional = PitchClass.fromChar(lowerCaseChar);
         assertTrue(noteOptional.isPresent());
         assertSame(note, noteOptional.get());
     }
 
-    @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns true")
+    @ParameterizedTest(name = "PitchClass.isNoteChar(''{0}'') returns true")
     @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F' })
     void noteIsNoteCharReturnsTrueForValidUpperCaseChar(char validUpperCaseNoteChar) {
-        final boolean isCharResultShouldBeTrue = Note.isNoteChar(validUpperCaseNoteChar);
+        final boolean isCharResultShouldBeTrue = PitchClass.isPitchLetter(validUpperCaseNoteChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
-    @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns true")
+    @ParameterizedTest(name = "PitchClass.isNoteChar(''{0}'') returns true")
     @ValueSource(chars = { 'a', 'b', 'c', 'd', 'e', 'f' })
     void noteIsNoteCharReturnsTrueForValidLowerCaseChar(char validLowerCaseNoteChar) {
-        final boolean isCharResultShouldBeTrue = Note.isNoteChar(validLowerCaseNoteChar);
+        final boolean isCharResultShouldBeTrue = PitchClass.isPitchLetter(validLowerCaseNoteChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
-    @ParameterizedTest(name = "Note.isNoteChar(''{0}'') returns false")
-    @MethodSource("nonNoteChars")
+    @ParameterizedTest(name = "PitchClass.isNoteChar(''{0}'') returns false")
+    @MethodSource("nonPitchLetterChars")
     void noteIsNoteCharReturnsFalseForInvalidNoteChar(char invalidNoteChar) {
-        final boolean isCharResultShouldBeFalse = Note.isNoteChar(invalidNoteChar);
+        final boolean isCharResultShouldBeFalse = PitchClass.isPitchLetter(invalidNoteChar);
         assertFalse(isCharResultShouldBeFalse);
     }
 
-    @ParameterizedTest(name = "Note.fromChar(''{0}'') returns empty Optional")
-    @MethodSource("nonNoteChars")
+    @ParameterizedTest(name = "PitchClass.fromChar(''{0}'') returns empty Optional")
+    @MethodSource("nonPitchLetterChars")
     void noteFromCharReturnsEmptyOptionalForInvalidNoteChar(char invalidNoteChar) {
-        final Optional<Note> fromCharResultShouldBeEmpty = Note.fromChar(invalidNoteChar);
+        final Optional<PitchClass> fromCharResultShouldBeEmpty = PitchClass.fromChar(invalidNoteChar);
         final boolean isEmptyShouldBeTrue = fromCharResultShouldBeEmpty.isEmpty();
         assertTrue(isEmptyShouldBeTrue);
     }

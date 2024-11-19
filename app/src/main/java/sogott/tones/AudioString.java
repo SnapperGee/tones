@@ -103,7 +103,8 @@ import java.util.Optional;
  * the 4th octave. This would be defined as {@code "A4"}. To designate a B&flat;
  * (flat) musical note in the 2nd octave would be {@code "B-2"}, with B&sharp;
  * (sharp) in the 2nd octave being {@code "B+2"}. The characters that correspond
- * to musical notes and their accidentals are defined in the {@link Note} and
+ * to musical notes and their accidentals are defined in the {@link PitchClass}
+ * and
  * {@link Accidental} enum respectively.
  *
  * <p>
@@ -130,7 +131,7 @@ import java.util.Optional;
  * @see AudioString.Delimiter
  * @see Pitch
  * @see Wave
- * @see Note
+ * @see PitchClass
  */
 final class AudioString {
     /**
@@ -352,7 +353,7 @@ final class AudioString {
             return false;
         }
 
-        if (!Note.isNoteChar(aString.charAt(0))) {
+        if (!PitchClass.isPitchLetter(aString.charAt(0))) {
             return isParsableWaveShapePrefixedTimbre(aString);
         }
 

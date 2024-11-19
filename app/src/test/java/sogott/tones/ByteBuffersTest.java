@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class ByteBuffersArgProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
-    private final static List<Note> notes = unmodifiableList(asList(Note.values()));
+    private final static List<PitchClass> notes = unmodifiableList(asList(PitchClass.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
     private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
 
