@@ -137,12 +137,12 @@ playing any audio:
 ## Audio Operand Components
 
 The primary command line operand arguments that are required to set the
-synthesized sound are referred to as *audio string*s. An *audio string* is a
+synthesized sound are referred to as *note string*s. A *note string* is a
 `String` that contains all the information needed to synthesize audio.
 
-The below diagram breaks down the segments that an *audio string* is composed of.
-The diagram also further breaks down the *pitch* segment of an audio string. The
-*pitch* segment is the component of an *audio string* used to dictate the
+The below diagram breaks down the segments that a *note string* is composed of.
+The diagram also further breaks down the *pitch* segment of an note string. The
+*pitch* segment is the component of a *note string* used to dictate the
 frequency of the synthesized audio:
 
 <details>
@@ -152,7 +152,7 @@ frequency of the synthesized audio:
 
 ### Wave Shape prefix
 
-  The first segment of an *audio string* sets what ***wave shape*** the audio
+  The first segment of a *note string* sets what ***wave shape*** the audio
   will be. This segment can be omitted to use the default wave shape. Refer to the
   [Wave Shapes section](#wave-shapes) for the different wave shapes audio cna be.
 
@@ -162,7 +162,8 @@ The pitch segment dictates the ***frequency*** the audio will be if it has
 a timbre or if the audio is silence (and therefore has no timbre). If this
 segment has a timbre, it composed of 3 components:
 
-1. The leading ***note*** character consisting of one of the alpha characters A-G.
+1. The leading ***pitch letter*** character consisting of one of the alpha
+characters A-G.
 1. followed by the ***accidental***. The accidental character makes it so a note
 can be a *sharp* &sharp; or *flat* &flat;. Or if it's a *natural* &natural;
 (neither a *sharp* &sharp; nor a *flat* &flat;), then this character can be
@@ -175,7 +176,7 @@ To create a silence, the pitch segment is simply a question mark character, `'?'
 
 ### Duration suffix
 
-The final segment of an audio string is the ***duration***. The duration amount
+The final segment of an note string is the ***duration***. The duration amount
 is ***relative to the <u>note beat value</u> and <u>bpm/tempo</u>***. Without
 these 2 additional bits of information (the note beat value and bpm/tempo) the
 duration amount alone isn't enough information to extrapolate the actual span of
