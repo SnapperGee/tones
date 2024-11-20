@@ -104,8 +104,7 @@ import java.util.Optional;
  * (flat) musical note in the 2nd octave would be {@code "B-2"}, with B&sharp;
  * (sharp) in the 2nd octave being {@code "B+2"}. The characters that correspond
  * to musical notes and their accidentals are defined in the {@link PitchClass}
- * and
- * {@link Accidental} enum respectively.
+ * and {@link Accidental} enum respectively.
  *
  * <p>
  * So putting all this together, a {@code String} to designate a sin wave that
