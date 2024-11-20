@@ -105,7 +105,8 @@ enum Accidental {
      *         interpreted as an {@link Accidental} value.
      */
     static boolean isAccidentalChar(char aChar) {
-        return Accidental.SHARP.charValue() == aChar || Accidental.FLAT.charValue() == aChar;
+        return Accidental.SHARP.charValue() == aChar || Accidental.FLAT.charValue() == aChar
+                || Accidental.NATURAL.charValue() == aChar;
     }
 
     /**
