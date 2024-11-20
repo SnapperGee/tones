@@ -56,11 +56,11 @@
  * the {@link sogott.tones.Wave Wave} enum. The shapes are:
  *
  * <ol>
- * <li><strong><em>SINE</em></string> &acd;
- * <li><strong><em>SQUARE</em></string> &#9101;
- * <li><strong><em>TRIANGLE</em></string> &wedge;
- * <li><strong><em>SAW UP</em></string> &#9727;
- * <li><strong><em>SAW DOWN</em></string> &#9722;
+ * <li><strong><em>SINE</em></strong> &acd;
+ * <li><strong><em>SQUARE</em></strong> &#9101;
+ * <li><strong><em>TRIANGLE</em></strong> &wedge;
+ * <li><strong><em>SAW UP</em></strong> &#9727;
+ * <li><strong><em>SAW DOWN</em></strong> &#9722;
  * </ol>
  *
  * <h2>Pitch/Frequency</h2>
