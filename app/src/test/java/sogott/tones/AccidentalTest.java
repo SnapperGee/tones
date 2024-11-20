@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -31,6 +32,15 @@ final class AccidentalTestArgsProvider {
             return Stream.of(
                     arguments(1, Accidental.SHARP),
                     arguments(-1, Accidental.FLAT));
+        }
+    }
+
+    final static class SymbolChars implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return Stream.of(
+                    arguments('♯', Accidental.SHARP),
+                    arguments('♭', Accidental.FLAT));
         }
     }
 }
@@ -56,6 +66,12 @@ final class AccidentalTest {
     @ArgumentsSource(AccidentalTestArgsProvider.OffSets.class)
     void accidentalOffSet(int offset, Accidental accidental) {
         assertSame(accidental.offset(), offset);
+    }
+
+    @ParameterizedTest(name = "Accidental.{1}.symbolChar() is ''{0}''")
+    @ArgumentsSource(AccidentalTestArgsProvider.SymbolChars.class)
+    void accidentalSymbolChar(char symbolChar, Accidental accidental) {
+        assertEquals(accidental.symbolChar(), symbolChar);
     }
 
     @ParameterizedTest(name = "Accidental.from(''{0}'') returns Optional<Accidental.{1}>")
