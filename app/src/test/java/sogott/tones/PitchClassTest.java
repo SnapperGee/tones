@@ -79,21 +79,21 @@ final class PitchClassTest {
 
     @ParameterizedTest(name = "PitchClass.{0}.offSet() is {1}")
     @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithOffset.class)
-    void noteOffsetValueIsValid(PitchClass note, int offset) {
+    void pitchClassOffsetValueIsValid(PitchClass note, int offset) {
         final int noteOffset = note.offset();
         assertSame(offset, noteOffset);
     }
 
     @ParameterizedTest(name = "PitchClass.{0}.charValue() is ''{1}''")
     @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithUpperCaseChar.class)
-    void noteCharValueIsValid(PitchClass note, char expectedCarValue) {
+    void pitchClassCharValueIsValid(PitchClass note, char expectedCarValue) {
         final char charValue = note.charValue();
         assertSame(expectedCarValue, charValue);
     }
 
     @ParameterizedTest(name = "PitchClass.fromChar(''{1}'') is Note.{0}")
     @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithUpperCaseChar.class)
-    void noteFromUpperCaseChar(PitchClass note, char upperCaseChar) {
+    void pitchClassFromUpperCaseChar(PitchClass note, char upperCaseChar) {
         final Optional<PitchClass> noteOptional = PitchClass.fromChar(upperCaseChar);
         assertTrue(noteOptional.isPresent());
         assertSame(note, noteOptional.get());
@@ -101,7 +101,7 @@ final class PitchClassTest {
 
     @ParameterizedTest(name = "PitchClass.fromChar(''{1}'') is Note.{0}")
     @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithLowerCaseChar.class)
-    void noteFromLowerCaseChar(PitchClass note, char lowerCaseChar) {
+    void pitchClassFromLowerCaseChar(PitchClass note, char lowerCaseChar) {
         final Optional<PitchClass> noteOptional = PitchClass.fromChar(lowerCaseChar);
         assertTrue(noteOptional.isPresent());
         assertSame(note, noteOptional.get());
@@ -109,28 +109,28 @@ final class PitchClassTest {
 
     @ParameterizedTest(name = "PitchClass.isNoteChar(''{0}'') returns true")
     @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F' })
-    void noteIsNoteCharReturnsTrueForValidUpperCaseChar(char validUpperCaseNoteChar) {
+    void pitchClassIsNoteCharReturnsTrueForValidUpperCaseChar(char validUpperCaseNoteChar) {
         final boolean isCharResultShouldBeTrue = PitchClass.isPitchLetter(validUpperCaseNoteChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
     @ParameterizedTest(name = "PitchClass.isNoteChar(''{0}'') returns true")
     @ValueSource(chars = { 'a', 'b', 'c', 'd', 'e', 'f' })
-    void noteIsNoteCharReturnsTrueForValidLowerCaseChar(char validLowerCaseNoteChar) {
+    void pitchClassIsNoteCharReturnsTrueForValidLowerCaseChar(char validLowerCaseNoteChar) {
         final boolean isCharResultShouldBeTrue = PitchClass.isPitchLetter(validLowerCaseNoteChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
     @ParameterizedTest(name = "PitchClass.isNoteChar(''{0}'') returns false")
     @MethodSource("nonPitchLetterChars")
-    void noteIsNoteCharReturnsFalseForInvalidNoteChar(char invalidNoteChar) {
+    void pitchClassIsNoteCharReturnsFalseForInvalidNoteChar(char invalidNoteChar) {
         final boolean isCharResultShouldBeFalse = PitchClass.isPitchLetter(invalidNoteChar);
         assertFalse(isCharResultShouldBeFalse);
     }
 
     @ParameterizedTest(name = "PitchClass.fromChar(''{0}'') returns empty Optional")
     @MethodSource("nonPitchLetterChars")
-    void noteFromCharReturnsEmptyOptionalForInvalidNoteChar(char invalidNoteChar) {
+    void pitchClassFromCharReturnsEmptyOptionalForInvalidNoteChar(char invalidNoteChar) {
         final Optional<PitchClass> fromCharResultShouldBeEmpty = PitchClass.fromChar(invalidNoteChar);
         final boolean isEmptyShouldBeTrue = fromCharResultShouldBeEmpty.isEmpty();
         assertTrue(isEmptyShouldBeTrue);
