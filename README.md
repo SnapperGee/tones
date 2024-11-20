@@ -22,7 +22,7 @@ WAV file.
 1. [Wave Shapes](#wave-shapes)
 1. [Command Line Options](#command-line-options)
 1. [Usage Example](#usage-example)
-1. [Note Operand Components](#note-operand-components)
+1. [Audio Operand Components](#audio-operand-components)
 
 ## Installation
 
@@ -134,27 +134,27 @@ playing any audio:
 - D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
 - C whole note sine wave in the 3rd octave &rightarrow; C&#119133;
 
-## Note Operand Components
+## Audio Operand Components
 
 The primary command line operand arguments that are required to set the
-synthesized sound are referred to as ***note string***s. A *note string* is a
+synthesized sound are referred to as ***audio string***s. An *audio string* is a
 `String` that contains all the information needed to synthesize audio.
 
-The below diagram breaks down the segments that a *note string* is composed of.
-The diagram also further breaks down the *pitch* segment of an note string. The
-*pitch* segment is the component of a *note string* used to dictate the
+The below diagram breaks down the segments that an *audio string* is composed
+of. The diagram also further breaks down the *pitch* segment of an audio string.
+The *pitch* segment is the component of an *audio string* used to dictate the
 frequency of the synthesized audio:
 
 <details>
-<summary>Note Operand Component diagram (click to show)</summary>
+<summary>Audio Operand Component diagram <i>(click to show)</i></summary>
 <img src="./img/audio_string.png" alt="Audio Operand Components diagram">
 </details>
 
 ### Wave Shape prefix
 
-The first segment of a *note string* sets what ***wave shape*** the audio will
+The first segment of an *audio string* sets what ***wave shape*** the audio will
 be. This segment can be omitted to use the default wave shape. Refer to the
-[Wave Shapes section](#wave-shapes) for the different wave shapes audio cna be.
+[Wave Shapes section](#wave-shapes) for the different wave shapes audio can be.
 
 ### Pitch (or silence)
 
@@ -162,7 +162,7 @@ The pitch segment dictates the ***frequency*** the audio will be if it has
 a timbre or if the audio is silence (and therefore has no timbre). If this
 segment has a timbre, it is composed of 3 components:
 
-1. The leading ***pitch letter*** character consisting of one of the alpha
+1. The leading ***pitch class*** character consisting of one of the alpha
 characters A-G.
 1. followed by the ***accidental***. The accidental character makes it so a note
 can be a *sharp* &sharp; or *flat* &flat;. Or if it's a *natural* &natural;
@@ -176,7 +176,7 @@ To create a silence, the pitch segment is simply a question mark character, `'?'
 
 ### Duration suffix
 
-The final segment of an note string is the ***duration***. The duration amount
+The final segment of an audio string is the ***duration***. The duration amount
 is ***relative to the <u>note beat value</u> and <u>bpm/tempo</u>***. Without
 these 2 additional bits of information (the note beat value and bpm/tempo) the
 duration amount alone isn't enough information to extrapolate the actual span of
