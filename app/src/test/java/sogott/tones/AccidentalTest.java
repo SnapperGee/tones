@@ -1,80 +1,68 @@
 package sogott.tones;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+final class AccidentalTestArgsProvider {
+    final static class CharValues implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return Stream.of(
+                    arguments('+', Accidental.SHARP),
+                    arguments('-', Accidental.FLAT));
+        }
+    }
+
+    final static class OffSets implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return Stream.of(
+                    arguments(1, Accidental.SHARP),
+                    arguments(-1, Accidental.FLAT));
+        }
+    }
+}
+
 final class AccidentalTest {
-    static char[] nonAccidentalChars() {
+    static Stream<Character> nonAccidentalChars() {
         return IntStream.rangeClosed(32, 126)
                 .filter(i -> i != '+' && i != '-')
-                .mapToObj(i -> (char) i)
-                .collect(
-                        StringBuilder::new,
-                        StringBuilder::append,
-                        StringBuilder::append)
-                .toString()
-                .toCharArray();
+                .mapToObj(i -> (char) i);
     }
 
-    @Test
-    void accidentalSharpCharValueEqualsPlus() {
-        final char sharpCharValue = Accidental.SHARP.charValue();
-        final char expectedAccidentalSharpCharValue = '+';
-        assertSame(expectedAccidentalSharpCharValue, sharpCharValue);
+    @ParameterizedTest(name = "Accidental.{1}.charValue() is ''{0}''")
+    @ArgumentsSource(AccidentalTestArgsProvider.CharValues.class)
+    void accidentalCharValue(char charValue, Accidental accidental) {
+        assertSame(accidental.charValue(), charValue);
     }
 
-    @Test
-    void accidentalFlatCharValueEqualsPlus() {
-        final char flatCharValue = Accidental.FLAT.charValue();
-        final char expectedAccidentalFlatCharValue = '-';
-        assertSame(expectedAccidentalFlatCharValue, flatCharValue);
+    @ParameterizedTest(name = "Accidental.{1}.offset() is {0}")
+    @ArgumentsSource(AccidentalTestArgsProvider.OffSets.class)
+    void accidentalOffSet(int offset, Accidental accidental) {
+        assertSame(accidental.offset(), offset);
     }
 
-    @Test
-    void accidentalSharpOffsetEquals1() {
-        final int accidentalSharpOffsetValue = Accidental.SHARP.offset();
-        final int expectedAccidentalSharpOffsetValue = 1;
-        assertSame(expectedAccidentalSharpOffsetValue, accidentalSharpOffsetValue);
-    }
+    @ParameterizedTest(name = "Accidental.from(''{0}'') returns Optional<Accidental.{1}>")
+    @ArgumentsSource(AccidentalTestArgsProvider.CharValues.class)
+    void accidentalFrom(char charValue, Accidental accidental) {
+        final Optional<Accidental> optionalAccidental = Accidental.fromChar(charValue);
 
-    @Test
-    void accidentalFlatOffsetEqualsNegative1() {
-        final int accidentalFlatOffsetValue = Accidental.FLAT.offset();
-        final int expectedAccidentalFlatOffsetValue = -1;
-        assertSame(expectedAccidentalFlatOffsetValue, accidentalFlatOffsetValue);
-    }
-
-    @Test
-    void accidentalFromCharPlusSignReturnsSharp() {
-        final Optional<Accidental> optionalAccidental = Accidental.fromChar('+');
-        final boolean optionalAccidentalIsPresent = optionalAccidental.isPresent();
-
-        assertTrue(optionalAccidentalIsPresent);
-
-        final Accidental noteValue = optionalAccidental.get();
-        final Accidental expectedAccidentalValue = Accidental.SHARP;
-
-        assertSame(expectedAccidentalValue, noteValue);
-    }
-
-    @Test
-    void accidentalFromCharMinusSignReturnsFlat() {
-        final Optional<Accidental> optionalAccidental = Accidental.fromChar('-');
-        final boolean optionalAccidentalIsPresent = optionalAccidental.isPresent();
-
-        assertTrue(optionalAccidentalIsPresent);
-
-        final Accidental noteValue = optionalAccidental.get();
-        final Accidental expectedAccidentalValue = Accidental.FLAT;
-
-        assertSame(expectedAccidentalValue, noteValue);
+        assertTrue(optionalAccidental.isPresent(),
+                () -> "Accidental.from('%c') returns non present optional.".formatted(charValue));
+        assertSame(accidental, optionalAccidental.get());
     }
 
     @Test
