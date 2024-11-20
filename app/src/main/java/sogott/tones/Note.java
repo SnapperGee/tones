@@ -36,15 +36,15 @@ import static java.util.Objects.hash;
  * to create the span of time the audio will play.
  *
  * <p>
- * If an {@link Note} object has a duration of <i>N</i>, then its span of time
+ * If a {@link Note} object has a duration of <i>N</i>, then its span of time
  * to play for is 1/<i>N</i> of a whole note. So if it has a duration value of
  * {@code 4}, then the audio has a time of 1/4 of a whole note or a quarter
  * note.
  * </ol>
  *
- * An {@link Note} object can be represented as a {@code String} that can be
+ * A {@link Note} object can be represented as a {@code String} that can be
  * divided up into 3 segments, each segment corresponding to each of the 3
- * properties that an {@link Note} object is composed of. Refer to the
+ * properties that a {@link Note} object is composed of. Refer to the
  * {@link NoteString} class for more info.
  *
  * @author Snap
@@ -75,7 +75,7 @@ final class Note {
     }
 
     /**
-     * Constructs an {@link Note} object instance with the following wave,
+     * Constructs a {@link Note} object instance with the following wave,
      * pitch, and duration properties.
      *
      * @param wave     The {@link Wave} of the constructed {@link Note} object.
@@ -118,15 +118,15 @@ final class Note {
     }
 
     /**
-     * Constructs an {@link Note} object instance with {@code null} wave and
+     * Constructs a {@link Note} object instance with {@code null} wave and
      * pitch properties and the duration property set to the passed {@code int}
      * argument.
      *
      * @param duration The positive duration {@code int} of the constructed
      *                 {@link Note} object.
      *
-     * @return an {@link Note} object instance with {@code null} wave and
-     *         pitch properties and the passed duration property.
+     * @return A {@link Note} object instance with {@code null} wave and pitch
+     *         properties and the passed duration property.
      */
     static Note silence(int duration) {
         return new Note(duration);
@@ -176,7 +176,7 @@ final class Note {
      * this value to create the span of time the audio will play.
      *
      * <p>
-     * If an {@link Note} object has a duration of <i>N</i>, then its span of
+     * If a {@link Note} object has a duration of <i>N</i>, then its span of
      * time to play for is 1/<i>N</i> of a whole note. So if it has a duration
      * value of {@code 4}, then the audio has a time of 1/4 of a whole note or a
      * quarter note.
