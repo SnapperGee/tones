@@ -3,11 +3,10 @@ package sogott.tones;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -37,6 +36,10 @@ final class AccidentalTestArgsProvider {
 }
 
 final class AccidentalTest {
+    static Stream<Character> accidentalChars() {
+        return Stream.of('+', '-');
+    }
+
     static Stream<Character> nonAccidentalChars() {
         return IntStream.rangeClosed(32, 126)
                 .filter(i -> i != '+' && i != '-')
@@ -65,23 +68,16 @@ final class AccidentalTest {
         assertSame(accidental, optionalAccidental.get());
     }
 
-    @Test
-    void accidentalIsAccidentalCharReturnsTrueForPlus() {
-        final boolean isAccidentalCharShouldBeTrue = Accidental.isAccidentalChar('+');
-        assertTrue(isAccidentalCharShouldBeTrue);
-    }
-
-    @Test
-    void accidentalIsAccidentalCharReturnsTrueForMinus() {
-        final boolean isAccidentalCharShouldBeTrue = Accidental.isAccidentalChar('-');
-        assertTrue(isAccidentalCharShouldBeTrue);
+    @ParameterizedTest(name = "Accidental.isAccidentalChar(''{0}'') returns true")
+    @MethodSource("accidentalChars")
+    void accidentalIsAccidentalCharReturnsTrueForAccidentalChar(char accidentalChar) {
+        assertTrue(Accidental.isAccidentalChar(accidentalChar));
     }
 
     @ParameterizedTest(name = "Accidental.isAccidentalChar(''{0}'') returns false")
     @MethodSource("nonAccidentalChars")
     void accidentalIsAccidentalCharReturnsFalseForNonAccidentalChar(char nonAccidentalChar) {
-        final boolean isAccidentalCharShouldBeFalse = Accidental.isAccidentalChar(nonAccidentalChar);
-        assertFalse(isAccidentalCharShouldBeFalse);
+        assertFalse(Accidental.isAccidentalChar(nonAccidentalChar));
     }
 
     @ParameterizedTest(name = "Accidental.fromChar(''{0}'') returns empty optional")
