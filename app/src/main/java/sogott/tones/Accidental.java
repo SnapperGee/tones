@@ -28,21 +28,23 @@ enum Accidental {
      * represented via the plus, {@code '+'}, {@code char} value with an offset
      * of {@code 1}.
      */
-    SHARP('+', 1),
+    SHARP('+', 1, '♯'),
 
     /**
      * The value for the <strong><em>flat</em></strong> &flat; accidental
      * represented via the minus, {@code '-'}, {@code char} value with an offset
      * of {@code -1}.
      */
-    FLAT('-', -1);
+    FLAT('-', -1, '♭');
 
     final private char _char;
     final private int _offset;
+    final private char _symbolChar;
 
-    private Accidental(char charValue, int offset) {
+    private Accidental(char charValue, int offset, char symbolChar) {
         this._char = charValue;
         this._offset = offset;
+        this._symbolChar = symbolChar;
     }
 
     /**
@@ -72,6 +74,10 @@ enum Accidental {
      */
     char charValue() {
         return this._char;
+    }
+
+    char symbolChar() {
+        return this._symbolChar;
     }
 
     /**
