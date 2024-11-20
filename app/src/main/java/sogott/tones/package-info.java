@@ -23,7 +23,9 @@
  * parsing {@code String}s to {@link sogott.tones.Note Note} objects. Below is
  * an example an audio string:
  *
- * <pre>{@code SIN>C=4.4}</pre>
+ * <pre>{@code
+ * SIN > C + 4.4
+ * }</pre>
  *
  * Here is a breakdown of the above {@code String}'s segments and how they
  * correspond to the audio properties:
@@ -54,14 +56,47 @@
  * the {@link sogott.tones.Wave Wave} enum. The shapes are:
  *
  * <ol>
- * <li><i>SINE</i> &acd;
- * <li><i>SQUARE</i> &#9101;
- * <li><i>TRIANGLE</i> &wedge;
- * <li><i>SAW UP</i> &#9727;
- * <li><i>SAW DOWN</i> &#9722;
+ * <li><strong><em>SINE</em></string> &acd;
+ * <li><strong><em>SQUARE</em></string> &#9101;
+ * <li><strong><em>TRIANGLE</em></string> &wedge;
+ * <li><strong><em>SAW UP</em></string> &#9727;
+ * <li><strong><em>SAW DOWN</em></string> &#9722;
  * </ol>
  *
  * <h2>Pitch/Frequency</h2>
+ * The <strong><em>pitch</em></strong> indicates the
+ * <strong><em>frequency</em></strong> and is composed of 3 properties that are
+ * defined in the {@link sogott.tones.Pitch Pitch} class. These properties are:
+ *
+ * <ol>
+ * <li><strong><em>Pitch Class</em></strong> (pitch letter)
+ * <li><strong><em>Accidental</em></strong>
+ * <li><strong><em>Octave</em></strong>
+ * </ol>
+ *
+ * <h3>Pitch Class (pitch letter)</h3>
+ * The <strong><em>pitch class</em></strong> is the letter of a musical note and
+ * corresponds to one of the characters A-G.
+ *
+ * <h3>Accidental</h3>
+ * The <strong><em>accidental</em></strong> indicates wether the musical note
+ * is a <i>sharp</i> &sharp; or <i>flat</i> &flat;. Or if it's a <i>natural</i>
+ * &natural; (neither a <i>sharp</i> &sharp; nor a <i>flat</i> &flat;), then
+ * this character can be omitted. The 3 characters used to represent the 3 types
+ * of accidentals are:
+ *
+ * <ol>
+ * <li>A minus sign, {@code '-'}, character for <i>flat</i> &flat;
+ * <li>An equals sign, {@code '='}, character for <i>natural</i> &natural;
+ * (character is optional and can be omitted)
+ * <li>A plus sign, {@code '+'}, character for <i>sharp</i> &sharp;
+ * </ol>
+ *
+ * <h3>Octave</h3>
+ * The final segment of a pitch is the octave, which is simply a non negative
+ * {@code int} (0 or greater) to indicate which octave the note is in.
+ *
+ * <h2>Duration</h2>
  */
 
 package sogott.tones;
