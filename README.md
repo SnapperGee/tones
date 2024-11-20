@@ -182,7 +182,7 @@ these 2 additional bits of information (the note beat value and bpm/tempo) the
 duration amount alone isn't enough information to extrapolate the actual span of
 time the audio or silence should be played.
 
-An easy way to think of it is that if the duration is integer *N*, then the
+The simplest way to think of it is that if the duration is integer *N*, then the
 length of the note will be <sup>1</sup>&frasl;<sub>*N*</sub>. So, if *N* were 1,
 then the duration would be <sup>1</sup>&frasl;<sub>1</sub> which would be a
 whole note. If *N* were 4, that'd result in <sup>1</sup>&frasl;<sub>4</sub> so
