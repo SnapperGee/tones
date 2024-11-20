@@ -3,7 +3,9 @@
  * musical format via the command line interface. The tones can be audibly
  * played and/or written to a WAV file. It achieves this by interpreting and
  * converting {@code String}s and {@code char}s, formatted in a structured
- * music-like notation, into the properties needed to synthesize audio.
+ * music-like notation, into the properties needed to synthesize audio. These
+ * properties can then be used to generate {@code byte} buffers appropriate for
+ * synthesizing PCM audio.
  *
  * <p>
  * There are 3 properties needed to synthesize audio that are defined in the
@@ -23,9 +25,7 @@
  * parsing {@code String}s to {@link sogott.tones.Note Note} objects. Below is
  * an example an audio string:
  *
- * <pre>{@code
- * SIN > C + 4.4
- * }</pre>
+ * <pre>{@code SIN>C+4.4}</pre>
  *
  * Here is a breakdown of the above {@code String}'s segments and how they
  * correspond to the audio properties:
@@ -41,12 +41,8 @@
  * {@code '.'} delimits this segment from the final segment.
  *
  * <h3>Duration (suffix)</h3>
- * The suffix integer {@code 4} indicates that the audio is a quarter note. The
- * duration is <strong><b>relative to the tempo/bpm and note beat
- * value</b></strong>. This information alone isn't enough to extrapolate the
- * actual span of time the audio will play for. The tempo/bpm of the playback
- * and the value each beat has must also be known to be able to use this value
- * to create the span of time the audio will play.
+ * The suffix integer {@code 4} indicates that the audio is a quarter note
+ * (explained further down).
  *
  * <h2>Wave Shape</h2>
  * Wave shapes are mathematically derived curves. The static methods of the
@@ -97,6 +93,20 @@
  * {@code int} (0 or greater) to indicate which octave the note is in.
  *
  * <h2>Duration</h2>
+ * The final segment of an audio string is its duration which is simply a
+ * positive integer (greater than 0). The duration is <strong><b>relative to the
+ * tempo/bpm and note beat value</b></strong>. This duration integer alone isn't
+ * enough to extrapolate the actual span of time the audio will play for. The
+ * tempo/bpm of the playback and the value each beat has must also be known to
+ * be able to use this value to create the span of time the audio will play.
+ *
+ * <p>
+ * The simplest way to think of it is that if the duration is integer <i>N</i>,
+ * then the length of the note will be <sup>1</sup>&frasl;<sub><i>N</i></sub>.
+ * So, if <i>N</i> were 1, then the duration would be
+ * <sup>1</sup>&frasl;<sub>1</sub> which would be a whole note. If <i>N</i> were
+ * 4, that'd result in <sup>1</sup>&frasl;<sub>4</sub> so it'd be a quarter note
+ * etc.
  */
 
 package sogott.tones;
