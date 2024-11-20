@@ -65,11 +65,11 @@ final public class Main {
 
                 final List<String> operands = unmodifiableList(cliArgs.getArgList());
 
-                final record ValidAndInvalidOperands(List<Note> valid, List<String> invalid) {
+                final record ValidAndInvalidOperands(List<Audio> valid, List<String> invalid) {
                 }
 
                 final ValidAndInvalidOperands validAndInvalidOperands = operands.stream().reduce(
-                        new ValidAndInvalidOperands(new ArrayList<Note>(),
+                        new ValidAndInvalidOperands(new ArrayList<Audio>(),
                                 new ArrayList<String>()),
                         (acc, operand) -> {
 

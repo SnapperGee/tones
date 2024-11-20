@@ -18,11 +18,11 @@ final class ByteBuffersArgProvider {
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
     private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
 
-    final static List<Note> notes = pitchClasses.stream().flatMap(pitchClass -> {
+    final static List<Audio> audioObjects = pitchClasses.stream().flatMap(pitchClass -> {
         return accidentals.stream().flatMap(accidental -> {
             final Pitch accidentalPitch = new Pitch(pitchClass, accidental, random.nextInt(0, 13));
             return waves.stream()
-                    .map(wave -> new Note(wave, accidentalPitch, random.nextInt(1, 1000)));
+                    .map(wave -> new Audio(wave, accidentalPitch, random.nextInt(1, 1000)));
         });
     }).toList();
 }
@@ -32,7 +32,7 @@ final class ByteBuffersTest {
     @Test
     @DisplayName("new ByteBuffers(Collection<Audio>, # > 0) does not throw")
     void byteBuffersConstructorPassedValidArgumentsDoesNotThrow() {
-        assertDoesNotThrow(() -> new ByteBuffers(ByteBuffersArgProvider.notes,
+        assertDoesNotThrow(() -> new ByteBuffers(ByteBuffersArgProvider.audioObjects,
                 ByteBuffersArgProvider.random.nextDouble(1, 200)));
     }
 

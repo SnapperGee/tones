@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-final class NoteArgsProvider {
+final class AudioTestArgsProvider {
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
@@ -157,7 +157,7 @@ final class NoteArgsProvider {
         final static class WavePitchDurationAlts implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchClasses.stream().flatMap(note -> {
+                return waves.stream().flatMap(wave -> pitchClasses.stream().flatMap(pitchClass -> {
                     final int duration = 1 << random.nextInt(8);
                     final int differentDuration = random.ints(0, 8).map(i -> 1 << i)
                             .filter(i -> i != duration).findFirst()
@@ -165,7 +165,7 @@ final class NoteArgsProvider {
 
                     return accidentals.stream()
                             .map(accidental -> arguments(wave,
-                                    new Pitch(note, accidental,
+                                    new Pitch(pitchClass, accidental,
                                             random.nextInt(13)),
                                     duration,
                                     differentDuration));
@@ -289,34 +289,34 @@ final class NoteArgsProvider {
     }
 }
 
-final class NoteTest {
+final class AudioTest {
 
     static private final IntStream positiveIntArgs() {
-        return NoteArgsProvider.random.ints(5, 1, 2000);
+        return AudioTestArgsProvider.random.ints(5, 1, 2000);
     }
 
     static private final IntStream nonPositiveIntArgs() {
-        return NoteArgsProvider.random.ints(5, -2000, 0);
+        return AudioTestArgsProvider.random.ints(5, -2000, 0);
     }
 
     ///////////////////////
     // valid constructor //
     ///////////////////////
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) does not throw")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) does not throw")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioConstructorPassedValidWavePitchDurationDoesNotThrow(Wave wave, Pitch pitch, int duration) {
-        assertDoesNotThrow(() -> new Note(wave, pitch, duration));
+        assertDoesNotThrow(() -> new Audio(wave, pitch, duration));
     }
 
     /////////////////////////
     // invalid constructor //
     /////////////////////////
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) throws")
-    @ArgumentsSource(NoteArgsProvider.Invalid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) throws")
+    @ArgumentsSource(AudioTestArgsProvider.Invalid.WavePitchDuration.class)
     void audioConstructorPassedInvalidWavesPitchesDurationsThrows(Wave wave, Pitch pitch, int duration) {
-        assertThrows(IllegalArgumentException.class, () -> new Note(wave, pitch, duration));
+        assertThrows(IllegalArgumentException.class, () -> new Audio(wave, pitch, duration));
     }
 
     /////////////////////////
@@ -326,40 +326,40 @@ final class NoteTest {
     @ParameterizedTest(name = "Audio.silence({0}) does not throw")
     @MethodSource("positiveIntArgs")
     void silenceDoesNotThrow(int duration) {
-        assertDoesNotThrow(() -> Note.silence(duration));
+        assertDoesNotThrow(() -> Audio.silence(duration));
     }
 
     @ParameterizedTest(name = "Audio.silence({0}) throws")
     @MethodSource("nonPositiveIntArgs")
     void silencePassedNonPositiveThrows(int duration) {
-        assertThrows(IllegalArgumentException.class, () -> Note.silence(duration));
+        assertThrows(IllegalArgumentException.class, () -> Audio.silence(duration));
     }
 
     @ParameterizedTest(name = "Audio.silence({0}).wave() returns null")
     @MethodSource("positiveIntArgs")
     void silenceWaveIsNull(int duration) {
-        final Note silenceAudio = Note.silence(duration);
+        final Audio silenceAudio = Audio.silence(duration);
         assertNull(silenceAudio.wave());
     }
 
     @ParameterizedTest(name = "Audio.silence({0}).pitch() returns null")
     @MethodSource("positiveIntArgs")
     void silencePitchIsNull(int duration) {
-        final Note silenceAudio = Note.silence(duration);
+        final Audio silenceAudio = Audio.silence(duration);
         assertNull(silenceAudio.pitch());
     }
 
     @ParameterizedTest(name = "Audio.silence({0}).duration() returns {0}")
     @MethodSource("positiveIntArgs")
     void silenceDurationReturnsDuration(int duration) {
-        final Note silenceAudio = Note.silence(duration);
+        final Audio silenceAudio = Audio.silence(duration);
         assertEquals(duration, silenceAudio.duration());
     }
 
     @ParameterizedTest(name = "Audio.silence({0}).stringValue() returns \"?.{0}\"")
     @MethodSource("positiveIntArgs")
     void silenceStringValueReturnsStringValue(int duration) {
-        final Note silenceAudio = Note.silence(duration);
+        final Audio silenceAudio = Audio.silence(duration);
         final String stringValue = "%c%c%d".formatted(NoteString.SILENCE_CHAR,
                 NoteString.Delimiter.VOICE_AND_DURATION.charValue(), duration);
         assertEquals(stringValue, silenceAudio.stringValue());
@@ -369,31 +369,31 @@ final class NoteTest {
     // properties/getters //
     ////////////////////////
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).wave() returns wave")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).wave() returns wave")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioWavePropertyReturnsWave(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         assertSame(wave, audio.wave());
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).pitch() returns pitch")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).pitch() returns pitch")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioPitchPropertyReturnsPitch(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         assertSame(pitch, audio.pitch());
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).duration() returns duration")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).duration() returns duration")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioDurationPropertyReturnsDuration(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         assertEquals(duration, audio.duration());
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}).stringValue() returns string value")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).stringValue() returns string value")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioStringValuePropertyReturnsStringValue(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         final String stringValue = "%s>%s.%d".formatted(wave.stringValue(), pitch.stringValue(), duration);
         assertEquals(stringValue, audio.stringValue());
     }
@@ -402,73 +402,73 @@ final class NoteTest {
     // equals //
     ////////////
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) equals same returns true")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) equals same returns true")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioEqualsSameReturnsTrue(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         assertTrue(audio.equals(audio));
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, {2}) equals equivalent returns true")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) equals equivalent returns true")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioEqualsEquivalentReturnsTrue(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
-        final Note equalAudio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
+        final Audio equalAudio = new Audio(wave, pitch, duration);
         assertTrue(audio.equals(equalAudio));
     }
 
-    @ParameterizedTest(name = "new Pitch(<Wave.{0}>, <{2}>, <{4}>) equals new Pitch(<Wave.{1}>, <{3}>, <{5}>) returns false")
-    @ArgumentsSource(NoteArgsProvider.Valid.AltWavesPitchesDurations.class)
+    @ParameterizedTest(name = "new Audio(<Wave.{0}>, <{2}>, <{4}>) equals new Pitch(<Wave.{1}>, <{3}>, <{5}>) returns false")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.AltWavesPitchesDurations.class)
     void audioEqualsUnequalWavePitchDurationReturnsFalse(Wave aWave, Wave anotherWave, Pitch aPitch,
             Pitch anotherPitch,
             int aDuration, int anotherDuration) {
-        final Note anAudio = new Note(aWave, aPitch, aDuration);
-        final Note aDifferentAudio = new Note(anotherWave, anotherPitch, anotherDuration);
+        final Audio anAudio = new Audio(aWave, aPitch, aDuration);
+        final Audio aDifferentAudio = new Audio(anotherWave, anotherPitch, anotherDuration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 
-    @ParameterizedTest(name = "new Pitch(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
-    @ArgumentsSource(NoteArgsProvider.Valid.WaveAltsPitchDuration.class)
+    @ParameterizedTest(name = "new Audio(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WaveAltsPitchDuration.class)
     void audioEqualsUnequalWavesPitchDurationReturnsFalse(Wave aWave, Wave anotherWave, Pitch pitch,
             int duration) {
-        final Note anAudio = new Note(aWave, pitch, duration);
-        final Note aDifferentAudio = new Note(anotherWave, pitch, duration);
+        final Audio anAudio = new Audio(aWave, pitch, duration);
+        final Audio aDifferentAudio = new Audio(anotherWave, pitch, duration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, <{1}>, <{3}>) equals new Pitch(Wave.{0}, <{2}>, <{4}>) returns false")
-    @ArgumentsSource(NoteArgsProvider.Valid.WaveAltPitchesAndDurations.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, <{1}>, <{3}>) equals new Pitch(Wave.{0}, <{2}>, <{4}>) returns false")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WaveAltPitchesAndDurations.class)
     void audioEqualsWaveWithUnequalPitchesAndDurationsReturnsFalse(Wave wave, Pitch aPitch, Pitch anotherPitch,
             int aDuration, int anotherDuration) {
-        final Note anAudio = new Note(wave, aPitch, aDuration);
-        final Note aDifferentAudio = new Note(wave, anotherPitch, anotherDuration);
+        final Audio anAudio = new Audio(wave, aPitch, aDuration);
+        final Audio aDifferentAudio = new Audio(wave, anotherPitch, anotherDuration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, {1}, <{2}>) equals new Pitch(Wave.{0}, {1}, <{3}>) returns false")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDurationAlts.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, <{2}>) equals new Pitch(Wave.{0}, {1}, <{3}>) returns false")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDurationAlts.class)
     void audioEqualsWavePitchUnequalDurationsReturnsFalse(Wave wave, Pitch pitch,
             int aDuration, int anotherDuration) {
-        final Note anAudio = new Note(wave, pitch, aDuration);
-        final Note aDifferentAudio = new Note(wave, pitch, anotherDuration);
+        final Audio anAudio = new Audio(wave, pitch, aDuration);
+        final Audio aDifferentAudio = new Audio(wave, pitch, anotherDuration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 
-    @ParameterizedTest(name = "new Pitch(Wave.{0}, <{1}>, {3}) equals new Pitch(Wave.{0}, <{2}>, {3}) returns false")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchAltsDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, <{1}>, {3}) equals new Pitch(Wave.{0}, <{2}>, {3}) returns false")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchAltsDuration.class)
     void audioEqualsWavePitchUnequalDurationsReturnsFalse(Wave wave, Pitch aPitch,
             Pitch anotherPitch, int duration) {
-        final Note anAudio = new Note(wave, aPitch, duration);
-        final Note aDifferentAudio = new Note(wave, anotherPitch, duration);
+        final Audio anAudio = new Audio(wave, aPitch, duration);
+        final Audio aDifferentAudio = new Audio(wave, anotherPitch, duration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 
-    @ParameterizedTest(name = "new Pitch(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
-    @ArgumentsSource(NoteArgsProvider.Valid.AltWavesAndPitchesWithDuration.class)
+    @ParameterizedTest(name = "new Audio(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.AltWavesAndPitchesWithDuration.class)
     void audioAltWavesAndPitchesWithEqualDurationReturnsFalse(Wave wave, Wave anotherWave,
             Pitch aPitch, Pitch anotherPitch, int duration) {
-        final Note anAudio = new Note(wave, aPitch, duration);
-        final Note aDifferentAudio = new Note(anotherWave, anotherPitch, duration);
+        final Audio anAudio = new Audio(wave, aPitch, duration);
+        final Audio aDifferentAudio = new Audio(anotherWave, anotherPitch, duration);
         assertFalse(anAudio.equals(aDifferentAudio));
     }
 
@@ -476,26 +476,26 @@ final class NoteTest {
     // hashCode //
     //////////////
 
-    @ParameterizedTest(name = "new Audio(Note.{0}, Accidental.{1}, {2}).hashCode() equals Objects.hash(Wave.{0}, {1}, {2})")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ParameterizedTest(name = "new Audio(Wave.{0}, Accidental.{1}, {2}).hashCode() equals Objects.hash(Wave.{0}, {1}, {2})")
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioHashCodeComputedFromWavePitchDuration(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         final int computedHashCode = hash(wave, pitch, duration);
         assertEquals(computedHashCode, audio.hashCode());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).hashCode() is same for same object")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void sameAudioHasEqualHashCode(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         assertTrue(audio.hashCode() == audio.hashCode());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).hashCode() is same for equal object")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void equalAudioHasEqualHashCode(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
-        final Note equalAudio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
+        final Audio equalAudio = new Audio(wave, pitch, duration);
         assertTrue(audio.hashCode() == equalAudio.hashCode());
     }
 
@@ -504,11 +504,11 @@ final class NoteTest {
     //////////////
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).toString() returns pretty String")
-    @ArgumentsSource(NoteArgsProvider.Valid.WavePitchDuration.class)
+    @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioToStringReturnsPrettyString(Wave wave, Pitch pitch, int duration) {
-        final Note audio = new Note(wave, pitch, duration);
+        final Audio audio = new Audio(wave, pitch, duration);
         final String toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(
-                Note.class.getSimpleName(),
+                Audio.class.getSimpleName(),
                 wave.name(), pitch.stringValue(), duration);
         assertEquals(toString, audio.toString());
     }

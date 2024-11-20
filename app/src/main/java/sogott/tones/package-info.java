@@ -9,7 +9,7 @@
  *
  * <p>
  * There are 3 properties needed to synthesize audio that are defined in the
- * {@link sogott.tones.Note Note} class. These properties are:
+ * {@link sogott.tones.Audio Audio} class. These properties are:
  *
  * <ol>
  * <li><strong><em>Wave Shape</em></strong>
@@ -22,7 +22,7 @@
  * used to synthesize audio. The {@code String} can be divided up into 3
  * segments, each segment corresponding to the above properties. The
  * {@link sogott.tones.NoteString NoteString} class contains static methods for
- * parsing {@code String}s to {@link sogott.tones.Note Note} objects. Below is
+ * parsing {@code String}s to {@link sogott.tones.Audio Audio} objects. Below is
  * an example an audio string:
  *
  * <pre>{@code SIN>C+4.4}</pre>
@@ -102,7 +102,7 @@
  *
  * <p>
  * The simplest way to think of it is that if the duration is integer <i>N</i>,
- * then the length of the note will be <sup>1</sup>&frasl;<sub><i>N</i></sub>.
+ * then the length of the audio will be <sup>1</sup>&frasl;<sub><i>N</i></sub>.
  * So, if <i>N</i> were 1, then the duration would be
  * <sup>1</sup>&frasl;<sub>1</sub> which would be a whole note. If <i>N</i> were
  * 4, that'd result in <sup>1</sup>&frasl;<sub>4</sub> so it'd be a quarter note

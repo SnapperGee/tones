@@ -52,7 +52,7 @@ final class NoteStringsArgProvider {
                                                                     NoteString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
-                                                            new Note(wave, new Pitch(
+                                                            new Audio(wave, new Pitch(
                                                                     pitchClass,
                                                                     accidental,
                                                                     octave),
@@ -69,7 +69,7 @@ final class NoteStringsArgProvider {
                                                                             NoteString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
-                                                                    new Note(wave, new Pitch(
+                                                                    new Audio(wave, new Pitch(
                                                                             pitchClass,
                                                                             accidental,
                                                                             octave),
@@ -96,7 +96,7 @@ final class NoteStringsArgProvider {
                                                                     .charValue(),
                                                             duration),
                                                     wave,
-                                                    new Note(wave, new Pitch(
+                                                    new Audio(wave, new Pitch(
                                                             pitchClass,
                                                             accidental,
                                                             octave),
@@ -111,7 +111,7 @@ final class NoteStringsArgProvider {
                                                                             .charValue(),
                                                                     duration),
                                                             wave,
-                                                            new Note(wave, new Pitch(
+                                                            new Audio(wave, new Pitch(
                                                                     pitchClass,
                                                                     accidental,
                                                                     octave),
@@ -758,8 +758,8 @@ final class NoteStringTest {
     @ParameterizedTest(name = "NoteString.parse(\"{0}\") creates optional of {1}")
     @ArgumentsSource(NoteStringsArgProvider.Valid.WaveShapePrefixedAudioStringValueAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
-            Note audio) {
-        final Optional<Note> parsedAudio = NoteString.parse(audioString);
+            Audio audio) {
+        final Optional<Audio> parsedAudio = NoteString.parse(audioString);
         assertTrue(parsedAudio.isPresent(), () -> "NoteString.parse(\"%s\") returned non present optional."
                 .formatted(audioString));
         assertEquals(audio, parsedAudio.get());
@@ -768,8 +768,8 @@ final class NoteStringTest {
     @ParameterizedTest(name = "NoteString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
     @ArgumentsSource(NoteStringsArgProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
-            Wave wave, Note audio) {
-        final Optional<Note> parsedAudio = NoteString.parse(audioString, wave);
+            Wave wave, Audio audio) {
+        final Optional<Audio> parsedAudio = NoteString.parse(audioString, wave);
         assertTrue(parsedAudio.isPresent(), () -> "NoteString.parse(\"%s\") returned non present optional."
                 .formatted(audioString));
         assertEquals(audio, parsedAudio.get());
@@ -779,7 +779,7 @@ final class NoteStringTest {
     @ArgumentsSource(NoteStringsArgProvider.Invalid.AudioStringValue.class)
     @EmptySource
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
-        final Optional<Note> parsedAudio = NoteString.parse(audioString);
+        final Optional<Audio> parsedAudio = NoteString.parse(audioString);
         assertTrue(parsedAudio.isEmpty(), () -> "NoteString.parse(\"%s\") returned non empty optional."
                 .formatted(audioString));
     }
@@ -787,7 +787,7 @@ final class NoteStringTest {
     @ParameterizedTest(name = "NoteString.parse(\"{0}\", {1}) returns empty optional")
     @ArgumentsSource(NoteStringsArgProvider.Invalid.NoteStringValueAndWave.class)
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, Wave wave) {
-        final Optional<Note> parsedAudio = NoteString.parse(audioString, wave);
+        final Optional<Audio> parsedAudio = NoteString.parse(audioString, wave);
         assertTrue(parsedAudio.isEmpty(), () -> "NoteString.parse(\"%s\") returned non empty optional."
                 .formatted(audioString));
     }
