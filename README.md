@@ -153,14 +153,16 @@ frequency of the synthesized audio:
 ### Wave Shape prefix
 
 The first segment of an *audio string* sets what ***wave shape*** the audio will
-be. This segment can be omitted to use the default wave shape. Refer to the
-[Wave Shapes section](#wave-shapes) for the different wave shapes audio can be.
+be. This segment can be omitted to use the default wave shape. If an audio
+string synthesizes silence (and not audible audio), then it does not have a wave
+shape prefix (nor a pitch). Refer to the [Wave Shapes section](#wave-shapes) for
+the different wave shapes audio can be.
 
 ### Pitch (or silence)
 
-The pitch segment dictates the ***frequency*** the audio will be if it has
-a timbre or if the audio is silence (and therefore has no timbre). If this
-segment has a timbre, it is composed of 3 components:
+The pitch segment dictates the ***frequency*** the audio will be if it's audible
+audio or if the audio is silence (and therefore has no pitch). Pitch is composed
+of 3 components:
 
 1. The leading ***pitch class*** character consisting of one of the alpha
 characters A-G.

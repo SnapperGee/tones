@@ -1,5 +1,7 @@
 package sogott.tones;
 
+import java.util.Optional;
+
 import static java.util.Objects.hash;
 
 /**
@@ -24,7 +26,10 @@ import static java.util.Objects.hash;
  * <li>
  * <h2><i>{@link #pitch() Pitch}</i></h2>
  * The {@link #pitch() pitch} property designates the frequency of the
- * synthesized audio. This property is constructed from a {@link Pitch} object.
+ * synthesized audio unless its silence. This property is an {@link Optional}
+ * containing a {@link Pitch} object if it's audible or an empty
+ * {@code Optional}
+ * if its silence.
  * <li>
  * <h2><i>{@link #duration() Duration}</i></h2>
  * The {@link #duration() duration} property designates the duration of the
@@ -54,7 +59,7 @@ import static java.util.Objects.hash;
  */
 final class Audio {
     final private Wave _wave;
-    final private Pitch _pitch;
+    final private Optional<Pitch> _pitch;
     final private int _duration;
     final private String _string;
     final private int _hashCode;
@@ -66,7 +71,7 @@ final class Audio {
         }
 
         this._wave = null;
-        this._pitch = null;
+        this._pitch = Optional.empty();
         this._duration = duration;
         this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
@@ -108,25 +113,28 @@ final class Audio {
         }
 
         this._wave = wave;
-        this._pitch = pitch;
+        this._pitch = Optional.of(pitch);
         this._duration = duration;
-        this._string = "%s>%s.%d".formatted(this._wave.stringValue(), this._pitch.stringValue(), this._duration);
+        this._string = "%s>%s.%d".formatted(this._wave.stringValue(), this._pitch.get().stringValue(), this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
         this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(Audio.class.getSimpleName(),
                 this._wave.name(),
-                this._pitch.stringValue(), this._duration);
+                this._pitch.get().stringValue(), this._duration);
     }
 
     /**
      * Constructs an {@link Audio} object instance with {@code null} wave and
-     * pitch properties and the duration property set to the passed {@code int}
-     * argument.
+     * empty {@link Optional} property and the duration property set to the
+     * passed {@code int} argument.
      *
      * @param duration The positive duration {@code int} of the constructed
      *                 {@link Audio} object.
      *
      * @return An {@link Audio} object instance with {@code null} wave and pitch
      *         properties and the passed duration property.
+     *
+     * @throws IllegalArgumentException if the duration is not positive (less
+     *                                  than or equal to 0).
      */
     static Audio silence(int duration) {
         return new Audio(duration);
@@ -155,13 +163,15 @@ final class Audio {
     }
 
     /**
-     * The {@link Pitch} frequency value of this {@link Audio} object if it's
-     * audible or {@code null} if it's silence.
+     * An {@link Optional} containing the {@link Pitch} frequency value of this
+     * {@link Audio} object if it's audible or an empty {@code Optional} if it's
+     * silence.
      *
-     * @return The {@link Pitch} frequency value of this {@link Audio} object if
-     *         it's audible or {@code null} if it's silence.
+     * @return An {@link Optional} containing the {@link Pitch} frequency value
+     *         of this {@link Audio} object if it's audible or an empty
+     *         {@code Optional} if it's silence.
      */
-    Pitch pitch() {
+    Optional<Pitch> pitch() {
         return this._pitch;
     }
 

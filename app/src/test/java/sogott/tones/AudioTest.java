@@ -342,11 +342,11 @@ final class AudioTest {
         assertNull(silenceAudio.wave());
     }
 
-    @ParameterizedTest(name = "Audio.silence({0}).pitch() returns null")
+    @ParameterizedTest(name = "Audio.silence({0}).pitch() returns empty Optional")
     @MethodSource("positiveIntArgs")
     void silencePitchIsNull(int duration) {
         final Audio silenceAudio = Audio.silence(duration);
-        assertNull(silenceAudio.pitch());
+        assertTrue(silenceAudio.pitch().isEmpty());
     }
 
     @ParameterizedTest(name = "Audio.silence({0}).duration() returns {0}")
@@ -376,11 +376,12 @@ final class AudioTest {
         assertSame(wave, audio.wave());
     }
 
-    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).pitch() returns pitch")
+    @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).pitch() returns Optional containing pitch")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioPitchPropertyReturnsPitch(Wave wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
-        assertSame(pitch, audio.pitch());
+        assertTrue(audio.pitch().isPresent(), () -> "new Audio(Wave.%s, %s, %d).pitch() returned non present Optional.".formatted(wave, pitch, duration));
+        assertSame(pitch, audio.pitch().get());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).duration() returns duration")

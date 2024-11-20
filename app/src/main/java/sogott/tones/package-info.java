@@ -13,7 +13,7 @@
  *
  * <ol>
  * <li><strong><em>Wave Shape</em></strong>
- * <li><strong><em>Frequency</em></strong>
+ * <li><strong><em>Frequency</em></strong> (pitch)
  * <li><strong><em>Duration</em></strong>
  * </ol>
  *
@@ -59,6 +59,9 @@
  * <li><strong><em>SAW DOWN</em></strong> &#9722;
  * </ol>
  *
+ * If audio is silence, it does not have a wave shape (nor pitch) and only has
+ * a duration.
+ *
  * <h2>Pitch/Frequency</h2>
  * The <strong><em>pitch</em></strong> indicates the
  * <strong><em>frequency</em></strong> and is composed of 3 properties that are
@@ -69,6 +72,9 @@
  * <li><strong><em>Accidental</em></strong>
  * <li><strong><em>Octave</em></strong>
  * </ol>
+ *
+ * If audio is silence, it does not have a pitch (nor wave shape) and only has
+ * a duration.
  *
  * <h3>Pitch Class (pitch letter)</h3>
  * The <strong><em>pitch class</em></strong> is the letter of a musical note and

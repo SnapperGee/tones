@@ -132,7 +132,7 @@ final class ByteBuffers {
         // if audio has a Wave shape and is therefore not silence add a fadeout to it
         if (audio.wave() != null) {
             final byte[] audioByteBuffer = audio.wave()
-                    .generate(Frequency.from(audio.pitch()),
+                    .generate(Frequency.from(audio.pitch().orElseThrow()),
                             (int) Math.ceil(1.0
                                     / audio.duration()
                                     * wholeNoteDuration));
