@@ -76,6 +76,12 @@ enum Accidental {
         return this._char;
     }
 
+    /**
+     * The literal symbol character for this {@link Accidental}. This character
+     * is intended for printing/display purposes.
+     *
+     * @return The literal symbol character for this {@link Accidental}.
+     */
     char symbolChar() {
         return this._symbolChar;
     }
