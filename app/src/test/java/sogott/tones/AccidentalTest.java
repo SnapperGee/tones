@@ -22,6 +22,7 @@ final class AccidentalTestArgsProvider {
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments('+', Accidental.SHARP),
+                    arguments('=', Accidental.NATURAL),
                     arguments('-', Accidental.FLAT));
         }
     }
@@ -31,6 +32,7 @@ final class AccidentalTestArgsProvider {
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments(1, Accidental.SHARP),
+                    arguments(0, Accidental.NATURAL),
                     arguments(-1, Accidental.FLAT));
         }
     }
@@ -40,6 +42,7 @@ final class AccidentalTestArgsProvider {
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     arguments('♯', Accidental.SHARP),
+                    arguments('♮', Accidental.NATURAL),
                     arguments('♭', Accidental.FLAT));
         }
     }
@@ -47,13 +50,13 @@ final class AccidentalTestArgsProvider {
 
 final class AccidentalTest {
     static Stream<Character> accidentalChars() {
-        return Stream.of('+', '-');
+        return Stream.of('+', '-', '=');
     }
 
     static Stream<Character> nonAccidentalChars() {
         return IntStream.rangeClosed(32, 126)
-                .filter(i -> i != '+' && i != '-')
-                .mapToObj(i -> (char) i);
+                .filter(cp -> cp != '+' && cp != '-' && cp != '=')
+                .mapToObj(cp -> (char) cp);
     }
 
     @ParameterizedTest(name = "Accidental.{1}.charValue() is ''{0}''")

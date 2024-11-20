@@ -24,18 +24,25 @@ import java.util.Optional;
 enum Accidental {
 
     /**
-     * The value for the <strong><em>sharp</em></strong> &sharp; accidental
-     * represented via the plus, {@code '+'}, {@code char} value with an offset
-     * of {@code 1}.
-     */
-    SHARP('+', 1, '♯'),
-
-    /**
      * The value for the <strong><em>flat</em></strong> &flat; accidental
      * represented via the minus, {@code '-'}, {@code char} value with an offset
      * of {@code -1}.
      */
-    FLAT('-', -1, '♭');
+    FLAT('-', -1, '♭'),
+
+    /**
+     * The value for the <strong><em>natural</em></strong> &natural; accidental
+     * represented via the equals, {@code '='}, {@code char} value with an
+     * offset of {@code 0}.
+     */
+    NATURAL('=', 0, '♮'),
+
+    /**
+     * The value for the <strong><em>sharp</em></strong> &sharp; accidental
+     * represented via the plus, {@code '+'}, {@code char} value with an offset
+     * of {@code 1}.
+     */
+    SHARP('+', 1, '♯');
 
     final private char _char;
     final private int _offset;
@@ -113,10 +120,9 @@ enum Accidental {
      *         {@code char} can be converted to one, otherwise an empty Optional.
      */
     static Optional<Accidental> fromChar(char aChar) {
-        return SHARP.charValue() == aChar
-                ? Optional.of(SHARP)
-                : FLAT.charValue() == aChar
-                        ? Optional.of(FLAT)
-                        : Optional.empty();
+        return SHARP.charValue() == aChar ? Optional.of(SHARP)
+                : FLAT.charValue() == aChar ? Optional.of(FLAT)
+                        : NATURAL.charValue() == aChar ? Optional.of(NATURAL)
+                                : Optional.empty();
     }
 }
