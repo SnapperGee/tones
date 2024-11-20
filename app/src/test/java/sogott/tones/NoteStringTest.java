@@ -4,16 +4,16 @@ import java.util.stream.Stream;
 import java.util.random.RandomGenerator;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.api.extension.ExtensionContext;
 
 import static java.util.Collections.unmodifiableList;
 import static java.util.Arrays.asList;
@@ -39,47 +39,31 @@ final class NoteStringsArgProvider {
                     final int duration = random.nextInt(1, 200000);
                     return waves.stream()
                             .flatMap(wave -> wave.stringValueAliases().stream()
-                                    .flatMap(waveStringAlias -> Stream.concat(
-                                            Stream.of(arguments(
-                                                    "%s%c%c%d%c%d".formatted(
-                                                            waveStringAlias,
-                                                            NoteString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                    .charValue(),
-                                                            pitchClass.charValue(),
-                                                            octave,
-                                                            NoteString.Delimiter.VOICE_AND_DURATION
-                                                                    .charValue(),
-                                                            duration),
-                                                    new Note(wave, new Pitch(
-                                                            pitchClass,
-                                                            null,
-                                                            octave),
-                                                            duration)),
-                                                    arguments("%s%c%c%d%c%d"
-                                                            .formatted(waveStringAlias
-                                                                    .toLowerCase(),
+                                    .flatMap(waveStringAlias -> accidentals.stream()
+                                            .flatMap(accidental -> Stream
+                                                    .of(arguments(
+                                                            "%s%c%c%c%d%c%d".formatted(
+                                                                    waveStringAlias,
                                                                     NoteString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                             .charValue(),
-                                                                    Character.toLowerCase(
-                                                                            pitchClass.charValue()),
+                                                                    pitchClass.charValue(),
+                                                                    accidental.charValue(),
                                                                     octave,
-                                                                    Character.toLowerCase(
-                                                                            NoteString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue()),
+                                                                    NoteString.Delimiter.VOICE_AND_DURATION
+                                                                            .charValue(),
                                                                     duration),
                                                             new Note(wave, new Pitch(
                                                                     pitchClass,
-                                                                    null,
+                                                                    accidental,
                                                                     octave),
-                                                                    duration))),
-                                            accidentals.stream()
-                                                    .flatMap(accidental -> Stream
-                                                            .of(arguments(
+                                                                    duration)),
+                                                            arguments(
                                                                     "%s%c%c%c%d%c%d".formatted(
-                                                                            waveStringAlias,
+                                                                            waveStringAlias.toLowerCase(),
                                                                             NoteString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
-                                                                            pitchClass.charValue(),
+                                                                            Character.toLowerCase(
+                                                                                    pitchClass.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
                                                                             NoteString.Delimiter.VOICE_AND_DURATION
@@ -89,24 +73,7 @@ final class NoteStringsArgProvider {
                                                                             pitchClass,
                                                                             accidental,
                                                                             octave),
-                                                                            duration)),
-                                                                    arguments(
-                                                                            "%s%c%c%c%d%c%d".formatted(
-                                                                                    waveStringAlias.toLowerCase(),
-                                                                                    NoteString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                            .charValue(),
-                                                                                    Character.toLowerCase(
-                                                                                            pitchClass.charValue()),
-                                                                                    accidental.charValue(),
-                                                                                    octave,
-                                                                                    NoteString.Delimiter.VOICE_AND_DURATION
-                                                                                            .charValue(),
-                                                                                    duration),
-                                                                            new Note(wave, new Pitch(
-                                                                                    pitchClass,
-                                                                                    accidental,
-                                                                                    octave),
-                                                                                    duration)))))));
+                                                                            duration))))));
                 });
             }
         }
@@ -114,44 +81,30 @@ final class NoteStringsArgProvider {
         final static class AudioStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchClasses.stream().flatMap(pitchClasses -> {
+                return pitchClasses.stream().flatMap(pitchClass -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waves.stream()
-                            .flatMap(wave -> Stream.concat(
-                                    Stream.of(arguments(
-                                            "%c%d%c%d".formatted(
-                                                    pitchClasses
-                                                            .charValue(),
-                                                    octave,
-                                                    NoteString.Delimiter.VOICE_AND_DURATION
-                                                            .charValue(),
-                                                    duration),
-                                            wave,
-                                            new Note(wave, new Pitch(
-                                                    pitchClasses,
-                                                    null, octave),
-                                                    duration)),
-                                            arguments(
-                                                    "%c%d%c%d".formatted(
-                                                            Character.toLowerCase(
-                                                                    pitchClasses.charValue()),
+                            .flatMap(wave -> accidentals.stream()
+                                    .flatMap(accidental -> Stream
+                                            .of(arguments(
+                                                    "%c%c%d%c%d".formatted(
+                                                            pitchClass.charValue(),
+                                                            accidental.charValue(),
                                                             octave,
-                                                            Character.toLowerCase(
-                                                                    NoteString.Delimiter.VOICE_AND_DURATION
-                                                                            .charValue()),
+                                                            NoteString.Delimiter.VOICE_AND_DURATION
+                                                                    .charValue(),
                                                             duration),
                                                     wave,
                                                     new Note(wave, new Pitch(
-                                                            pitchClasses,
-                                                            null,
+                                                            pitchClass,
+                                                            accidental,
                                                             octave),
-                                                            duration))),
-                                    accidentals.stream()
-                                            .flatMap(accidental -> Stream
-                                                    .of(arguments(
+                                                            duration)),
+                                                    arguments(
                                                             "%c%c%d%c%d".formatted(
-                                                                    pitchClasses.charValue(),
+                                                                    Character.toLowerCase(
+                                                                            pitchClass.charValue()),
                                                                     accidental.charValue(),
                                                                     octave,
                                                                     NoteString.Delimiter.VOICE_AND_DURATION
@@ -159,25 +112,10 @@ final class NoteStringsArgProvider {
                                                                     duration),
                                                             wave,
                                                             new Note(wave, new Pitch(
-                                                                    pitchClasses,
+                                                                    pitchClass,
                                                                     accidental,
                                                                     octave),
-                                                                    duration)),
-                                                            arguments(
-                                                                    "%c%c%d%c%d".formatted(
-                                                                            Character.toLowerCase(
-                                                                                    pitchClasses.charValue()),
-                                                                            accidental.charValue(),
-                                                                            octave,
-                                                                            NoteString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue(),
-                                                                            duration),
-                                                                    wave,
-                                                                    new Note(wave, new Pitch(
-                                                                            pitchClasses,
-                                                                            accidental,
-                                                                            octave),
-                                                                            duration))))));
+                                                                    duration)))));
                 });
             }
         }
