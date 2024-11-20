@@ -36,10 +36,10 @@ import static java.util.Objects.hash;
  * to create the span of time the audio will play.
  *
  * <p>
- * If a {@link Note} object has a duration of <i>N</i>, then its span of time
- * to play for is 1/<i>N</i> of a whole note. So if it has a duration value of
- * {@code 4}, then the audio has a time of 1/4 of a whole note or a quarter
- * note.
+ * If a {@link Note} object has a duration <i>N</i>, then its span of time to
+ * play for is <sup>1</sup>&frasl;<sub><i>N</i></sub> of a whole note. So if it
+ * has a duration value of {@code 4}, then the audio has a time of
+ * <sup>1</sup>&frasl;<sub>4</sub> of a whole note which is a quarter note.
  * </ol>
  *
  * A {@link Note} object can be represented as a {@code String} that can be
