@@ -152,9 +152,9 @@ frequency of the synthesized audio:
 
 ### Wave Shape prefix
 
-  The first segment of a *note string* sets what ***wave shape*** the audio
-  will be. This segment can be omitted to use the default wave shape. Refer to the
-  [Wave Shapes section](#wave-shapes) for the different wave shapes audio cna be.
+The first segment of a *note string* sets what ***wave shape*** the audio will
+be. This segment can be omitted to use the default wave shape. Refer to the
+[Wave Shapes section](#wave-shapes) for the different wave shapes audio cna be.
 
 ### Pitch (or silence)
 
