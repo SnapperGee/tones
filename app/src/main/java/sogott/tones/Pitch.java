@@ -50,7 +50,7 @@ import java.util.Optional;
  * @see PitchClass
  * @see Accidental
  * @see Audio
- * @see NoteString
+ * @see AudioString
  */
 final class Pitch {
     final private PitchClass _pitchClass;

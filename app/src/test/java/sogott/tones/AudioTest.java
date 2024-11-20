@@ -360,8 +360,8 @@ final class AudioTest {
     @MethodSource("positiveIntArgs")
     void silenceStringValueReturnsStringValue(int duration) {
         final Audio silenceAudio = Audio.silence(duration);
-        final String stringValue = "%c%c%d".formatted(NoteString.SILENCE_CHAR,
-                NoteString.Delimiter.VOICE_AND_DURATION.charValue(), duration);
+        final String stringValue = "%c%c%d".formatted(AudioString.SILENCE_CHAR,
+                AudioString.Delimiter.VOICE_AND_DURATION.charValue(), duration);
         assertEquals(stringValue, silenceAudio.stringValue());
     }
 

@@ -19,9 +19,9 @@ import static java.util.Collections.unmodifiableList;
  *
  * <p>
  * Its {@link #charValue() charValue} is also used for parsing {@code String}s
- * to a {@link Pitch} object by the {@link NoteString} and {@link Pitch} class.
+ * to a {@link Pitch} object by the {@link AudioString} and {@link Pitch} class.
  *
- * @see NoteString
+ * @see AudioString
  * @see Frequency
  * @see Pitch
  */

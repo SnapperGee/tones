@@ -15,9 +15,9 @@ import java.util.Optional;
  *
  * <p>
  * Its {@link #charValue() charValue} is also used for parsing {@code String}s
- * to a {@link Pitch} object by the {@link NoteString} and {@link Pitch} class.
+ * to a {@link Pitch} object by the {@link AudioString} and {@link Pitch} class.
  *
- * @see NoteString
+ * @see AudioString
  * @see Frequency
  * @see Pitch
  */
@@ -69,14 +69,14 @@ enum Accidental {
 
     /**
      * The {@code char} value of this {@link Accidental} used by the
-     * the {@link NoteString} class to parse {@code String}s to
+     * the {@link AudioString} class to parse {@code String}s to
      * {@link Pitch} objects.
      *
      * @return The {@code char} value of this {@link Accidental} used by the
-     *         the {@link NoteString} class to parse {@code String}s to
+     *         the {@link AudioString} class to parse {@code String}s to
      *         {@link Pitch}.
      *
-     * @see NoteString
+     * @see AudioString
      * @see Pitch
      */
     char charValue() {

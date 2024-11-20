@@ -73,7 +73,7 @@ final public class Main {
                                 new ArrayList<String>()),
                         (acc, operand) -> {
 
-                            NoteString.parse(operand, wave).ifPresentOrElse(
+                            AudioString.parse(operand, wave).ifPresentOrElse(
                                     parsedOperand -> acc.valid().add(parsedOperand),
                                     () -> acc.invalid().add(operand));
 

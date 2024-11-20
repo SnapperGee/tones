@@ -45,12 +45,12 @@ import static java.util.Objects.hash;
  * An {@link Audio} object can be represented as a {@code String} that can be
  * divided up into 3 segments, each segment corresponding to each of the 3
  * properties that an {@link Audio} object is composed of. Refer to the
- * {@link NoteString} class for more info.
+ * {@link AudioString} class for more info.
  *
  * @author Snap
  * @see Wave
  * @see Pitch
- * @see NoteString
+ * @see AudioString
  */
 final class Audio {
     final private Wave _wave;
@@ -68,7 +68,7 @@ final class Audio {
         this._wave = null;
         this._pitch = null;
         this._duration = duration;
-        this._string = "%c.%d".formatted(NoteString.SILENCE_CHAR, this._duration);
+        this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
         this._hashCode = hash(this._wave, this._pitch, this._duration);
         this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
                 Audio.class.getSimpleName(), this._duration);

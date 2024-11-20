@@ -21,9 +21,9 @@
  * An <strong><em>audio string</em></strong> is a {@code String} that can be
  * used to synthesize audio. The {@code String} can be divided up into 3
  * segments, each segment corresponding to the above properties. The
- * {@link sogott.tones.NoteString NoteString} class contains static methods for
- * parsing {@code String}s to {@link sogott.tones.Audio Audio} objects. Below is
- * an example an audio string:
+ * {@link sogott.tones.AudioString AudioString} class contains static methods
+ * for parsing {@code String}s to {@link sogott.tones.Audio Audio} objects.
+ * Below is an example an audio string:
  *
  * <pre>{@code SIN>C+4.4}</pre>
  *
