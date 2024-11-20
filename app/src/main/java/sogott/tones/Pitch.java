@@ -88,6 +88,11 @@ final class Pitch {
                     "Null %s %s.".formatted(Pitch.class.getSimpleName(), PitchClass.class.getSimpleName()));
         }
 
+        if (accidental == null) {
+            throw new IllegalArgumentException(
+                    "Null %s %s.".formatted(Pitch.class.getSimpleName(), Accidental.class.getSimpleName()));
+        }
+
         if (octave < 0) {
             throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
         }
@@ -95,14 +100,14 @@ final class Pitch {
         this._pitchClass = pitchClass;
         this._accidental = accidental;
         this._octave = octave;
-        this._stringValue = this._accidental == null
+        this._stringValue = this._accidental == Accidental.NATURAL
                 ? "%c%d".formatted(this._pitchClass.charValue(), this._octave)
                 : "%c%c%d".formatted(this._pitchClass.charValue(), this._accidental.charValue(), this._octave);
         this._hashCode = hash(this._pitchClass, this._accidental, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
                 this._pitchClass.name(),
-                this._accidental == null ? "null" : this._accidental.name(),
+                this._accidental.name(),
                 this._octave,
                 this._stringValue);
     }
@@ -110,8 +115,8 @@ final class Pitch {
     /**
      * Constructs a {@link Pitch} object instance with the following note and
      * octave properties and its {@link #accidental() accidental} property set
-     * to {@code null} designating that its note is natural &natural; (neither
-     * sharp &sharp; nor flat &flat;).
+     * to {@link Accidental#NATURAL NATURAL} designating that its note is
+     * natural &natural; (neither sharp &sharp; nor flat &flat;).
      *
      * @param pitchClass The {@link PitchClass} of the constructed {@link Pitch}
      *                   object.
@@ -126,7 +131,7 @@ final class Pitch {
      * @see PitchClass
      */
     Pitch(PitchClass pitchClass, int octave) {
-        this(pitchClass, null, octave);
+        this(pitchClass, Accidental.NATURAL, octave);
     }
 
     /**
@@ -234,7 +239,7 @@ final class Pitch {
                     ? Accidental.fromChar(aString.charAt(startIndex - 1))
                             .map(accidental -> Optional.of(new Pitch(note, accidental, octave)))
                             .orElse(Optional.empty())
-                    : Optional.of(new Pitch(note, octave));
+                    : Optional.of(new Pitch(note, Accidental.NATURAL, octave));
         }).orElse(Optional.empty());
     }
 
@@ -263,16 +268,16 @@ final class Pitch {
             return false;
         }
 
-        // Check if the second character is accidental ('+' or '-')
+        // Check if the second character is accidental ('+', '=', or '-')
         final int startIndex = Accidental.isAccidentalChar(aString.charAt(1)) ? 2 : 1;
 
-        // if second char is accidental ('+' or '-') there must be an octave int after
-        // it
+        // if second char is accidental ('+', '=', or '-') there must be an
+        // octave int after it
         if (startIndex == 2 && aString.length() < 3) {
             return false;
         }
 
-        // only an octave int after leading note or second accidental '+' or '-' char
+        // only an octave int after leading note or accidental '+', '=', or '-' char
         return aString.codePoints().skip(startIndex).allMatch(Character::isDigit);
     }
 }
