@@ -37,5 +37,7 @@ tasks.named<Test>("test") {
 
 tasks.named<Javadoc>("javadoc") {
     title = "tones"
-    options.memberLevel = JavadocMemberLevel.PACKAGE
+    options {
+        memberLevel = JavadocMemberLevel.PACKAGE
+    }
 }
