@@ -1,7 +1,5 @@
 package sogott.tones;
 
-import java.util.Optional;
-
 final record PitchClassAndAccidental(PitchClass pitchClass, Accidental accidental) {
     PitchClassAndAccidental {
         if (pitchClass == null) {
@@ -9,9 +7,7 @@ final record PitchClassAndAccidental(PitchClass pitchClass, Accidental accidenta
         }
 
         if (accidental == null) {
-            throw new IllegalArgumentException(
-                    "Null %s<%s>".formatted(Optional.class.getSimpleName(),
-                            Accidental.class.getSimpleName()));
+            throw new IllegalArgumentException("Null " + Accidental.class.getSimpleName());
         }
     }
 
