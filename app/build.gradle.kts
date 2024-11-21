@@ -36,8 +36,6 @@ tasks.named<Test>("test") {
 }
 
 tasks.named<Javadoc>("javadoc") {
-    val options = options as StandardJavadocDocletOptions
     title = "tones"
     options.memberLevel = JavadocMemberLevel.PACKAGE
-    options.stylesheetFile = file("src/main/css/dark-theme.css")
 }
