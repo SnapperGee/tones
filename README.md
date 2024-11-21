@@ -164,7 +164,7 @@ The pitch segment dictates the ***frequency*** the audio will be if it's audible
 audio or if the audio is silence (and therefore has no pitch). Pitch is composed
 of 3 components:
 
-1. The leading ***pitch class*** character consisting of one of the alpha
+1. The leading ***pitch letter*** character consisting of one of the alpha
 characters A-G.
 1. followed by the ***accidental***. The accidental character makes it so a note
 can be a *sharp* &sharp; or *flat* &flat;. Or if it's a *natural* &natural;
