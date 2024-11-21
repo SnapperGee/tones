@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    sodipodi:docname="audio_string.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,19 +23,21 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="3.396423"
-     inkscape:cx="249.67444"
-     inkscape:cy="198.44407"
-     inkscape:window-width="2880"
-     inkscape:window-height="1751"
+     inkscape:zoom="0.94662365"
+     inkscape:cx="185.39575"
+     inkscape:cy="213.38998"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
      inkscape:window-x="0"
-     inkscape:window-y="1105"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg5"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
     <rect
@@ -95,8 +97,8 @@
     <rect
        x="175.25262"
        y="462.67398"
-       width="232.26663"
-       height="36.757511"
+       width="172.37031"
+       height="36.131269"
        id="rect49647" />
     <rect
        x="175.25262"
@@ -104,14 +106,19 @@
        width="232.26663"
        height="36.757511"
        id="rect70878" />
+    <rect
+       x="175.25262"
+       y="462.67398"
+       width="161.44658"
+       height="36.492455"
+       id="rect49647-5" />
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer10"
      inkscape:label="pitch_string"
      style="display:inline"
-     transform="translate(-26.775099,-87.953868)"
-     sodipodi:insensitive="true">
+     transform="translate(-26.775099,-87.953868)">
     <g
        inkscape:label="pitch_text"
        inkscape:groupmode="layer"
@@ -121,15 +128,15 @@
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,59.555666,21.057387)"
          id="text34024"
-         style="font-style:normal;font-weight:normal;font-size:74.6667px;line-height:1.25;font-family:sans-serif;letter-spacing:24px;white-space:pre;shape-inside:url(#rect34032);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         style="font-style:normal;font-weight:normal;font-size:74.6667px;line-height:1.25;font-family:sans-serif;letter-spacing:24px;white-space:pre;shape-inside:url(#rect34032);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
            x="86.9375"
-           y="542.06644"
-           id="tspan7039">C+4</tspan></text>
+           y="543.94129"
+           id="tspan316">C+4</tspan></text>
       <text
          xml:space="preserve"
          transform="scale(0.26458333)"
          id="text34028"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect34034);fill:#000000;fill-opacity:1;stroke:none" />
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect34034);display:inline;fill:#000000;fill-opacity:1;stroke:none" />
     </g>
     <g
        inkscape:groupmode="layer"
@@ -144,25 +151,25 @@
            xml:space="preserve"
            transform="matrix(0.26458333,0,0,0.26458333,42.659953,51.445379)"
            id="text43286"
-           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect43290);fill:#000000;fill-opacity:1;stroke:none"
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect43290);display:inline;fill:#000000;fill-opacity:1;stroke:none"
            x="81.742188"
            y="0"><tspan
-             x="175.72949"
-             y="490.98633"
-             id="tspan7043"><tspan
+             x="181.75272"
+             y="491.78983"
+             id="tspan320"><tspan
                style="text-align:center;text-anchor:middle;fill:#00ff00"
-               id="tspan7041">Accidental
+               id="tspan318">Accidental
 </tspan></tspan><tspan
-             x="181.76855"
-             y="530.98633"
-             id="tspan7047"><tspan
+             x="187.40073"
+             y="531.78983"
+             id="tspan324"><tspan
                style="text-align:center;text-anchor:middle;fill:#00ff00"
-               id="tspan7045">(optional)</tspan></tspan></text>
+               id="tspan322">(optional)</tspan></tspan></text>
         <text
            xml:space="preserve"
            transform="scale(0.26458333)"
            id="text56180"
-           style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect56182);fill:#000000;fill-opacity:1;stroke:none" />
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect56182);display:inline;fill:#000000;fill-opacity:1;stroke:none" />
       </g>
       <g
          inkscape:groupmode="layer"
@@ -174,8 +181,22 @@
            id="rect49378"
            width="15.140417"
            height="1.6815062"
-           x="103.39063"
+           x="99.157303"
            y="164.7294" />
+        <rect
+           style="display:inline;fill:#00ffff;stroke-width:0.270994"
+           id="rect49378-3"
+           width="33.463615"
+           height="1.6815062"
+           x="81.211044"
+           y="147.40074" />
+        <rect
+           style="display:inline;fill:#00ffff;stroke-width:0.310903"
+           id="rect49378-3-6"
+           width="44.045696"
+           height="1.6815062"
+           x="54.590931"
+           y="142.22694" />
         <rect
            style="fill:#ff0000;stroke-width:0.264583"
            id="rect49380"
@@ -203,25 +224,24 @@
          style="display:inline">
         <text
            xml:space="preserve"
-           transform="matrix(0.26458333,0,0,0.26458333,89.130582,48.657989)"
+           transform="matrix(0.26458333,0,0,0.26458333,88.072248,48.657989)"
            id="text70874"
-           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect70878);fill:#0000ff;fill-opacity:1;stroke:none"><tspan
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect70878);display:inline;fill:#0000ff;fill-opacity:1;stroke:none"><tspan
              x="175.25195"
-             y="490.98633"
-             id="tspan7049">Octave</tspan></text>
+             y="491.78983"
+             id="tspan326">Octave</tspan></text>
       </g>
       <g
          inkscape:groupmode="layer"
          id="g69187"
          inkscape:label="octavel_underline"
-         style="display:inline"
-         sodipodi:insensitive="true">
+         style="display:inline">
         <rect
            style="fill:#0000ff;stroke-width:0.177773"
            id="rect69181"
            width="14.400837"
            height="1.6815062"
-           x="124.70859"
+           x="117.30027"
            y="164.78889" />
         <rect
            style="fill:#ff0000;stroke-width:0.264583"
@@ -251,14 +271,22 @@
          style="display:inline">
         <text
            xml:space="preserve"
-           transform="matrix(0.26458333,0,0,0.26458333,-20.321251,49.631347)"
+           transform="matrix(0.26458333,0,0,0.26458333,-10.049127,50.116557)"
            id="text49643"
-           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect49647);fill:#000000;fill-opacity:1;stroke:none"><tspan
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect49647);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
              x="175.25195"
-             y="490.98633"
-             id="tspan7053"><tspan
+             y="491.78983"
+             id="tspan330"><tspan
                style="fill:#ff0000"
-               id="tspan7051">(Musical) Note</tspan></tspan></text>
+               id="tspan328">Pitch Letter</tspan></tspan></text>
+        <text
+           xml:space="preserve"
+           transform="matrix(0.26458333,0,0,0.26458333,-13.840118,28.196493)"
+           id="text49643-3"
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect49647-5);display:inline;fill:#00ffff;fill-opacity:1;stroke:none"><tspan
+             x="175.25195"
+             y="491.78983"
+             id="tspan332">Pitch Class</tspan></text>
       </g>
       <g
          inkscape:groupmode="layer"
@@ -266,9 +294,9 @@
          inkscape:label="note_underline"
          style="display:inline">
         <rect
-           style="fill:#ff0000;stroke-width:0.190052"
+           style="fill:#ff0000;stroke-width:0.181992"
            id="rect42889"
-           width="16.458868"
+           width="15.092363"
            height="1.6815062"
            x="81.339775"
            y="165.02681" />
@@ -284,43 +312,73 @@
            id="rect42893"
            width="2.0562167"
            height="4.5056677"
-           x="95.742432"
+           x="95.213264"
            y="162.20265" />
         <rect
            style="display:inline;fill:#0000ff;stroke-width:0.264583"
            id="rect42893-5"
            width="2.0562167"
            height="4.5056677"
-           x="124.70859"
+           x="117.30027"
            y="161.96474" />
         <rect
            style="display:inline;fill:#0000ff;stroke-width:0.264583"
            id="rect42893-5-6"
            width="2.0562167"
            height="4.5056677"
-           x="137.05321"
+           x="129.64497"
            y="161.96474" />
         <rect
            style="display:inline;fill:#00ff00;stroke-width:0.264583"
            id="rect42893-7"
            width="2.0562167"
            height="4.5056677"
-           x="103.39063"
+           x="99.157303"
            y="161.90524" />
         <rect
            style="display:inline;fill:#00ff00;stroke-width:0.386423"
            id="rect42893-7-3"
            width="2.0562167"
            height="9.610857"
-           x="109.93443"
+           x="105.7011"
            y="164.82991" />
+        <rect
+           style="display:inline;fill:#00ffff;stroke-width:0.325374"
+           id="rect42893-7-3-5"
+           width="2.0562167"
+           height="6.8139853"
+           x="98.425179"
+           y="-149.02274"
+           transform="scale(1,-1)" />
+        <rect
+           style="display:inline;fill:#00ffff;stroke-width:0.372968"
+           id="rect42893-7-3-5-2"
+           width="2.0562167"
+           height="8.9531889"
+           x="54.338238"
+           y="-151.36826"
+           transform="scale(1,-1)" />
         <rect
            style="display:inline;fill:#00ff00;stroke-width:0.264583"
            id="rect42893-7-5"
            width="2.0562167"
            height="4.5056677"
-           x="116.47484"
+           x="112.24149"
            y="161.90524" />
+        <rect
+           style="display:inline;fill:#00ffff;stroke-width:0.264583"
+           id="rect42893-7-5-6"
+           width="2.0562167"
+           height="4.5056677"
+           x="112.65963"
+           y="147.50862" />
+        <rect
+           style="display:inline;fill:#00ffff;stroke-width:0.264583"
+           id="rect42893-7-5-6-7"
+           width="2.0562167"
+           height="4.5056677"
+           x="80.800552"
+           y="147.4091" />
       </g>
       <g
          inkscape:groupmode="layer"
@@ -340,8 +398,8 @@
            id="rect16782-2"
            width="1.9200472"
            height="9.1889086"
-           x="-14.784857"
-           y="214.88622"
+           x="-20.170645"
+           y="209.79921"
            transform="rotate(-43.365228)" />
       </g>
     </g>
@@ -351,8 +409,7 @@
      id="layer9"
      inkscape:label="audio_string"
      style="display:inline"
-     transform="translate(-26.775099,-87.953868)"
-     sodipodi:insensitive="true">
+     transform="translate(-26.775099,-87.953868)">
     <g
        inkscape:label="audio_text"
        inkscape:groupmode="layer"
@@ -361,15 +418,15 @@
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,26.996094,-40.805542)"
          id="text4127"
-         style="font-style:normal;font-weight:normal;font-size:74.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect4129);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         style="font-style:normal;font-weight:normal;font-size:74.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect4129);display:inline;fill:#000000;fill-opacity:1;stroke:none"><tspan
            x="86.9375"
-           y="542.06644"
-           id="tspan7055">TRI&gt;C+4.4</tspan></text>
+           y="543.94129"
+           id="tspan334">TRI&gt;C+4.4</tspan></text>
       <text
          xml:space="preserve"
          transform="scale(0.26458333)"
          id="text11325"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11327);fill:#000000;fill-opacity:1;stroke:none" />
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11327);display:inline;fill:#000000;fill-opacity:1;stroke:none" />
     </g>
     <g
        inkscape:groupmode="layer"
@@ -384,20 +441,20 @@
            xml:space="preserve"
            transform="matrix(0.26458333,0,0,0.26458333,-4.7839354,-10.11765)"
            id="text20067"
-           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect20069);fill:#000000;fill-opacity:1;stroke:none"
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect20069);display:inline;fill:#000000;fill-opacity:1;stroke:none"
            x="97.71875"
            y="0"><tspan
-             x="175.68262"
-             y="490.98633"
-             id="tspan7059"><tspan
+             x="183.42419"
+             y="491.78983"
+             id="tspan338"><tspan
                style="text-align:center;text-anchor:middle;fill:#ff0000"
-               id="tspan7057">Wave Shape
+               id="tspan336">Wave Shape
 </tspan></tspan><tspan
-             x="197.45605"
-             y="530.98633"
-             id="tspan7063"><tspan
+             x="203.08823"
+             y="531.78983"
+             id="tspan342"><tspan
                style="text-align:center;text-anchor:middle;fill:#ff0000"
-               id="tspan7061">(optional)</tspan></tspan></text>
+               id="tspan340">(optional)</tspan></tspan></text>
       </g>
       <g
          inkscape:groupmode="layer"
@@ -450,12 +507,12 @@
          inkscape:label="pitch_text">
         <text
            xml:space="preserve"
-           transform="matrix(0.26458333,0,0,0.26458333,63.502564,-10.347741)"
+           transform="matrix(0.26458333,0,0,0.26458333,53.701463,-10.084429)"
            id="text25810"
-           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect25814);fill:#00ff00;fill-opacity:1;stroke:none"><tspan
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect25814);display:inline;fill:#00ff00;fill-opacity:1;stroke:none"><tspan
              x="175.25195"
-             y="490.98633"
-             id="tspan7065">Pitch</tspan></text>
+             y="491.78983"
+             id="tspan344">Pitch</tspan></text>
       </g>
       <g
          inkscape:groupmode="layer"
@@ -466,34 +523,34 @@
            id="rect25782"
            width="1.9200472"
            height="9.1889086"
-           x="119.92863"
-           y="104.03004" />
+           x="110.12753"
+           y="104.82252" />
       </g>
       <g
          inkscape:groupmode="layer"
          id="g16531"
          inkscape:label="pitch_underline">
         <rect
-           style="fill:#00ff00;stroke-width:0.309413"
+           style="fill:#00ff00;stroke-width:0.281533"
            id="rect16525"
-           width="43.624779"
+           width="36.117237"
            height="1.6815062"
-           x="98.254852"
-           y="103.80867" />
+           x="91.06749"
+           y="104.60115" />
         <rect
            style="fill:#00ff00;stroke-width:0.264583"
            id="rect16527"
            width="2.0562167"
            height="4.5056677"
-           x="98.254852"
-           y="100.9845" />
+           x="90.889839"
+           y="101.62187" />
         <rect
            style="fill:#00ff00;stroke-width:0.264583"
            id="rect16529"
            width="2.0562167"
            height="4.5056677"
-           x="139.82343"
-           y="100.9845" />
+           x="125.11651"
+           y="101.73587" />
       </g>
     </g>
     <g
@@ -506,14 +563,14 @@
          inkscape:label="duration_text">
         <text
            xml:space="preserve"
-           transform="matrix(0.26458333,0,0,0.26458333,90.652351,-10.414496)"
+           transform="matrix(0.26458333,0,0,0.26458333,76.201952,-10.811254)"
            id="text28550"
-           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect28554);fill:#00ff00;fill-opacity:1;stroke:none"><tspan
+           style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect28554);display:inline;fill:#00ff00;fill-opacity:1;stroke:none"><tspan
              x="175.25195"
-             y="490.98633"
-             id="tspan7069"><tspan
+             y="491.78983"
+             id="tspan348"><tspan
                style="fill:#0000ff"
-               id="tspan7067">Duration</tspan></tspan></text>
+               id="tspan346">Duration</tspan></tspan></text>
       </g>
       <g
          inkscape:groupmode="layer"
@@ -524,34 +581,34 @@
            id="rect28395"
            width="1.9200472"
            height="9.1889086"
-           x="153.47295"
-           y="103.98294" />
+           x="137.96422"
+           y="104.64452" />
       </g>
       <g
          inkscape:groupmode="layer"
          id="g16657"
          inkscape:label="duration_underline">
         <rect
-           style="fill:#0000ff;stroke-width:0.183985"
+           style="fill:#0000ff;stroke-width:0.169415"
            id="rect16651"
-           width="15.424986"
+           width="13.078633"
            height="1.6814909"
-           x="146.05507"
-           y="103.63991" />
+           x="130.54634"
+           y="104.30148" />
         <rect
            style="fill:#0000ff;stroke-width:0.264583"
            id="rect16653"
            width="2.0562167"
            height="4.5056677"
-           x="146.05507"
-           y="100.81573" />
+           x="130.54634"
+           y="101.4773" />
         <rect
            style="fill:#0000ff;stroke-width:0.264583"
            id="rect16655"
            width="2.0562167"
            height="4.5056677"
-           x="159.42384"
-           y="100.81573" />
+           x="142.32764"
+           y="101.4773" />
       </g>
     </g>
   </g>
