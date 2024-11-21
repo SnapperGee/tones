@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-final class CliOptionArgProvider {
+final class CliOptionTestArgsProvider {
     final static class EnumValuesWithLongOpt implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
@@ -103,19 +103,19 @@ final class CliOptionArgProvider {
 
 final class CliOptionTest {
     @ParameterizedTest(name = "CliOption.{0}.value().getLongOpt() returns \"{1}\"")
-    @ArgumentsSource(CliOptionArgProvider.EnumValuesWithLongOpt.class)
+    @ArgumentsSource(CliOptionTestArgsProvider.EnumValuesWithLongOpt.class)
     void cliOptionLongOptValue(CliOption cliOption, String longOpt) {
         assertEquals(longOpt, cliOption.value().getLongOpt());
     }
 
     @ParameterizedTest(name = "CliOption.{0}.value().getOpt() returns \"{1}\"")
-    @ArgumentsSource(CliOptionArgProvider.EnumValuesWithFlag.class)
+    @ArgumentsSource(CliOptionTestArgsProvider.EnumValuesWithFlag.class)
     void cliOptionFlagValue(CliOption cliOption, String flag) {
         assertEquals(flag, cliOption.value().getOpt());
     }
 
     @ParameterizedTest(name = "CliOption.{0}.value().getArgs() returns {1}")
-    @ArgumentsSource(CliOptionArgProvider.EnumValuesWithArgCount.class)
+    @ArgumentsSource(CliOptionTestArgsProvider.EnumValuesWithArgCount.class)
     void cliOptionArgCount(CliOption cliOption, int numOfArgs) {
         assertEquals(numOfArgs, cliOption.value().getArgs());
     }
@@ -133,13 +133,13 @@ final class CliOptionTest {
     }
 
     @ParameterizedTest(name = "CliOption.{0}.value().getArgName() returns \"{1}\"")
-    @ArgumentsSource(CliOptionArgProvider.EnumValuesWithArgName.class)
+    @ArgumentsSource(CliOptionTestArgsProvider.EnumValuesWithArgName.class)
     void cliOptionArgName(CliOption cliOption, String argName) {
         assertEquals(argName, cliOption.value().getArgName());
     }
 
     @ParameterizedTest(name = "CliOption.{0}.value().getType() returns {1}")
-    @ArgumentsSource(CliOptionArgProvider.EnumValuesWithType.class)
+    @ArgumentsSource(CliOptionTestArgsProvider.EnumValuesWithType.class)
     void cliOptionArgName(CliOption cliOption, Class<?> type) {
         assertSame(type, cliOption.value().getType());
     }

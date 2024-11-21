@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class ByteBuffersArgProvider {
+final class ByteBuffersTestArgsProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
     private final static List<PitchClass> pitchClasses = unmodifiableList(asList(PitchClass.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
@@ -32,22 +32,22 @@ final class ByteBuffersTest {
     @Test
     @DisplayName("new ByteBuffers(Collection<Audio>, # > 0) does not throw")
     void byteBuffersConstructorPassedValidArgumentsDoesNotThrow() {
-        assertDoesNotThrow(() -> new ByteBuffers(ByteBuffersArgProvider.audioObjects,
-                ByteBuffersArgProvider.random.nextDouble(1, 200)));
+        assertDoesNotThrow(() -> new ByteBuffers(ByteBuffersTestArgsProvider.audioObjects,
+                ByteBuffersTestArgsProvider.random.nextDouble(1, 200)));
     }
 
     @Test
     @DisplayName("new ByteBuffers(null, # > 0) throws")
     void byteBuffersConstructorPassedNullAudioCollectionThrows() {
         assertThrows(IllegalArgumentException.class, () -> new ByteBuffers(null,
-                ByteBuffersArgProvider.random.nextDouble(1, 201)));
+                ByteBuffersTestArgsProvider.random.nextDouble(1, 201)));
     }
 
     @Test
     @DisplayName("new ByteBuffers(Collection<Audio>, # <= 0) throws")
     void byteBuffersConstructorPassedNegativeWholeNoteDurationThrows() {
         assertThrows(IllegalArgumentException.class, () -> new ByteBuffers(null,
-                ByteBuffersArgProvider.random.nextDouble(-200, 0)));
+                ByteBuffersTestArgsProvider.random.nextDouble(-200, 0)));
     }
 
     @Test

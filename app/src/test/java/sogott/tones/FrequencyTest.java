@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.closeTo;
 
-final class FrequencyArgProvider {
+final class FrequencyTestArgsProvider {
     final static class NoteAccidentalOctaveFrequency implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
@@ -484,7 +484,7 @@ final class FrequencyTest {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
     @ParameterizedTest(name = "Frequency.from(Note.{0}, {1}, {2}) ≅ {3}")
-    @ArgumentsSource(FrequencyArgProvider.NoteAccidentalOctaveFrequency.class)
+    @ArgumentsSource(FrequencyTestArgsProvider.NoteAccidentalOctaveFrequency.class)
     void frequencyFromNoteAccidentalOctave(PitchClass note, Accidental accidental, int octave,
             double expectedFrequency) {
         final double frequency = Frequency.from(note, accidental, octave);
@@ -492,14 +492,14 @@ final class FrequencyTest {
     }
 
     @ParameterizedTest(name = "Frequency.from(Note.{0}, {1}) ≅ {2}")
-    @ArgumentsSource(FrequencyArgProvider.NoteOctaveFrequency.class)
+    @ArgumentsSource(FrequencyTestArgsProvider.NoteOctaveFrequency.class)
     void frequencyFromNoteOctave(PitchClass note, int octave, double expectedFrequency) {
         final double frequency = Frequency.from(note, octave);
         assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));
     }
 
     @ParameterizedTest(name = "Frequency.from({0}) ≅ {1}")
-    @ArgumentsSource(FrequencyArgProvider.PitchFrequency.class)
+    @ArgumentsSource(FrequencyTestArgsProvider.PitchFrequency.class)
     void frequencyFromPitch(Pitch pitch, double expectedFrequency) {
         final double frequency = Frequency.from(pitch);
         assertThat(frequency, is(closeTo(expectedFrequency, 0.01)));

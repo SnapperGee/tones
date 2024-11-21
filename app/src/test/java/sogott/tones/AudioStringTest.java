@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-final class AudioStringTestArgProvider {
+final class AudioStringTestArgsProvider {
     private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
     private final static List<PitchClass> pitchClasses = unmodifiableList(asList(PitchClass.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
@@ -756,7 +756,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
-    @ArgumentsSource(AudioStringTestArgProvider.Valid.WaveShapePrefixedAudioStringValueAndAudio.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioStringValueAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
             Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
@@ -766,7 +766,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
-    @ArgumentsSource(AudioStringTestArgProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
             Wave wave, Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
@@ -776,7 +776,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") returns empty optional")
-    @ArgumentsSource(AudioStringTestArgProvider.Invalid.AudioStringValue.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringValue.class)
     @EmptySource
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
@@ -785,7 +785,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty optional")
-    @ArgumentsSource(AudioStringTestArgProvider.Invalid.AudioStringValueAndWave.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringValueAndWave.class)
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, Wave wave) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
