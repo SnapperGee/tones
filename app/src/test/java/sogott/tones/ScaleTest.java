@@ -162,21 +162,25 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP), Scale.Major.Sharp.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.SHARP), Scale.Major.Sharp.C),
+                        arguments(Scale.Major.Sharp.C, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.SHARP)
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Major.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP), Scale.Major.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP), Scale.Major.Sharp.F));
+                        arguments(Scale.Major.Sharp.F, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP)
+                        }));
             }
         }
     }
@@ -339,9 +343,9 @@ final class ScaleTest {
         final static class Sharp {
             @ParameterizedTest(name = "Scale.Major.Sharp.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Major.Sharp.class)
-            void scaleMajorSharpCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
-                    Scale.Major.Sharp majorSharpScale) {
-                assertThat(majorSharpScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
+            void scaleMajorSharpCorrectNotes(Scale.Major.Sharp majorSharpScale,
+                    PitchClassAndAccidental[] pitchClassesAndAccidentals) {
+                assertThat(majorSharpScale.pitchClassesAndAccidentals(), contains(pitchClassesAndAccidentals));
             }
         }
     }
