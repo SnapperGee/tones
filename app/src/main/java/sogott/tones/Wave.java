@@ -8,7 +8,6 @@ import java.util.function.BiFunction;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableSet;
 import static java.util.Comparator.comparingInt;
 
 /**
@@ -38,29 +37,29 @@ enum Wave {
     /**
      * A <i>SINE</i> wave.
      */
-    SINE(GenerateWaveByteBuffer::sine, "SIN"),
+    SINE(GenerateWaveByteBuffer::sine, "SIN", Set.of("SINE","SIN")),
 
     /**
      * A <i>SQUARE</i> wave.
      */
-    SQUARE(GenerateWaveByteBuffer::square, "SQR"),
+    SQUARE(GenerateWaveByteBuffer::square, "SQR", Set.of("SQUARE", "SQR")),
 
     /**
      * A <i>TRIANGLE</i> wave.
      */
-    TRIANGLE(GenerateWaveByteBuffer::triangle, "TRI"),
+    TRIANGLE(GenerateWaveByteBuffer::triangle, "TRI", Set.of("TRIANGLE", "TRI")),
 
     /**
      * A <i>SAW UP</i> wave.
      */
-    SAW_UP(GenerateWaveByteBuffer::sawUp, "SUP", Set.of("SAWUP")),
+    SAW_UP(GenerateWaveByteBuffer::sawUp, "SUP", Set.of("SAW_UP", "SAWUP", "SUP")),
 
     /**
      * A <i>SAW DOWN</i> wave.
      */
-    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAWDOWN"));
+    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN"));
 
-    private final static List<Wave> _waves = unmodifiableList(asList(Wave.values()));
+    private final static List<Wave> WAVES = unmodifiableList(asList(Wave.values()));
 
     private final BiFunction<Double, Integer, byte[]> _generatorFunc;
 
@@ -68,19 +67,11 @@ enum Wave {
 
     private final Set<String> _stringValueAliases;
 
-    private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue) {
-        this._generatorFunc = generatorFunc;
-        this._stringValue = stringValue;
-        this._stringValueAliases = Set.of(this._stringValue, this.name());
-    }
-
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue,
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
-        final Set<String> stringSet = new HashSet<String>(asList(this._stringValue, this.name()));
-        stringSet.addAll(stringValueAliases);
-        this._stringValueAliases = unmodifiableSet(stringSet);
+        this._stringValueAliases = stringValueAliases;
     }
 
     /**
@@ -167,7 +158,7 @@ enum Wave {
      *         present or an empty optional if not.
      */
     static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
-        return _waves.stream()
+        return WAVES.stream()
                 .flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                         && aString.regionMatches(ignoreCase, 0, waveStringAlias, 0, waveStringAlias.length()))
@@ -217,11 +208,11 @@ enum Wave {
         }
 
         if (ignoreCase) {
-            return _waves.stream().filter(wave -> wave._stringValueAliases.stream()
+            return WAVES.stream().filter(wave -> wave._stringValueAliases.stream()
                     .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst();
         }
 
-        return _waves.stream().filter(wave -> wave._stringValueAliases.stream()
+        return WAVES.stream().filter(wave -> wave._stringValueAliases.stream()
                 .anyMatch(waveStringValue -> aString.equals(waveStringValue))).findFirst();
     }
 
