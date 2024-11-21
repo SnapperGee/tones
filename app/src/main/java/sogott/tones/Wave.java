@@ -60,13 +60,13 @@ enum Wave {
      */
     SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAWDOWN"));
 
-    final private static List<Wave> _waves = unmodifiableList(asList(Wave.values()));
+    private final static List<Wave> _waves = unmodifiableList(asList(Wave.values()));
 
-    final private BiFunction<Double, Integer, byte[]> _generatorFunc;
+    private final BiFunction<Double, Integer, byte[]> _generatorFunc;
 
-    final private String _stringValue;
+    private final String _stringValue;
 
-    final private Set<String> _stringValueAliases;
+    private final Set<String> _stringValueAliases;
 
     private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue) {
         this._generatorFunc = generatorFunc;
