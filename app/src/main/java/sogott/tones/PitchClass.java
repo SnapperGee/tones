@@ -1,7 +1,7 @@
 package sogott.tones;
 
-final record PitchClassAndAccidental(PitchLetter pitchLetter, Accidental accidental) {
-    PitchClassAndAccidental {
+final record PitchClass(PitchLetter pitchLetter, Accidental accidental) {
+    PitchClass {
         if (pitchLetter == null) {
             throw new IllegalArgumentException("Null " + PitchLetter.class.getSimpleName());
         }
