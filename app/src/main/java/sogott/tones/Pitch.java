@@ -53,6 +53,7 @@ import java.util.Optional;
  * @see AudioString
  */
 final class Pitch {
+
     final private PitchLetter _pitchLetter;
     final private Accidental _accidental;
     final private int _octave;
