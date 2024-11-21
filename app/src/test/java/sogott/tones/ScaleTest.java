@@ -266,37 +266,45 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT), Scale.Minor.Flat.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.A),
+                        arguments(Scale.Minor.Flat.A, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT)
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Flat.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Flat.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.B),
+                        arguments(Scale.Minor.Flat.B, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT)
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Flat.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.D),
+                        arguments(Scale.Minor.Flat.D, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT)
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Flat.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT), Scale.Minor.Flat.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Flat.E));
+                        arguments(Scale.Minor.Flat.E, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT)
+                        }));
             }
         }
 
@@ -367,9 +375,9 @@ final class ScaleTest {
         final static class Flat {
             @ParameterizedTest(name = "Scale.Minor.Flat.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Minor.Flat.class)
-            void scaleMinorFlatCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
-                    Scale.Minor.Flat minorFlatScale) {
-                assertThat(minorFlatScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
+            void scaleMinorFlatCorrectNotes(Scale.Minor.Flat minorFlatScale,
+                    PitchClassAndAccidental[] pitchClassesAndAccidentals) {
+                assertThat(minorFlatScale.pitchClassesAndAccidentals(), contains(pitchClassesAndAccidentals));
             }
         }
 
