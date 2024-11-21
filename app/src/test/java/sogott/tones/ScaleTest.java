@@ -1,6 +1,5 @@
 package sogott.tones;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -20,72 +19,72 @@ final class ScaleArgProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
                         arguments(Scale.Major.Natural.A, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP)
                         }),
 
                         arguments(Scale.Major.Natural.B, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP)
                         }),
 
                         arguments(Scale.Major.Natural.C, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Major.Natural.D, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP)
                         }),
 
                         arguments(Scale.Major.Natural.E, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP)
                         }),
 
                         arguments(Scale.Major.Natural.F, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Major.Natural.G, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP)
                         }));
             }
@@ -98,21 +97,21 @@ final class ScaleArgProvider {
                         arguments(Scale.Major.Flat.A, new PitchClassAndAccidental[] {
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Major.Flat.B, new PitchClassAndAccidental[] {
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Major.Flat.C, new PitchClassAndAccidental[] {
@@ -132,17 +131,17 @@ final class ScaleArgProvider {
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Major.Flat.E, new PitchClassAndAccidental[] {
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Major.Flat.G, new PitchClassAndAccidental[] {
@@ -152,7 +151,7 @@ final class ScaleArgProvider {
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL)
                         }));
             }
         }
@@ -175,7 +174,7 @@ final class ScaleArgProvider {
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP)
@@ -190,73 +189,73 @@ final class ScaleArgProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
                         arguments(Scale.Minor.Natural.A, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Minor.Natural.B, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Minor.Natural.C, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT)
                         }),
 
                         arguments(Scale.Minor.Natural.D, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Minor.Natural.E, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL)
                         }),
 
                         arguments(Scale.Minor.Natural.F, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT)
                         }),
 
                         arguments(Scale.Minor.Natural.G, new PitchClassAndAccidental[] {
-                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL)
                         }));
             }
         }
@@ -277,10 +276,10 @@ final class ScaleArgProvider {
 
                         arguments(Scale.Minor.Flat.B, new PitchClassAndAccidental[] {
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT)
                         }),
@@ -291,13 +290,13 @@ final class ScaleArgProvider {
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT)
                         }),
 
                         arguments(Scale.Minor.Flat.E, new PitchClassAndAccidental[] {
                                 new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                                 new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
@@ -314,11 +313,11 @@ final class ScaleArgProvider {
                         arguments(Scale.Minor.Sharp.F, new PitchClassAndAccidental[] {
                                 new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                                 new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                                 new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
-                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                                new PitchClassAndAccidental(PitchClass.E, Optional.empty())
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL)
                         }));
             }
         }

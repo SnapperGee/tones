@@ -1,7 +1,6 @@
 package sogott.tones;
 
 import java.util.List;
-import java.util.Optional;
 
 interface Scale {
     List<PitchClassAndAccidental> pitchClassesAndAccidentals();
@@ -9,60 +8,60 @@ interface Scale {
     final static class Major {
         static enum Natural implements Scale {
             A(List.of(
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP))),
             B(List.of(
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP))),
             C(List.of(
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL))),
             D(List.of(
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP))),
             E(List.of(
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP))),
             F(List.of(
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL))),
             G(List.of(
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP)));
 
             final private List<PitchClassAndAccidental> _pitchClassesAndAccidentals;
@@ -80,19 +79,19 @@ interface Scale {
             A(List.of(
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL))),
             B(List.of(
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL))),
             C(List.of(
                     new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
@@ -108,15 +107,15 @@ interface Scale {
                     new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL))),
             E(List.of(
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL))),
             G(List.of(
                     new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
@@ -124,7 +123,7 @@ interface Scale {
                     new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty())));
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL)));
 
             final private List<PitchClassAndAccidental> _pitchClassesAndAccidentals;
 
@@ -150,7 +149,7 @@ interface Scale {
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.SHARP)));
@@ -175,61 +174,61 @@ interface Scale {
     final static class Minor {
         static enum Natural implements Scale {
             A(List.of(
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL))),
             B(List.of(
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL))),
             C(List.of(
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT))),
             D(List.of(
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL))),
             E(List.of(
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()))),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL))),
             F(List.of(
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT))),
             G(List.of(
-                    new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.G, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty())));
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL)));
 
             final private List<PitchClassAndAccidental> _pitchClassesAndAccidentals;
 
@@ -253,10 +252,10 @@ interface Scale {
                     new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT))),
             B(List.of(
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.C, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT))),
             D(List.of(
@@ -265,11 +264,11 @@ interface Scale {
                     new PitchClassAndAccidental(PitchClass.F, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.FLAT))),
             E(List.of(
                     new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
-                    new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.F, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
                     new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
@@ -291,11 +290,11 @@ interface Scale {
             F(List.of(
                     new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
                     new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                    new PitchClassAndAccidental(PitchClass.A, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.B, Accidental.NATURAL),
                     new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
-                    new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
-                    new PitchClassAndAccidental(PitchClass.E, Optional.empty())));
+                    new PitchClassAndAccidental(PitchClass.D, Accidental.NATURAL),
+                    new PitchClassAndAccidental(PitchClass.E, Accidental.NATURAL)));
 
             final private List<PitchClassAndAccidental> _pitchClassesAndAccidentals;
 

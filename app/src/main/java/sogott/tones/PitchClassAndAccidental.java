@@ -2,7 +2,7 @@ package sogott.tones;
 
 import java.util.Optional;
 
-final record PitchClassAndAccidental(PitchClass pitchClass, Optional<Accidental> accidental) {
+final record PitchClassAndAccidental(PitchClass pitchClass, Accidental accidental) {
     PitchClassAndAccidental {
         if (pitchClass == null) {
             throw new IllegalArgumentException("Null " + PitchClass.class.getSimpleName());
@@ -15,7 +15,7 @@ final record PitchClassAndAccidental(PitchClass pitchClass, Optional<Accidental>
         }
     }
 
-    PitchClassAndAccidental(PitchClass pitchClass, Accidental accidental) {
-        this(pitchClass, Optional.of(accidental));
+    Pitch toPitchWithOctave(int octave) {
+        return new Pitch(this.pitchClass, this.accidental, octave);
     }
 }
