@@ -12,6 +12,7 @@ import org.junit.platform.suite.api.Suite;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.contains;
 
 final class ScaleArgProvider {
     static final class Major {
@@ -159,61 +160,75 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.A),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.A),
+                        arguments(Scale.Minor.Natural.A, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty())
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Minor.Natural.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Minor.Natural.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.B),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.B),
+                        arguments(Scale.Minor.Natural.B, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty())
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Natural.C),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.C),
+                        arguments(Scale.Minor.Natural.C, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT)
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.D),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.D),
+                        arguments(Scale.Minor.Natural.D, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty())
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Minor.Natural.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.E),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.E),
+                        arguments(Scale.Minor.Natural.E, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.E, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty())
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT), Scale.Minor.Natural.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT), Scale.Minor.Natural.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.F),
+                        arguments(Scale.Minor.Natural.F, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT)
+                        }),
 
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT), Scale.Minor.Natural.G),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Natural.G),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT), Scale.Minor.Natural.G),
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Optional.empty()), Scale.Minor.Natural.G));
+                        arguments(Scale.Minor.Natural.G, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.G, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.C, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Accidental.FLAT),
+                                new PitchClassAndAccidental(PitchClass.F, Optional.empty())
+                        }));
             }
         }
 
@@ -311,9 +326,10 @@ final class ScaleTest {
         final static class Natural {
             @ParameterizedTest(name = "Scale.Minor.Natural.{1} contains {0}")
             @ArgumentsSource(ScaleArgProvider.Minor.Natural.class)
-            void scaleMinorNaturalCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
-                    Scale.Minor.Natural minorNaturalScale) {
-                assertThat(minorNaturalScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
+            void scaleMinorNaturalCorrectNotes(
+                    Scale.Minor.Natural minorNaturalScale,
+                    PitchClassAndAccidental[] pitchClassesAndAccidentals) {
+                assertThat(minorNaturalScale.pitchClassesAndAccidentals(), contains(pitchClassesAndAccidentals));
             }
         }
 
