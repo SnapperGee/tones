@@ -11,7 +11,6 @@ import org.junit.platform.suite.api.Suite;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.contains;
 
 final class ScaleArgProvider {
@@ -312,13 +311,15 @@ final class ScaleArgProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP), Scale.Minor.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP), Scale.Minor.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.A, Optional.empty()), Scale.Minor.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.B, Optional.empty()), Scale.Minor.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP), Scale.Minor.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.D, Optional.empty()), Scale.Minor.Sharp.F),
-                        arguments(new PitchClassAndAccidental(PitchClass.E, Optional.empty()), Scale.Minor.Sharp.F));
+                        arguments(Scale.Minor.Sharp.F, new PitchClassAndAccidental[] {
+                                new PitchClassAndAccidental(PitchClass.F, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.G, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.A, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.B, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.C, Accidental.SHARP),
+                                new PitchClassAndAccidental(PitchClass.D, Optional.empty()),
+                                new PitchClassAndAccidental(PitchClass.E, Optional.empty())
+                        }));
             }
         }
     }
@@ -329,7 +330,7 @@ final class ScaleTest {
     final static class Major {
         @Suite
         final static class Natural {
-            @ParameterizedTest(name = "Scale.Major.Natural.{1} contains {0}")
+            @ParameterizedTest(name = "Scale.Major.Natural.{0} contains {1}")
             @ArgumentsSource(ScaleArgProvider.Major.Natural.class)
             void scaleMajorNaturalCorrectNotes(Scale.Major.Natural majorNaturalScale,
                     PitchClassAndAccidental[] pitchClassesAndAccidentals) {
@@ -339,7 +340,7 @@ final class ScaleTest {
 
         @Suite
         final static class Flat {
-            @ParameterizedTest(name = "Scale.Major.Flat.{1} contains {0}")
+            @ParameterizedTest(name = "Scale.Major.Flat.{0} contains {1}")
             @ArgumentsSource(ScaleArgProvider.Major.Flat.class)
             void scaleMajorFlatCorrectNotes(Scale.Major.Flat majorFlatScale,
                     PitchClassAndAccidental[] pitchClassesAndAccidentals) {
@@ -349,7 +350,7 @@ final class ScaleTest {
 
         @Suite
         final static class Sharp {
-            @ParameterizedTest(name = "Scale.Major.Sharp.{1} contains {0}")
+            @ParameterizedTest(name = "Scale.Major.Sharp.{0} contains {1}")
             @ArgumentsSource(ScaleArgProvider.Major.Sharp.class)
             void scaleMajorSharpCorrectNotes(Scale.Major.Sharp majorSharpScale,
                     PitchClassAndAccidental[] pitchClassesAndAccidentals) {
@@ -362,7 +363,7 @@ final class ScaleTest {
     final static class Minor {
         @Suite
         final static class Natural {
-            @ParameterizedTest(name = "Scale.Minor.Natural.{1} contains {0}")
+            @ParameterizedTest(name = "Scale.Minor.Natural.{0} contains {1}")
             @ArgumentsSource(ScaleArgProvider.Minor.Natural.class)
             void scaleMinorNaturalCorrectNotes(
                     Scale.Minor.Natural minorNaturalScale,
@@ -373,7 +374,7 @@ final class ScaleTest {
 
         @Suite
         final static class Flat {
-            @ParameterizedTest(name = "Scale.Minor.Flat.{1} contains {0}")
+            @ParameterizedTest(name = "Scale.Minor.Flat.{0} contains {1}")
             @ArgumentsSource(ScaleArgProvider.Minor.Flat.class)
             void scaleMinorFlatCorrectNotes(Scale.Minor.Flat minorFlatScale,
                     PitchClassAndAccidental[] pitchClassesAndAccidentals) {
@@ -383,11 +384,11 @@ final class ScaleTest {
 
         @Suite
         final static class Sharp {
-            @ParameterizedTest(name = "Scale.Minor.Sharp.{1} contains {0}")
+            @ParameterizedTest(name = "Scale.Minor.Sharp.{0} contains {1}")
             @ArgumentsSource(ScaleArgProvider.Minor.Sharp.class)
-            void scaleMinorSharpCorrectNotes(PitchClassAndAccidental pitchClassAndAccidental,
-                    Scale.Minor.Sharp minorSharpScale) {
-                assertThat(minorSharpScale.pitchClassesAndAccidentals(), hasItem(pitchClassAndAccidental));
+            void scaleMinorSharpCorrectNotes(Scale.Minor.Sharp minorSharpScale,
+                    PitchClassAndAccidental[] pitchClassesAndAccidentals) {
+                assertThat(minorSharpScale.pitchClassesAndAccidentals(), contains(pitchClassesAndAccidentals));
             }
         }
     }
