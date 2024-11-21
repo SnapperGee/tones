@@ -7,10 +7,10 @@ import java.util.Optional;
  * This class defines an object that can be used to represent the frequency of
  * audio expressed as a musical note. It consists of 3 primary properties:
  *
- * <h2>1.) {@code Pitch Class}</h2>
+ * <h2>1.) {@code Pitch Letter}</h2>
  * The {@link #note() note} property consists of a character value corresponding
  * to one of the musical notes (A-G). These note chars are defined in the
- * {@link PitchClass} enum.
+ * {@link PitchLetter} enum.
  *
  * <h2>2.) {@code Accidental}</h2>
  * The {@link #accidental() accidental} property consists of a character value
@@ -41,19 +41,19 @@ import java.util.Optional;
  * (flat) musical note in the 2nd octave would be {@code "B-2"}, with B&sharp;
  * (sharp) in the 2nd octave e being {@code "B+2"}. The characters that
  * correspond to musical notes and their accidentals are defined in the
- * {@link PitchClass} and {@link Accidental} enum respectively. A {@link Pitch}
+ * {@link PitchLetter} and {@link Accidental} enum respectively. A {@link Pitch}
  * object
  * of the note B&sharp; (sharp) in the 2nd octave would be <code>Pitch {
  * note=Note.B, accidental=Accidental.SHARP, octave=2}</code> with a string
  * value of {@code "B+2"}.
  *
- * @see PitchClass
+ * @see PitchLetter
  * @see Accidental
  * @see Audio
  * @see AudioString
  */
 final class Pitch {
-    final private PitchClass _pitchClass;
+    final private PitchLetter _pitchLetter;
     final private Accidental _accidental;
     final private int _octave;
     final private String _stringValue;
@@ -62,9 +62,9 @@ final class Pitch {
 
     /**
      * Constructs a {@link Pitch} object instance with the following
-     * {@link PitchClass}, {@link Accidental}, and octave properties.
+     * {@link PitchLetter}, {@link Accidental}, and octave properties.
      *
-     * @param pitchClass The {@link PitchClass} of the constructed {@link Pitch}
+     * @param pitchLetter The {@link PitchLetter} of the constructed {@link Pitch}
      *                   object.
      *
      * @param accidental The {@link Accidental} (sharp &sharp; or flat &flat;)
@@ -75,17 +75,17 @@ final class Pitch {
      * @param octave     A non negative {@code int} specifying what octave the note
      *                   of the constructed {@link Pitch} object is in.
      *
-     * @throws IllegalArgumentException If the passed {@link PitchClass} is
+     * @throws IllegalArgumentException If the passed {@link PitchLetter} is
      *                                  {@code null} or the octave is negative
      *                                  (less than 0).
      *
-     * @see PitchClass
+     * @see PitchLetter
      * @see Accidental
      */
-    Pitch(PitchClass pitchClass, Accidental accidental, int octave) {
-        if (pitchClass == null) {
+    Pitch(PitchLetter pitchLetter, Accidental accidental, int octave) {
+        if (pitchLetter == null) {
             throw new IllegalArgumentException(
-                    "Null %s %s.".formatted(Pitch.class.getSimpleName(), PitchClass.class.getSimpleName()));
+                    "Null %s %s.".formatted(Pitch.class.getSimpleName(), PitchLetter.class.getSimpleName()));
         }
 
         if (accidental == null) {
@@ -97,16 +97,16 @@ final class Pitch {
             throw new IllegalArgumentException("Negative octave: %d".formatted(octave));
         }
 
-        this._pitchClass = pitchClass;
+        this._pitchLetter = pitchLetter;
         this._accidental = accidental;
         this._octave = octave;
         this._stringValue = this._accidental == Accidental.NATURAL
-                ? "%c%d".formatted(this._pitchClass.charValue(), this._octave)
-                : "%c%c%d".formatted(this._pitchClass.charValue(), this._accidental.charValue(), this._octave);
-        this._hashCode = hash(this._pitchClass, this._accidental, this._octave);
+                ? "%c%d".formatted(this._pitchLetter.charValue(), this._octave)
+                : "%c%c%d".formatted(this._pitchLetter.charValue(), this._accidental.charValue(), this._octave);
+        this._hashCode = hash(this._pitchLetter, this._accidental, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
-                this._pitchClass.name(),
+                this._pitchLetter.name(),
                 this._accidental.name(),
                 this._octave,
                 this._stringValue);
@@ -118,32 +118,32 @@ final class Pitch {
      * to {@link Accidental#NATURAL NATURAL} designating that its note is
      * natural &natural; (neither sharp &sharp; nor flat &flat;).
      *
-     * @param pitchClass The {@link PitchClass} of the constructed {@link Pitch}
+     * @param pitchLetter The {@link PitchLetter} of the constructed {@link Pitch}
      *                   object.
      *
      * @param octave     A non negative {@code int} specifying what octave the note
      *                   of the constructed {@link Pitch} object is in.
      *
-     * @throws IllegalArgumentException If the passed {@link PitchClass} is
+     * @throws IllegalArgumentException If the passed {@link PitchLetter} is
      *                                  {@code null} or the octave is negative
      *                                  (less than 0).
      *
-     * @see PitchClass
+     * @see PitchLetter
      */
-    Pitch(PitchClass pitchClass, int octave) {
-        this(pitchClass, Accidental.NATURAL, octave);
+    Pitch(PitchLetter pitchLetter, int octave) {
+        this(pitchLetter, Accidental.NATURAL, octave);
     }
 
     /**
-     * The {@link PitchClass} value of this {@link Pitch} object. That is, one
-     * of the {@code char} values A-G defined in the {@link PitchClass} enum.
+     * The {@link PitchLetter} value of this {@link Pitch} object. That is, one
+     * of the {@code char} values A-G defined in the {@link PitchLetter} enum.
      *
-     * @return The {@link PitchClass} value of this {@link Pitch} object.
+     * @return The {@link PitchLetter} value of this {@link Pitch} object.
      *
-     * @see PitchClass
+     * @see PitchLetter
      */
-    PitchClass note() {
-        return this._pitchClass;
+    PitchLetter note() {
+        return this._pitchLetter;
     }
 
     /**
@@ -185,7 +185,7 @@ final class Pitch {
     public boolean equals(Object obj) {
         return this == obj ||
                 obj instanceof Pitch other
-                        && this._pitchClass == other._pitchClass
+                        && this._pitchLetter == other._pitchLetter
                         && this._accidental == other._accidental
                         && this._octave == other._octave;
     }
@@ -234,7 +234,7 @@ final class Pitch {
 
         final int octave = Integer.parseInt(octaveString);
 
-        return PitchClass.fromChar(aString.charAt(0)).map(note -> {
+        return PitchLetter.fromChar(aString.charAt(0)).map(note -> {
             return startIndex == 2
                     ? Accidental.fromChar(aString.charAt(startIndex - 1))
                             .map(accidental -> Optional.of(new Pitch(note, accidental, octave)))
@@ -264,7 +264,7 @@ final class Pitch {
         }
 
         // leading char must be valid note
-        if (!PitchClass.isPitchLetter(aString.charAt(0))) {
+        if (!PitchLetter.isPitchLetter(aString.charAt(0))) {
             return false;
         }
 

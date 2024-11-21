@@ -8,9 +8,9 @@ import static java.util.Collections.unmodifiableList;
 
 /**
  * Enum of values to represent musical
- * <strong><em>pitch class</em></strong>es/<strong><em>pitch
+ * <strong><em>pitch letter</em></strong>es/<strong><em>pitch
  * letter</em></strong>s, characters A-G, and static methods for processing
- * characters in ways related to these pitch class enum values.
+ * characters in ways related to these pitch letter enum values.
  *
  * <p>
  * Each accidental value consists of an {@link #offset() offset} {@code int}
@@ -25,63 +25,63 @@ import static java.util.Collections.unmodifiableList;
  * @see Frequency
  * @see Pitch
  */
-enum PitchClass {
+enum PitchLetter {
     /**
-     * The enum value for the <strong><em>A</em></strong> pitch class/letter
+     * The enum value for the <strong><em>A</em></strong> pitch letter/letter
      * with an offset value of {@code 0}.
      */
     A(0),
 
     /**
-     * The enum value for the <strong><em>B</em></strong> pitch class/letter
+     * The enum value for the <strong><em>B</em></strong> pitch letter/letter
      * with an offset value of {@code 2}.
      */
     B(2),
 
     /**
-     * The enum value for the <strong><em>C</em></strong> pitch class/letter
+     * The enum value for the <strong><em>C</em></strong> pitch letter/letter
      * with an offset value of {@code -9}.
      */
     C(-9),
 
     /**
-     * The enum value for the <strong><em>D</em></strong> pitch class/letter
+     * The enum value for the <strong><em>D</em></strong> pitch letter/letter
      * with an offset value of {@code -7}.
      */
     D(-7),
 
     /**
-     * The enum value for the <strong><em>E</em></strong> pitch class/letter
+     * The enum value for the <strong><em>E</em></strong> pitch letter/letter
      * with an offset value of {@code -5}.
      */
     E(-5),
 
     /**
-     * The enum value for the <strong><em>F</em></strong> pitch class/letter
+     * The enum value for the <strong><em>F</em></strong> pitch letter/letter
      * with an offset value of {@code -4}.
      */
     F(-4),
 
     /**
-     * The enum value for the <strong><em>G</em></strong> pitch class/letter
+     * The enum value for the <strong><em>G</em></strong> pitch letter/letter
      * with an offset value of {@code -2}.
      */
     G(-2);
 
-    final private static List<PitchClass> _pitchClasses = unmodifiableList(asList(PitchClass.values()));
+    final private static List<PitchLetter> _pitchLetters = unmodifiableList(asList(PitchLetter.values()));
 
     final private char _char;
     final private int _offset;
 
-    private PitchClass(int offSet) {
+    private PitchLetter(int offSet) {
         this._char = this.name().charAt(0);
         this._offset = offSet;
     }
 
     /**
-     * The {@code char} value of the pitch class/letter.
+     * The {@code char} value of the pitch letter/letter.
      *
-     * @return The {@code char} value of the pitch class/letter.
+     * @return The {@code char} value of the pitch letter/letter.
      */
     char charValue() {
         return this._char;
@@ -99,33 +99,33 @@ enum PitchClass {
     }
 
     /**
-     * Attempts to convert a {@code char} to its {@link PitchClass} value.
-     * Returns an optional containing the {@link PitchClass} value of the char
+     * Attempts to convert a {@code char} to its {@link PitchLetter} value.
+     * Returns an optional containing the {@link PitchLetter} value of the char
      * if it can be converted, otherwise an empty optional is returned.
      *
-     * @param aChar {@code char} to attempt to convert to a {@link PitchClass}
+     * @param aChar {@code char} to attempt to convert to a {@link PitchLetter}
      *              value.
      *
-     * @return An optional containing the {@link PitchClass} value of the char if it
+     * @return An optional containing the {@link PitchLetter} value of the char if it
      *         can be converted, otherwise an empty optional
      */
-    static Optional<PitchClass> fromChar(char aChar) {
+    static Optional<PitchLetter> fromChar(char aChar) {
         final char upperCaseChar = Character.toUpperCase(aChar);
-        return _pitchClasses.stream().filter(pitchClass -> pitchClass.charValue() == upperCaseChar).findFirst();
+        return _pitchLetters.stream().filter(pitchLetter -> pitchLetter.charValue() == upperCaseChar).findFirst();
     }
 
     /**
      * Returns {@code true} if the passed {@code char} argument can be
-     * interpreted as a {@link PitchClass} value.
+     * interpreted as a {@link PitchLetter} value.
      *
      * @param aChar {@code char} to check if it can be interpreted as a
-     *              {@link PitchClass} value.
+     *              {@link PitchLetter} value.
      *
      * @return {@code true} if the passed {@code char} argument can be
-     *         interpreted as a {@link PitchClass} value.
+     *         interpreted as a {@link PitchLetter} value.
      */
     static boolean isPitchLetter(char aChar) {
         final char upperCaseChar = Character.toUpperCase(aChar);
-        return _pitchClasses.stream().anyMatch(pitchClass -> pitchClass.charValue() == upperCaseChar);
+        return _pitchLetters.stream().anyMatch(pitchLetter -> pitchLetter.charValue() == upperCaseChar);
     }
 }

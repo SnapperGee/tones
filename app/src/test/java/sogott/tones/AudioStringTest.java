@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class AudioStringTestArgsProvider {
     private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
-    private final static List<PitchClass> pitchClasses = unmodifiableList(asList(PitchClass.values()));
+    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
     final static RandomGenerator random = RandomGenerator.getDefault();
@@ -34,7 +34,7 @@ final class AudioStringTestArgsProvider {
         final static class WaveShapePrefixedAudioStringValueAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchClasses.stream().flatMap(pitchClass -> {
+                return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waves.stream()
@@ -46,14 +46,14 @@ final class AudioStringTestArgsProvider {
                                                                     waveStringAlias,
                                                                     AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                             .charValue(),
-                                                                    pitchClass.charValue(),
+                                                                    pitchLetter.charValue(),
                                                                     accidental.charValue(),
                                                                     octave,
                                                                     AudioString.Delimiter.VOICE_AND_DURATION
                                                                             .charValue(),
                                                                     duration),
                                                             new Audio(wave, new Pitch(
-                                                                    pitchClass,
+                                                                    pitchLetter,
                                                                     accidental,
                                                                     octave),
                                                                     duration)),
@@ -63,14 +63,14 @@ final class AudioStringTestArgsProvider {
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
                                                                             Character.toLowerCase(
-                                                                                    pitchClass.charValue()),
+                                                                                    pitchLetter.charValue()),
                                                                             accidental.charValue(),
                                                                             octave,
                                                                             AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
                                                                             duration),
                                                                     new Audio(wave, new Pitch(
-                                                                            pitchClass,
+                                                                            pitchLetter,
                                                                             accidental,
                                                                             octave),
                                                                             duration))))));
@@ -81,7 +81,7 @@ final class AudioStringTestArgsProvider {
         final static class AudioStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchClasses.stream().flatMap(pitchClass -> {
+                return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waves.stream()
@@ -89,7 +89,7 @@ final class AudioStringTestArgsProvider {
                                     .flatMap(accidental -> Stream
                                             .of(arguments(
                                                     "%c%c%d%c%d".formatted(
-                                                            pitchClass.charValue(),
+                                                            pitchLetter.charValue(),
                                                             accidental.charValue(),
                                                             octave,
                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -97,14 +97,14 @@ final class AudioStringTestArgsProvider {
                                                             duration),
                                                     wave,
                                                     new Audio(wave, new Pitch(
-                                                            pitchClass,
+                                                            pitchLetter,
                                                             accidental,
                                                             octave),
                                                             duration)),
                                                     arguments(
                                                             "%c%c%d%c%d".formatted(
                                                                     Character.toLowerCase(
-                                                                            pitchClass.charValue()),
+                                                                            pitchLetter.charValue()),
                                                                     accidental.charValue(),
                                                                     octave,
                                                                     AudioString.Delimiter.VOICE_AND_DURATION
@@ -112,7 +112,7 @@ final class AudioStringTestArgsProvider {
                                                                     duration),
                                                             wave,
                                                             new Audio(wave, new Pitch(
-                                                                    pitchClass,
+                                                                    pitchLetter,
                                                                     accidental,
                                                                     octave),
                                                                     duration)))));
@@ -123,12 +123,12 @@ final class AudioStringTestArgsProvider {
         final static class AudioStringValueWithoutWaveShapePrefix implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchClasses.stream().flatMap(pitchClass -> {
+                return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return Stream.concat(
                             Stream.of(arguments(
-                                    "%c%d%c%d".formatted(pitchClass.charValue(),
+                                    "%c%d%c%d".formatted(pitchLetter.charValue(),
                                             octave,
                                             AudioString.Delimiter.VOICE_AND_DURATION
                                                     .charValue(),
@@ -136,7 +136,7 @@ final class AudioStringTestArgsProvider {
                                     arguments(
                                             "%c%d%c%d".formatted(
                                                     Character.toLowerCase(
-                                                            pitchClass.charValue()),
+                                                            pitchLetter.charValue()),
                                                     octave,
                                                     Character.toLowerCase(
                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -145,7 +145,7 @@ final class AudioStringTestArgsProvider {
                             accidentals.stream()
                                     .flatMap(accidental -> Stream.of(arguments(
                                             "%c%c%d%c%d".formatted(
-                                                    pitchClass.charValue(),
+                                                    pitchLetter.charValue(),
                                                     accidental.charValue(),
                                                     octave,
                                                     AudioString.Delimiter.VOICE_AND_DURATION
@@ -154,7 +154,7 @@ final class AudioStringTestArgsProvider {
                                             arguments(
                                                     "%c%c%d%c%d".formatted(
                                                             Character.toLowerCase(
-                                                                    pitchClass.charValue()),
+                                                                    pitchLetter.charValue()),
                                                             accidental.charValue(),
                                                             octave,
                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -169,7 +169,7 @@ final class AudioStringTestArgsProvider {
         final static class AudioStringValue implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchClasses.stream().flatMap(note -> {
+                return pitchLetters.stream().flatMap(note -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waves.stream()
@@ -433,7 +433,7 @@ final class AudioStringTestArgsProvider {
         final static class AudioStringValueAndWave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchClasses.stream().flatMap(pitchClass -> {
+                return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waves.stream()
@@ -446,7 +446,7 @@ final class AudioStringTestArgsProvider {
                                                                     .formatted(waveStringAlias,
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
-                                                                            pitchClass.charValue(),
+                                                                            pitchLetter.charValue(),
                                                                             octave,
                                                                             AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
@@ -459,7 +459,7 @@ final class AudioStringTestArgsProvider {
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
                                                                             Character.toLowerCase(
-                                                                                    pitchClass.charValue()),
+                                                                                    pitchLetter.charValue()),
                                                                             octave,
                                                                             Character.toLowerCase(
                                                                                     AudioString.Delimiter.VOICE_AND_DURATION
@@ -471,7 +471,7 @@ final class AudioStringTestArgsProvider {
                                                                     .formatted(waveStringAlias,
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
-                                                                            pitchClass.charValue(),
+                                                                            pitchLetter.charValue(),
                                                                             octave,
                                                                             AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
@@ -484,7 +484,7 @@ final class AudioStringTestArgsProvider {
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
                                                                             Character.toLowerCase(
-                                                                                    pitchClass.charValue()),
+                                                                                    pitchLetter.charValue()),
                                                                             octave,
                                                                             Character.toLowerCase(
                                                                                     AudioString.Delimiter.VOICE_AND_DURATION
@@ -497,7 +497,7 @@ final class AudioStringTestArgsProvider {
                                                                     .formatted(
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
-                                                                            pitchClass.charValue(),
+                                                                            pitchLetter.charValue(),
                                                                             octave,
                                                                             AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
@@ -508,7 +508,7 @@ final class AudioStringTestArgsProvider {
                                                                     .formatted(
                                                                             waveStringAlias.toLowerCase(),
                                                                             Character.toLowerCase(
-                                                                                    pitchClass.charValue()),
+                                                                                    pitchLetter.charValue()),
                                                                             octave,
                                                                             Character.toLowerCase(
                                                                                     AudioString.Delimiter.VOICE_AND_DURATION
@@ -518,7 +518,7 @@ final class AudioStringTestArgsProvider {
                                                     arguments(
                                                             "%1$s%2$c%3$d%4$c%5$d"
                                                                     .formatted(waveStringAlias,
-                                                                            pitchClass.charValue(),
+                                                                            pitchLetter.charValue(),
                                                                             octave,
                                                                             AudioString.Delimiter.VOICE_AND_DURATION
                                                                                     .charValue(),
@@ -531,7 +531,7 @@ final class AudioStringTestArgsProvider {
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
                                                                             Character.toLowerCase(
-                                                                                    pitchClass.charValue()),
+                                                                                    pitchLetter.charValue()),
                                                                             Character.toLowerCase(
                                                                                     AudioString.Delimiter.VOICE_AND_DURATION
                                                                                             .charValue()),
@@ -542,7 +542,7 @@ final class AudioStringTestArgsProvider {
                                                                     .formatted(waveStringAlias,
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
-                                                                            pitchClass.charValue(),
+                                                                            pitchLetter.charValue(),
                                                                             octave,
                                                                             duration),
                                                             wave),
@@ -553,7 +553,7 @@ final class AudioStringTestArgsProvider {
                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                     .charValue(),
                                                                             Character.toLowerCase(
-                                                                                    pitchClass.charValue()),
+                                                                                    pitchLetter.charValue()),
                                                                             octave,
                                                                             Character.toLowerCase(
                                                                                     AudioString.Delimiter.VOICE_AND_DURATION
@@ -571,7 +571,7 @@ final class AudioStringTestArgsProvider {
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
                                                                                             Character.toLowerCase(
-                                                                                                    pitchClass
+                                                                                                    pitchLetter
                                                                                                             .charValue()),
                                                                                             accidental.charValue(),
                                                                                             octave,
@@ -585,7 +585,7 @@ final class AudioStringTestArgsProvider {
                                                                                             waveStringAlias,
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
-                                                                                            pitchClass.charValue(),
+                                                                                            pitchLetter.charValue(),
                                                                                             accidental.charValue(),
                                                                                             octave,
                                                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -600,7 +600,7 @@ final class AudioStringTestArgsProvider {
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
                                                                                             Character.toLowerCase(
-                                                                                                    pitchClass
+                                                                                                    pitchLetter
                                                                                                             .charValue()),
                                                                                             accidental.charValue(),
                                                                                             octave,
@@ -614,7 +614,7 @@ final class AudioStringTestArgsProvider {
                                                                                             waveStringAlias,
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
-                                                                                            pitchClass.charValue(),
+                                                                                            pitchLetter.charValue(),
                                                                                             accidental.charValue(),
                                                                                             octave,
                                                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -629,7 +629,7 @@ final class AudioStringTestArgsProvider {
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
                                                                                             Character.toLowerCase(
-                                                                                                    pitchClass
+                                                                                                    pitchLetter
                                                                                                             .charValue()),
                                                                                             accidental.charValue(),
                                                                                             octave,
@@ -643,7 +643,7 @@ final class AudioStringTestArgsProvider {
                                                                                     .formatted(
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
-                                                                                            pitchClass.charValue(),
+                                                                                            pitchLetter.charValue(),
                                                                                             accidental.charValue(),
                                                                                             octave,
                                                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -656,7 +656,7 @@ final class AudioStringTestArgsProvider {
                                                                                             waveStringAlias
                                                                                                     .toLowerCase(),
                                                                                             Character.toLowerCase(
-                                                                                                    pitchClass
+                                                                                                    pitchLetter
                                                                                                             .charValue()),
                                                                                             accidental.charValue(),
                                                                                             octave,
@@ -684,7 +684,7 @@ final class AudioStringTestArgsProvider {
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
                                                                                             Character.toLowerCase(
-                                                                                                    pitchClass
+                                                                                                    pitchLetter
                                                                                                             .charValue()),
                                                                                             accidental.charValue(),
                                                                                             AudioString.Delimiter.VOICE_AND_DURATION
@@ -697,7 +697,7 @@ final class AudioStringTestArgsProvider {
                                                                                             waveStringAlias,
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
-                                                                                            pitchClass.charValue(),
+                                                                                            pitchLetter.charValue(),
                                                                                             accidental.charValue(),
                                                                                             octave,
                                                                                             duration),
@@ -710,7 +710,7 @@ final class AudioStringTestArgsProvider {
                                                                                             AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
                                                                                                     .charValue(),
                                                                                             Character.toLowerCase(
-                                                                                                    pitchClass
+                                                                                                    pitchLetter
                                                                                                             .charValue()),
                                                                                             accidental.charValue(),
                                                                                             octave,

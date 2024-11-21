@@ -28,7 +28,7 @@ final class AudioTestArgsProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
 
     final private static List<Wave> waves = unmodifiableList(asList(Wave.values()));
-    final private static List<PitchClass> pitchClasses = unmodifiableList(asList(PitchClass.values()));
+    final private static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     final private static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
     final static class Valid {
@@ -36,9 +36,9 @@ final class AudioTestArgsProvider {
         final static class WavePitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchClasses.stream().flatMap(pitchClass -> accidentals.stream()
+                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                         .map(accidental -> arguments(wave,
-                                new Pitch(pitchClass, accidental,
+                                new Pitch(pitchLetter, accidental,
                                         random.nextInt(13)),
                                 1 << random.nextInt(8)))));
             }
@@ -53,14 +53,14 @@ final class AudioTestArgsProvider {
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
                     final Wave differentWave = waves.get(differentWaveIndex);
 
-                    return pitchClasses.stream().flatMap(pitchClass -> {
-                        final int pitchClassIndex = pitchClasses.indexOf(pitchClass);
-                        final int differentPitchClassIndex = random
-                                .ints(0, pitchClasses.size())
-                                .filter(i -> i != pitchClassIndex).findFirst()
+                    return pitchLetters.stream().flatMap(pitchLetter -> {
+                        final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
+                        final int differentPitchLetterIndex = random
+                                .ints(0, pitchLetters.size())
+                                .filter(i -> i != pitchLetterIndex).findFirst()
                                 .orElseThrow();
-                        final PitchClass differentPitchClass = pitchClasses
-                                .get(differentPitchClassIndex);
+                        final PitchLetter differentPitchLetter = pitchLetters
+                                .get(differentPitchLetterIndex);
                         final int duration = 1 << random.nextInt(8);
                         final int differentDuration = random.ints(0, 8)
                                 .map(i -> 1 << i)
@@ -82,9 +82,9 @@ final class AudioTestArgsProvider {
 
                                     return arguments(wave,
                                             differentWave,
-                                            new Pitch(pitchClass, accidental,
+                                            new Pitch(pitchLetter, accidental,
                                                     random.nextInt(13)),
-                                            new Pitch(differentPitchClass,
+                                            new Pitch(differentPitchLetter,
                                                     differentAccidental,
                                                     random.nextInt(13)),
                                             duration,
@@ -104,10 +104,10 @@ final class AudioTestArgsProvider {
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
                     final Wave differentWave = waves.get(differentWaveIndex);
 
-                    return pitchClasses.stream().flatMap(pitchClass -> accidentals.stream()
+                    return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                             .map(accidental -> arguments(wave,
                                     differentWave,
-                                    new Pitch(pitchClass, accidental,
+                                    new Pitch(pitchLetter, accidental,
                                             random.nextInt(13)),
                                     1 << random.nextInt(8))));
                 });
@@ -117,12 +117,12 @@ final class AudioTestArgsProvider {
         final static class WaveAltPitchesAndDurations implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchClasses.stream().flatMap(pitchClass -> {
-                    final int pitchClassIndex = pitchClasses.indexOf(pitchClass);
-                    final int differentPitchClassIndex = random.ints(0, pitchClasses.size())
-                            .filter(i -> i != pitchClassIndex).findFirst()
+                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
+                    final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
+                    final int differentPitchLetterIndex = random.ints(0, pitchLetters.size())
+                            .filter(i -> i != pitchLetterIndex).findFirst()
                             .orElseThrow();
-                    final PitchClass differentPitchClass = pitchClasses.get(differentPitchClassIndex);
+                    final PitchLetter differentPitchLetter = pitchLetters.get(differentPitchLetterIndex);
                     final int duration = 1 << random.nextInt(8);
                     final int differentDuration = random.ints(0, 8).map(i -> 1 << i)
                             .filter(i -> i != duration).findFirst()
@@ -142,9 +142,9 @@ final class AudioTestArgsProvider {
                                         .get(differentAccidentalIndex);
 
                                 return arguments(wave,
-                                        new Pitch(pitchClass, accidental,
+                                        new Pitch(pitchLetter, accidental,
                                                 random.nextInt(13)),
-                                        new Pitch(differentPitchClass,
+                                        new Pitch(differentPitchLetter,
                                                 differentAccidental,
                                                 random.nextInt(13)),
                                         duration,
@@ -157,7 +157,7 @@ final class AudioTestArgsProvider {
         final static class WavePitchDurationAlts implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchClasses.stream().flatMap(pitchClass -> {
+                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
                     final int duration = 1 << random.nextInt(8);
                     final int differentDuration = random.ints(0, 8).map(i -> 1 << i)
                             .filter(i -> i != duration).findFirst()
@@ -165,7 +165,7 @@ final class AudioTestArgsProvider {
 
                     return accidentals.stream()
                             .map(accidental -> arguments(wave,
-                                    new Pitch(pitchClass, accidental,
+                                    new Pitch(pitchLetter, accidental,
                                             random.nextInt(13)),
                                     duration,
                                     differentDuration));
@@ -176,12 +176,12 @@ final class AudioTestArgsProvider {
         final static class WavePitchAltsDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchClasses.stream().flatMap(pitchClass -> {
-                    final int pitchClassIndex = pitchClasses.indexOf(pitchClass);
-                    final int differentPitchClassIndex = random.ints(0, pitchClasses.size())
-                            .filter(i -> i != pitchClassIndex).findFirst()
+                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
+                    final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
+                    final int differentPitchLetterIndex = random.ints(0, pitchLetters.size())
+                            .filter(i -> i != pitchLetterIndex).findFirst()
                             .orElseThrow();
-                    final PitchClass differentPitchClass = pitchClasses.get(differentPitchClassIndex);
+                    final PitchLetter differentPitchLetter = pitchLetters.get(differentPitchLetterIndex);
 
                     return accidentals.stream()
                             .map(accidental -> {
@@ -197,9 +197,9 @@ final class AudioTestArgsProvider {
                                         .get(differentAccidentalIndex);
 
                                 return arguments(wave,
-                                        new Pitch(pitchClass, accidental,
+                                        new Pitch(pitchLetter, accidental,
                                                 random.nextInt(13)),
-                                        new Pitch(differentPitchClass,
+                                        new Pitch(differentPitchLetter,
                                                 differentAccidental,
                                                 random.nextInt(13)),
                                         1 << random.nextInt(8));
@@ -217,14 +217,14 @@ final class AudioTestArgsProvider {
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
                     final Wave differentWave = waves.get(differentWaveIndex);
 
-                    return pitchClasses.stream().flatMap(pitchClass -> {
-                        final int pitchClassIndex = pitchClasses.indexOf(pitchClass);
-                        final int differentPitchClassIndex = random
-                                .ints(0, pitchClasses.size())
-                                .filter(i -> i != pitchClassIndex).findFirst()
+                    return pitchLetters.stream().flatMap(pitchLetter -> {
+                        final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
+                        final int differentPitchLetterIndex = random
+                                .ints(0, pitchLetters.size())
+                                .filter(i -> i != pitchLetterIndex).findFirst()
                                 .orElseThrow();
-                        final PitchClass differentPitchClass = pitchClasses
-                                .get(differentPitchClassIndex);
+                        final PitchLetter differentPitchLetter = pitchLetters
+                                .get(differentPitchLetterIndex);
 
                         return accidentals.stream()
                                 .map(accidental -> {
@@ -241,9 +241,9 @@ final class AudioTestArgsProvider {
 
                                     return arguments(wave,
                                             differentWave,
-                                            new Pitch(pitchClass, accidental,
+                                            new Pitch(pitchLetter, accidental,
                                                     random.nextInt(13)),
-                                            new Pitch(differentPitchClass,
+                                            new Pitch(differentPitchLetter,
                                                     differentAccidental,
                                                     random.nextInt(13)),
                                             1 << random.nextInt(
@@ -264,22 +264,22 @@ final class AudioTestArgsProvider {
                         Stream.of(
                                 arguments(null, null, 1 << random.nextInt(8)),
                                 arguments(null, null, -(1 << random.nextInt(8)))),
-                        pitchClasses.stream().flatMap(pitchClass -> accidentals.stream()
+                        pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                                 .flatMap(accidental -> Stream.of(
                                         arguments(wave, new Pitch(
-                                                pitchClass,
+                                                pitchLetter,
                                                 accidental,
                                                 random.nextInt(13)),
                                                 -(1 << random.nextInt(
                                                         8))),
                                         arguments(null, new Pitch(
-                                                pitchClass,
+                                                pitchLetter,
                                                 accidental,
                                                 random.nextInt(13)),
                                                 -(1 << random.nextInt(
                                                         8))),
                                         arguments(null, new Pitch(
-                                                pitchClass,
+                                                pitchLetter,
                                                 accidental,
                                                 random.nextInt(13)),
                                                 1 << random.nextInt(

@@ -68,7 +68,7 @@
  * defined in the {@link sogott.tones.Pitch Pitch} class. These properties are:
  *
  * <ol>
- * <li><strong><em>Pitch Class</em></strong> (pitch letter)
+ * <li><strong><em>Pitch Letter</em></strong>
  * <li><strong><em>Accidental</em></strong>
  * <li><strong><em>Octave</em></strong>
  * </ol>
@@ -76,8 +76,8 @@
  * If audio is silence, it does not have a pitch (nor wave shape) and only has
  * a duration.
  *
- * <h3>Pitch Class (pitch letter)</h3>
- * The <strong><em>pitch class</em></strong> is the letter of a musical note and
+ * <h3>Pitch Letter</h3>
+ * The <strong><em>pitch letter</em></strong> is the letter of a musical note and
  * corresponds to one of the characters A-G.
  *
  * <h3>Accidental</h3>

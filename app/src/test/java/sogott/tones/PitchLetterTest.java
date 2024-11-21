@@ -17,18 +17,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-final class PitchClassTestArgsProvider {
+final class PitchLetterTestArgsProvider {
     final static class EnumValuesWithOffset implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(PitchClass.A, 0),
-                    arguments(PitchClass.B, 2),
-                    arguments(PitchClass.C, -9),
-                    arguments(PitchClass.D, -7),
-                    arguments(PitchClass.E, -5),
-                    arguments(PitchClass.F, -4),
-                    arguments(PitchClass.G, -2));
+                    arguments(PitchLetter.A, 0),
+                    arguments(PitchLetter.B, 2),
+                    arguments(PitchLetter.C, -9),
+                    arguments(PitchLetter.D, -7),
+                    arguments(PitchLetter.E, -5),
+                    arguments(PitchLetter.F, -4),
+                    arguments(PitchLetter.G, -2));
         }
     }
 
@@ -36,13 +36,13 @@ final class PitchClassTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(PitchClass.A, 'A'),
-                    arguments(PitchClass.B, 'B'),
-                    arguments(PitchClass.C, 'C'),
-                    arguments(PitchClass.D, 'D'),
-                    arguments(PitchClass.E, 'E'),
-                    arguments(PitchClass.F, 'F'),
-                    arguments(PitchClass.G, 'G'));
+                    arguments(PitchLetter.A, 'A'),
+                    arguments(PitchLetter.B, 'B'),
+                    arguments(PitchLetter.C, 'C'),
+                    arguments(PitchLetter.D, 'D'),
+                    arguments(PitchLetter.E, 'E'),
+                    arguments(PitchLetter.F, 'F'),
+                    arguments(PitchLetter.G, 'G'));
         }
     }
 
@@ -50,18 +50,18 @@ final class PitchClassTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(PitchClass.A, 'a'),
-                    arguments(PitchClass.B, 'b'),
-                    arguments(PitchClass.C, 'c'),
-                    arguments(PitchClass.D, 'd'),
-                    arguments(PitchClass.E, 'e'),
-                    arguments(PitchClass.F, 'f'),
-                    arguments(PitchClass.G, 'g'));
+                    arguments(PitchLetter.A, 'a'),
+                    arguments(PitchLetter.B, 'b'),
+                    arguments(PitchLetter.C, 'c'),
+                    arguments(PitchLetter.D, 'd'),
+                    arguments(PitchLetter.E, 'e'),
+                    arguments(PitchLetter.F, 'f'),
+                    arguments(PitchLetter.G, 'g'));
         }
     }
 }
 
-final class PitchClassTest {
+final class PitchLetterTest {
     static private char[] nonPitchLetterChars() {
         return IntStream.concat(
                 IntStream.concat(
@@ -77,61 +77,61 @@ final class PitchClassTest {
                 .toCharArray();
     }
 
-    @ParameterizedTest(name = "PitchClass.{0}.offSet() is {1}")
-    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithOffset.class)
-    void pitchClassOffsetValueIsValid(PitchClass pitchClass, int offset) {
+    @ParameterizedTest(name = "PitchLetter.{0}.offSet() is {1}")
+    @ArgumentsSource(PitchLetterTestArgsProvider.EnumValuesWithOffset.class)
+    void pitchClassOffsetValueIsValid(PitchLetter pitchClass, int offset) {
         final int pitchClassOffset = pitchClass.offset();
         assertSame(offset, pitchClassOffset);
     }
 
-    @ParameterizedTest(name = "PitchClass.{0}.charValue() is ''{1}''")
-    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithUpperCaseChar.class)
-    void pitchClassCharValueIsValid(PitchClass pitchClass, char expectedCarValue) {
+    @ParameterizedTest(name = "PitchLetter.{0}.charValue() is ''{1}''")
+    @ArgumentsSource(PitchLetterTestArgsProvider.EnumValuesWithUpperCaseChar.class)
+    void pitchClassCharValueIsValid(PitchLetter pitchClass, char expectedCarValue) {
         final char charValue = pitchClass.charValue();
         assertSame(expectedCarValue, charValue);
     }
 
-    @ParameterizedTest(name = "PitchClass.fromChar(''{1}'') is PitchClass.{0}")
-    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithUpperCaseChar.class)
-    void pitchClassFromUpperCaseChar(PitchClass pitchClass, char upperCaseChar) {
-        final Optional<PitchClass> pitchClassOptional = PitchClass.fromChar(upperCaseChar);
+    @ParameterizedTest(name = "PitchLetter.fromChar(''{1}'') is PitchClass.{0}")
+    @ArgumentsSource(PitchLetterTestArgsProvider.EnumValuesWithUpperCaseChar.class)
+    void pitchClassFromUpperCaseChar(PitchLetter pitchClass, char upperCaseChar) {
+        final Optional<PitchLetter> pitchClassOptional = PitchLetter.fromChar(upperCaseChar);
         assertTrue(pitchClassOptional.isPresent());
         assertSame(pitchClass, pitchClassOptional.get());
     }
 
-    @ParameterizedTest(name = "PitchClass.fromChar(''{1}'') is PitchClass.{0}")
-    @ArgumentsSource(PitchClassTestArgsProvider.EnumValuesWithLowerCaseChar.class)
-    void pitchClassFromLowerCaseChar(PitchClass pitchClass, char lowerCaseChar) {
-        final Optional<PitchClass> pitchClassOptional = PitchClass.fromChar(lowerCaseChar);
+    @ParameterizedTest(name = "PitchLetter.fromChar(''{1}'') is PitchClass.{0}")
+    @ArgumentsSource(PitchLetterTestArgsProvider.EnumValuesWithLowerCaseChar.class)
+    void pitchClassFromLowerCaseChar(PitchLetter pitchClass, char lowerCaseChar) {
+        final Optional<PitchLetter> pitchClassOptional = PitchLetter.fromChar(lowerCaseChar);
         assertTrue(pitchClassOptional.isPresent());
         assertSame(pitchClass, pitchClassOptional.get());
     }
 
-    @ParameterizedTest(name = "PitchClass.isPitchLetter(''{0}'') returns true")
+    @ParameterizedTest(name = "PitchLetter.isPitchLetter(''{0}'') returns true")
     @ValueSource(chars = { 'A', 'B', 'C', 'D', 'E', 'F' })
     void pitchClassIsPitchLetterReturnsTrueForValidUpperCaseChar(char validUpperCasePitchClassLetterChar) {
-        final boolean isCharResultShouldBeTrue = PitchClass.isPitchLetter(validUpperCasePitchClassLetterChar);
+        final boolean isCharResultShouldBeTrue = PitchLetter.isPitchLetter(validUpperCasePitchClassLetterChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
-    @ParameterizedTest(name = "PitchClass.isPitchLetter(''{0}'') returns true")
+    @ParameterizedTest(name = "PitchLetter.isPitchLetter(''{0}'') returns true")
     @ValueSource(chars = { 'a', 'b', 'c', 'd', 'e', 'f' })
     void pitchClassIsPitchLetterReturnsTrueForValidLowerCaseChar(char validLowerCasePitchClassLetterChar) {
-        final boolean isCharResultShouldBeTrue = PitchClass.isPitchLetter(validLowerCasePitchClassLetterChar);
+        final boolean isCharResultShouldBeTrue = PitchLetter.isPitchLetter(validLowerCasePitchClassLetterChar);
         assertTrue(isCharResultShouldBeTrue);
     }
 
-    @ParameterizedTest(name = "PitchClass.isPitchLetter(''{0}'') returns false")
+    @ParameterizedTest(name = "PitchLetter.isPitchLetter(''{0}'') returns false")
     @MethodSource("nonPitchLetterChars")
     void pitchClassIsPitchLetterReturnsFalseForInvalidNoteChar(char nonPitchLetterChar) {
-        final boolean isCharResultShouldBeFalse = PitchClass.isPitchLetter(nonPitchLetterChar);
+        final boolean isCharResultShouldBeFalse = PitchLetter.isPitchLetter(nonPitchLetterChar);
         assertFalse(isCharResultShouldBeFalse);
     }
 
-    @ParameterizedTest(name = "PitchClass.fromChar(''{0}'') returns empty Optional")
+    @ParameterizedTest(name = "PitchLetter.fromChar(''{0}'') returns empty Optional")
     @MethodSource("nonPitchLetterChars")
     void pitchClassFromCharReturnsEmptyOptionalForInvalidNoteChar(char nonPitchLetterChar) {
-        final Optional<PitchClass> fromCharResultShouldBeEmpty = PitchClass.fromChar(nonPitchLetterChar);
+        final Optional<PitchLetter> fromCharResultShouldBeEmpty = PitchLetter.fromChar(nonPitchLetterChar);
         final boolean isEmptyShouldBeTrue = fromCharResultShouldBeEmpty.isEmpty();
         assertTrue(isEmptyShouldBeTrue);
     }

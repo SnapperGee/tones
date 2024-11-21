@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class ByteBuffersTestArgsProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
-    private final static List<PitchClass> pitchClasses = unmodifiableList(asList(PitchClass.values()));
+    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
     private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
 
-    final static List<Audio> audioObjects = pitchClasses.stream().flatMap(pitchClass -> {
+    final static List<Audio> audioObjects = pitchLetters.stream().flatMap(pitchLetter -> {
         return accidentals.stream().flatMap(accidental -> {
-            final Pitch accidentalPitch = new Pitch(pitchClass, accidental, random.nextInt(0, 13));
+            final Pitch accidentalPitch = new Pitch(pitchLetter, accidental, random.nextInt(0, 13));
             return waves.stream()
                     .map(wave -> new Audio(wave, accidentalPitch, random.nextInt(1, 1000)));
         });
