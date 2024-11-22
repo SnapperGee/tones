@@ -1,8 +1,8 @@
 package sogott.tones;
 
-final record PitchClass(PitchLetter pitchLetter, Accidental accidental) {
+final record PitchClass(PitchLetter letter, Accidental accidental) {
     PitchClass {
-        if (pitchLetter == null) {
+        if (letter == null) {
             throw new IllegalArgumentException("Null " + PitchLetter.class.getSimpleName());
         }
 
@@ -12,6 +12,6 @@ final record PitchClass(PitchLetter pitchLetter, Accidental accidental) {
     }
 
     Pitch toPitchWithOctave(int octave) {
-        return new Pitch(this.pitchLetter, this.accidental, octave);
+        return new Pitch(this.letter, this.accidental, octave);
     }
 }
