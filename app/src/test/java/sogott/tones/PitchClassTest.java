@@ -81,16 +81,23 @@ final class PitchClassTestArgsProvider {
 final class PitchClassTest {
     @Test
     @DisplayName("new PitchClass(null, Accidental) throws IllegalArgumentException")
-    void pitchConstructorPassedNullPitchLetterThrows() {
+    void pitchConstructorPassedNullPitchLetterAndNonNullAccidentalThrows() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PitchClass(null, PitchClassTestArgsProvider.randomAccidental()));
     }
 
     @Test
     @DisplayName("new PitchClass(PitchLetter, null) throws IllegalArgumentException")
-    void pitchConstructorPassedNullAccidentalThrows() {
+    void pitchConstructorPassedPitchLetterAndNullAccidentalThrows() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PitchClass(PitchClassTestArgsProvider.randomPitchLetter(), null));
+    }
+
+    @Test
+    @DisplayName("new PitchClass(null) throws IllegalArgumentException")
+    void pitchConstructorPassedNullAThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PitchClass(null));
     }
 
     @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
