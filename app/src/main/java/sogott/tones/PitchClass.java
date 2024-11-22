@@ -13,6 +13,10 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
         }
     }
 
+    PitchClass(PitchLetter letter) {
+        this(letter, Accidental.NATURAL);
+    }
+
     Pitch toPitchWithOctave(int octave) {
         return new Pitch(this.letter, this.accidental, octave);
     }
