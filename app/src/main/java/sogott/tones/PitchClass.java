@@ -1,5 +1,7 @@
 package sogott.tones;
 
+import java.util.Optional;
+
 final record PitchClass(PitchLetter letter, Accidental accidental) {
     PitchClass {
         if (letter == null) {
@@ -13,5 +15,25 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
 
     Pitch toPitchWithOctave(int octave) {
         return new Pitch(this.letter, this.accidental, octave);
+    }
+
+    static Optional<PitchClass> parse(String aString) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null string.");
+        }
+
+        if (aString.length() == 1) {
+            return PitchLetter.fromChar(aString.charAt(0))
+                    .map(pitchLetter -> new PitchClass(pitchLetter, Accidental.NATURAL));
+        }
+
+        if (aString.length() == 2) {
+            return PitchLetter.fromChar(aString.charAt(0))
+                    .map(pitchLetter -> Accidental.fromChar(aString.charAt(1))
+                            .map(accidental -> new PitchClass(pitchLetter, accidental)))
+                    .orElse(Optional.empty());
+        }
+
+        return Optional.empty();
     }
 }
