@@ -7,20 +7,31 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class PitchClassTestArgsProvider {
-    final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
     final static RandomGenerator random = RandomGenerator.getDefault();
+
+    static PitchLetter randomPitchLetter() {
+        return pitchLetters.get(random.nextInt(pitchLetters.size()));
+    }
+
+    static Accidental randomAccidental() {
+        return accidentals.get(random.nextInt(accidentals.size()));
+    }
 
     final static class Valid {
         final static class QualifiedUpperCasePitchClassStringAndObject implements ArgumentsProvider {
@@ -68,6 +79,20 @@ final class PitchClassTestArgsProvider {
 }
 
 final class PitchClassTest {
+    @Test
+    @DisplayName("new PitchClass(null, Accidental) throws IllegalArgumentException")
+    void pitchConstructorPassedNullPitchLetterThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PitchClass(null, PitchClassTestArgsProvider.randomAccidental()));
+    }
+
+    @Test
+    @DisplayName("new PitchClass(PitchLetter, null) throws IllegalArgumentException")
+    void pitchConstructorPassedNullAccidentalThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new PitchClass(PitchClassTestArgsProvider.randomPitchLetter(), null));
+    }
+
     @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
     @ArgumentsSource(PitchClassTestArgsProvider.Valid.QualifiedUpperCasePitchClassStringAndObject.class)
     void pitchClassParseStringOfQualifiedUpperCaseValidLetterReturnsPresentOptional(
@@ -86,7 +111,8 @@ final class PitchClassTest {
             PitchClass expectedPitchClass) {
         final Optional<PitchClass> pitchClassOptional = PitchClass.parse(soloUpperCasePitchLetterString);
         assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returns non present Optional".formatted(soloUpperCasePitchLetterString));
+                () -> "PitchClass.parse(\"%s\") returns non present Optional"
+                        .formatted(soloUpperCasePitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
     }
 
@@ -108,7 +134,8 @@ final class PitchClassTest {
             PitchClass expectedPitchClass) {
         final Optional<PitchClass> pitchClassOptional = PitchClass.parse(lowerCaseSoloPitchLetterString);
         assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returns non present Optional".formatted(lowerCaseSoloPitchLetterString));
+                () -> "PitchClass.parse(\"%s\") returns non present Optional"
+                        .formatted(lowerCaseSoloPitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
     }
 }
