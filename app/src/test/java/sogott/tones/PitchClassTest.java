@@ -15,6 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,6 +35,34 @@ final class PitchClassTestArgsProvider {
     }
 
     final static class Valid {
+        final static class PitchLetterAndAccidental implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream()
+                        .flatMap(pitchLetter -> accidentals.stream()
+                                .map(accidental -> arguments(pitchLetter, accidental)));
+            }
+        }
+
+        final static class PitchLetter implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream()
+                        .flatMap(pitchLetter -> accidentals.stream()
+                                .map(accidental -> arguments(pitchLetter)));
+            }
+        }
+
+        final static class PitchLetterAndObject implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream()
+                        .flatMap(pitchLetter -> accidentals.stream()
+                                .map(accidental -> arguments(pitchLetter,
+                                        new PitchClass(pitchLetter, Accidental.NATURAL))));
+            }
+        }
+
         final static class QualifiedUpperCasePitchClassStringAndObject implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
@@ -79,6 +108,19 @@ final class PitchClassTestArgsProvider {
 }
 
 final class PitchClassTest {
+    @ParameterizedTest(name = "new PitchClass(PitchLetter.{0}, Accidental.{1}) does not throw")
+    @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetterAndAccidental.class)
+    void pitchConstructorPassedValidPitchLetterAndAccidentalDoesNotThrow(PitchLetter pitchLetter,
+            Accidental accidental) {
+        assertDoesNotThrow(() -> new PitchClass(pitchLetter, accidental));
+    }
+
+    @ParameterizedTest(name = "new PitchClass(PitchLetter.{0}) does not throw")
+    @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetter.class)
+    void pitchConstructorPassedValidPitchLetterDoesNotThrow(PitchLetter pitchLetter) {
+        assertDoesNotThrow(() -> new PitchClass(pitchLetter));
+    }
+
     @Test
     @DisplayName("new PitchClass(null, Accidental) throws IllegalArgumentException")
     void pitchConstructorPassedNullPitchLetterAndNonNullAccidentalThrows() {
@@ -98,6 +140,13 @@ final class PitchClassTest {
     void pitchConstructorPassedNullAThrows() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PitchClass(null));
+    }
+
+    @ParameterizedTest(name = "new PitchClass(PitchLetter.{0}) returns {1}")
+    @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetterAndObject.class)
+    void pitchConstructorPassedValidPitchLetterReturnsPitchClassWithPitchLetterAndNatural(PitchLetter pitchLetter,
+            PitchClass expectedPitchClass) {
+        assertEquals(expectedPitchClass, new PitchClass(pitchLetter));
     }
 
     @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
