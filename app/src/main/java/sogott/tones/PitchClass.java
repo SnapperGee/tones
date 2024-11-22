@@ -21,6 +21,15 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
         return new Pitch(this.letter, this.accidental, octave);
     }
 
+    String stringValue() {
+        return this.accidental == Accidental.NATURAL
+                ? Character.toString(this.letter.charValue())
+                : new StringBuilder(2)
+                        .append(this.letter.charValue())
+                        .append(this.accidental.charValue())
+                        .toString();
+    }
+
     static Optional<PitchClass> parse(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
