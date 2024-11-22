@@ -17,7 +17,7 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
         this(letter, Accidental.NATURAL);
     }
 
-    Pitch toPitchWithOctave(int octave) {
+    Pitch toPitch(int octave) {
         return new Pitch(this.letter, this.accidental, octave);
     }
 
