@@ -99,15 +99,16 @@ enum PitchLetter {
     }
 
     /**
-     * Attempts to convert a {@code char} to its {@link PitchLetter} value.
-     * Returns an optional containing the {@link PitchLetter} value of the char
-     * if it can be converted, otherwise an empty optional is returned.
+     * Attempts to case insensitively convert a {@code char} to its
+     * {@link PitchLetter} value. Returns an {@link Optional} containing the
+     * {@link PitchLetter} of the {@code char} if it can be converted, otherwise
+     * an empty {@link Optional} is returned.
      *
-     * @param aChar {@code char} to attempt to convert to a {@link PitchLetter}
-     *              value.
+     * @param aChar {@code char} to attempt to convert to a {@link PitchLetter}.
      *
-     * @return An optional containing the {@link PitchLetter} value of the char if it
-     *         can be converted, otherwise an empty optional
+     * @return An {@link Optional} containing the {@link PitchLetter} value of
+     *         the {@code char} if it can be converted, otherwise an empty
+     *         {@link Optional}.
      */
     static Optional<PitchLetter> fromChar(char aChar) {
         final char upperCaseChar = Character.toUpperCase(aChar);
@@ -115,14 +116,14 @@ enum PitchLetter {
     }
 
     /**
-     * Returns {@code true} if the passed {@code char} argument can be
-     * interpreted as a {@link PitchLetter} value.
+     * Returns {@code true} if the passed {@code char} argument can case
+     * insensitively be interpreted as a {@link PitchLetter} value.
      *
      * @param aChar {@code char} to check if it can be interpreted as a
-     *              {@link PitchLetter} value.
+     *              {@link PitchLetter}.
      *
-     * @return {@code true} if the passed {@code char} argument can be
-     *         interpreted as a {@link PitchLetter} value.
+     * @return {@code true} if the passed {@code char} argument can be case
+     *         insensitively interpreted as a {@link PitchLetter}.
      */
     static boolean isPitchLetter(char aChar) {
         final char upperCaseChar = Character.toUpperCase(aChar);
