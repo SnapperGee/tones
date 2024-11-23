@@ -224,7 +224,7 @@ final class PitchClassTest {
             PitchClass expectedPitchClass) {
         final Optional<PitchClass> pitchClassOptional = PitchClass.parse(upperCasePitchLetterString);
         assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returns non present Optional".formatted(upperCasePitchLetterString));
+                () -> "PitchClass.parse(\"%s\") returned non present Optional".formatted(upperCasePitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
     }
 
@@ -235,7 +235,7 @@ final class PitchClassTest {
             PitchClass expectedPitchClass) {
         final Optional<PitchClass> pitchClassOptional = PitchClass.parse(soloUpperCasePitchLetterString);
         assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returns non present Optional"
+                () -> "PitchClass.parse(\"%s\") returned non present Optional"
                         .formatted(soloUpperCasePitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
     }
@@ -247,7 +247,7 @@ final class PitchClassTest {
             PitchClass expectedPitchClass) {
         final Optional<PitchClass> pitchClassOptional = PitchClass.parse(lowerCasePitchLetterString);
         assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returns non present Optional".formatted(lowerCasePitchLetterString));
+                () -> "PitchClass.parse(\"%s\") returned non present Optional".formatted(lowerCasePitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
     }
 
@@ -258,9 +258,17 @@ final class PitchClassTest {
             PitchClass expectedPitchClass) {
         final Optional<PitchClass> pitchClassOptional = PitchClass.parse(lowerCaseSoloPitchLetterString);
         assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returns non present Optional"
+                () -> "PitchClass.parse(\"%s\") returned non present Optional"
                         .formatted(lowerCaseSoloPitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
+    }
+
+    @Test
+    @DisplayName("PitchClass.parse(null) throws IllegalArgumentException")
+    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.PitchLetterWithValidAccidentalString.class)
+    void pitchClassParseOfNullThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> PitchClass.parse(null),
+                () -> "PitchClass.parse(null) did not throw IllegalArgumentException");
     }
 
     @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
