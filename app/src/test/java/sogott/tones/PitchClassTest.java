@@ -146,6 +146,32 @@ final class PitchClassTestArgsProvider {
                         .flatMap(s -> s);
             }
         }
+
+        final static class PitchLetterWithValidAccidentalString implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return IntStream.rangeClosed(0, 127)
+                        .filter(codePoint -> codePoint != 'A'
+                                && codePoint != 'B'
+                                && codePoint != 'C'
+                                && codePoint != 'D'
+                                && codePoint != 'E'
+                                && codePoint != 'F'
+                                && codePoint != 'G'
+                                && codePoint != 'a'
+                                && codePoint != 'b'
+                                && codePoint != 'c'
+                                && codePoint != 'd'
+                                && codePoint != 'e'
+                                && codePoint != 'f'
+                                && codePoint != 'g')
+                        .mapToObj(pitchLetterCodePoint -> IntStream.of('-', '=', '+')
+                                .mapToObj(nonAccidentalCodePoint -> arguments(
+                                        new StringBuilder(2).append((char) pitchLetterCodePoint)
+                                                .append((char) nonAccidentalCodePoint).toString())))
+                        .flatMap(s -> s);
+            }
+        }
     }
 }
 
@@ -248,10 +274,19 @@ final class PitchClassTest {
 
     @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
     @ArgumentsSource(PitchClassTestArgsProvider.Invalid.ValidPitchLetterWithInvalidAccidentalString.class)
-    @EmptySource
     void pitchClassParseStringOfValidLetterWithInvalidAccidentalReturnsEmptyOptional(
             String validPitchLetterWithInvalidAccidentalString) {
         assertTrue(PitchClass.parse(validPitchLetterWithInvalidAccidentalString).isEmpty(),
-                () -> "PitchClass.parse(\"%s\") returned non empty Optional".formatted(validPitchLetterWithInvalidAccidentalString));
+                () -> "PitchClass.parse(\"%s\") returned non empty Optional"
+                        .formatted(validPitchLetterWithInvalidAccidentalString));
+    }
+
+    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
+    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.PitchLetterWithValidAccidentalString.class)
+    void pitchClassParseStringOfInvalidLetterWithValidAccidentalReturnsEmptyOptional(
+            String invalidPitchLetterWithValidAccidentalString) {
+        assertTrue(PitchClass.parse(invalidPitchLetterWithValidAccidentalString).isEmpty(),
+                () -> "PitchClass.parse(\"%s\") returned non empty Optional"
+                        .formatted(invalidPitchLetterWithValidAccidentalString));
     }
 }
