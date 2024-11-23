@@ -1,5 +1,6 @@
 package sogott.tones;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import static java.util.Arrays.asList;
@@ -105,6 +107,30 @@ final class PitchClassTestArgsProvider {
             }
         }
     }
+
+    final static class Invalid {
+        final static class SoloPitchLetterString implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return IntStream.rangeClosed(0, 127)
+                        .filter(codePoint -> codePoint != 'A'
+                                && codePoint != 'B'
+                                && codePoint != 'C'
+                                && codePoint != 'D'
+                                && codePoint != 'E'
+                                && codePoint != 'F'
+                                && codePoint != 'G'
+                                && codePoint != 'a'
+                                && codePoint != 'b'
+                                && codePoint != 'c'
+                                && codePoint != 'd'
+                                && codePoint != 'e'
+                                && codePoint != 'f'
+                                && codePoint != 'g')
+                        .mapToObj(codePoint -> arguments(Character.toString((char) codePoint)));
+            }
+        }
+    }
 }
 
 final class PitchClassTest {
@@ -193,5 +219,14 @@ final class PitchClassTest {
                 () -> "PitchClass.parse(\"%s\") returns non present Optional"
                         .formatted(lowerCaseSoloPitchLetterString));
         assertEquals(expectedPitchClass, pitchClassOptional.get());
+    }
+
+    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
+    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.SoloPitchLetterString.class)
+    @EmptySource
+    void pitchClassParseStringOfSoloInvalidLetterReturnsEmptyOptional(
+            String invalidSoloPitchLetterString) {
+        assertTrue(PitchClass.parse(invalidSoloPitchLetterString).isEmpty(),
+                () -> "PitchClass.parse(\"%s\") returned non empty Optional".formatted(invalidSoloPitchLetterString));
     }
 }
