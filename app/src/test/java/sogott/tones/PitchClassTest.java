@@ -130,6 +130,22 @@ final class PitchClassTestArgsProvider {
                         .mapToObj(codePoint -> arguments(Character.toString((char) codePoint)));
             }
         }
+
+        final static class ValidPitchLetterWithInvalidAccidentalString implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return IntStream.concat(
+                        IntStream.rangeClosed(65, 71),
+                        IntStream.rangeClosed(97, 103))
+                        .mapToObj(pitchLetterCodePoint -> IntStream.rangeClosed(0, 127)
+                                .filter(nonAccidentalCodePoint -> nonAccidentalCodePoint != '-'
+                                        && nonAccidentalCodePoint != '=' && nonAccidentalCodePoint != '+')
+                                .mapToObj(nonAccidentalCodePoint -> arguments(
+                                        new StringBuilder(2).append((char) pitchLetterCodePoint)
+                                                .append((char) nonAccidentalCodePoint).toString())))
+                        .flatMap(s -> s);
+            }
+        }
     }
 }
 
@@ -228,5 +244,14 @@ final class PitchClassTest {
             String invalidSoloPitchLetterString) {
         assertTrue(PitchClass.parse(invalidSoloPitchLetterString).isEmpty(),
                 () -> "PitchClass.parse(\"%s\") returned non empty Optional".formatted(invalidSoloPitchLetterString));
+    }
+
+    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
+    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.ValidPitchLetterWithInvalidAccidentalString.class)
+    @EmptySource
+    void pitchClassParseStringOfValidLetterWithInvalidAccidentalReturnsEmptyOptional(
+            String validPitchLetterWithInvalidAccidentalString) {
+        assertTrue(PitchClass.parse(validPitchLetterWithInvalidAccidentalString).isEmpty(),
+                () -> "PitchClass.parse(\"%s\") returned non empty Optional".formatted(validPitchLetterWithInvalidAccidentalString));
     }
 }
