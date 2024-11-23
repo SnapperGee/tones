@@ -265,7 +265,6 @@ final class PitchClassTest {
 
     @Test
     @DisplayName("PitchClass.parse(null) throws IllegalArgumentException")
-    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.PitchLetterWithValidAccidentalString.class)
     void pitchClassParseOfNullThrowsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> PitchClass.parse(null),
                 () -> "PitchClass.parse(null) did not throw IllegalArgumentException");
