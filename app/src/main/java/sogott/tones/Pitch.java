@@ -8,8 +8,7 @@ import java.util.Optional;
  * audio expressed as a musical note. It consists of 3 primary properties:
  *
  * <h2>1.) {@code Pitch Letter}</h2>
- * The {@link #letter() note} property consists of a character value
- * corresponding
+ * The {@link #letter() letter} property consists of a character value corresponding
  * to one of the musical notes (A-G). These note chars are defined in the
  * {@link PitchLetter} enum.
  *
