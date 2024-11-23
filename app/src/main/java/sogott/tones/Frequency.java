@@ -103,7 +103,7 @@ final class Frequency {
                     "Null %s.".formatted(Pitch.class.getSimpleName()));
         }
 
-        return from(pitch.note(), pitch.accidental(), pitch.octave());
+        return from(pitch.letter(), pitch.accidental(), pitch.octave());
     }
 
     private Frequency() {

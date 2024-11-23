@@ -312,13 +312,12 @@ final class PitchTest {
     // properties/getters //
     ////////////////////////
 
-    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).note() is Note.{0}")
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).letter() is PitchLetter.{0}")
     @ArgumentsSource(PitchTestArgsProvider.Valid.NoteAccidentalAndOctave.class)
     void pitchConstructedWithNoteAccidentalAndOctavePropertyReturnsNote(PitchLetter pitchLetter, Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
-        final PitchLetter noteProperty = pitch.note();
-        assertSame(pitchLetter, noteProperty);
+        assertSame(pitchLetter, pitch.letter());
     }
 
     @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).accidental() is Accidental.{1}")
@@ -327,8 +326,7 @@ final class PitchTest {
             Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
-        final Accidental accidentalProperty = pitch.accidental();
-        assertSame(accidental, accidentalProperty);
+        assertSame(accidental, pitch.accidental());
     }
 
     @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).octave() is {2}")
@@ -337,8 +335,7 @@ final class PitchTest {
             Accidental accidental,
             int octave) {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
-        final int octaveProperty = pitch.octave();
-        assertSame(octave, octaveProperty);
+        assertSame(octave, pitch.octave());
     }
 
     @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).stringValue() = \"{3}\"")
@@ -346,8 +343,7 @@ final class PitchTest {
     void pitchConstructedWithNoteAccidentalAndOctaveStringValuePropertyReturnsStringValue(PitchLetter pitchLetter,
             Accidental accidental, int octave, String stringValue) {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
-        final String stringValueProperty = pitch.stringValue();
-        assertEquals(stringValue, stringValueProperty);
+        assertEquals(stringValue, pitch.stringValue());
     }
 
     ////////////
