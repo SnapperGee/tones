@@ -9,6 +9,7 @@ final class PitchClass {
     private final Accidental _accidental;
     private final int _hashCode;
     private final String _stringValue;
+    private final String _toString;
 
     PitchClass(PitchLetter letter, Accidental accidental) {
         if (letter == null) {
@@ -28,6 +29,8 @@ final class PitchClass {
                         .append(this._letter.charValue())
                         .append(this._accidental.charValue())
                         .toString();
+        this._toString = "%s{letter=%s, accidental=%s}".formatted(PitchClass.class.getSimpleName(), this._letter.name(),
+                this._accidental.name());
     }
 
     PitchClass(PitchLetter letter) {
@@ -72,5 +75,10 @@ final class PitchClass {
     @Override
     public int hashCode() {
         return this._hashCode;
+    }
+
+    @Override
+    public String toString() {
+        return this._toString;
     }
 }
