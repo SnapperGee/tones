@@ -32,7 +32,7 @@ import static java.util.Comparator.comparingInt;
  *
  * @see GenerateWaveByteBuffer
  */
-enum Wave {
+enum WaveShape {
     /**
      * A <i>SINE</i> wave.
      */
@@ -58,7 +58,7 @@ enum Wave {
      */
     SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN"));
 
-    private final static List<Wave> WAVES = unmodifiableList(asList(Wave.values()));
+    private final static List<WaveShape> WAVES = unmodifiableList(asList(WaveShape.values()));
 
     private final BiFunction<Double, Integer, byte[]> _generatorFunc;
 
@@ -66,7 +66,7 @@ enum Wave {
 
     private final Set<String> _stringValueAliases;
 
-    private Wave(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue,
+    private WaveShape(BiFunction<Double, Integer, byte[]> generatorFunc, String stringValue,
             Set<String> stringValueAliases) {
         this._generatorFunc = generatorFunc;
         this._stringValue = stringValue;
@@ -181,23 +181,23 @@ enum Wave {
     }
 
     /**
-     * Returns an optional containing the {@link Wave} value the passed string
-     * argument can be parsed to. If it can't be parsed to a {@link Wave}, then
+     * Returns an optional containing the {@link WaveShape} value the passed string
+     * argument can be parsed to. If it can't be parsed to a {@link WaveShape}, then
      * an empty optional is returned.
      *
      * @param aString    {@code String} to case insensitively parse to a
-     *                   {@link Wave}.
+     *                   {@link WaveShape}.
      *
      * @param ignoreCase {@code boolean} specifying whether case is ignored or
      *                   not when parsing the passed {@code String} argument.
      *
-     * @return An optional containing the {@link Wave} value the passed string
+     * @return An optional containing the {@link WaveShape} value the passed string
      *         argument can be parsed to if it can be, otherwise an empty optional.
      *
      * @throws IllegalArgumentException If passed {@code String} argument is
      *                                  {@code null}.
      */
-    static Optional<Wave> parse(String aString, boolean ignoreCase) {
+    static Optional<WaveShape> parse(String aString, boolean ignoreCase) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string argument.");
         }
@@ -216,17 +216,17 @@ enum Wave {
     }
 
     /**
-     * Returns an optional containing the {@link Wave} value the passed string
+     * Returns an optional containing the {@link WaveShape} value the passed string
      * argument can be case insensitively parsed to. If it can't be parsed to a
-     * {@link Wave}, then an empty optional is returned.
+     * {@link WaveShape}, then an empty optional is returned.
      *
-     * @param aString {@code String} to case insensitively parse to a {@link Wave}.
+     * @param aString {@code String} to case insensitively parse to a {@link WaveShape}.
      *
-     * @return An optional containing the {@link Wave} value the passed string
+     * @return An optional containing the {@link WaveShape} value the passed string
      *         argument can be case insensitively parsed to if it can be,
      *         otherwise an empty optional.
      */
-    static Optional<Wave> parse(String aString) {
+    static Optional<WaveShape> parse(String aString) {
         return parse(aString, true);
     }
 

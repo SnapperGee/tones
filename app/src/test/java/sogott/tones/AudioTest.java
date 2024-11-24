@@ -27,7 +27,7 @@ final class AudioTestArgsProvider {
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    final private static List<Wave> waves = unmodifiableList(asList(Wave.values()));
+    final private static List<WaveShape> waves = unmodifiableList(asList(WaveShape.values()));
     final private static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     final private static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
@@ -51,7 +51,7 @@ final class AudioTestArgsProvider {
                     final int waveIndex = waves.indexOf(wave);
                     final int differentWaveIndex = random.ints(0, waves.size())
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
-                    final Wave differentWave = waves.get(differentWaveIndex);
+                    final WaveShape differentWave = waves.get(differentWaveIndex);
 
                     return pitchLetters.stream().flatMap(pitchLetter -> {
                         final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
@@ -102,7 +102,7 @@ final class AudioTestArgsProvider {
                     final int waveIndex = waves.indexOf(wave);
                     final int differentWaveIndex = random.ints(0, waves.size())
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
-                    final Wave differentWave = waves.get(differentWaveIndex);
+                    final WaveShape differentWave = waves.get(differentWaveIndex);
 
                     return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                             .map(accidental -> arguments(wave,
@@ -215,7 +215,7 @@ final class AudioTestArgsProvider {
                     final int waveIndex = waves.indexOf(wave);
                     final int differentWaveIndex = random.ints(0, waves.size())
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
-                    final Wave differentWave = waves.get(differentWaveIndex);
+                    final WaveShape differentWave = waves.get(differentWaveIndex);
 
                     return pitchLetters.stream().flatMap(pitchLetter -> {
                         final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
@@ -305,7 +305,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) does not throw")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioConstructorPassedValidWavePitchDurationDoesNotThrow(Wave wave, Pitch pitch, int duration) {
+    void audioConstructorPassedValidWavePitchDurationDoesNotThrow(WaveShape wave, Pitch pitch, int duration) {
         assertDoesNotThrow(() -> new Audio(wave, pitch, duration));
     }
 
@@ -315,7 +315,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) throws")
     @ArgumentsSource(AudioTestArgsProvider.Invalid.WavePitchDuration.class)
-    void audioConstructorPassedInvalidWavesPitchesDurationsThrows(Wave wave, Pitch pitch, int duration) {
+    void audioConstructorPassedInvalidWavesPitchesDurationsThrows(WaveShape wave, Pitch pitch, int duration) {
         assertThrows(IllegalArgumentException.class, () -> new Audio(wave, pitch, duration));
     }
 
@@ -371,14 +371,14 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).wave() returns wave")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioWavePropertyReturnsWave(Wave wave, Pitch pitch, int duration) {
+    void audioWavePropertyReturnsWave(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         assertSame(wave, audio.wave());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).pitch() returns Optional containing pitch")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioPitchPropertyReturnsPitch(Wave wave, Pitch pitch, int duration) {
+    void audioPitchPropertyReturnsPitch(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         assertTrue(audio.pitch().isPresent(), () -> "new Audio(Wave.%s, %s, %d).pitch() returned non present Optional.".formatted(wave, pitch, duration));
         assertSame(pitch, audio.pitch().get());
@@ -386,14 +386,14 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).duration() returns duration")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioDurationPropertyReturnsDuration(Wave wave, Pitch pitch, int duration) {
+    void audioDurationPropertyReturnsDuration(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         assertEquals(duration, audio.duration());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).stringValue() returns string value")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioStringValuePropertyReturnsStringValue(Wave wave, Pitch pitch, int duration) {
+    void audioStringValuePropertyReturnsStringValue(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         final String stringValue = "%s>%s.%d".formatted(wave.stringValue(), pitch.stringValue(), duration);
         assertEquals(stringValue, audio.stringValue());
@@ -405,14 +405,14 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) equals same returns true")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioEqualsSameReturnsTrue(Wave wave, Pitch pitch, int duration) {
+    void audioEqualsSameReturnsTrue(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         assertTrue(audio.equals(audio));
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}) equals equivalent returns true")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioEqualsEquivalentReturnsTrue(Wave wave, Pitch pitch, int duration) {
+    void audioEqualsEquivalentReturnsTrue(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         final Audio equalAudio = new Audio(wave, pitch, duration);
         assertTrue(audio.equals(equalAudio));
@@ -420,7 +420,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(<Wave.{0}>, <{2}>, <{4}>) equals new Pitch(<Wave.{1}>, <{3}>, <{5}>) returns false")
     @ArgumentsSource(AudioTestArgsProvider.Valid.AltWavesPitchesDurations.class)
-    void audioEqualsUnequalWavePitchDurationReturnsFalse(Wave aWave, Wave anotherWave, Pitch aPitch,
+    void audioEqualsUnequalWavePitchDurationReturnsFalse(WaveShape aWave, WaveShape anotherWave, Pitch aPitch,
             Pitch anotherPitch,
             int aDuration, int anotherDuration) {
         final Audio anAudio = new Audio(aWave, aPitch, aDuration);
@@ -430,7 +430,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WaveAltsPitchDuration.class)
-    void audioEqualsUnequalWavesPitchDurationReturnsFalse(Wave aWave, Wave anotherWave, Pitch pitch,
+    void audioEqualsUnequalWavesPitchDurationReturnsFalse(WaveShape aWave, WaveShape anotherWave, Pitch pitch,
             int duration) {
         final Audio anAudio = new Audio(aWave, pitch, duration);
         final Audio aDifferentAudio = new Audio(anotherWave, pitch, duration);
@@ -439,7 +439,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, <{1}>, <{3}>) equals new Pitch(Wave.{0}, <{2}>, <{4}>) returns false")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WaveAltPitchesAndDurations.class)
-    void audioEqualsWaveWithUnequalPitchesAndDurationsReturnsFalse(Wave wave, Pitch aPitch, Pitch anotherPitch,
+    void audioEqualsWaveWithUnequalPitchesAndDurationsReturnsFalse(WaveShape wave, Pitch aPitch, Pitch anotherPitch,
             int aDuration, int anotherDuration) {
         final Audio anAudio = new Audio(wave, aPitch, aDuration);
         final Audio aDifferentAudio = new Audio(wave, anotherPitch, anotherDuration);
@@ -448,7 +448,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, <{2}>) equals new Pitch(Wave.{0}, {1}, <{3}>) returns false")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDurationAlts.class)
-    void audioEqualsWavePitchUnequalDurationsReturnsFalse(Wave wave, Pitch pitch,
+    void audioEqualsWavePitchUnequalDurationsReturnsFalse(WaveShape wave, Pitch pitch,
             int aDuration, int anotherDuration) {
         final Audio anAudio = new Audio(wave, pitch, aDuration);
         final Audio aDifferentAudio = new Audio(wave, pitch, anotherDuration);
@@ -457,7 +457,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, <{1}>, {3}) equals new Pitch(Wave.{0}, <{2}>, {3}) returns false")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchAltsDuration.class)
-    void audioEqualsWavePitchUnequalDurationsReturnsFalse(Wave wave, Pitch aPitch,
+    void audioEqualsWavePitchUnequalDurationsReturnsFalse(WaveShape wave, Pitch aPitch,
             Pitch anotherPitch, int duration) {
         final Audio anAudio = new Audio(wave, aPitch, duration);
         final Audio aDifferentAudio = new Audio(wave, anotherPitch, duration);
@@ -466,7 +466,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(<Wave.{0}>, {2}, {3}) equals new Pitch(<Wave.{1}>, {2}, {3}) returns false")
     @ArgumentsSource(AudioTestArgsProvider.Valid.AltWavesAndPitchesWithDuration.class)
-    void audioAltWavesAndPitchesWithEqualDurationReturnsFalse(Wave wave, Wave anotherWave,
+    void audioAltWavesAndPitchesWithEqualDurationReturnsFalse(WaveShape wave, WaveShape anotherWave,
             Pitch aPitch, Pitch anotherPitch, int duration) {
         final Audio anAudio = new Audio(wave, aPitch, duration);
         final Audio aDifferentAudio = new Audio(anotherWave, anotherPitch, duration);
@@ -479,7 +479,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, Accidental.{1}, {2}).hashCode() equals Objects.hash(Wave.{0}, {1}, {2})")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioHashCodeComputedFromWavePitchDuration(Wave wave, Pitch pitch, int duration) {
+    void audioHashCodeComputedFromWavePitchDuration(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         final int computedHashCode = hash(wave, pitch, duration);
         assertEquals(computedHashCode, audio.hashCode());
@@ -487,14 +487,14 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).hashCode() is same for same object")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void sameAudioHasEqualHashCode(Wave wave, Pitch pitch, int duration) {
+    void sameAudioHasEqualHashCode(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         assertTrue(audio.hashCode() == audio.hashCode());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).hashCode() is same for equal object")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void equalAudioHasEqualHashCode(Wave wave, Pitch pitch, int duration) {
+    void equalAudioHasEqualHashCode(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         final Audio equalAudio = new Audio(wave, pitch, duration);
         assertTrue(audio.hashCode() == equalAudio.hashCode());
@@ -506,7 +506,7 @@ final class AudioTest {
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).toString() returns pretty String")
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
-    void audioToStringReturnsPrettyString(Wave wave, Pitch pitch, int duration) {
+    void audioToStringReturnsPrettyString(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
         final String toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(
                 Audio.class.getSimpleName(),

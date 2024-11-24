@@ -16,7 +16,7 @@ final class ByteBuffersTestArgsProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
     private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
-    private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
+    private final static List<WaveShape> waves = unmodifiableList(asList(WaveShape.values()));
 
     final static List<Audio> audioObjects = pitchLetters.stream().flatMap(pitchLetter -> {
         return accidentals.stream().flatMap(accidental -> {

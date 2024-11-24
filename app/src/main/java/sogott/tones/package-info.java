@@ -49,7 +49,7 @@
  * {@link sogott.tones.GenerateWaveByteBuffer GenerateWaveByteBuffer} generate
  * the different wave shapes (as byte buffers appropriate for synthesizing PCM
  * audio). There are 5 shapes this package is capably of synthesizing defined in
- * the {@link sogott.tones.Wave Wave} enum. The shapes are:
+ * the {@link sogott.tones.WaveShape Wave} enum. The shapes are:
  *
  * <ol>
  * <li><strong><em>SINE</em></strong> &acd;

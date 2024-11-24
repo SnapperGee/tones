@@ -78,7 +78,7 @@ final class CliOptionTestArgsProvider {
             return Stream.of(
                     arguments(CliOption.BPM, Integer.class),
                     arguments(CliOption.NOTE_BEAT_VALUE, Integer.class),
-                    arguments(CliOption.WAVE, Wave.class),
+                    arguments(CliOption.WAVE, WaveShape.class),
                     arguments(CliOption.OUT, Path.class),
                     arguments(CliOption.VERSION, String.class),
                     arguments(CliOption.QUIET, String.class),
@@ -92,7 +92,7 @@ final class CliOptionTestArgsProvider {
             return Stream.of(
                     arguments(CliOption.BPM, Integer.class),
                     arguments(CliOption.NOTE_BEAT_VALUE, Integer.class),
-                    arguments(CliOption.WAVE, Wave.class),
+                    arguments(CliOption.WAVE, WaveShape.class),
                     arguments(CliOption.OUT, Path.class),
                     arguments(CliOption.VERSION, String.class),
                     arguments(CliOption.QUIET, String.class),

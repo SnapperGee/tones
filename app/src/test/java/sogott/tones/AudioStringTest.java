@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class AudioStringTestArgsProvider {
-    private final static List<Wave> waves = unmodifiableList(asList(Wave.values()));
+    private final static List<WaveShape> waves = unmodifiableList(asList(WaveShape.values()));
     private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
@@ -743,9 +743,9 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(null, {0}) throws")
-    @EnumSource(Wave.class)
+    @EnumSource(WaveShape.class)
     @NullSource
-    void audioStringParseTwoNullsThrows(Wave wave) {
+    void audioStringParseTwoNullsThrows(WaveShape wave) {
         assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null, wave));
     }
 
@@ -768,7 +768,7 @@ final class AudioStringTest {
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
-            Wave wave, Audio audio) {
+            WaveShape wave, Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
                 .formatted(audioString));
@@ -786,7 +786,7 @@ final class AudioStringTest {
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty optional")
     @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringValueAndWave.class)
-    void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, Wave wave) {
+    void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, WaveShape wave) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
                 .formatted(audioString));

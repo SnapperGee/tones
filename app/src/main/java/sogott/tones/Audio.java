@@ -14,7 +14,7 @@ import static java.util.Objects.hash;
  * <h2><i>{@link #wave() Wave}</i></h2>
  * The {@link #wave() wave} property designates the shape of the wave of the
  * synthesized audio. This property will be one of the values defined in the
- * {@link Wave} enum if it's audible audio or {@code null} if it's silence. The
+ * {@link WaveShape} enum if it's audible audio or {@code null} if it's silence. The
  * following wave shapes are:
  * <ul>
  * <li><i>sin</i>
@@ -53,12 +53,12 @@ import static java.util.Objects.hash;
  * {@link AudioString} class for more info.
  *
  * @author Snap
- * @see Wave
+ * @see WaveShape
  * @see Pitch
  * @see AudioString
  */
 final class Audio {
-    final private Wave _wave;
+    final private WaveShape _wave;
     final private Optional<Pitch> _pitch;
     final private int _duration;
     final private String _string;
@@ -83,7 +83,7 @@ final class Audio {
      * Constructs an {@link Audio} object instance with the following wave,
      * pitch, and duration properties.
      *
-     * @param wave     The {@link Wave} of the constructed {@link Audio} object.
+     * @param wave     The {@link WaveShape} of the constructed {@link Audio} object.
      *
      * @param pitch    The {@link Pitch} of the constructed {@link Audio} object.
      *
@@ -94,13 +94,13 @@ final class Audio {
      *                                  are {@code null} or the duration is not
      *                                  positive (less than or equal to 0).
      *
-     * @see Wave
+     * @see WaveShape
      * @see Pitch
      */
-    Audio(Wave wave, Pitch pitch, int duration) {
+    Audio(WaveShape wave, Pitch pitch, int duration) {
         if (wave == null) {
             throw new IllegalArgumentException(
-                    "Null %s %s.".formatted(Audio.class.getSimpleName(), Wave.class.getSimpleName()));
+                    "Null %s %s.".formatted(Audio.class.getSimpleName(), WaveShape.class.getSimpleName()));
         }
 
         if (pitch == null) {
@@ -141,9 +141,9 @@ final class Audio {
     }
 
     /**
-     * The {@link Wave} shape value of this {@link Audio} object is it's audible
+     * The {@link WaveShape} shape value of this {@link Audio} object is it's audible
      * or {@code null} if it's silence. The possible wave shape values are
-     * defined in the {@link Wave} enum. The possible wave shapes are:
+     * defined in the {@link WaveShape} enum. The possible wave shapes are:
      *
      * <ul>
      * <li><i>SIN</i>
@@ -153,12 +153,12 @@ final class Audio {
      * <li><i>SAW DOWN</i>
      * </ul>
      *
-     * @return The {@link Wave} value of this {@link Audio} object if it's
+     * @return The {@link WaveShape} value of this {@link Audio} object if it's
      *         audible or {@code null} if it's silence.
      *
-     * @see Wave
+     * @see WaveShape
      */
-    Wave wave() {
+    WaveShape wave() {
         return this._wave;
     }
 

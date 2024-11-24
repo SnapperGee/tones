@@ -26,11 +26,11 @@ final class WaveTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Wave.SINE, "SIN"),
-                    arguments(Wave.SQUARE, "SQR"),
-                    arguments(Wave.TRIANGLE, "TRI"),
-                    arguments(Wave.SAW_UP, "SUP"),
-                    arguments(Wave.SAW_DOWN, "SDN"));
+                    arguments(WaveShape.SINE, "SIN"),
+                    arguments(WaveShape.SQUARE, "SQR"),
+                    arguments(WaveShape.TRIANGLE, "TRI"),
+                    arguments(WaveShape.SAW_UP, "SUP"),
+                    arguments(WaveShape.SAW_DOWN, "SDN"));
         }
     }
 
@@ -38,11 +38,11 @@ final class WaveTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Wave.SINE, "sin"),
-                    arguments(Wave.SQUARE, "sqr"),
-                    arguments(Wave.TRIANGLE, "tri"),
-                    arguments(Wave.SAW_UP, "sup"),
-                    arguments(Wave.SAW_DOWN, "sdn"));
+                    arguments(WaveShape.SINE, "sin"),
+                    arguments(WaveShape.SQUARE, "sqr"),
+                    arguments(WaveShape.TRIANGLE, "tri"),
+                    arguments(WaveShape.SAW_UP, "sup"),
+                    arguments(WaveShape.SAW_DOWN, "sdn"));
         }
     }
 
@@ -50,11 +50,11 @@ final class WaveTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Wave.SINE, Set.of(Wave.SINE.name(), Wave.SINE.stringValue())),
-                    arguments(Wave.SQUARE, Set.of(Wave.SQUARE.name(), Wave.SQUARE.stringValue())),
-                    arguments(Wave.TRIANGLE, Set.of(Wave.TRIANGLE.name(), Wave.TRIANGLE.stringValue())),
-                    arguments(Wave.SAW_UP, Set.of(Wave.SAW_UP.name(), Wave.SAW_UP.stringValue(), "SAWUP")),
-                    arguments(Wave.SAW_DOWN, Set.of(Wave.SAW_DOWN.name(), Wave.SAW_DOWN.stringValue(), "SAWDOWN")));
+                    arguments(WaveShape.SINE, Set.of(WaveShape.SINE.name(), WaveShape.SINE.stringValue())),
+                    arguments(WaveShape.SQUARE, Set.of(WaveShape.SQUARE.name(), WaveShape.SQUARE.stringValue())),
+                    arguments(WaveShape.TRIANGLE, Set.of(WaveShape.TRIANGLE.name(), WaveShape.TRIANGLE.stringValue())),
+                    arguments(WaveShape.SAW_UP, Set.of(WaveShape.SAW_UP.name(), WaveShape.SAW_UP.stringValue(), "SAWUP")),
+                    arguments(WaveShape.SAW_DOWN, Set.of(WaveShape.SAW_DOWN.name(), WaveShape.SAW_DOWN.stringValue(), "SAWDOWN")));
         }
     }
 
@@ -62,15 +62,15 @@ final class WaveTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Wave.SINE, Set.of(Wave.SINE.name().toLowerCase(), Wave.SINE.stringValue().toLowerCase())),
-                    arguments(Wave.SQUARE,
-                            Set.of(Wave.SQUARE.name().toLowerCase(), Wave.SQUARE.stringValue().toLowerCase())),
-                    arguments(Wave.TRIANGLE,
-                            Set.of(Wave.TRIANGLE.name().toLowerCase(), Wave.TRIANGLE.stringValue().toLowerCase())),
-                    arguments(Wave.SAW_UP,
-                            Set.of(Wave.SAW_UP.name().toLowerCase(), Wave.SAW_UP.stringValue().toLowerCase(), "sawup")),
-                    arguments(Wave.SAW_DOWN, Set.of(Wave.SAW_DOWN.name().toLowerCase(),
-                            Wave.SAW_DOWN.stringValue().toLowerCase(), "sawdown")));
+                    arguments(WaveShape.SINE, Set.of(WaveShape.SINE.name().toLowerCase(), WaveShape.SINE.stringValue().toLowerCase())),
+                    arguments(WaveShape.SQUARE,
+                            Set.of(WaveShape.SQUARE.name().toLowerCase(), WaveShape.SQUARE.stringValue().toLowerCase())),
+                    arguments(WaveShape.TRIANGLE,
+                            Set.of(WaveShape.TRIANGLE.name().toLowerCase(), WaveShape.TRIANGLE.stringValue().toLowerCase())),
+                    arguments(WaveShape.SAW_UP,
+                            Set.of(WaveShape.SAW_UP.name().toLowerCase(), WaveShape.SAW_UP.stringValue().toLowerCase(), "sawup")),
+                    arguments(WaveShape.SAW_DOWN, Set.of(WaveShape.SAW_DOWN.name().toLowerCase(),
+                            WaveShape.SAW_DOWN.stringValue().toLowerCase(), "sawdown")));
         }
     }
 
@@ -78,18 +78,18 @@ final class WaveTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Wave.SINE.name(), Wave.SINE),
-                    arguments(Wave.SINE.stringValue(), Wave.SINE),
-                    arguments(Wave.SQUARE.name(), Wave.SQUARE),
-                    arguments("SQR", Wave.SQUARE),
-                    arguments(Wave.TRIANGLE.name(), Wave.TRIANGLE),
-                    arguments("TRI", Wave.TRIANGLE),
-                    arguments(Wave.SAW_UP.name(), Wave.SAW_UP),
-                    arguments("SUP", Wave.SAW_UP),
-                    arguments("SAWUP", Wave.SAW_UP),
-                    arguments(Wave.SAW_DOWN.name(), Wave.SAW_DOWN),
-                    arguments("SDN", Wave.SAW_DOWN),
-                    arguments("SAWDOWN", Wave.SAW_DOWN));
+                    arguments(WaveShape.SINE.name(), WaveShape.SINE),
+                    arguments(WaveShape.SINE.stringValue(), WaveShape.SINE),
+                    arguments(WaveShape.SQUARE.name(), WaveShape.SQUARE),
+                    arguments("SQR", WaveShape.SQUARE),
+                    arguments(WaveShape.TRIANGLE.name(), WaveShape.TRIANGLE),
+                    arguments("TRI", WaveShape.TRIANGLE),
+                    arguments(WaveShape.SAW_UP.name(), WaveShape.SAW_UP),
+                    arguments("SUP", WaveShape.SAW_UP),
+                    arguments("SAWUP", WaveShape.SAW_UP),
+                    arguments(WaveShape.SAW_DOWN.name(), WaveShape.SAW_DOWN),
+                    arguments("SDN", WaveShape.SAW_DOWN),
+                    arguments("SAWDOWN", WaveShape.SAW_DOWN));
         }
     }
 
@@ -97,25 +97,25 @@ final class WaveTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    arguments(Wave.SINE.name().toLowerCase(), Wave.SINE),
-                    arguments(Wave.SINE.stringValue().toLowerCase(), Wave.SINE),
-                    arguments(Wave.SQUARE.name().toLowerCase(), Wave.SQUARE),
-                    arguments("sqr", Wave.SQUARE),
-                    arguments(Wave.TRIANGLE.name().toLowerCase(), Wave.TRIANGLE),
-                    arguments("tri", Wave.TRIANGLE),
-                    arguments(Wave.SAW_UP.name().toLowerCase(), Wave.SAW_UP),
-                    arguments("sup", Wave.SAW_UP),
-                    arguments("sawup", Wave.SAW_UP),
-                    arguments(Wave.SAW_DOWN.name().toLowerCase(), Wave.SAW_DOWN),
-                    arguments("sdn", Wave.SAW_DOWN),
-                    arguments("sawdown", Wave.SAW_DOWN));
+                    arguments(WaveShape.SINE.name().toLowerCase(), WaveShape.SINE),
+                    arguments(WaveShape.SINE.stringValue().toLowerCase(), WaveShape.SINE),
+                    arguments(WaveShape.SQUARE.name().toLowerCase(), WaveShape.SQUARE),
+                    arguments("sqr", WaveShape.SQUARE),
+                    arguments(WaveShape.TRIANGLE.name().toLowerCase(), WaveShape.TRIANGLE),
+                    arguments("tri", WaveShape.TRIANGLE),
+                    arguments(WaveShape.SAW_UP.name().toLowerCase(), WaveShape.SAW_UP),
+                    arguments("sup", WaveShape.SAW_UP),
+                    arguments("sawup", WaveShape.SAW_UP),
+                    arguments(WaveShape.SAW_DOWN.name().toLowerCase(), WaveShape.SAW_DOWN),
+                    arguments("sdn", WaveShape.SAW_DOWN),
+                    arguments("sawdown", WaveShape.SAW_DOWN));
         }
     }
 
     final static class PrefixedStrings implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return Arrays.stream(Wave.values()).flatMap(wave -> Stream.concat(
+            return Arrays.stream(WaveShape.values()).flatMap(wave -> Stream.concat(
                     wave.stringValueAliases().stream().map(stringValueAlias -> arguments(wave, stringValueAlias)),
                     wave.stringValueAliases().stream()
                             .flatMap(stringValueAlias -> IntStream.range(1, 7)
@@ -131,35 +131,35 @@ final class WaveTestArgsProvider {
 final class WaveTest {
     @ParameterizedTest(name = "Wave.{0}.stringValue() = \"{1}\"")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringValue.class)
-    void waveStringValueIsValid(Wave wave, String expectedStringValue) {
+    void waveStringValueIsValid(WaveShape wave, String expectedStringValue) {
         final String waveStringValue = wave.stringValue();
         assertEquals(expectedStringValue, waveStringValue);
     }
 
     @ParameterizedTest(name = "Wave.{0}.stringValueAliases() = {1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAliases.class)
-    void waveStringValueAliasesIsValid(Wave wave, Set<String> expectedStringAliases) {
+    void waveStringValueAliasesIsValid(WaveShape wave, Set<String> expectedStringAliases) {
         final Set<String> waveStringAliases = wave.stringValueAliases();
         assertEquals(expectedStringAliases, waveStringAliases);
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAlias.class)
-    void waveParseUpperCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
-        final Optional<Wave> optionalWave = Wave.parse(waveString);
+    void waveParseUpperCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
+        final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
     @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithLowerCaseStringAlias.class)
-    void waveParseLowerCaseStringReturnsOptionalOfWave(String waveString, Wave expectedWave) {
-        final Optional<Wave> optionalWave = Wave.parse(waveString);
+    void waveParseLowerCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
+        final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
     @ParameterizedTest(name = "Wave.{0}.prefixes(\"{1}\") returns true")
     @ArgumentsSource(WaveTestArgsProvider.PrefixedStrings.class)
-    void prefixesReturnsTrueForPrefixedStrings(Wave wave, String prefixedString) {
+    void prefixesReturnsTrueForPrefixedStrings(WaveShape wave, String prefixedString) {
         assertTrue(wave.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(wave.name(), prefixedString));
     }

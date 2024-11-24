@@ -27,7 +27,7 @@ final public class Main {
 
     private final static int BPM = 140;
     private final static int NOTE_BEAT_VALUE = 4;
-    private final static Wave WAVE = Wave.SINE;
+    private final static WaveShape WAVE = WaveShape.SINE;
 
     /**
      * The entry point of this application where command line processing takes
@@ -57,7 +57,7 @@ final public class Main {
                         CliOption.NOTE_BEAT_VALUE.value(),
                         NOTE_BEAT_VALUE);
 
-                final Wave wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), WAVE);
+                final WaveShape wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), WAVE);
 
                 final double beatDuration = 60000.0 / bpm;
 

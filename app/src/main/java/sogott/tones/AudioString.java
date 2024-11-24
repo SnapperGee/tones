@@ -77,7 +77,7 @@ import java.util.Optional;
  * This is defined via the {@link Delimiter#WAVE_SHAPE_AND_PITCH} enum value. An
  * example of a wave shape prefix for a triangle wave would be {@code "TRI>"}
  * with the rest of the string coming after the {@code '>'} character. The types
- * of supported wave shapes are defined in the {@link Wave} enum.
+ * of supported wave shapes are defined in the {@link WaveShape} enum.
  *
  * <p>
  * The leading wave shape prefix and its delimiter can optionally be omitted
@@ -129,7 +129,7 @@ import java.util.Optional;
  * @see Audio
  * @see AudioString.Delimiter
  * @see Pitch
- * @see Wave
+ * @see WaveShape
  * @see PitchLetter
  */
 final class AudioString {
@@ -178,7 +178,7 @@ final class AudioString {
 
     /**
      * Parses the passed {@code String} argument to an {@link Audio} object,
-     * using the passed {@link Wave} argument as the default wave shape if the
+     * using the passed {@link WaveShape} argument as the default wave shape if the
      * passed string is audible audio with a timbre (and not silence) and has
      * no wave shape prefix segment. If the passed string can't be parsed to
      * audio then an empty optional is returned, otherwise the returned optional
@@ -189,7 +189,7 @@ final class AudioString {
      *
      * @param aString          {@code String} to parse to an {@link Audio} object.
      *
-     * @param defaultWaveShape {@link Wave} to use as a default value if the
+     * @param defaultWaveShape {@link WaveShape} to use as a default value if the
      *                         passed string argument is audible audio with a timbre
      *                         (not silence) with no wave shape prefix.
      *
@@ -199,7 +199,7 @@ final class AudioString {
      * @throws IllegalArgumentException If either of the provided arguments are
      *                                  {@code null}.
      */
-    static Optional<Audio> parse(String aString, Wave defaultWaveShape) {
+    static Optional<Audio> parse(String aString, WaveShape defaultWaveShape) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
         }
@@ -288,7 +288,7 @@ final class AudioString {
         return Optional.of(Audio.silence(duration));
     }
 
-    private static Optional<Audio> parseTone(String aString, Wave defaultWave) {
+    private static Optional<Audio> parseTone(String aString, WaveShape defaultWave) {
         if (!isParsableTimbre(aString, false)) {
             return Optional.empty();
         }
@@ -298,8 +298,8 @@ final class AudioString {
         final String durationString = splitString[1];
         final int duration = Integer.parseInt(durationString);
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
-        final Wave wave = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
-                : Wave.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
+        final WaveShape wave = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
+                : WaveShape.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
@@ -317,7 +317,7 @@ final class AudioString {
         final String durationString = splitString[1];
         final int duration = Integer.parseInt(durationString);
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
-        final Wave wave = Wave.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
+        final WaveShape wave = WaveShape.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
@@ -332,7 +332,7 @@ final class AudioString {
             return false;
         }
 
-        return Wave.extractPrefix(aString).map(prefix -> {
+        return WaveShape.extractPrefix(aString).map(prefix -> {
             final int prefixLength = prefix.length();
 
             if (aString.charAt(prefixLength) != Delimiter.WAVE_SHAPE_AND_PITCH.charValue()) {
