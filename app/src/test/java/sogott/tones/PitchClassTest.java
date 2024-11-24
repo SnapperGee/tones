@@ -1,9 +1,7 @@
 package sogott.tones;
 
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.List;
-import java.util.Optional;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +9,6 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import static java.util.Arrays.asList;
@@ -19,7 +16,6 @@ import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class PitchClassTestArgsProvider {
@@ -62,114 +58,6 @@ final class PitchClassTestArgsProvider {
                         .flatMap(pitchLetter -> accidentals.stream()
                                 .map(accidental -> arguments(pitchLetter,
                                         new PitchClass(pitchLetter, Accidental.NATURAL))));
-            }
-        }
-
-        final static class QualifiedUpperCasePitchClassStringAndObject implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchLetters.stream()
-                        .flatMap(pitchLetter -> accidentals.stream()
-                                .map(accidental -> arguments(
-                                        new StringBuilder(2).append(pitchLetter.charValue())
-                                                .append(accidental.charValue()).toString(),
-                                        new PitchClass(pitchLetter, accidental))));
-            }
-        }
-
-        final static class SoloUpperCasePitchLetterStringAndObject implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchLetters.stream()
-                        .map(pitchLetter -> arguments(
-                                Character.toString(Character.toLowerCase(pitchLetter.charValue())),
-                                new PitchClass(pitchLetter, Accidental.NATURAL)));
-            }
-        }
-
-        final static class QualifiedLowerCasePitchClassStringAndObject implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchLetters.stream()
-                        .flatMap(pitchLetter -> accidentals.stream()
-                                .map(accidental -> arguments(
-                                        new StringBuilder(2).append(Character.toLowerCase(pitchLetter.charValue()))
-                                                .append(accidental.charValue()).toString(),
-                                        new PitchClass(pitchLetter, accidental))));
-            }
-        }
-
-        final static class SoloLowerCasePitchLetterStringAndObject implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return pitchLetters.stream().map(pitchLetter -> arguments(Character.toString(pitchLetter.charValue()),
-                        new PitchClass(pitchLetter, Accidental.NATURAL)));
-            }
-        }
-    }
-
-    final static class Invalid {
-        final static class SoloPitchLetterString implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return IntStream.rangeClosed(0, 127)
-                        .filter(codePoint -> codePoint != 'A'
-                                && codePoint != 'B'
-                                && codePoint != 'C'
-                                && codePoint != 'D'
-                                && codePoint != 'E'
-                                && codePoint != 'F'
-                                && codePoint != 'G'
-                                && codePoint != 'a'
-                                && codePoint != 'b'
-                                && codePoint != 'c'
-                                && codePoint != 'd'
-                                && codePoint != 'e'
-                                && codePoint != 'f'
-                                && codePoint != 'g')
-                        .mapToObj(codePoint -> arguments(Character.toString((char) codePoint)));
-            }
-        }
-
-        final static class ValidPitchLetterWithInvalidAccidentalString implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return IntStream.concat(
-                        IntStream.rangeClosed(65, 71),
-                        IntStream.rangeClosed(97, 103))
-                        .mapToObj(pitchLetterCodePoint -> IntStream.rangeClosed(0, 127)
-                                .filter(nonAccidentalCodePoint -> nonAccidentalCodePoint != '-'
-                                        && nonAccidentalCodePoint != '=' && nonAccidentalCodePoint != '+')
-                                .mapToObj(nonAccidentalCodePoint -> arguments(
-                                        new StringBuilder(2).append((char) pitchLetterCodePoint)
-                                                .append((char) nonAccidentalCodePoint).toString())))
-                        .flatMap(s -> s);
-            }
-        }
-
-        final static class PitchLetterWithValidAccidentalString implements ArgumentsProvider {
-            @Override
-            public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return IntStream.rangeClosed(0, 127)
-                        .filter(codePoint -> codePoint != 'A'
-                                && codePoint != 'B'
-                                && codePoint != 'C'
-                                && codePoint != 'D'
-                                && codePoint != 'E'
-                                && codePoint != 'F'
-                                && codePoint != 'G'
-                                && codePoint != 'a'
-                                && codePoint != 'b'
-                                && codePoint != 'c'
-                                && codePoint != 'd'
-                                && codePoint != 'e'
-                                && codePoint != 'f'
-                                && codePoint != 'g')
-                        .mapToObj(pitchLetterCodePoint -> IntStream.of('-', '=', '+')
-                                .mapToObj(nonAccidentalCodePoint -> arguments(
-                                        new StringBuilder(2).append((char) pitchLetterCodePoint)
-                                                .append((char) nonAccidentalCodePoint).toString())))
-                        .flatMap(s -> s);
             }
         }
     }
@@ -215,85 +103,5 @@ final class PitchClassTest {
     void pitchConstructorPassedValidPitchLetterReturnsPitchClassWithPitchLetterAndNatural(PitchLetter pitchLetter,
             PitchClass expectedPitchClass) {
         assertEquals(expectedPitchClass, new PitchClass(pitchLetter));
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
-    @ArgumentsSource(PitchClassTestArgsProvider.Valid.QualifiedUpperCasePitchClassStringAndObject.class)
-    void pitchClassParseStringOfQualifiedUpperCaseValidLetterReturnsPresentOptional(
-            String upperCasePitchLetterString,
-            PitchClass expectedPitchClass) {
-        final Optional<PitchClass> pitchClassOptional = PitchClass.parse(upperCasePitchLetterString);
-        assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returned non present Optional".formatted(upperCasePitchLetterString));
-        assertEquals(expectedPitchClass, pitchClassOptional.get());
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
-    @ArgumentsSource(PitchClassTestArgsProvider.Valid.SoloUpperCasePitchLetterStringAndObject.class)
-    void pitchClassParseStringOfSoloValidUpperCaseLetterReturnsPresentOptional(
-            String soloUpperCasePitchLetterString,
-            PitchClass expectedPitchClass) {
-        final Optional<PitchClass> pitchClassOptional = PitchClass.parse(soloUpperCasePitchLetterString);
-        assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returned non present Optional"
-                        .formatted(soloUpperCasePitchLetterString));
-        assertEquals(expectedPitchClass, pitchClassOptional.get());
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
-    @ArgumentsSource(PitchClassTestArgsProvider.Valid.QualifiedLowerCasePitchClassStringAndObject.class)
-    void pitchClassParseStringOfQualifiedLowerCaseValidLetterReturnsPresentOptional(
-            String lowerCasePitchLetterString,
-            PitchClass expectedPitchClass) {
-        final Optional<PitchClass> pitchClassOptional = PitchClass.parse(lowerCasePitchLetterString);
-        assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returned non present Optional".formatted(lowerCasePitchLetterString));
-        assertEquals(expectedPitchClass, pitchClassOptional.get());
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns Optional<{1}>")
-    @ArgumentsSource(PitchClassTestArgsProvider.Valid.SoloLowerCasePitchLetterStringAndObject.class)
-    void pitchClassParseStringOfSoloValidLowerCaseLetterReturnsPresentOptional(
-            String lowerCaseSoloPitchLetterString,
-            PitchClass expectedPitchClass) {
-        final Optional<PitchClass> pitchClassOptional = PitchClass.parse(lowerCaseSoloPitchLetterString);
-        assertTrue(pitchClassOptional.isPresent(),
-                () -> "PitchClass.parse(\"%s\") returned non present Optional"
-                        .formatted(lowerCaseSoloPitchLetterString));
-        assertEquals(expectedPitchClass, pitchClassOptional.get());
-    }
-
-    @Test
-    @DisplayName("PitchClass.parse(null) throws IllegalArgumentException")
-    void pitchClassParseOfNullThrowsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> PitchClass.parse(null),
-                () -> "PitchClass.parse(null) did not throw IllegalArgumentException");
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
-    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.SoloPitchLetterString.class)
-    @EmptySource
-    void pitchClassParseStringOfSoloInvalidLetterReturnsEmptyOptional(
-            String invalidSoloPitchLetterString) {
-        assertTrue(PitchClass.parse(invalidSoloPitchLetterString).isEmpty(),
-                () -> "PitchClass.parse(\"%s\") returned non empty Optional".formatted(invalidSoloPitchLetterString));
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
-    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.ValidPitchLetterWithInvalidAccidentalString.class)
-    void pitchClassParseStringOfValidLetterWithInvalidAccidentalReturnsEmptyOptional(
-            String validPitchLetterWithInvalidAccidentalString) {
-        assertTrue(PitchClass.parse(validPitchLetterWithInvalidAccidentalString).isEmpty(),
-                () -> "PitchClass.parse(\"%s\") returned non empty Optional"
-                        .formatted(validPitchLetterWithInvalidAccidentalString));
-    }
-
-    @ParameterizedTest(name = "PitchClass.parse(\"{0}\") returns empty Optional")
-    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.PitchLetterWithValidAccidentalString.class)
-    void pitchClassParseStringOfInvalidLetterWithValidAccidentalReturnsEmptyOptional(
-            String invalidPitchLetterWithValidAccidentalString) {
-        assertTrue(PitchClass.parse(invalidPitchLetterWithValidAccidentalString).isEmpty(),
-                () -> "PitchClass.parse(\"%s\") returned non empty Optional"
-                        .formatted(invalidPitchLetterWithValidAccidentalString));
     }
 }

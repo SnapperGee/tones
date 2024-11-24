@@ -283,8 +283,8 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String durationString = aString.substring(aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue()) + 1);
-        final int duration = Integer.parseInt(durationString);
+        final int delimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
+        final int duration = Integer.parseInt(aString, delimiterIndex, aString.length(), 10);
         return Optional.of(Audio.silence(duration));
     }
 
