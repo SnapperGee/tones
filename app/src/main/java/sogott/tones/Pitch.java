@@ -57,6 +57,7 @@ final class Pitch {
 
     final private PitchClass _pitchClass;
     final private int _octave;
+    final private double _frequency;
     final private String _stringValue;
     final private int _hashCode;
     final private String _toString;
@@ -87,6 +88,14 @@ final class Pitch {
 
         this._pitchClass = pitchClass;
         this._octave = octave;
+
+        final int octaveOffset = (this._octave - 4) * 12;
+        final double pitchFrequency = 440
+                * Math.pow(2,
+                        (this._pitchClass.letter().offset() + (this._pitchClass.accidental().offset()) + octaveOffset)
+                                / 12.0);
+        this._frequency = pitchFrequency;
+
         this._stringValue = this._pitchClass.accidental() == Accidental.NATURAL
                 ? "%c%d".formatted(this._pitchClass.letter().charValue(), this._octave)
                 : "%c%c%d".formatted(this._pitchClass.letter().charValue(), this.accidental().charValue(),
@@ -182,6 +191,19 @@ final class Pitch {
      */
     int octave() {
         return this._octave;
+    }
+
+    /**
+     * The {@code double} frequency of this {@link Pitch} derived from its
+     * {@link #letter() letter}, {@link #accidental() accidental}, and
+     * {@link #octave() octave}.
+     *
+     * @return The {@code double} frequency of this {@link Pitch} derived from its
+     *         {@link #letter() letter}, {@link #accidental() accidental}, and
+     *         {@link #octave() octave}.
+     */
+    double frequency() {
+        return this._frequency;
     }
 
     /**
