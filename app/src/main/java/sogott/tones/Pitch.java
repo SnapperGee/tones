@@ -8,7 +8,8 @@ import java.util.Optional;
  * audio expressed as a musical note. It consists of 3 primary properties:
  *
  * <h2>1.) {@code Pitch Letter}</h2>
- * The {@link #letter() letter} property consists of a character value corresponding
+ * The {@link #letter() letter} property consists of a character value
+ * corresponding
  * to one of the musical notes (A-G). These note chars are defined in the
  * {@link PitchLetter} enum.
  *
@@ -60,6 +61,20 @@ final class Pitch {
     final private int _hashCode;
     final private String _toString;
 
+    /**
+     * Construct a {@link Pitch} object instance with the provided
+     * {@link PitchClass} and {@code octave}.
+     *
+     * @param pitchClass The {@link PitchClass} of the instantiated {@link Pitch}
+     *                   object.
+     *
+     * @param octave     A non negative (0 or greater) {@code int} octave of the
+     *                   instantiated {@link Pitch}.
+     *
+     * @throws IllegalArgumentException If the passed {@link PitchClass} is
+     *                                  {@code null} or the octave is negative
+     *                                  (less than 0).
+     */
     Pitch(PitchClass pitchClass, int octave) {
         if (pitchClass == null) {
             throw new IllegalArgumentException(
@@ -74,7 +89,8 @@ final class Pitch {
         this._octave = octave;
         this._stringValue = this._pitchClass.accidental() == Accidental.NATURAL
                 ? "%c%d".formatted(this._pitchClass.letter().charValue(), this._octave)
-                : "%c%c%d".formatted(this._pitchClass.letter().charValue(), this.accidental().charValue(), this._octave);
+                : "%c%c%d".formatted(this._pitchClass.letter().charValue(), this.accidental().charValue(),
+                        this._octave);
         this._hashCode = hash(this._pitchClass, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
