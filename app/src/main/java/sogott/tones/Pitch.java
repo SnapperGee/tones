@@ -241,10 +241,11 @@ final class Pitch {
                             .filter(accidental -> aString.length() >= 3
                                     && aString.codePoints().skip(2).allMatch(Character::isDigit))
                             .flatMap(accidental -> Optional.of(new Pitch(new PitchClass(pitchLetter, accidental),
-                                    Integer.parseInt(aString.substring(2)))))
+                                    Integer.parseInt(aString, 2, aString.length(), 10))))
+                            // if string is a leading pitch letter followed by octave int
                             .or(() -> aString.codePoints().skip(1).allMatch(Character::isDigit)
                                     ? Optional.of(new Pitch(new PitchClass(pitchLetter),
-                                            Integer.parseInt(aString.substring(1))))
+                                            Integer.parseInt(aString, 1, aString.length(), 10)))
                                     : Optional.empty()));
         }
 
