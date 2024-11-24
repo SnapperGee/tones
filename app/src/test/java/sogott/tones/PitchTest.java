@@ -410,14 +410,14 @@ final class PitchTest {
     // hashCode //
     //////////////
 
-    // @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).hashCode() equals Objects.hash(Note.{0}, Accidental.{1}, {2})")
-    // @ArgumentsSource(PitchTestArgsProvider.Valid.NoteAccidentalAndOctave.class)
-    // void hashCodesComputedFromNoteAccidentalAndOctave(PitchLetter pitchLetter, Accidental accidental,
-    //         int octave) {
-    //     final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
-    //     final int computedHashCode = hash(pitchLetter, accidental, octave);
-    //     assertEquals(computedHashCode, pitch.hashCode());
-    // }
+    @ParameterizedTest(name = "new Pitch(new PitchClass(PitchLetter.{0}, Accidental.{1}), {2}).hashCode() equals Objects.hash(Note.{0}, Accidental.{1}, {2})")
+    @ArgumentsSource(PitchTestArgsProvider.Valid.NoteAccidentalAndOctave.class)
+    void hashCodesComputedFromPitchLetterAccidentalAndOctave(PitchLetter pitchLetter, Accidental accidental,
+            int octave) {
+        final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
+        final int computedHashCode = hash(new PitchClass(pitchLetter, accidental), octave);
+        assertEquals(computedHashCode, pitch.hashCode());
+    }
 
     @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).hashCode() is same for same object")
     @ArgumentsSource(PitchTestArgsProvider.Valid.NoteAccidentalAndOctave.class)
@@ -427,14 +427,14 @@ final class PitchTest {
         assertTrue(aPitch.hashCode() == aPitch.hashCode());
     }
 
-    // @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).hashCode() is same for equal object")
-    // @ArgumentsSource(PitchTestArgsProvider.Valid.NoteAccidentalAndOctave.class)
-    // void equivalentPitchesHaveSameHashCode(PitchLetter pitchLetter, Accidental accidental,
-    //         int octave) {
-    //     final Pitch aPitch = new Pitch(pitchLetter, accidental, octave);
-    //     final Pitch anotherEqualPitch = new Pitch(pitchLetter, accidental, octave);
-    //     assertTrue(aPitch.hashCode() == anotherEqualPitch.hashCode());
-    // }
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).hashCode() is same for equal object")
+    @ArgumentsSource(PitchTestArgsProvider.Valid.NoteAccidentalAndOctave.class)
+    void equivalentPitchesHaveSameHashCode(PitchLetter pitchLetter, Accidental accidental,
+            int octave) {
+        final Pitch aPitch = new Pitch(pitchLetter, accidental, octave);
+        final Pitch anotherEqualPitch = new Pitch(new PitchClass(pitchLetter, accidental), octave);
+        assertTrue(aPitch.hashCode() == anotherEqualPitch.hashCode());
+    }
 
     ////////////////
     // isParsable //
