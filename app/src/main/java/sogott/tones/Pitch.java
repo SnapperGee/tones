@@ -230,30 +230,25 @@ final class Pitch {
             throw new IllegalArgumentException("Null string.");
         }
 
-        // string must be at least a note char and octave int
-        if (aString.length() < 2) {
-            return Optional.empty();
+        if (!aString.isBlank()) {
+            // first char must be pitch letter
+            return PitchLetter.fromChar(aString.charAt(0))
+                    // after leading pitch letter, an accidental or octave is required
+                    .filter(pitchLetter -> aString.length() > 1)
+                    // if leading char is pitch letter followed by an accidental
+                    .flatMap(pitchLetter -> Accidental.fromChar(aString.charAt(1))
+                            // octave int must come after leading pitch letter and accidental char
+                            .filter(accidental -> aString.length() >= 3
+                                    && aString.codePoints().skip(2).allMatch(Character::isDigit))
+                            .flatMap(accidental -> Optional.of(new Pitch(new PitchClass(pitchLetter, accidental),
+                                    Integer.parseInt(aString.substring(2)))))
+                            .or(() -> aString.codePoints().skip(1).allMatch(Character::isDigit)
+                                    ? Optional.of(new Pitch(new PitchClass(pitchLetter),
+                                            Integer.parseInt(aString.substring(1))))
+                                    : Optional.empty()));
         }
 
-        final int startIndex = Accidental.isAccidentalChar(aString.charAt(1))
-                ? 2
-                : 1;
-
-        final String octaveString = aString.substring(startIndex);
-
-        if (octaveString.length() == 0 || !octaveString.codePoints().allMatch(Character::isDigit)) {
-            return Optional.empty();
-        }
-
-        final int octave = Integer.parseInt(octaveString);
-
-        return PitchLetter.fromChar(aString.charAt(0)).map(note -> {
-            return startIndex == 2
-                    ? Accidental.fromChar(aString.charAt(startIndex - 1))
-                            .map(accidental -> Optional.of(new Pitch(note, accidental, octave)))
-                            .orElse(Optional.empty())
-                    : Optional.of(new Pitch(note, Accidental.NATURAL, octave));
-        }).orElse(Optional.empty());
+        return Optional.empty();
     }
 
     /**
