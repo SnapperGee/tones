@@ -136,15 +136,15 @@ final class WaveTestArgsProvider {
 final class WaveTest {
     @ParameterizedTest(name = "WaveShape.{0}.stringValue() = \"{1}\"")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringValue.class)
-    void waveShapeStringValueIsValid(WaveShape wave, String expectedStringValue) {
-        final String waveStringValue = wave.stringValue();
+    void waveShapeStringValueIsValid(WaveShape waveShape, String expectedStringValue) {
+        final String waveStringValue = waveShape.stringValue();
         assertEquals(expectedStringValue, waveStringValue);
     }
 
     @ParameterizedTest(name = "WaveShape.{0}.stringValueAliases() = {1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAliases.class)
-    void waveShapeStringValueAliasesIsValid(WaveShape wave, Set<String> expectedStringAliases) {
-        final Set<String> waveStringAliases = wave.stringValueAliases();
+    void waveShapeStringValueAliasesIsValid(WaveShape waveShape, Set<String> expectedStringAliases) {
+        final Set<String> waveStringAliases = waveShape.stringValueAliases();
         assertEquals(expectedStringAliases, waveStringAliases);
     }
 
@@ -164,9 +164,9 @@ final class WaveTest {
 
     @ParameterizedTest(name = "WaveShape.{0}.prefixes(\"{1}\") returns true")
     @ArgumentsSource(WaveTestArgsProvider.PrefixedStrings.class)
-    void prefixesReturnsTrueForPrefixedStrings(WaveShape wave, String prefixedString) {
-        assertTrue(wave.prefixes(prefixedString),
-                () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(wave.name(), prefixedString));
+    void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
+        assertTrue(waveShape.prefixes(prefixedString),
+                () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
     }
 
     @Test
