@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 final class AudioTestArgsProvider {
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    final private static List<WaveShape> waveShapes = stream(WaveShape.values()).filter(waveShape -> waveShape != WaveShape.NONE).toList();
+    final private static List<WaveShape> waveShapes = stream(WaveShape.values())
+            .filter(waveShape -> waveShape != WaveShape.NONE).toList();
     final private static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     final private static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
@@ -37,11 +37,12 @@ final class AudioTestArgsProvider {
         final static class WavePitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
-                        .map(accidental -> arguments(wave,
-                                new Pitch(pitchLetter, accidental,
-                                        random.nextInt(13)),
-                                1 << random.nextInt(8)))));
+                return waveShapes.stream()
+                        .flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
+                                .map(accidental -> arguments(wave,
+                                        new Pitch(pitchLetter, accidental,
+                                                random.nextInt(13)),
+                                        1 << random.nextInt(8)))));
             }
         }
 
@@ -381,7 +382,8 @@ final class AudioTest {
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioPitchPropertyReturnsPitch(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
-        assertTrue(audio.pitch().isPresent(), () -> "new Audio(Wave.%s, %s, %d).pitch() returned non present Optional.".formatted(wave, pitch, duration));
+        assertTrue(audio.pitch().isPresent(), () -> "new Audio(Wave.%s, %s, %d).pitch() returned non present Optional."
+                .formatted(wave, pitch, duration));
         assertSame(pitch, audio.pitch().get());
     }
 
