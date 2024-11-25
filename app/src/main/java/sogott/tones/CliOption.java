@@ -152,7 +152,7 @@ enum CliOption {
 
     private final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
 
-    private final static String CMD_LINE_SYNTAX = "beep [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [%s>]NOTE.INTEGER..."
+    private final static String CMD_LINE_SYNTAX = "tones [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [%s>]PITCH.INTEGER..."
             .formatted(CliOption.BPM.value().getLongOpt(),
                     CliOption.BPM.value().getOpt(),
                     CliOption.BPM.value().getArgName(),
@@ -172,7 +172,7 @@ enum CliOption {
                     CliOption.QUIET.value().getOpt(),
                     CliOption.QUIET.value().getLongOpt(),
                     CliOption.WAVE.value().getArgName())
-            + "\nPlay musical note based beeps.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
+            + "\nPlay musical note based tones.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
 
     private final static Options ALL_OPTIONS = stream(CliOption.values()).reduce(
             new Options(),
@@ -204,7 +204,6 @@ enum CliOption {
         new HelpFormatter().printHelp(
                 CliOption.CMD_LINE_SYNTAX,
                 ALL_OPTIONS);
-        ;
     }
 
     final private Option _value;
