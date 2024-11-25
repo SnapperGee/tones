@@ -11,7 +11,8 @@ import java.util.Objects;
  * <ol>
  * <li>
  * <h2><i>{@link #waveShape() Wave}</i></h2>
- * The {@link #waveShape() wave} property designates the shape of the wave of the
+ * The {@link #waveShape() wave} property designates the shape of the wave of
+ * the
  * synthesized audio. This property will be one of the values defined in the
  * {@link WaveShape} enum if it's audible audio or {@code null} if it's silence.
  * The
@@ -75,8 +76,10 @@ final class Audio {
         this._duration = duration;
         this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
         this._hashCode = Objects.hash(this._waveShape, this._pitch, this._duration);
-        this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
-                Audio.class.getSimpleName(), this._duration);
+        this._toString = "%s {wave=%s, pitch=null, duration=%d}".formatted(
+                Audio.class.getSimpleName(),
+                WaveShape.NONE.name(),
+                this._duration);
     }
 
     /**
