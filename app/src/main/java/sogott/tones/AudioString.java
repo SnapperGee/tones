@@ -171,7 +171,7 @@ final class AudioString {
         }
     }
 
-    private final static String SILENCE_PREFIX = new StringBuilder()
+    private final static String SILENCE_PREFIX = new StringBuilder(2)
             .append(SILENCE_CHAR)
             .append(Delimiter.VOICE_AND_DURATION.charValue())
             .toString();
