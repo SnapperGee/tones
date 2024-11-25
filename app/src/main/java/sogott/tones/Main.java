@@ -53,8 +53,7 @@ final public class Main {
             } else {
                 final List<String> operands = unmodifiableList(cliArgs.getArgList());
 
-                if(operands.isEmpty())
-                {
+                if (operands.isEmpty()) {
                     throw new ParseException("No audio String operand argument(s) passed.");
                 }
 
