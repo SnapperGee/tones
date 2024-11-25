@@ -121,11 +121,11 @@ enum CliOption {
             .build()),
 
     /**
-     * Contains the {@link Option} for preventing audible output from being played.
+     * Contains the {@link Option} for preventing output from being audibly played.
      */
     QUIET(Option.builder("q")
             .longOpt("quiet")
-            .desc("Prevents audible output from being played.")
+            .desc("Prevents output from being audibly played.")
             .numberOfArgs(0)
             .build()),
 
