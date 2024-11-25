@@ -36,7 +36,7 @@ enum WaveShape {
     /**
      * A <i>SINE</i> wave.
      */
-    SINE(GenerateWaveByteBuffer::sine, "SIN", Set.of("SINE","SIN")),
+    SINE(GenerateWaveByteBuffer::sine, "SIN", Set.of("SINE", "SIN")),
 
     /**
      * A <i>SQUARE</i> wave.
@@ -56,7 +56,22 @@ enum WaveShape {
     /**
      * A <i>SAW DOWN</i> wave.
      */
-    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN"));
+    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN")),
+
+    /**
+     * No wave shape present.
+     */
+    NONE((_double, _integer) -> {throw new UnsupportedOperationException("");}, "", Set.of()) {
+        @Override
+        boolean prefixes(String aString, boolean ignoreCase) {
+            return !SINE.prefixes(aString, ignoreCase)
+                    && !SQUARE.prefixes(aString, ignoreCase)
+                    && !TRIANGLE.prefixes(aString, ignoreCase)
+                    && !SAW_UP.prefixes(aString, ignoreCase)
+                    && !SAW_DOWN.prefixes(aString, ignoreCase);
+        }
+
+    };
 
     private final static List<WaveShape> WAVES = unmodifiableList(asList(WaveShape.values()));
 
@@ -220,7 +235,8 @@ enum WaveShape {
      * argument can be case insensitively parsed to. If it can't be parsed to a
      * {@link WaveShape}, then an empty optional is returned.
      *
-     * @param aString {@code String} to case insensitively parse to a {@link WaveShape}.
+     * @param aString {@code String} to case insensitively parse to a
+     *                {@link WaveShape}.
      *
      * @return An optional containing the {@link WaveShape} value the passed string
      *         argument can be case insensitively parsed to if it can be,
