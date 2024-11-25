@@ -67,7 +67,7 @@ final class Audio {
     final private String _toString;
 
     private Audio(int duration) {
-        if (duration < 0) {
+        if (duration <= 0) {
             throw new IllegalArgumentException("Negative duration: %d".formatted(duration));
         }
 

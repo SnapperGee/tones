@@ -309,7 +309,7 @@ final class AudioTest {
     }
 
     static private final IntStream nonPositiveIntArgs() {
-        return AudioTestArgsProvider.random.ints(5, -2000, 0);
+        return IntStream.rangeClosed(-12, 0);
     }
 
     ///////////////////////
@@ -335,11 +335,12 @@ final class AudioTest {
     @Test
     @DisplayName("new Audio(WaveShape.NONE, Pitch, 1 < # < 1000) throws IllegalArgumentException")
     void audioConstructorPassedNoneWaveShapeThrows() {
-        final Pitch pitch = new Pitch(AudioTestArgsProvider.randomPitchLetter(), AudioTestArgsProvider.randomAccidental(), AudioTestArgsProvider.random.nextInt(13));
+        final Pitch pitch = new Pitch(AudioTestArgsProvider.randomPitchLetter(),
+                AudioTestArgsProvider.randomAccidental(), AudioTestArgsProvider.random.nextInt(13));
         assertThrows(
-            IllegalArgumentException.class,
-            () -> new Audio(WaveShape.NONE, pitch, AudioTestArgsProvider.random.nextInt(1, 1000)),
-            () -> "new Audio(WaveShape.NONE, Pitch, 1 < # < 1000) did not throw IllegalArgumentException");
+                IllegalArgumentException.class,
+                () -> new Audio(WaveShape.NONE, pitch, AudioTestArgsProvider.random.nextInt(1, 1000)),
+                () -> "new Audio(WaveShape.NONE, Pitch, 1 < # < 1000) did not throw IllegalArgumentException");
     }
 
     /////////////////////////
