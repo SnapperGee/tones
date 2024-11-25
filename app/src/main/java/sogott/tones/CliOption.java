@@ -50,10 +50,10 @@ enum CliOption {
     /**
      * Contains the {@link Option} for setting the beat value of a note. The
      * easiest way to think of this value is the bottom value of a time
-     * signature. So if there's a time signature of <sup>3</sup>&frasl;
-     * <sub>4</sub>, then {@code 4} is the beat value of a note. This
-     * affects how the duration is applied to each note. A positive integer
-     * (greater than 0) is expected.
+     * signature. So if there's a time signature of
+     * <sup>3</sup>&frasl;<sub>4</sub>, then {@code 4} is the beat value of a
+     * note. This affects how the duration is applied to each note. A positive
+     * integer (greater than 0) is expected.
      */
     NOTE_BEAT_VALUE(Option.builder("n")
             .argName("INTEGER")
