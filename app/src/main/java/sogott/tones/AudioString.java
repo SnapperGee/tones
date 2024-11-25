@@ -298,13 +298,13 @@ final class AudioString {
         final String durationString = splitString[1];
         final int duration = Integer.parseInt(durationString);
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
-        final WaveShape wave = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
+        final WaveShape waveShape = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
                 : WaveShape.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
                 ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
                 : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
 
-        return Optional.of(new Audio(wave, pitch, duration));
+        return Optional.of(new Audio(waveShape, pitch, duration));
     }
 
     private static Optional<Audio> parsePitch(String aString) {
