@@ -1,8 +1,7 @@
 package sogott.tones;
 
 import java.util.Optional;
-
-import static java.util.Objects.hash;
+import java.util.Objects;
 
 /**
  * This class contains the properties necessary needed to generate {@code byte}
@@ -60,7 +59,7 @@ import static java.util.Objects.hash;
  */
 final class Audio {
     final private WaveShape _waveShape;
-    final private Optional<Pitch> _pitch;
+    final private Pitch _pitch;
     final private int _duration;
     final private String _string;
     final private int _hashCode;
@@ -72,10 +71,10 @@ final class Audio {
         }
 
         this._waveShape = WaveShape.NONE;
-        this._pitch = Optional.empty();
+        this._pitch = null;
         this._duration = duration;
         this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
-        this._hashCode = hash(this._waveShape, this._pitch, this._duration);
+        this._hashCode = Objects.hash(this._waveShape, this._pitch, this._duration);
         this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
                 Audio.class.getSimpleName(), this._duration);
     }
@@ -123,14 +122,14 @@ final class Audio {
         }
 
         this._waveShape = waveShape;
-        this._pitch = Optional.of(pitch);
+        this._pitch = pitch;
         this._duration = duration;
-        this._string = "%s>%s.%d".formatted(this._waveShape.stringValue(), this._pitch.get().stringValue(),
+        this._string = "%s>%s.%d".formatted(this._waveShape.stringValue(), this._pitch.stringValue(),
                 this._duration);
-        this._hashCode = hash(this._waveShape, this._pitch, this._duration);
+        this._hashCode = Objects.hash(this._waveShape, this._pitch, this._duration);
         this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(Audio.class.getSimpleName(),
                 this._waveShape.name(),
-                this._pitch.get().stringValue(), this._duration);
+                this._pitch.stringValue(), this._duration);
     }
 
     /**
@@ -184,7 +183,7 @@ final class Audio {
      *         {@code Optional} if it's silence.
      */
     Optional<Pitch> pitch() {
-        return this._pitch;
+        return Optional.ofNullable(this._pitch);
     }
 
     /**
@@ -227,7 +226,7 @@ final class Audio {
         return this == obj ||
                 obj instanceof Audio other
                         && this._waveShape == other._waveShape
-                        && this._pitch.equals(other._pitch)
+                        && Objects.equals(this._pitch, other._pitch)
                         && this._duration == other._duration;
     }
 
