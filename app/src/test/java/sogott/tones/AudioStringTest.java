@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import static java.util.Collections.unmodifiableList;
+import static java.util.Arrays.stream;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class AudioStringTestArgsProvider {
-    private final static List<WaveShape> waves = unmodifiableList(asList(WaveShape.values()));
+    private final static List<WaveShape> waveShapes = stream(WaveShape.values()).filter(waveShape -> waveShape != WaveShape.NONE).toList();
     private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
@@ -37,7 +38,7 @@ final class AudioStringTestArgsProvider {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
-                    return waves.stream()
+                    return waveShapes.stream()
                             .flatMap(wave -> wave.stringValueAliases().stream()
                                     .flatMap(waveStringAlias -> accidentals.stream()
                                             .flatMap(accidental -> Stream
@@ -84,7 +85,7 @@ final class AudioStringTestArgsProvider {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
-                    return waves.stream()
+                    return waveShapes.stream()
                             .flatMap(wave -> accidentals.stream()
                                     .flatMap(accidental -> Stream
                                             .of(arguments(
@@ -172,7 +173,7 @@ final class AudioStringTestArgsProvider {
                 return pitchLetters.stream().flatMap(note -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
-                    return waves.stream()
+                    return waveShapes.stream()
                             .flatMap(wave -> wave.stringValueAliases().stream()
                                     .flatMap(waveStringAlias -> Stream.concat(
                                             Stream.of(
@@ -436,7 +437,7 @@ final class AudioStringTestArgsProvider {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
-                    return waves.stream()
+                    return waveShapes.stream()
                             .flatMap(wave -> wave.stringValueAliases().stream()
                                     .flatMap(waveStringAlias -> Stream.concat(
                                             Stream.of(

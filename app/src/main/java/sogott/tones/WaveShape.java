@@ -61,7 +61,7 @@ enum WaveShape {
     /**
      * No wave shape present.
      */
-    NONE((_double, _integer) -> {throw new UnsupportedOperationException("");}, "", Set.of()) {
+    NONE((_double, _integer) -> {throw new UnsupportedOperationException(WaveShape.class.getSimpleName() + "NONE does not support byte generation.");}, "", Set.of()) {
         @Override
         boolean prefixes(String aString, boolean ignoreCase) {
             return !SINE.prefixes(aString, ignoreCase)
@@ -69,6 +69,10 @@ enum WaveShape {
                     && !TRIANGLE.prefixes(aString, ignoreCase)
                     && !SAW_UP.prefixes(aString, ignoreCase)
                     && !SAW_DOWN.prefixes(aString, ignoreCase);
+        }
+
+        static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
+            return Optional.empty();
         }
 
     };

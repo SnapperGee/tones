@@ -11,10 +11,11 @@ import static java.util.Objects.hash;
  *
  * <ol>
  * <li>
- * <h2><i>{@link #wave() Wave}</i></h2>
- * The {@link #wave() wave} property designates the shape of the wave of the
+ * <h2><i>{@link #waveShape() Wave}</i></h2>
+ * The {@link #waveShape() wave} property designates the shape of the wave of the
  * synthesized audio. This property will be one of the values defined in the
- * {@link WaveShape} enum if it's audible audio or {@code null} if it's silence. The
+ * {@link WaveShape} enum if it's audible audio or {@code null} if it's silence.
+ * The
  * following wave shapes are:
  * <ul>
  * <li><i>sin</i>
@@ -58,7 +59,7 @@ import static java.util.Objects.hash;
  * @see AudioString
  */
 final class Audio {
-    final private WaveShape _wave;
+    final private WaveShape _waveShape;
     final private Optional<Pitch> _pitch;
     final private int _duration;
     final private String _string;
@@ -70,11 +71,11 @@ final class Audio {
             throw new IllegalArgumentException("Negative duration: %d".formatted(duration));
         }
 
-        this._wave = null;
+        this._waveShape = WaveShape.NONE;
         this._pitch = Optional.empty();
         this._duration = duration;
         this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
-        this._hashCode = hash(this._wave, this._pitch, this._duration);
+        this._hashCode = hash(this._waveShape, this._pitch, this._duration);
         this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
                 Audio.class.getSimpleName(), this._duration);
     }
@@ -83,12 +84,13 @@ final class Audio {
      * Constructs an {@link Audio} object instance with the following wave,
      * pitch, and duration properties.
      *
-     * @param wave     The {@link WaveShape} of the constructed {@link Audio} object.
+     * @param waveShape The {@link WaveShape} of the constructed {@link Audio}
+     *                  object.
      *
-     * @param pitch    The {@link Pitch} of the constructed {@link Audio} object.
+     * @param pitch     The {@link Pitch} of the constructed {@link Audio} object.
      *
-     * @param duration The positive duration {@code int} of the constructed
-     *                 {@link Audio} object.
+     * @param duration  The positive duration {@code int} of the constructed
+     *                  {@link Audio} object.
      *
      * @throws IllegalArgumentException if either of the wave or pitch arguments
      *                                  are {@code null} or the duration is not
@@ -97,10 +99,18 @@ final class Audio {
      * @see WaveShape
      * @see Pitch
      */
-    Audio(WaveShape wave, Pitch pitch, int duration) {
-        if (wave == null) {
+    Audio(WaveShape waveShape, Pitch pitch, int duration) {
+        if (waveShape == null) {
             throw new IllegalArgumentException(
                     "Null %s %s.".formatted(Audio.class.getSimpleName(), WaveShape.class.getSimpleName()));
+        }
+
+        if (waveShape == WaveShape.NONE) {
+            throw new IllegalArgumentException(
+                    "%$1s %$2s cannot be initialized to %$3s. Use %$1s.silence(int) method instead..".formatted(
+                            Audio.class.getSimpleName(),
+                            WaveShape.class.getSimpleName(),
+                            WaveShape.NONE.name()));
         }
 
         if (pitch == null) {
@@ -112,13 +122,14 @@ final class Audio {
             throw new IllegalArgumentException("Non positive duration: %d".formatted(duration));
         }
 
-        this._wave = wave;
+        this._waveShape = waveShape;
         this._pitch = Optional.of(pitch);
         this._duration = duration;
-        this._string = "%s>%s.%d".formatted(this._wave.stringValue(), this._pitch.get().stringValue(), this._duration);
-        this._hashCode = hash(this._wave, this._pitch, this._duration);
+        this._string = "%s>%s.%d".formatted(this._waveShape.stringValue(), this._pitch.get().stringValue(),
+                this._duration);
+        this._hashCode = hash(this._waveShape, this._pitch, this._duration);
         this._toString = "%s {wave=%s, pitch=\"%s\", duration=%d}".formatted(Audio.class.getSimpleName(),
-                this._wave.name(),
+                this._waveShape.name(),
                 this._pitch.get().stringValue(), this._duration);
     }
 
@@ -141,7 +152,8 @@ final class Audio {
     }
 
     /**
-     * The {@link WaveShape} shape value of this {@link Audio} object is it's audible
+     * The {@link WaveShape} shape value of this {@link Audio} object is it's
+     * audible
      * or {@code null} if it's silence. The possible wave shape values are
      * defined in the {@link WaveShape} enum. The possible wave shapes are:
      *
@@ -158,8 +170,8 @@ final class Audio {
      *
      * @see WaveShape
      */
-    WaveShape wave() {
-        return this._wave;
+    WaveShape waveShape() {
+        return this._waveShape;
     }
 
     /**
@@ -214,7 +226,7 @@ final class Audio {
     public boolean equals(Object obj) {
         return this == obj ||
                 obj instanceof Audio other
-                        && this._wave == other._wave
+                        && this._waveShape == other._waveShape
                         && this._pitch.equals(other._pitch)
                         && this._duration == other._duration;
     }

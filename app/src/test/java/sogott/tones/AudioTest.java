@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static java.util.Objects.hash;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +28,7 @@ final class AudioTestArgsProvider {
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    final private static List<WaveShape> waves = unmodifiableList(asList(WaveShape.values()));
+    final private static List<WaveShape> waveShapes = stream(WaveShape.values()).filter(waveShape -> waveShape != WaveShape.NONE).toList();
     final private static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     final private static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
@@ -36,7 +37,7 @@ final class AudioTestArgsProvider {
         final static class WavePitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
+                return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                         .map(accidental -> arguments(wave,
                                 new Pitch(pitchLetter, accidental,
                                         random.nextInt(13)),
@@ -47,11 +48,11 @@ final class AudioTestArgsProvider {
         final static class AltWavesPitchesDurations implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> {
-                    final int waveIndex = waves.indexOf(wave);
-                    final int differentWaveIndex = random.ints(0, waves.size())
+                return waveShapes.stream().flatMap(wave -> {
+                    final int waveIndex = waveShapes.indexOf(wave);
+                    final int differentWaveIndex = random.ints(0, waveShapes.size())
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
-                    final WaveShape differentWave = waves.get(differentWaveIndex);
+                    final WaveShape differentWave = waveShapes.get(differentWaveIndex);
 
                     return pitchLetters.stream().flatMap(pitchLetter -> {
                         final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
@@ -98,11 +99,11 @@ final class AudioTestArgsProvider {
         final static class WaveAltsPitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> {
-                    final int waveIndex = waves.indexOf(wave);
-                    final int differentWaveIndex = random.ints(0, waves.size())
+                return waveShapes.stream().flatMap(wave -> {
+                    final int waveIndex = waveShapes.indexOf(wave);
+                    final int differentWaveIndex = random.ints(0, waveShapes.size())
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
-                    final WaveShape differentWave = waves.get(differentWaveIndex);
+                    final WaveShape differentWave = waveShapes.get(differentWaveIndex);
 
                     return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                             .map(accidental -> arguments(wave,
@@ -117,7 +118,7 @@ final class AudioTestArgsProvider {
         final static class WaveAltPitchesAndDurations implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
+                return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
                     final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
                     final int differentPitchLetterIndex = random.ints(0, pitchLetters.size())
                             .filter(i -> i != pitchLetterIndex).findFirst()
@@ -157,7 +158,7 @@ final class AudioTestArgsProvider {
         final static class WavePitchDurationAlts implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
+                return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
                     final int duration = 1 << random.nextInt(8);
                     final int differentDuration = random.ints(0, 8).map(i -> 1 << i)
                             .filter(i -> i != duration).findFirst()
@@ -176,7 +177,7 @@ final class AudioTestArgsProvider {
         final static class WavePitchAltsDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
+                return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
                     final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
                     final int differentPitchLetterIndex = random.ints(0, pitchLetters.size())
                             .filter(i -> i != pitchLetterIndex).findFirst()
@@ -211,11 +212,11 @@ final class AudioTestArgsProvider {
         final static class AltWavesAndPitchesWithDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> {
-                    final int waveIndex = waves.indexOf(wave);
-                    final int differentWaveIndex = random.ints(0, waves.size())
+                return waveShapes.stream().flatMap(wave -> {
+                    final int waveIndex = waveShapes.indexOf(wave);
+                    final int differentWaveIndex = random.ints(0, waveShapes.size())
                             .filter(i -> i != waveIndex).findFirst().orElseThrow();
-                    final WaveShape differentWave = waves.get(differentWaveIndex);
+                    final WaveShape differentWave = waveShapes.get(differentWaveIndex);
 
                     return pitchLetters.stream().flatMap(pitchLetter -> {
                         final int pitchLetterIndex = pitchLetters.indexOf(pitchLetter);
@@ -260,7 +261,7 @@ final class AudioTestArgsProvider {
         final static class WavePitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
-                return waves.stream().flatMap(wave -> Stream.concat(
+                return waveShapes.stream().flatMap(wave -> Stream.concat(
                         Stream.of(
                                 arguments(null, null, 1 << random.nextInt(8)),
                                 arguments(null, null, -(1 << random.nextInt(8)))),
@@ -335,11 +336,11 @@ final class AudioTest {
         assertThrows(IllegalArgumentException.class, () -> Audio.silence(duration));
     }
 
-    @ParameterizedTest(name = "Audio.silence({0}).wave() returns null")
+    @ParameterizedTest(name = "Audio.silence({0}).wave() returns WaveShape.NONE")
     @MethodSource("positiveIntArgs")
-    void silenceWaveIsNull(int duration) {
+    void silenceWaveIsNone(int duration) {
         final Audio silenceAudio = Audio.silence(duration);
-        assertNull(silenceAudio.wave());
+        assertSame(WaveShape.NONE, silenceAudio.waveShape());
     }
 
     @ParameterizedTest(name = "Audio.silence({0}).pitch() returns empty Optional")
@@ -373,7 +374,7 @@ final class AudioTest {
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioWavePropertyReturnsWave(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
-        assertSame(wave, audio.wave());
+        assertSame(wave, audio.waveShape());
     }
 
     @ParameterizedTest(name = "new Audio(Wave.{0}, {1}, {2}).pitch() returns Optional containing pitch")

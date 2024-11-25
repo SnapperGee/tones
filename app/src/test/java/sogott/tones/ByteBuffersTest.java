@@ -6,6 +6,7 @@ import javax.sound.sampled.AudioFormat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import static java.util.Arrays.stream;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,12 +17,12 @@ final class ByteBuffersTestArgsProvider {
     final static RandomGenerator random = RandomGenerator.getDefault();
     private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
-    private final static List<WaveShape> waves = unmodifiableList(asList(WaveShape.values()));
+    private final static List<WaveShape> waveShapes = stream(WaveShape.values()).filter(waveShape -> waveShape != WaveShape.NONE).toList();
 
     final static List<Audio> audioObjects = pitchLetters.stream().flatMap(pitchLetter -> {
         return accidentals.stream().flatMap(accidental -> {
             final Pitch accidentalPitch = new Pitch(pitchLetter, accidental, random.nextInt(0, 13));
-            return waves.stream()
+            return waveShapes.stream()
                     .map(wave -> new Audio(wave, accidentalPitch, random.nextInt(1, 1000)));
         });
     }).toList();
