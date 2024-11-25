@@ -34,7 +34,7 @@ enum CliOption {
             .argName("INTEGER")
             .longOpt("bpm")
             .hasArg()
-            .desc("Set speed of playback to INTEGER beats per minute (defaults to 140).")
+            .desc("Set speed of audio to INTEGER beats per minute (defaults to 140).")
             .type(Integer.class)
             .converter(arg -> {
                 if (arg.isBlank() || !arg.codePoints().allMatch(Character::isDigit)) {
