@@ -7,20 +7,23 @@ import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class WaveTestArgsProvider {
 
-    final private static RandomGenerator random = RandomGenerator.getDefault();
+    final static RandomGenerator random = RandomGenerator.getDefault();
 
     final static class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
         @Override
@@ -129,38 +132,45 @@ final class WaveTestArgsProvider {
 }
 
 final class WaveTest {
-    @ParameterizedTest(name = "Wave.{0}.stringValue() = \"{1}\"")
+    @ParameterizedTest(name = "WaveShape.{0}.stringValue() = \"{1}\"")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringValue.class)
-    void waveStringValueIsValid(WaveShape wave, String expectedStringValue) {
+    void waveShapeStringValueIsValid(WaveShape wave, String expectedStringValue) {
         final String waveStringValue = wave.stringValue();
         assertEquals(expectedStringValue, waveStringValue);
     }
 
-    @ParameterizedTest(name = "Wave.{0}.stringValueAliases() = {1}")
+    @ParameterizedTest(name = "WaveShape.{0}.stringValueAliases() = {1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAliases.class)
-    void waveStringValueAliasesIsValid(WaveShape wave, Set<String> expectedStringAliases) {
+    void waveShapeStringValueAliasesIsValid(WaveShape wave, Set<String> expectedStringAliases) {
         final Set<String> waveStringAliases = wave.stringValueAliases();
         assertEquals(expectedStringAliases, waveStringAliases);
     }
 
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
+    @ParameterizedTest(name = "WaveShape.parse(\"{0}\") returns optional of Wave.{1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAlias.class)
-    void waveParseUpperCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
+    void waveShapeParseUpperCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
         final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
-    @ParameterizedTest(name = "Wave.parse(\"{0}\") returns optional of Wave.{1}")
+    @ParameterizedTest(name = "WaveShape.parse(\"{0}\") returns optional of Wave.{1}")
     @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithLowerCaseStringAlias.class)
-    void waveParseLowerCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
+    void waveShapeParseLowerCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
         final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
-    @ParameterizedTest(name = "Wave.{0}.prefixes(\"{1}\") returns true")
+    @ParameterizedTest(name = "WaveShape.{0}.prefixes(\"{1}\") returns true")
     @ArgumentsSource(WaveTestArgsProvider.PrefixedStrings.class)
     void prefixesReturnsTrueForPrefixedStrings(WaveShape wave, String prefixedString) {
         assertTrue(wave.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(wave.name(), prefixedString));
+    }
+
+    @Test
+    @DisplayName("WaveShape.NONE.generate(1 < # < 1000, 1 < # < 1000) throws UnsupportedOperationException")
+    void waveShapeGenerateThrowsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> WaveShape.NONE.generate(WaveTestArgsProvider.random.nextDouble(1, 1000), WaveTestArgsProvider.random.nextInt(1, 1000)),
+                () -> "%s.%s.generate(1 < # < 1000, 1 < # < 1000) did not throw UnsupportedOperationException".formatted(WaveShape.class.getSimpleName(), WaveShape.NONE.name()));
     }
 }
