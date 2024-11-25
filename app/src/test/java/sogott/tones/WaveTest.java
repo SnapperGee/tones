@@ -33,7 +33,8 @@ final class WaveTestArgsProvider {
                     arguments(WaveShape.SQUARE, "SQR"),
                     arguments(WaveShape.TRIANGLE, "TRI"),
                     arguments(WaveShape.SAW_UP, "SUP"),
-                    arguments(WaveShape.SAW_DOWN, "SDN"));
+                    arguments(WaveShape.SAW_DOWN, "SDN"),
+                    arguments(WaveShape.NONE, ""));
         }
     }
 
@@ -57,7 +58,8 @@ final class WaveTestArgsProvider {
                     arguments(WaveShape.SQUARE, Set.of(WaveShape.SQUARE.name(), WaveShape.SQUARE.stringValue())),
                     arguments(WaveShape.TRIANGLE, Set.of(WaveShape.TRIANGLE.name(), WaveShape.TRIANGLE.stringValue())),
                     arguments(WaveShape.SAW_UP, Set.of(WaveShape.SAW_UP.name(), WaveShape.SAW_UP.stringValue(), "SAWUP")),
-                    arguments(WaveShape.SAW_DOWN, Set.of(WaveShape.SAW_DOWN.name(), WaveShape.SAW_DOWN.stringValue(), "SAWDOWN")));
+                    arguments(WaveShape.SAW_DOWN, Set.of(WaveShape.SAW_DOWN.name(), WaveShape.SAW_DOWN.stringValue(), "SAWDOWN")),
+                    arguments(WaveShape.NONE, Set.of()));
         }
     }
 
