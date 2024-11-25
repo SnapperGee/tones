@@ -45,7 +45,7 @@ final public class Main {
             if (cliArgs.hasOption(CliOption.HELP.value())) {
                 CliOption.printHelp();
             } else if (cliArgs.hasOption(CliOption.VERSION.value())) {
-                System.out.println("beep 0.0.1");
+                System.out.println("tones 1.0.0");
             } else if (cliArgs.hasOption(CliOption.QUIET.value())
                     && !cliArgs.hasOption(CliOption.OUT.value())) {
                 System.out.println(
