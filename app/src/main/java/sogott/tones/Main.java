@@ -55,7 +55,7 @@ final public class Main {
 
                 if(operands.isEmpty())
                 {
-                    throw new ParseException("No audio String argument(s) passed.");
+                    throw new ParseException("No audio String operand argument(s) passed.");
                 }
 
                 final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), BPM);
