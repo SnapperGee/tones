@@ -51,6 +51,13 @@ final public class Main {
                 System.out.println(
                         "No audio output specified (audible playback disabled and no file output selected). Exiting...");
             } else {
+                final List<String> operands = unmodifiableList(cliArgs.getArgList());
+
+                if(operands.isEmpty())
+                {
+                    throw new ParseException("No audio String argument(s) passed.");
+                }
+
                 final int bpm = cliArgs.getParsedOptionValue(CliOption.BPM.value(), BPM);
 
                 final int noteBeatValue = cliArgs.getParsedOptionValue(
@@ -62,8 +69,6 @@ final public class Main {
                 final double beatDuration = 60000.0 / bpm;
 
                 final double wholeNoteDuration = beatDuration * noteBeatValue;
-
-                final List<String> operands = unmodifiableList(cliArgs.getArgList());
 
                 final record ValidAndInvalidOperands(List<Audio> valid, List<String> invalid) {
                 }
