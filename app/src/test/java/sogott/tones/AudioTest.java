@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.random.RandomGenerator;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -31,6 +34,14 @@ final class AudioTestArgsProvider {
             .filter(waveShape -> waveShape != WaveShape.NONE).toList();
     final private static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     final private static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+
+    static PitchLetter randomPitchLetter() {
+        return pitchLetters.get(random.nextInt(pitchLetters.size()));
+    }
+
+    static Accidental randomAccidental() {
+        return accidentals.get(random.nextInt(accidentals.size()));
+    }
 
     final static class Valid {
 
@@ -319,6 +330,16 @@ final class AudioTest {
     @ArgumentsSource(AudioTestArgsProvider.Invalid.WavePitchDuration.class)
     void audioConstructorPassedInvalidWavesPitchesDurationsThrows(WaveShape wave, Pitch pitch, int duration) {
         assertThrows(IllegalArgumentException.class, () -> new Audio(wave, pitch, duration));
+    }
+
+    @Test
+    @DisplayName("new Audio(WaveShape.NONE, Pitch, 1 < # < 1000) throws IllegalArgumentException")
+    void audioConstructorPassedNoneWaveShapeThrows() {
+        final Pitch pitch = new Pitch(AudioTestArgsProvider.randomPitchLetter(), AudioTestArgsProvider.randomAccidental(), AudioTestArgsProvider.random.nextInt(13));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> new Audio(WaveShape.NONE, pitch, AudioTestArgsProvider.random.nextInt(1, 1000)),
+            () -> "new Audio(WaveShape.NONE, Pitch, 1 < # < 1000) did not throw IllegalArgumentException");
     }
 
     /////////////////////////
