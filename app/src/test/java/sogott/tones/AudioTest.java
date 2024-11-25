@@ -30,10 +30,10 @@ final class AudioTestArgsProvider {
 
     final static RandomGenerator random = RandomGenerator.getDefault();
 
-    final private static List<WaveShape> waveShapes = stream(WaveShape.values())
+    private final static List<WaveShape> waveShapes = stream(WaveShape.values())
             .filter(waveShape -> waveShape != WaveShape.NONE).toList();
-    final private static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    final private static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
     static PitchLetter randomPitchLetter() {
         return pitchLetters.get(random.nextInt(pitchLetters.size()));
@@ -305,7 +305,7 @@ final class AudioTestArgsProvider {
 final class AudioTest {
 
     static private final IntStream positiveIntArgs() {
-        return AudioTestArgsProvider.random.ints(5, 1, 2000);
+        return IntStream.rangeClosed(1, 20);
     }
 
     static private final IntStream nonPositiveIntArgs() {
