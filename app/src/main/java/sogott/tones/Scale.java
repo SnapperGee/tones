@@ -1,315 +1,297 @@
 package sogott.tones;
 
+import java.util.Optional;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
-interface Scale {
-    List<PitchClass> pitchClasses();
+import static java.util.Collections.unmodifiableMap;
 
-    final static class Major {
-        static enum Natural implements Scale {
-            A(List.of(
+enum Scale {
+    MAJOR(new EnumMap<PitchLetter, EnumMap<Accidental, List<PitchClass>>>(Map.ofEntries(
+            Map.entry(PitchLetter.A, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.FLAT),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.A, Accidental.NATURAL),
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.SHARP),
                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
                     new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
-                    new PitchClass(PitchLetter.G, Accidental.SHARP))),
-            B(List.of(
+                    new PitchClass(PitchLetter.G, Accidental.SHARP)
+                ))
+            ))),
+            Map.entry(PitchLetter.B, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.SHARP),
                     new PitchClass(PitchLetter.D, Accidental.SHARP),
                     new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
                     new PitchClass(PitchLetter.G, Accidental.SHARP),
-                    new PitchClass(PitchLetter.A, Accidental.SHARP))),
-            C(List.of(
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.NATURAL))),
-            D(List.of(
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.F, Accidental.SHARP),
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.C, Accidental.SHARP))),
-            E(List.of(
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.F, Accidental.SHARP),
-                    new PitchClass(PitchLetter.G, Accidental.SHARP),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.C, Accidental.SHARP),
-                    new PitchClass(PitchLetter.D, Accidental.SHARP))),
-            F(List.of(
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL))),
-            G(List.of(
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.F, Accidental.SHARP)));
-
-            final private List<PitchClass> _pitchClass;
-
-            private Natural(List<PitchClass> pitchClasses) {
-                this._pitchClass = pitchClasses;
-            }
-
-            public List<PitchClass> pitchClasses() {
-                return this._pitchClass;
-            }
-        }
-
-        static enum Flat implements Scale {
-            A(List.of(
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL))),
-            B(List.of(
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL))),
-            C(List.of(
+                    new PitchClass(PitchLetter.A, Accidental.SHARP)
+                ))
+            ))),
+            Map.entry(PitchLetter.C, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
                     new PitchClass(PitchLetter.C, Accidental.FLAT),
                     new PitchClass(PitchLetter.D, Accidental.FLAT),
                     new PitchClass(PitchLetter.E, Accidental.FLAT),
                     new PitchClass(PitchLetter.F, Accidental.FLAT),
                     new PitchClass(PitchLetter.G, Accidental.FLAT),
                     new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT))),
-            D(List.of(
-                    new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.FLAT),
-                    new PitchClass(PitchLetter.G, Accidental.FLAT),
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL))),
-            E(List.of(
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.NATURAL),
                     new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL))),
-            G(List.of(
-                    new PitchClass(PitchLetter.G, Accidental.FLAT),
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.FLAT),
-                    new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL)));
-
-            final private List<PitchClass> _pitchClass;
-
-            private Flat(List<PitchClass> pitchClasses) {
-                this._pitchClass = pitchClasses;
-            }
-
-            public List<PitchClass> pitchClasses() {
-                return this._pitchClass;
-            }
-        }
-
-        static enum Sharp implements Scale {
-            C(List.of(
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.B, Accidental.NATURAL)
+                )),
+                Map.entry(Accidental.SHARP, List.of(
                     new PitchClass(PitchLetter.C, Accidental.SHARP),
                     new PitchClass(PitchLetter.D, Accidental.SHARP),
                     new PitchClass(PitchLetter.E, Accidental.SHARP),
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
                     new PitchClass(PitchLetter.G, Accidental.SHARP),
                     new PitchClass(PitchLetter.A, Accidental.SHARP),
-                    new PitchClass(PitchLetter.B, Accidental.SHARP))),
-            F(List.of(
+                    new PitchClass(PitchLetter.B, Accidental.SHARP)
+                ))
+            ))),
+            Map.entry(PitchLetter.D, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.D, Accidental.FLAT),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.FLAT),
+                    new PitchClass(PitchLetter.G, Accidental.FLAT),
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.F, Accidental.SHARP),
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.C, Accidental.SHARP)
+                ))
+            ))),
+            Map.entry(PitchLetter.E, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.F, Accidental.SHARP),
+                    new PitchClass(PitchLetter.G, Accidental.SHARP),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.C, Accidental.SHARP),
+                    new PitchClass(PitchLetter.D, Accidental.SHARP)
+                ))
+            ))),
+            Map.entry(PitchLetter.F, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.NATURAL, List.of(
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.F, Accidental.SHARP),
+                    new PitchClass(PitchLetter.G, Accidental.SHARP),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.C, Accidental.SHARP),
+                    new PitchClass(PitchLetter.D, Accidental.SHARP)
+                )),
+                Map.entry(Accidental.SHARP, List.of(
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
                     new PitchClass(PitchLetter.G, Accidental.SHARP),
                     new PitchClass(PitchLetter.A, Accidental.SHARP),
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.SHARP),
                     new PitchClass(PitchLetter.D, Accidental.SHARP),
-                    new PitchClass(PitchLetter.E, Accidental.SHARP)));
+                    new PitchClass(PitchLetter.E, Accidental.SHARP)
+                ))
+            ))),
+            Map.entry(PitchLetter.G, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.G, Accidental.FLAT),
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.FLAT),
+                    new PitchClass(PitchLetter.D, Accidental.FLAT),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.F, Accidental.SHARP)
+                ))
+            )))
+        ))),
 
-            final private List<PitchClass> _pitchClass;
-
-            private Sharp(List<PitchClass> pitchClasses) {
-                this._pitchClass = pitchClasses;
-            }
-
-            public List<PitchClass> pitchClasses() {
-                return this._pitchClass;
-            }
-        }
-
-        private Major() {
-            throw new UnsupportedOperationException(
-                    Major.class.getSimpleName() + " is static an cannot be instantiated.");
-        }
-    }
-
-    final static class Minor {
-        static enum Natural implements Scale {
-            A(List.of(
+    MINOR(new EnumMap<PitchLetter, EnumMap<Accidental, List<PitchClass>>>(Map.ofEntries(
+            Map.entry(PitchLetter.A, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.FLAT),
+                    new PitchClass(PitchLetter.D, Accidental.FLAT),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.FLAT),
+                    new PitchClass(PitchLetter.G, Accidental.FLAT)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.A, Accidental.NATURAL),
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.NATURAL),
                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
                     new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL))),
-            B(List.of(
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL)
+                ))
+            ))),
+            Map.entry(PitchLetter.B, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.FLAT),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.G, Accidental.FLAT),
+                    new PitchClass(PitchLetter.A, Accidental.FLAT)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.SHARP),
                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
                     new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
                     new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL))),
-            C(List.of(
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL)
+                ))
+            ))),
+            Map.entry(PitchLetter.C, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.C, Accidental.NATURAL),
                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
                     new PitchClass(PitchLetter.E, Accidental.FLAT),
                     new PitchClass(PitchLetter.F, Accidental.NATURAL),
                     new PitchClass(PitchLetter.G, Accidental.NATURAL),
                     new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT))),
-            D(List.of(
+                    new PitchClass(PitchLetter.B, Accidental.FLAT)
+                ))
+            ))),
+            Map.entry(PitchLetter.D, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.D, Accidental.FLAT),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.FLAT),
+                    new PitchClass(PitchLetter.G, Accidental.FLAT),
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.C, Accidental.FLAT)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
                     new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.NATURAL),
                     new PitchClass(PitchLetter.G, Accidental.NATURAL),
                     new PitchClass(PitchLetter.A, Accidental.NATURAL),
                     new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL))),
-            E(List.of(
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL)
+                ))
+            ))),
+            Map.entry(PitchLetter.E, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.FLAT, List.of(
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.G, Accidental.FLAT),
+                    new PitchClass(PitchLetter.A, Accidental.FLAT),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.FLAT),
+                    new PitchClass(PitchLetter.D, Accidental.FLAT)
+                )),
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.E, Accidental.NATURAL),
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
                     new PitchClass(PitchLetter.G, Accidental.NATURAL),
                     new PitchClass(PitchLetter.A, Accidental.NATURAL),
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL))),
-            F(List.of(
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL)
+                ))
+            ))),
+            Map.entry(PitchLetter.F, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.NATURAL, List.of(
                     new PitchClass(PitchLetter.F, Accidental.NATURAL),
                     new PitchClass(PitchLetter.G, Accidental.NATURAL),
                     new PitchClass(PitchLetter.A, Accidental.FLAT),
                     new PitchClass(PitchLetter.B, Accidental.FLAT),
                     new PitchClass(PitchLetter.C, Accidental.NATURAL),
                     new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT))),
-            G(List.of(
-                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL)));
-
-            final private List<PitchClass> _pitchClass;
-
-            private Natural(List<PitchClass> pitchClasses) {
-                this._pitchClass = pitchClasses;
-            }
-
-            public List<PitchClass> pitchClasses() {
-                return this._pitchClass;
-            }
-        }
-
-        static enum Flat implements Scale {
-            A(List.of(
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.FLAT),
-                    new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.FLAT),
-                    new PitchClass(PitchLetter.G, Accidental.FLAT))),
-            B(List.of(
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.FLAT),
-                    new PitchClass(PitchLetter.A, Accidental.FLAT))),
-            D(List.of(
-                    new PitchClass(PitchLetter.D, Accidental.FLAT),
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.FLAT),
-                    new PitchClass(PitchLetter.G, Accidental.FLAT),
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.C, Accidental.FLAT))),
-            E(List.of(
-                    new PitchClass(PitchLetter.E, Accidental.FLAT),
-                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.G, Accidental.FLAT),
-                    new PitchClass(PitchLetter.A, Accidental.FLAT),
-                    new PitchClass(PitchLetter.B, Accidental.FLAT),
-                    new PitchClass(PitchLetter.C, Accidental.FLAT),
-                    new PitchClass(PitchLetter.D, Accidental.FLAT)));
-
-            final private List<PitchClass> _pitchClass;
-
-            private Flat(List<PitchClass> pitchClasses) {
-                this._pitchClass = pitchClasses;
-            }
-
-            public List<PitchClass> pitchClasses() {
-                return this._pitchClass;
-            }
-        }
-
-        static enum Sharp implements Scale {
-            F(List.of(
+                    new PitchClass(PitchLetter.E, Accidental.FLAT)
+                )),
+                Map.entry(Accidental.SHARP, List.of(
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
                     new PitchClass(PitchLetter.G, Accidental.SHARP),
                     new PitchClass(PitchLetter.A, Accidental.NATURAL),
                     new PitchClass(PitchLetter.B, Accidental.NATURAL),
                     new PitchClass(PitchLetter.C, Accidental.SHARP),
                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL)));
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL)
+                ))
+            ))),
+            Map.entry(PitchLetter.G, new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
+                Map.entry(Accidental.NATURAL, List.of(
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.E, Accidental.FLAT),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL)
+                ))
+            )))
+        )));
 
-            final private List<PitchClass> _pitchClass;
+    private final Map<PitchLetter, Map<Accidental, List<PitchClass>>> _maps;
 
-            private Sharp(List<PitchClass> pitchClasses) {
-                this._pitchClass = pitchClasses;
-            }
+    private Scale(EnumMap<PitchLetter, EnumMap<Accidental, List<PitchClass>>> maps) {
+        this._maps = unmodifiableMap(maps);
+    }
 
-            public List<PitchClass> pitchClasses() {
-                return this._pitchClass;
-            }
-        }
-
-        private Minor() {
-            throw new UnsupportedOperationException(
-                    Minor.class.getSimpleName() + " is static an cannot be instantiated.");
-        }
+    Optional<List<PitchClass>> of(PitchClass pitchClass) {
+        return Optional.ofNullable(this._maps.get(pitchClass.letter())).map(accidentalMap -> accidentalMap.get(pitchClass.accidental()));
     }
 }
