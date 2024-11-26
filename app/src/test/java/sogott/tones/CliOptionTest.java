@@ -1,16 +1,23 @@
 package sogott.tones;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Path;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -148,10 +155,18 @@ final class CliOptionTest {
     @EnumSource(CliOption.class)
     void cliOptionDescriptionIsNonBlankString(CliOption cliOption) {
         assertNotNull(cliOption.value().getDescription(),
-                () -> "%s.%s.value().getDescirption() returns null"
+                () -> "%s.%s.value().getDescirption() returned null"
                         .formatted(cliOption.getDeclaringClass().getSimpleName(), cliOption.name()));
         assertFalse(cliOption.value().getDescription().isBlank(),
                 () -> "%s.%s.value().getDescirption() does not return non blank String"
                         .formatted(cliOption.getDeclaringClass().getSimpleName(), cliOption.name()));
+    }
+
+    @Test
+    @DisplayName("CliOption.OUT converter passed pre-existing path throws FileAlreadyExistsException")
+    void cliOptionOutConverterPassedPreExistingPathThrowsFileAlreadyExistsException(@TempDir Path tempDir) throws IOException {
+        final Path filePath = tempDir.resolve("TEST_FILE.wav");
+        filePath.toFile().createNewFile();
+        assertThrows(FileAlreadyExistsException.class, () -> CliOption.OUT.value().getConverter().apply(filePath.toString()));
     }
 }
