@@ -430,7 +430,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        final static class AudioStringValueAndWave implements ArgumentsProvider {
+        final static class AudioStringAndWave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -440,6 +440,9 @@ final class AudioStringTestArgsProvider {
                             .flatMap(wave -> wave.stringValueAliases().stream()
                                     .flatMap(waveStringAlias -> Stream.concat(
                                             Stream.of(
+                                                arguments(
+                                                    "",
+                                                    wave),
                                                     // duplicate
                                                     arguments(
                                                             "%1$s%1$s%2$c%3$c%4$d%5$c%6$d"
@@ -785,7 +788,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty optional")
-    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringValueAndWave.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringAndWave.class)
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, WaveShape wave) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
