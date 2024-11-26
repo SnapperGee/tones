@@ -241,15 +241,7 @@ final class AudioString {
             throw new IllegalArgumentException("Null string.");
         }
 
-        if (isParsableSilence(aString)) {
-            return parseSilence(aString);
-        }
-
-        if (isParsableTimbre(aString, true)) {
-            return parsePitch(aString);
-        }
-
-        return Optional.empty();
+        return parseSilence(aString).or(() -> parsePitch(aString));
     }
 
     private static boolean isParsableTimbre(String aString, boolean requireWaveShapePrefix) {
