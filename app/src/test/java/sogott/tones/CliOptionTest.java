@@ -15,11 +15,14 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.ParameterizedTest;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.blankOrNullString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class CliOptionTestArgsProvider {
@@ -154,12 +157,7 @@ final class CliOptionTest {
     @ParameterizedTest(name = "CliOption.{0}.value().getDescirption() returns non blank String")
     @EnumSource(CliOption.class)
     void cliOptionDescriptionIsNonBlankString(CliOption cliOption) {
-        assertNotNull(cliOption.value().getDescription(),
-                () -> "%s.%s.value().getDescirption() returned null"
-                        .formatted(cliOption.getDeclaringClass().getSimpleName(), cliOption.name()));
-        assertFalse(cliOption.value().getDescription().isBlank(),
-                () -> "%s.%s.value().getDescirption() does not return non blank String"
-                        .formatted(cliOption.getDeclaringClass().getSimpleName(), cliOption.name()));
+        assertThat(cliOption.value().getDescription(), is(not(blankOrNullString())));
     }
 
     @Test
