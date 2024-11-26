@@ -289,7 +289,8 @@ final class AudioString {
         final String waveShapePrefixAndPitch = splitString[0];
         final String durationString = splitString[1];
         final int duration = Integer.parseInt(durationString);
-        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
+        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch
+                .split(Character.toString(Delimiter.WAVE_SHAPE_AND_PITCH.charValue()));
         final WaveShape waveShape = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
                 : WaveShape.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
         final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
