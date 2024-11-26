@@ -14,9 +14,9 @@ import java.util.Optional;
  * <h2>Audio String Segments</h2>
  * The segments of an audio string can be grouped together into 2 parts. The
  * first leading part is referred to as the <strong><em>voice</em></strong>.
- * This contains the information about the timbre of the audio if it's not
+ * This contains the information about the tone of the audio if it's not
  * silence or information designating that the audio is silence (and therefore
- * has no timbre). The 2nd part of the audio string that follows the "voice"
+ * has no tone). The 2nd part of the audio string that follows the "voice"
  * segment(s) is the <strong><em>duration suffix segment</em></strong>.
  *
  * <p>
@@ -135,7 +135,7 @@ import java.util.Optional;
 final class AudioString {
     /**
      * The character used as a leading prefix to designate that an audio string
-     * should be parsed as silence (as opposed to a timbre).
+     * should be parsed as silence (as opposed to a tone).
      */
     final static char SILENCE_CHAR = '?';
 
@@ -145,7 +145,7 @@ final class AudioString {
     static enum Delimiter {
         /**
          * The character used to separate the wave shape segment from the pitch
-         * segment of an audio string that's parsed to a timbre (not silence).
+         * segment of an audio string that's parsed to a tone (not silence).
          */
         WAVE_SHAPE_AND_PITCH('>'),
 
@@ -177,24 +177,23 @@ final class AudioString {
             .toString();
 
     /**
-     * Parses the passed {@code String} argument to an {@link Audio} object,
-     * using the passed {@link WaveShape} argument as the default wave shape if the
-     * passed string is audible audio with a timbre (and not silence) and has
-     * no wave shape prefix segment. If the passed string can't be parsed to
-     * audio then an empty optional is returned, otherwise the returned optional
-     * contains the resulting audio object from parsing the string.
+     * <em>Case insensitively</em> parses the passed {@code String} argument to
+     * an {@link Audio} object, using the passed {@link WaveShape} argument as
+     * the default wave shape if the passed {@code String} is audible audio with
+     * a tone (and not silence) and has no wave shape prefix segment. If the
+     * passed {@code String} can't be parsed to audio then an empty
+     * {@link Optional} is returned, otherwise the returned {@link Optional}
+     * contains the resulting audio object from parsing the {@code string}.
      *
-     * <p>
-     * The parsing is performed case insensitively.
-     *
-     * @param aString          {@code String} to parse to an {@link Audio} object.
+     * @param aString          {@code String} to attempt to parse to an
+     *                         {@link Audio} object.
      *
      * @param defaultWaveShape {@link WaveShape} to use as a default value if the
-     *                         passed string argument is audible audio with a timbre
-     *                         (not silence) with no wave shape prefix.
+     *                         passed {@code String} argument is audible audio
+     *                         with a tone (not silence) with no wave shape prefix.
      *
-     * @return An {@code Optional} containing the {@link Audio} object parsed from
-     *         the passed string or an empty optional if it can't be parsed.
+     * @return An {@link Optional} containing the {@link Audio} object parsed
+     *         from the passed string or an empty optional if it can't be parsed.
      *
      * @throws IllegalArgumentException If either of the provided arguments are
      *                                  {@code null}.
@@ -212,7 +211,7 @@ final class AudioString {
             return parseSilence(aString);
         }
 
-        if (isParsableTimbre(aString, false)) {
+        if (isParsableTone(aString, false)) {
             return parseTone(aString, defaultWaveShape);
         }
 
@@ -244,12 +243,12 @@ final class AudioString {
         return parseSilence(aString).or(() -> parsePitch(aString));
     }
 
-    private static boolean isParsableTimbre(String aString, boolean requireWaveShapePrefix) {
+    private static boolean isParsableTone(String aString, boolean requireWaveShapePrefix) {
         return aString != null
                 && !aString.isBlank()
                 && (requireWaveShapePrefix
-                        ? isParsableWaveShapePrefixedTimbre(aString)
-                        : isParsableTimbreWithoutWaveShapePrefix(aString));
+                        ? isParsableWaveShapePrefixedTone(aString)
+                        : isParsableToneWithoutWaveShapePrefix(aString));
     }
 
     private static boolean isParsableSilence(String aString) {
@@ -281,7 +280,7 @@ final class AudioString {
     }
 
     private static Optional<Audio> parseTone(String aString, WaveShape defaultWave) {
-        if (!isParsableTimbre(aString, false)) {
+        if (!isParsableTone(aString, false)) {
             return Optional.empty();
         }
 
@@ -306,7 +305,7 @@ final class AudioString {
     }
 
     private static Optional<Audio> parsePitch(String aString) {
-        if (!isParsableTimbre(aString, true)) {
+        if (!isParsableTone(aString, true)) {
             return Optional.empty();
         }
 
@@ -324,14 +323,16 @@ final class AudioString {
         final String waveShapeString = aString.substring(0, waveShapeAndPitchDelimiterIndex);
         final WaveShape wave = WaveShape.parse(waveShapeString).orElseThrow();
 
-        // isolate section of String between wave shape and pitch delimiter and pitch and duration delimiter
-        final String pitchString = aString.substring(waveShapeAndPitchDelimiterIndex + 1, voiceAndDurationDelimiterIndex);
+        // isolate section of String between wave shape and pitch delimiter and pitch
+        // and duration delimiter
+        final String pitchString = aString.substring(waveShapeAndPitchDelimiterIndex + 1,
+                voiceAndDurationDelimiterIndex);
         final Pitch pitch = Pitch.parse(pitchString).orElseThrow();
 
         return Optional.of(new Audio(wave, pitch, duration));
     }
 
-    private static boolean isParsableWaveShapePrefixedTimbre(String aString) {
+    private static boolean isParsableWaveShapePrefixedTone(String aString) {
         // must be at least a leading wav shape, angle bracket, note char,
         // octave int, period, and duration int
         if (aString.length() < 6) {
@@ -352,14 +353,14 @@ final class AudioString {
         }).orElse(false);
     }
 
-    private static boolean isParsableTimbreWithoutWaveShapePrefix(String aString) {
+    private static boolean isParsableToneWithoutWaveShapePrefix(String aString) {
         // must be at least a note char, octave int, period, and duration int
         if (aString.length() < 4) {
             return false;
         }
 
         if (!PitchLetter.isPitchLetter(aString.charAt(0))) {
-            return isParsableWaveShapePrefixedTimbre(aString);
+            return isParsableWaveShapePrefixedTone(aString);
         }
 
         final String[] pitchAndDuration = aString.split("\\.", 3);
