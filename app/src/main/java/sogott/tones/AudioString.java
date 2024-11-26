@@ -285,10 +285,15 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String[] voiceAndDuration = aString.split("\\" + Delimiter.VOICE_AND_DURATION.charValue());
-        final String waveShapePrefixAndPitch = voiceAndDuration[0];
-        final String durationString = voiceAndDuration[1];
-        final int duration = Integer.parseInt(durationString);
+        final int voiceAndDurationDelimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
+
+        if (voiceAndDurationDelimiterIndex == -1) {
+            return Optional.empty();
+        }
+
+        final int duration = Integer.parseInt(aString, voiceAndDurationDelimiterIndex + 1, aString.length(), 10);
+
+        final String waveShapePrefixAndPitch = aString.substring(0, voiceAndDurationDelimiterIndex);
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch
                 .split(Character.toString(Delimiter.WAVE_SHAPE_AND_PITCH.charValue()));
         final WaveShape waveShape = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
