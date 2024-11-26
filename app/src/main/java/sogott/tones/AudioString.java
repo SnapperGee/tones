@@ -285,9 +285,9 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String[] splitString = aString.split("\\.");
-        final String waveShapePrefixAndPitch = splitString[0];
-        final String durationString = splitString[1];
+        final String[] voiceAndDuration = aString.split("\\" + Delimiter.VOICE_AND_DURATION.charValue());
+        final String waveShapePrefixAndPitch = voiceAndDuration[0];
+        final String durationString = voiceAndDuration[1];
         final int duration = Integer.parseInt(durationString);
         final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch
                 .split(Character.toString(Delimiter.WAVE_SHAPE_AND_PITCH.charValue()));
