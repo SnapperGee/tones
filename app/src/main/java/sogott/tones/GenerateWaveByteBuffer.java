@@ -3,7 +3,8 @@ package sogott.tones;
 /**
  * Class consisting exclusively of static methods used to generate {@code byte}
  * arrays that can be used as buffers to generate wave shapes. These methods are
- * used internally by the {@link WaveShape#generate(double, int)} method and assume
+ * used internally by the {@link WaveShape#generate(double, int)} method and
+ * assume
  * a sample rate of 44.1khz.
  *
  * <p>
