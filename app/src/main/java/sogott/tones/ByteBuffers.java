@@ -63,7 +63,7 @@ final class ByteBuffers {
         }
 
         if (wholeNoteDuration <= 0) {
-            throw new IllegalArgumentException("Non positive whole not duration: " + wholeNoteDuration);
+            throw new IllegalArgumentException("Non positive whole note duration: " + wholeNoteDuration);
         }
 
         this._audioObjects = List.copyOf(audioObjects);
@@ -129,20 +129,17 @@ final class ByteBuffers {
             throw new IllegalArgumentException("Non positive whole note duration: " + wholeNoteDuration);
         }
 
-        // if audio has a Wave shape and is therefore not silence add a fadeout to it
-        if (audio.waveShape() != WaveShape.NONE) {
-            final byte[] audioByteBuffer = audio.waveShape()
+        return audio.waveShape().map(waveShape -> {
+            final byte[] audioByteBuffer = waveShape
                     .generate(audio.pitch().orElseThrow().frequency(),
                             (int) Math.ceil(1.0
                                     / audio.duration()
                                     * wholeNoteDuration));
 
             return applyFadeoutTail(audioByteBuffer, SILENCE_RATIO, AUDIO_FORMAT);
-        } else {
-            return GenerateWaveByteBuffer.silence(
-                    (int) Math.round(1.0 / audio.duration()
-                            * wholeNoteDuration));
-        }
+        }).orElse(GenerateWaveByteBuffer.silence(
+                (int) Math.ceil(1.0 / audio.duration()
+                        * wholeNoteDuration)));
     }
 
     /**

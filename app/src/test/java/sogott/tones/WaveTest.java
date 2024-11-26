@@ -9,8 +9,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
@@ -18,7 +16,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class WaveTestArgsProvider {
@@ -33,8 +30,7 @@ final class WaveTestArgsProvider {
                     arguments(WaveShape.SQUARE, "SQR"),
                     arguments(WaveShape.TRIANGLE, "TRI"),
                     arguments(WaveShape.SAW_UP, "SUP"),
-                    arguments(WaveShape.SAW_DOWN, "SDN"),
-                    arguments(WaveShape.NONE, ""));
+                    arguments(WaveShape.SAW_DOWN, "SDN"));
         }
     }
 
@@ -58,8 +54,7 @@ final class WaveTestArgsProvider {
                     arguments(WaveShape.SQUARE, Set.of(WaveShape.SQUARE.name(), WaveShape.SQUARE.stringValue())),
                     arguments(WaveShape.TRIANGLE, Set.of(WaveShape.TRIANGLE.name(), WaveShape.TRIANGLE.stringValue())),
                     arguments(WaveShape.SAW_UP, Set.of(WaveShape.SAW_UP.name(), WaveShape.SAW_UP.stringValue(), "SAWUP")),
-                    arguments(WaveShape.SAW_DOWN, Set.of(WaveShape.SAW_DOWN.name(), WaveShape.SAW_DOWN.stringValue(), "SAWDOWN")),
-                    arguments(WaveShape.NONE, Set.of()));
+                    arguments(WaveShape.SAW_DOWN, Set.of(WaveShape.SAW_DOWN.name(), WaveShape.SAW_DOWN.stringValue(), "SAWDOWN")));
         }
     }
 
@@ -167,12 +162,5 @@ final class WaveTest {
     void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
         assertTrue(waveShape.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
-    }
-
-    @Test
-    @DisplayName("WaveShape.NONE.generate(1 < # < 1000, 1 < # < 1000) throws UnsupportedOperationException")
-    void waveShapeGenerateThrowsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> WaveShape.NONE.generate(WaveTestArgsProvider.random.nextDouble(1, 1000), WaveTestArgsProvider.random.nextInt(1, 1000)),
-                () -> "%s.%s.generate(1 < # < 1000, 1 < # < 1000) did not throw UnsupportedOperationException".formatted(WaveShape.class.getSimpleName(), WaveShape.NONE.name()));
     }
 }

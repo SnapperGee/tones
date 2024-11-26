@@ -71,14 +71,13 @@ final class Audio {
             throw new IllegalArgumentException("Negative duration: %d".formatted(duration));
         }
 
-        this._waveShape = WaveShape.NONE;
+        this._waveShape = null;
         this._pitch = null;
         this._duration = duration;
         this._string = "%c.%d".formatted(AudioString.SILENCE_CHAR, this._duration);
         this._hashCode = Objects.hash(this._waveShape, this._pitch, this._duration);
-        this._toString = "%s {wave=%s, pitch=null, duration=%d}".formatted(
+        this._toString = "%s {wave=null, pitch=null, duration=%d}".formatted(
                 Audio.class.getSimpleName(),
-                WaveShape.NONE.name(),
                 this._duration);
     }
 
@@ -105,14 +104,6 @@ final class Audio {
         if (waveShape == null) {
             throw new IllegalArgumentException(
                     "Null %s %s.".formatted(Audio.class.getSimpleName(), WaveShape.class.getSimpleName()));
-        }
-
-        if (waveShape == WaveShape.NONE) {
-            throw new IllegalArgumentException(
-                    "%$1s %$2s cannot be initialized to %$3s. Use %$1s.silence(int) method instead..".formatted(
-                            Audio.class.getSimpleName(),
-                            WaveShape.class.getSimpleName(),
-                            WaveShape.NONE.name()));
         }
 
         if (pitch == null) {
@@ -172,8 +163,8 @@ final class Audio {
      *
      * @see WaveShape
      */
-    WaveShape waveShape() {
-        return this._waveShape;
+    Optional<WaveShape> waveShape() {
+        return Optional.ofNullable(this._waveShape);
     }
 
     /**

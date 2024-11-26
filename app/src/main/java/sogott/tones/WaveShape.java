@@ -56,26 +56,7 @@ enum WaveShape {
     /**
      * A <i>SAW DOWN</i> wave.
      */
-    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN")),
-
-    /**
-     * No wave shape present.
-     */
-    NONE((_double, _integer) -> {throw new UnsupportedOperationException(WaveShape.class.getSimpleName() + "NONE does not support byte generation.");}, "", Set.of()) {
-        @Override
-        boolean prefixes(String aString, boolean ignoreCase) {
-            return !SINE.prefixes(aString, ignoreCase)
-                    && !SQUARE.prefixes(aString, ignoreCase)
-                    && !TRIANGLE.prefixes(aString, ignoreCase)
-                    && !SAW_UP.prefixes(aString, ignoreCase)
-                    && !SAW_DOWN.prefixes(aString, ignoreCase);
-        }
-
-        static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
-            return Optional.empty();
-        }
-
-    };
+    SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN"));
 
     private final static List<WaveShape> WAVES = unmodifiableList(asList(WaveShape.values()));
 
