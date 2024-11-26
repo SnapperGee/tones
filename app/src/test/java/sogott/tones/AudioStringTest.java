@@ -440,9 +440,9 @@ final class AudioStringTestArgsProvider {
                             .flatMap(wave -> wave.stringValueAliases().stream()
                                     .flatMap(waveStringAlias -> Stream.concat(
                                             Stream.of(
-                                                arguments(
-                                                    "",
-                                                    wave),
+                                                    arguments(
+                                                            "",
+                                                            wave),
                                                     // duplicate
                                                     arguments(
                                                             "%1$s%1$s%2$c%3$c%4$d%5$c%6$d"
