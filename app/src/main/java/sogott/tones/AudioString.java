@@ -310,15 +310,23 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final String[] voiceAndDuration = aString.split("\\.");
-        final String waveShapePrefixAndPitch = voiceAndDuration[0];
-        final String durationString = voiceAndDuration[1];
-        final int duration = Integer.parseInt(durationString);
-        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch.split(">");
-        final WaveShape wave = WaveShape.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
-        final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
-                ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
-                : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
+        final int voiceAndDurationDelimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
+
+        if (voiceAndDurationDelimiterIndex == -1) {
+            return Optional.empty();
+        }
+
+        final int duration = Integer.parseInt(aString, voiceAndDurationDelimiterIndex + 1, aString.length(), 10);
+
+        final int waveShapeAndPitchDelimiterIndex = aString.indexOf(Delimiter.WAVE_SHAPE_AND_PITCH.charValue());
+
+        // isolate prefix of String up to wave shape and pitch delimiter
+        final String waveShapeString = aString.substring(0, waveShapeAndPitchDelimiterIndex);
+        final WaveShape wave = WaveShape.parse(waveShapeString).orElseThrow();
+
+        // isolate section of String between wave shape and pitch delimiter and pitch and duration delimiter
+        final String pitchString = aString.substring(waveShapeAndPitchDelimiterIndex + 1, voiceAndDurationDelimiterIndex);
+        final Pitch pitch = Pitch.parse(pitchString).orElseThrow();
 
         return Optional.of(new Audio(wave, pitch, duration));
     }
