@@ -22,7 +22,7 @@ WAV file.
 1. [Wave Shapes](#wave-shapes)
 1. [Command Line Options](#command-line-options)
 1. [Usage Example](#usage-example)
-1. [Audio Operand Components](#audio-operand-components)
+1. [Audio String](#audio-string)
 
 ## Installation
 
@@ -123,9 +123,9 @@ Below is a more intricate example relative to the simple example above:
 $tones --bpm 135 --wave sup --silent --o sandstorm C4.4 tri>D3.4 SQR>E-5.2 ?.2 sdn>D4.2 SIN>C3.1
 ```
 
-This writes the audio of the following notes at 135 bpm to a 44.1khz/16bit WAV
-file named `sandstorm.wav` in the current working directory without audibly
-playing any audio:
+This writes the audio without audibly playing it of the following notes at 135
+bpm to a 44.1khz/16bit WAV file named `sandstorm.wav` in the current working
+directory:
 
 - C quarter note sawtooth up wave in the 4th octave &rightarrow; C&#9833;
 - D quarter note triangle wave in the 3rd octave &rightarrow; D&#9833;
@@ -134,7 +134,7 @@ playing any audio:
 - D half note sawtooth down wave in the 4th octave &rightarrow; D&#119134;
 - C whole note sine wave in the 3rd octave &rightarrow; C&#119133;
 
-## Audio Operand Components
+## Audio String
 
 The primary command line operand arguments that are required to set the
 synthesized sound are referred to as ***audio string***s. An *audio string* is a
