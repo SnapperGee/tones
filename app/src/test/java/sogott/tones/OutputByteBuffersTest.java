@@ -11,6 +11,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.DisplayName;
 
 import static java.util.Collections.emptyList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -18,6 +19,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.io.FileMatchers.anExistingFile;;
 
 final class OutputByteBuffersTest {
     private final RandomGenerator random = RandomGenerator.getDefault();
@@ -97,7 +100,6 @@ final class OutputByteBuffersTest {
         final Path filePathArg = tempDir.resolve("TEST_FILE");
         final Path expectedFilePath = Path.of(filePathArg.toString() + ".wav");
         OutputByteBuffers.toWavFile(byteBuffers, expectedFilePath);
-        assertTrue(expectedFilePath.toFile().exists(),
-                () -> "File \"%s\" not created".formatted(expectedFilePath.toString()));
+        assertThat("File \"%s\" not created".formatted(expectedFilePath.toString()), expectedFilePath.toFile(), is(anExistingFile()));
     }
 }
