@@ -124,7 +124,7 @@ Below is a more intricate example relative to the simple example above:
 $tones --bpm 135 --wave sup --silent --o sandstorm C4.4 tri>D3.4 SQR>E-5.2 ?.2 sdn>D4.2 SIN>C3.1
 ```
 
-This writes the audio without audibly playing it of the following notes at 135
+This writes the audio, without audibly playing it, of the following notes at 135
 bpm to a 44.1khz/16bit WAV file named `sandstorm.wav` in the current working
 directory:
 
