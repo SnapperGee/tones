@@ -285,13 +285,13 @@ enum Scale {
             ))))
         )));
 
-    private final Map<PitchLetter, Map<Accidental, List<PitchClass>>> _maps;
+    private final Map<PitchLetter, Map<Accidental, List<PitchClass>>> _accidentalPitchClassMap;
 
-    private Scale(EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>> maps) {
-        this._maps = unmodifiableMap(maps);
+    private Scale(EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>> accidentalPitchClassMap) {
+        this._accidentalPitchClassMap = unmodifiableMap(accidentalPitchClassMap);
     }
 
     Optional<List<PitchClass>> of(PitchClass pitchClass) {
-        return Optional.ofNullable(this._maps.get(pitchClass.letter())).map(accidentalMap -> accidentalMap.get(pitchClass.accidental()));
+        return Optional.ofNullable(this._accidentalPitchClassMap.get(pitchClass.letter())).map(accidentalMap -> accidentalMap.get(pitchClass.accidental()));
     }
 }
