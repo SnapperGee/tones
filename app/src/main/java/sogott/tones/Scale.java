@@ -120,13 +120,13 @@ enum Scale {
             )))),
             Map.entry(PitchLetter.F, unmodifiableMap(new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
                 Map.entry(Accidental.NATURAL, List.of(
-                    new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.F, Accidental.SHARP),
-                    new PitchClass(PitchLetter.G, Accidental.SHARP),
+                    new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.G, Accidental.NATURAL),
                     new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                    new PitchClass(PitchLetter.C, Accidental.SHARP),
-                    new PitchClass(PitchLetter.D, Accidental.SHARP)
+                    new PitchClass(PitchLetter.B, Accidental.FLAT),
+                    new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                    new PitchClass(PitchLetter.E, Accidental.NATURAL)
                 )),
                 Map.entry(Accidental.SHARP, List.of(
                     new PitchClass(PitchLetter.F, Accidental.SHARP),
