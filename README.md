@@ -23,6 +23,7 @@ WAV file.
 1. [Command Line Options](#command-line-options)
 1. [Usage Example](#usage-example)
 1. [Audio String](#audio-string)
+1. [Miscellaneous Info](#miscellaneous-info)
 
 ## Installation
 
@@ -158,23 +159,32 @@ string synthesizes silence (and not audible audio), then it does not have a wave
 shape prefix (nor a pitch). Refer to the [Wave Shapes section](#wave-shapes) for
 the different wave shapes audio can be.
 
-### Pitch (or silence)
+### Pitch
 
-The pitch segment dictates the ***frequency*** the audio will be if it's audible
-audio or if the audio is silence (and therefore has no pitch). Pitch is composed
-of 3 components:
+The pitch segment dictates if audio is silence or an audible tone with a
+***frequency***. Pitch is composed of 2 components:
 
-1. The leading ***pitch letter*** character consisting of one of the alpha
-characters A-G.
-1. followed by the ***accidental***. The accidental character makes it so a note
-can be a *sharp* &sharp; or *flat* &flat;. Or if it's a *natural* &natural;
-(neither a *sharp* &sharp; nor a *flat* &flat;), then this character can be
-omitted.
-1. And then finally followed by the ***octave***. The octave is simply a non
-negative integer (0 or greater) to set the octave the note that precedes is
-in.
+1. #### Pitch Class
 
-To create a silence, the pitch segment is simply a question mark character, `'?'`.
+    The ***pitch class*** consists of:
+
+    1. The leading ***pitch letter*** character consisting of one of the alpha
+    characters A-G.
+    1. followed by the ***accidental***. The accidental character designates a note
+    as a *flat* &flat;, *natural* &natural;, or *sharp* &sharp;. If it's a *natural*
+    &natural; then this character can be omitted. The 3 accidental characters
+    are:
+        - a minus sign `'-'` for a flat &flat;.
+        - an equals sign `'='` (or nothing) for a natural &natural;.
+        - and a plus sign `'+'` for a sharp &sharp;.
+
+1. #### Octave
+
+    And then finally the ***octave*** is the last segment of the *pitch*. The
+    octave is simply a non negative integer (0 or greater) to set the octave the
+    pitch is in.
+
+To create silence, the pitch segment is simply a question mark character, `'?'`.
 
 ### Duration suffix
 
@@ -189,6 +199,12 @@ length of the note will be <sup>1</sup>&frasl;<sub>*N*</sub>. So, if *N* were 1,
 then the duration would be <sup>1</sup>&frasl;<sub>1</sub> which would be a
 whole note. If *N* were 4, that'd result in <sup>1</sup>&frasl;<sub>4</sub> so
 it'd be a quarter note etc.
+
+## Miscellaneous Info
+
+Double accidentals are not supported. Instead enharmonically equivalent notes
+should be used. For instance, C&sharp;&sharp; (C double sharp) is enharmonically
+equivalent to D&natural; (D natural).
 
 [java shield]: https://img.shields.io/badge/java%20JDK%2021-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java JDK 21"
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
