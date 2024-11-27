@@ -46,8 +46,7 @@ final class ScaleTestArgsProvider {
                         }),
 
                         arguments(
-                                PitchLetter.C,
-                                Accidental.NATURAL,
+                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
                                 new PitchClass[] {
                                     new PitchClass(PitchLetter.C, Accidental.NATURAL),
                                     new PitchClass(PitchLetter.D, Accidental.NATURAL),
