@@ -50,29 +50,29 @@ the current OS's audio output is set to:
 
 ## Wave Shapes
 
-It's possible to generate tones with 5 different wave shapes. Each wave shape
-can be represented via one or more case insensitive `String`s. The following
+There are 5 different wave shapes a tone can be. Each wave shape can be
+represented via one or more case insensitive strings. The following
 wave shapes and their strings are:
 
 - Sine &acd;
 
-  The `String`s for this wave shape are: `SIN` and `SINE`.
+  The strings for this wave shape are: `SIN` and `SINE`.
 
 - Square &#9101;
 
-  The `String`s for this wave shape are: `SQR` and `SQUARE`.
+  The strings for this wave shape are: `SQR` and `SQUARE`.
 
 - Triangle &wedge;
 
-  The `String`s for this wave shape are: `TRI` and `TRIANGLE`.
+  The strings for this wave shape are: `TRI` and `TRIANGLE`.
 
 - Saw Up &#9727;
 
-  The `String`s for this wave shape are: `SUP`, `SAWUP` and `SAW_UP`.
+  The strings for this wave shape are: `SUP`, `SAWUP` and `SAW_UP`.
 
 - Saw Down &#9722;
 
-  The `String`s for this wave shape are: `SDN`, `SAWDOWN` and `SAW_DOWN`.
+  The strings for this wave shape are: `SDN`, `SAWDOWN` and `SAW_DOWN`.
 
 ## Command Line Options
 
