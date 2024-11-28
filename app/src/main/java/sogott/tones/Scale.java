@@ -292,6 +292,11 @@ enum Scale {
     }
 
     List<PitchClass> of(PitchClass pitchClass) {
+
+        if (pitchClass == null) {
+            throw new IllegalArgumentException("Null " + PitchClass.class.getSimpleName());
+        }
+
         return Optional.ofNullable(this._accidentalPitchClassMap.get(pitchClass.letter()))
             .map(accidentalMap -> accidentalMap.get(pitchClass.accidental()))
             .orElseGet(() -> switch(pitchClass.letter()) {
@@ -325,13 +330,18 @@ enum Scale {
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.NATURAL);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
+                case F ->
+                    switch(pitchClass.accidental()) {
+                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.E).get(Accidental.NATURAL);
+                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.G).get(Accidental.FLAT);
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                    };
                 case G ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.FLAT);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
-                default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
             });
     }
 }
