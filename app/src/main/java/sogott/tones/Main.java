@@ -1,17 +1,15 @@
 package sogott.tones;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.ArrayList;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.ParseException;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.ParseException;
 
 import static java.util.Collections.unmodifiableList;
-
-import java.nio.file.Path;
 
 /**
  * Command line processing takes place here and an operation dependent on the
