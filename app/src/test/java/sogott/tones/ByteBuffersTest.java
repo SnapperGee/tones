@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class ByteBuffersTestArgsProvider {
-    final static RandomGenerator random = RandomGenerator.getDefault();
-    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
-    private final static List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
+    static final RandomGenerator random = RandomGenerator.getDefault();
+    private static final List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private static final List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private static final List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
 
-    final static List<Audio> audioObjects = pitchLetters.stream().flatMap(pitchLetter -> {
+    static final List<Audio> audioObjects = pitchLetters.stream().flatMap(pitchLetter -> {
         return accidentals.stream().flatMap(accidental -> {
             final Pitch accidentalPitch = new Pitch(pitchLetter, accidental, random.nextInt(0, 13));
             return waveShapes.stream()

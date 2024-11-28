@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class PitchLetterTestArgsProvider {
-    final static class EnumValuesWithOffset implements ArgumentsProvider {
+    static final class EnumValuesWithOffset implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -32,7 +32,7 @@ final class PitchLetterTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithUpperCaseChar implements ArgumentsProvider {
+    static final class EnumValuesWithUpperCaseChar implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -46,7 +46,7 @@ final class PitchLetterTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithLowerCaseChar implements ArgumentsProvider {
+    static final class EnumValuesWithLowerCaseChar implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(

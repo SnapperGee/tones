@@ -578,7 +578,7 @@ final class ScalePitchClassesTest {
 
     @Suite
     @DisplayName("ScalePitchClasses.Major.Natural")
-    final static class MajorNatural {
+    static final class MajorNatural {
         @ParameterizedTest(name = "ScalePitchClasses.MAJOR.of({0}) contains {1}")
         @ArgumentsSource(ScalePitchClassesTestArgsProvider.Major.Natural.class)
         void scaleMajorNaturalCorrectNotes(
@@ -591,7 +591,7 @@ final class ScalePitchClassesTest {
 
     @Suite
     @DisplayName("ScalePitchClasses.Major.Flat")
-    final static class MajorFlat {
+    static final class MajorFlat {
         @ParameterizedTest(name = "ScalePitchClasses.MAJOR.of({0}) contains {1}")
         @ArgumentsSource(ScalePitchClassesTestArgsProvider.Major.Flat.class)
         void scaleMajorNaturalCorrectNotes(
@@ -604,7 +604,7 @@ final class ScalePitchClassesTest {
 
     @Suite
     @DisplayName("ScalePitchClasses.Major.Sharp")
-    final static class MajorSharp {
+    static final class MajorSharp {
         @ParameterizedTest(name = "ScalePitchClasses.MAJOR.of({0}) contains {1}")
         @ArgumentsSource(ScalePitchClassesTestArgsProvider.Major.Sharp.class)
         void scaleMajorNaturalCorrectNotes(
@@ -617,7 +617,7 @@ final class ScalePitchClassesTest {
 
     @Suite
     @DisplayName("ScalePitchClasses.Minor.Natural")
-    final static class MinorNatural {
+    static final class MinorNatural {
         @ParameterizedTest(name = "ScalePitchClasses.MINOR.of({0}) contains {1}")
         @ArgumentsSource(ScalePitchClassesTestArgsProvider.Minor.Natural.class)
         void scaleMajorNaturalCorrectNotes(
@@ -630,7 +630,7 @@ final class ScalePitchClassesTest {
 
     @Suite
     @DisplayName("ScalePitchClasses.Minor.Flat")
-    final static class MinorFlat {
+    static final class MinorFlat {
         @ParameterizedTest(name = "ScalePitchClasses.MINOR.of({0}) contains {1}")
         @ArgumentsSource(ScalePitchClassesTestArgsProvider.Minor.Flat.class)
         void scaleMajorNaturalCorrectNotes(
@@ -643,7 +643,7 @@ final class ScalePitchClassesTest {
 
     @Suite
     @DisplayName("ScalePitchClasses.Minor.Sharp")
-    final static class MinorSharp {
+    static final class MinorSharp {
         @ParameterizedTest(name = "ScalePitchClasses.MINOR.of({0}) contains {1}")
         @ArgumentsSource(ScalePitchClassesTestArgsProvider.Minor.Sharp.class)
         void scaleMajorNaturalCorrectNotes(

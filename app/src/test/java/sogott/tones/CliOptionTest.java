@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class CliOptionTestArgsProvider {
-    final static class EnumValuesWithLongOpt implements ArgumentsProvider {
+    static final class EnumValuesWithLongOpt implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -40,7 +40,7 @@ final class CliOptionTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithFlag implements ArgumentsProvider {
+    static final class EnumValuesWithFlag implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -54,7 +54,7 @@ final class CliOptionTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithArgCount implements ArgumentsProvider {
+    static final class EnumValuesWithArgCount implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -68,7 +68,7 @@ final class CliOptionTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithArgName implements ArgumentsProvider {
+    static final class EnumValuesWithArgName implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -82,7 +82,7 @@ final class CliOptionTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithType implements ArgumentsProvider {
+    static final class EnumValuesWithType implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -96,7 +96,7 @@ final class CliOptionTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithDescription implements ArgumentsProvider {
+    static final class EnumValuesWithDescription implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(

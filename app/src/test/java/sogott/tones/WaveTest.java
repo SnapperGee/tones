@@ -20,9 +20,9 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class WaveTestArgsProvider {
 
-    final static RandomGenerator random = RandomGenerator.getDefault();
+    static final RandomGenerator random = RandomGenerator.getDefault();
 
-    final static class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
+    static final class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -34,7 +34,7 @@ final class WaveTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithLowerCaseStringValue implements ArgumentsProvider {
+    static final class EnumValuesWithLowerCaseStringValue implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -46,7 +46,7 @@ final class WaveTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithUpperCaseStringAliases implements ArgumentsProvider {
+    static final class EnumValuesWithUpperCaseStringAliases implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -58,7 +58,7 @@ final class WaveTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithLowerCaseStringAliases implements ArgumentsProvider {
+    static final class EnumValuesWithLowerCaseStringAliases implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -74,7 +74,7 @@ final class WaveTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithUpperCaseStringAlias implements ArgumentsProvider {
+    static final class EnumValuesWithUpperCaseStringAlias implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -93,7 +93,7 @@ final class WaveTestArgsProvider {
         }
     }
 
-    final static class EnumValuesWithLowerCaseStringAlias implements ArgumentsProvider {
+    static final class EnumValuesWithLowerCaseStringAlias implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -112,7 +112,7 @@ final class WaveTestArgsProvider {
         }
     }
 
-    final static class PrefixedStrings implements ArgumentsProvider {
+    static final class PrefixedStrings implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Arrays.stream(WaveShape.values()).flatMap(wave -> Stream.concat(

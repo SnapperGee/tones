@@ -58,7 +58,7 @@ enum WaveShape {
      */
     SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN"));
 
-    private final static List<WaveShape> WAVES = unmodifiableList(asList(WaveShape.values()));
+    private static final List<WaveShape> WAVES = unmodifiableList(asList(WaveShape.values()));
 
     private final BiFunction<Double, Integer, byte[]> _generatorFunc;
 

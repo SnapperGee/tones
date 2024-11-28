@@ -24,14 +24,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class AudioStringTestArgsProvider {
-    private final static List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
-    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private static final List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
+    private static final List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private static final List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
-    final static RandomGenerator random = RandomGenerator.getDefault();
+    static final RandomGenerator random = RandomGenerator.getDefault();
 
     static final class Valid {
-        final static class WaveShapePrefixedAudioStringValueAndAudio implements ArgumentsProvider {
+        static final class WaveShapePrefixedAudioStringValueAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -78,7 +78,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        final static class AudioStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
+        static final class AudioStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -120,7 +120,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        final static class AudioStringValueWithoutWaveShapePrefix implements ArgumentsProvider {
+        static final class AudioStringValueWithoutWaveShapePrefix implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -166,7 +166,7 @@ final class AudioStringTestArgsProvider {
     }
 
     static final class Invalid {
-        final static class AudioStringValue implements ArgumentsProvider {
+        static final class AudioStringValue implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(note -> {
@@ -430,7 +430,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        final static class AudioStringAndWave implements ArgumentsProvider {
+        static final class AudioStringAndWave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {

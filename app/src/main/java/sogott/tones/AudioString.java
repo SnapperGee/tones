@@ -137,7 +137,7 @@ final class AudioString {
      * The character used as a leading prefix to designate that an audio string
      * should be parsed as silence (as opposed to a tone).
      */
-    final static char SILENCE_CHAR = '?';
+    static final char SILENCE_CHAR = '?';
 
     /**
      * Enum of char values used to separate the segments of an audio string.
@@ -171,7 +171,7 @@ final class AudioString {
         }
     }
 
-    private final static String SILENCE_PREFIX = new StringBuilder(2)
+    private static final String SILENCE_PREFIX = new StringBuilder(2)
             .append(SILENCE_CHAR)
             .append(Delimiter.VOICE_AND_DURATION.charValue())
             .toString();

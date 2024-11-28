@@ -29,10 +29,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.closeTo;
 
 final class PitchTestArgsProvider {
-    final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    static final List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private static final List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
-    final static RandomGenerator random = RandomGenerator.getDefault();
+    static final RandomGenerator random = RandomGenerator.getDefault();
 
     private static Stream<Arguments> pitchLetterAccidentalAndOctave(int octaveOrigin, int octaveBound) {
         return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
@@ -95,22 +95,22 @@ final class PitchTestArgsProvider {
                 .map(pitchLetter -> arguments(pitchLetter, random.nextInt(octaveOrigin, octaveBound)));
     }
 
-    final static class Valid {
-        final static class PitchLetterAccidentalAndOctave implements ArgumentsProvider {
+    static final class Valid {
+        static final class PitchLetterAccidentalAndOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetterAccidentalAndOctave(0, 13);
             }
         }
 
-        final static class PitchLetterAndOctave implements ArgumentsProvider {
+        static final class PitchLetterAndOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetterAndOctave(0, 13);
             }
         }
 
-        final static class AccidentalAndOctave implements ArgumentsProvider {
+        static final class AccidentalAndOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
@@ -120,7 +120,7 @@ final class PitchTestArgsProvider {
             }
         }
 
-        final static class PitchLetterAccidentalAndOctaveStringValue implements ArgumentsProvider {
+        static final class PitchLetterAccidentalAndOctaveStringValue implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -143,7 +143,7 @@ final class PitchTestArgsProvider {
             }
         }
 
-        final static class PitchStringValues implements ArgumentsProvider {
+        static final class PitchStringValues implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -164,7 +164,7 @@ final class PitchTestArgsProvider {
             }
         }
 
-        final static class PitchLClassAndOctave implements ArgumentsProvider {
+        static final class PitchLClassAndOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
@@ -172,35 +172,35 @@ final class PitchTestArgsProvider {
             }
         }
 
-        final static class DifferingPitchLettersAccidentalsAndOctaves implements ArgumentsProvider {
+        static final class DifferingPitchLettersAccidentalsAndOctaves implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return differingPitchLetterAccidentalsAndOctaves(0, 12);
             }
         }
 
-        final static class DifferingPitchLettersWithAccidentalAndOctave implements ArgumentsProvider {
+        static final class DifferingPitchLettersWithAccidentalAndOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return differingPitchLetterWithAccidentalAndOctave(0, 12);
             }
         }
 
-        final static class PitchLetterWithDifferingAccidentalsAndOctave implements ArgumentsProvider {
+        static final class PitchLetterWithDifferingAccidentalsAndOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetterDifferingAccidentalsAndOctave(0, 12);
             }
         }
 
-        final static class PitchLetterAccidentalWithDifferingOctaves implements ArgumentsProvider {
+        static final class PitchLetterAccidentalWithDifferingOctaves implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchClassAccidentalWithDifferingOctaves(0, 12);
             }
         }
 
-        final static class PitchLetterAccidentalOctaveFrequency implements ArgumentsProvider {
+        static final class PitchLetterAccidentalOctaveFrequency implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
@@ -397,22 +397,22 @@ final class PitchTestArgsProvider {
         }
     }
 
-    final static class Invalid {
-        final static class NoteAccidentalAndNegativeOctave implements ArgumentsProvider {
+    static final class Invalid {
+        static final class NoteAccidentalAndNegativeOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetterAccidentalAndOctave(-12, 0);
             }
         }
 
-        final static class NoteAndNegativeOctave implements ArgumentsProvider {
+        static final class NoteAndNegativeOctave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetterAndOctave(-12, 0);
             }
         }
 
-        final static class PitchStringValues implements ArgumentsProvider {
+        static final class PitchStringValues implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()

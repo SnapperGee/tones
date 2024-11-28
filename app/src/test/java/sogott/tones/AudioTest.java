@@ -26,11 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class AudioTestArgsProvider {
 
-    final static RandomGenerator random = RandomGenerator.getDefault();
+    static final RandomGenerator random = RandomGenerator.getDefault();
 
-    private final static List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
-    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private static final List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
+    private static final List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private static final List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
     static PitchLetter randomPitchLetter() {
         return pitchLetters.get(random.nextInt(pitchLetters.size()));
@@ -40,9 +40,9 @@ final class AudioTestArgsProvider {
         return accidentals.get(random.nextInt(accidentals.size()));
     }
 
-    final static class Valid {
+    static final class Valid {
 
-        final static class WavePitchDuration implements ArgumentsProvider {
+        static final class WavePitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream()
@@ -54,7 +54,7 @@ final class AudioTestArgsProvider {
             }
         }
 
-        final static class AltWavesPitchesDurations implements ArgumentsProvider {
+        static final class AltWavesPitchesDurations implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> {
@@ -105,7 +105,7 @@ final class AudioTestArgsProvider {
             }
         }
 
-        final static class WaveAltsPitchDuration implements ArgumentsProvider {
+        static final class WaveAltsPitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> {
@@ -124,7 +124,7 @@ final class AudioTestArgsProvider {
             }
         }
 
-        final static class WaveAltPitchesAndDurations implements ArgumentsProvider {
+        static final class WaveAltPitchesAndDurations implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
@@ -164,7 +164,7 @@ final class AudioTestArgsProvider {
             }
         }
 
-        final static class WavePitchDurationAlts implements ArgumentsProvider {
+        static final class WavePitchDurationAlts implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
@@ -183,7 +183,7 @@ final class AudioTestArgsProvider {
             }
         }
 
-        final static class WavePitchAltsDuration implements ArgumentsProvider {
+        static final class WavePitchAltsDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> pitchLetters.stream().flatMap(pitchLetter -> {
@@ -218,7 +218,7 @@ final class AudioTestArgsProvider {
             }
         }
 
-        final static class AltWavesAndPitchesWithDuration implements ArgumentsProvider {
+        static final class AltWavesAndPitchesWithDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> {
@@ -265,9 +265,9 @@ final class AudioTestArgsProvider {
         }
     }
 
-    final static class Invalid {
+    static final class Invalid {
 
-        final static class WavePitchDuration implements ArgumentsProvider {
+        static final class WavePitchDuration implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return waveShapes.stream().flatMap(wave -> Stream.concat(

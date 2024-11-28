@@ -18,13 +18,13 @@ import javax.sound.sampled.AudioFormat;
  * @see OutputByteBuffers
  */
 final class ByteBuffers {
-    private final static float SAMPLE_RATE = 44100;
+    private static final float SAMPLE_RATE = 44100;
 
-    private final static int SAMPLE_SIZE = 16; // in bits
-    private final static int CHANNELS = 1;
-    private final static boolean SIGNED = true;
-    private final static boolean BIG_ENDIAN = false;
-    private final static double SILENCE_RATIO = 0.85;
+    private static final int SAMPLE_SIZE = 16; // in bits
+    private static final int CHANNELS = 1;
+    private static final boolean SIGNED = true;
+    private static final boolean BIG_ENDIAN = false;
+    private static final double SILENCE_RATIO = 0.85;
 
     /**
      * {@link AudioFormat} used by this class when converting the {@link Audio}
@@ -32,7 +32,7 @@ final class ByteBuffers {
      * {@link OutputByteBuffers} static methods when outputting the byte array
      * buffers.
      */
-    final static AudioFormat AUDIO_FORMAT = new AudioFormat(SAMPLE_RATE,
+    static final AudioFormat AUDIO_FORMAT = new AudioFormat(SAMPLE_RATE,
             SAMPLE_SIZE, CHANNELS, SIGNED, BIG_ENDIAN);
 
     private final List<Audio> _audioObjects;

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class AccidentalTestArgsProvider {
-    final static class CharValues implements ArgumentsProvider {
+    static final class CharValues implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -27,7 +27,7 @@ final class AccidentalTestArgsProvider {
         }
     }
 
-    final static class OffSets implements ArgumentsProvider {
+    static final class OffSets implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -37,7 +37,7 @@ final class AccidentalTestArgsProvider {
         }
     }
 
-    final static class SymbolChars implements ArgumentsProvider {
+    static final class SymbolChars implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(

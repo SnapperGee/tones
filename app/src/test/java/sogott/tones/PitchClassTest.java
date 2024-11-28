@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class PitchClassTestArgsProvider {
-    private final static List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
-    private final static List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private static final List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private static final List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
 
-    final static RandomGenerator random = RandomGenerator.getDefault();
+    static final RandomGenerator random = RandomGenerator.getDefault();
 
     static PitchLetter randomPitchLetter() {
         return pitchLetters.get(random.nextInt(pitchLetters.size()));
@@ -32,8 +32,8 @@ final class PitchClassTestArgsProvider {
         return accidentals.get(random.nextInt(accidentals.size()));
     }
 
-    final static class Valid {
-        final static class PitchLetterAndAccidental implements ArgumentsProvider {
+    static final class Valid {
+        static final class PitchLetterAndAccidental implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream()
@@ -42,7 +42,7 @@ final class PitchClassTestArgsProvider {
             }
         }
 
-        final static class PitchLetter implements ArgumentsProvider {
+        static final class PitchLetter implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream()
@@ -51,7 +51,7 @@ final class PitchClassTestArgsProvider {
             }
         }
 
-        final static class PitchLetterAndObject implements ArgumentsProvider {
+        static final class PitchLetterAndObject implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream()

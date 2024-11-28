@@ -17,15 +17,15 @@ package sogott.tones;
  * @see WaveShape
  */
 final class GenerateWaveByteBuffer {
-    private final static float SAMPLE_RATE = 44100;
-    private final static short AMPLITUDE = Short.MAX_VALUE;
+    private static final float SAMPLE_RATE = 44100;
+    private static final short AMPLITUDE = Short.MAX_VALUE;
 
     // ADR defined in milliseconds
-    private final static int ATTACK = 50;
-    private final static int DECAY = 50;
-    private final static int RELEASE = 50;
+    private static final int ATTACK = 50;
+    private static final int DECAY = 50;
+    private static final int RELEASE = 50;
 
-    private final static double SUSTAIN = 0.9; // sustain level of max volume (AMPLITUDE)
+    private static final double SUSTAIN = 0.9; // sustain level of max volume (AMPLITUDE)
 
     /**
      * Generates an empty {@code byte} array buffer (all indexes initialized to

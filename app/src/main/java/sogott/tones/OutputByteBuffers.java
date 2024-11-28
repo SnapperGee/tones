@@ -38,7 +38,7 @@ final class OutputByteBuffers {
      * @throws IllegalArgumentException If either of the passed arguments are
      *                                  {@code null}.
      */
-    final static void toAudio(
+    static final void toAudio(
             ByteBuffers byteBuffers,
             SourceDataLine sourceDataLine) throws LineUnavailableException {
         if (byteBuffers == null) {
@@ -77,7 +77,7 @@ final class OutputByteBuffers {
      * @throws IllegalArgumentException If either of the passed arguments are
      *                                  {@code null}.
      */
-    final static Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath) {
+    static final Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath) {
         if (byteBuffers == null) {
             throw new IllegalArgumentException("Null byte buffers");
         }

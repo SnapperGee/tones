@@ -150,9 +150,9 @@ enum CliOption {
             .numberOfArgs(0)
             .build());
 
-    private final static CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
+    private static final CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
 
-    private final static String CMD_LINE_SYNTAX = "tones [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [%s>]PITCH.INTEGER..."
+    private static final String CMD_LINE_SYNTAX = "tones [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [%s>]PITCH.INTEGER..."
             .formatted(CliOption.BPM.value().getLongOpt(),
                     CliOption.BPM.value().getOpt(),
                     CliOption.BPM.value().getArgName(),
@@ -174,7 +174,7 @@ enum CliOption {
                     CliOption.WAVE.value().getArgName())
             + "\nPlay musical note based tones.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
 
-    private final static Options ALL_OPTIONS = stream(CliOption.values()).reduce(
+    private static final Options ALL_OPTIONS = stream(CliOption.values()).reduce(
             new Options(),
             (options, option) -> options.addOption(option.value()),
             (options1, options2) -> options1.addOptions(options2));
@@ -192,7 +192,7 @@ enum CliOption {
      *
      * @see Main#main(String[])
      */
-    final static CommandLine parse(String[] args) throws ParseException {
+    static final CommandLine parse(String[] args) throws ParseException {
         return DEFAULT_PARSER.parse(ALL_OPTIONS, args);
     }
 
@@ -200,7 +200,7 @@ enum CliOption {
      * Prints a help message consisting of usage instructions and information
      * about the options and flags to stdout.
      */
-    final static void printHelp() {
+    static final void printHelp() {
         new HelpFormatter().printHelp(
                 CliOption.CMD_LINE_SYNTAX,
                 ALL_OPTIONS);

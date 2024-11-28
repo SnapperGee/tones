@@ -25,9 +25,9 @@ import java.nio.file.Path;
  */
 final public class Main {
 
-    private final static int BPM = 140;
-    private final static int NOTE_BEAT_VALUE = 4;
-    private final static WaveShape WAVE = WaveShape.SINE;
+    private static final int BPM = 140;
+    private static final int NOTE_BEAT_VALUE = 4;
+    private static final WaveShape WAVE = WaveShape.SINE;
 
     /**
      * The entry point of this application where command line processing takes
