@@ -285,10 +285,14 @@ enum ScalePitchClasses {
             ))))
         )));
 
-    private final Map<PitchLetter, Map<Accidental, List<PitchClass>>> _accidentalPitchClassMap;
+    private final Map<PitchLetter, Map<Accidental, List<PitchClass>>> _pitchLetterAccidentalMap;
 
     private ScalePitchClasses(EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>> accidentalPitchClassMap) {
-        this._accidentalPitchClassMap = unmodifiableMap(accidentalPitchClassMap);
+        this._pitchLetterAccidentalMap = unmodifiableMap(accidentalPitchClassMap);
+    }
+
+    Map<PitchLetter, Map<Accidental, List<PitchClass>>> pitchLetterAccidentalMap() {
+        return this._pitchLetterAccidentalMap;
     }
 
     List<PitchClass> of(PitchClass pitchClass) {
@@ -297,49 +301,49 @@ enum ScalePitchClasses {
             throw new IllegalArgumentException("Null " + PitchClass.class.getSimpleName());
         }
 
-        return Optional.ofNullable(this._accidentalPitchClassMap.get(pitchClass.letter()))
+        return Optional.ofNullable(this._pitchLetterAccidentalMap.get(pitchClass.letter()))
             .map(accidentalMap -> accidentalMap.get(pitchClass.accidental()))
             .orElseGet(() -> switch(pitchClass.letter()) {
                 case A ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.G).get(Accidental.SHARP);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.B).get(Accidental.FLAT);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.G).get(Accidental.SHARP);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.B).get(Accidental.FLAT);
                         default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case B ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.SHARP);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.C).get(Accidental.NATURAL);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.A).get(Accidental.SHARP);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.C).get(Accidental.NATURAL);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case C ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.B).get(Accidental.NATURAL);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.D).get(Accidental.FLAT);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.B).get(Accidental.NATURAL);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.D).get(Accidental.FLAT);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case D ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.C).get(Accidental.SHARP);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.E).get(Accidental.FLAT);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.C).get(Accidental.SHARP);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.E).get(Accidental.FLAT);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case E ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.D).get(Accidental.SHARP);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.NATURAL);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.D).get(Accidental.SHARP);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.F).get(Accidental.NATURAL);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case F ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.E).get(Accidental.NATURAL);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.G).get(Accidental.FLAT);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.E).get(Accidental.NATURAL);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.G).get(Accidental.FLAT);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case G ->
                     switch(pitchClass.accidental()) {
-                        case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.SHARP);
-                        case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.FLAT);
+                        case FLAT -> this._pitchLetterAccidentalMap.get(PitchLetter.F).get(Accidental.SHARP);
+                        case SHARP -> this._pitchLetterAccidentalMap.get(PitchLetter.A).get(Accidental.FLAT);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
             }
