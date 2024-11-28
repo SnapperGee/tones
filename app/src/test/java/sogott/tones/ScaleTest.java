@@ -6,9 +6,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.platform.suite.api.Suite;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -380,6 +382,13 @@ final class ScaleTestArgsProvider {
 }
 
 final class ScaleTest {
+
+    @ParameterizedTest(name = "Scale.{0}.of(null) throws IllegalArgumentException")
+    @EnumSource(Scale.class)
+    void scaleOfNullThrowsIllegalArgumentException(Scale scale) {
+            assertThrows(IllegalArgumentException.class, () -> scale.of(null));
+    }
+
     @Suite
     final static class Major {
         @Suite
