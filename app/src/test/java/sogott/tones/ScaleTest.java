@@ -32,7 +32,7 @@ final class ScaleTestArgsProvider {
 final class ScaleTest {
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
     @ArgumentsSource(ScaleTestArgsProvider.ScaleIn2ndOctaveWithLeadingToneIn1stOctave.class)
-    void scaleMajorNaturalCorrectNotes(
+    void scalePitchPassedNegativeIndex(
         List<PitchClass> pitchClasses,
         int scaleOctave,
         int pitchIndex,
