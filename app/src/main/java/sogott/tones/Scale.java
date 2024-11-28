@@ -342,6 +342,7 @@ enum Scale {
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.FLAT);
                         default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
-            });
+            }
+        );
     }
 }
