@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -576,80 +577,80 @@ final class ScaleTest {
     }
 
     @Suite
-    final static class Major {
-        @Suite
-        final static class Natural {
-            @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
-            @ArgumentsSource(ScaleTestArgsProvider.Major.Natural.class)
-            void scaleMajorNaturalCorrectNotes(
-                PitchClass rootPitchClass,
-                PitchClass[] expectedPitchClasses) {
-                    final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
-                    assertThat(pitchClasses, contains(expectedPitchClasses));
-            }
-        }
-
-        @Suite
-        final static class Flat {
-            @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
-            @ArgumentsSource(ScaleTestArgsProvider.Major.Flat.class)
-            void scaleMajorNaturalCorrectNotes(
-                PitchClass rootPitchClass,
-                PitchClass[] expectedPitchClasses) {
-                    final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
-                    assertThat(pitchClasses, contains(expectedPitchClasses));
-            }
-        }
-
-        @Suite
-        final static class Sharp {
-            @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
-            @ArgumentsSource(ScaleTestArgsProvider.Major.Sharp.class)
-            void scaleMajorNaturalCorrectNotes(
-                PitchClass rootPitchClass,
-                PitchClass[] expectedPitchClasses) {
-                    final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
-                    assertThat(pitchClasses, contains(expectedPitchClasses));
-            }
+    @DisplayName("Scale.Major.Natural")
+    final static class MajorNatural {
+        @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
+        @ArgumentsSource(ScaleTestArgsProvider.Major.Natural.class)
+        void scaleMajorNaturalCorrectNotes(
+            PitchClass rootPitchClass,
+            PitchClass[] expectedPitchClasses) {
+                final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 
     @Suite
-    final static class Minor {
-        @Suite
-        final static class Natural {
-            @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
-            @ArgumentsSource(ScaleTestArgsProvider.Minor.Natural.class)
-            void scaleMajorNaturalCorrectNotes(
-                PitchClass rootPitchClass,
-                PitchClass[] expectedPitchClasses) {
-                    final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
-                    assertThat(pitchClasses, contains(expectedPitchClasses));
-            }
+    @DisplayName("Scale.Major.Flat")
+    final static class MajorFlat {
+        @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
+        @ArgumentsSource(ScaleTestArgsProvider.Major.Flat.class)
+        void scaleMajorNaturalCorrectNotes(
+            PitchClass rootPitchClass,
+            PitchClass[] expectedPitchClasses) {
+                final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                assertThat(pitchClasses, contains(expectedPitchClasses));
         }
+    }
 
-        @Suite
-        final static class Flat {
-            @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
-            @ArgumentsSource(ScaleTestArgsProvider.Minor.Flat.class)
-            void scaleMajorNaturalCorrectNotes(
-                PitchClass rootPitchClass,
-                PitchClass[] expectedPitchClasses) {
-                    final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
-                    assertThat(pitchClasses, contains(expectedPitchClasses));
-            }
+    @Suite
+    @DisplayName("Scale.Major.Sharp")
+    final static class MajorSharp {
+        @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
+        @ArgumentsSource(ScaleTestArgsProvider.Major.Sharp.class)
+        void scaleMajorNaturalCorrectNotes(
+            PitchClass rootPitchClass,
+            PitchClass[] expectedPitchClasses) {
+                final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                assertThat(pitchClasses, contains(expectedPitchClasses));
         }
+    }
 
-        @Suite
-        final static class Sharp {
-            @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
-            @ArgumentsSource(ScaleTestArgsProvider.Minor.Sharp.class)
-            void scaleMajorNaturalCorrectNotes(
-                PitchClass rootPitchClass,
-                PitchClass[] expectedPitchClasses) {
-                    final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
-                    assertThat(pitchClasses, contains(expectedPitchClasses));
-            }
+    @Suite
+    @DisplayName("Scale.Minor.Natural")
+    final static class MinorNatural {
+        @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
+        @ArgumentsSource(ScaleTestArgsProvider.Minor.Natural.class)
+        void scaleMajorNaturalCorrectNotes(
+            PitchClass rootPitchClass,
+            PitchClass[] expectedPitchClasses) {
+                final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                assertThat(pitchClasses, contains(expectedPitchClasses));
+        }
+    }
+
+    @Suite
+    @DisplayName("Scale.Minor.Flat")
+    final static class MinorFlat {
+        @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
+        @ArgumentsSource(ScaleTestArgsProvider.Minor.Flat.class)
+        void scaleMajorNaturalCorrectNotes(
+            PitchClass rootPitchClass,
+            PitchClass[] expectedPitchClasses) {
+                final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                assertThat(pitchClasses, contains(expectedPitchClasses));
+        }
+    }
+
+    @Suite
+    @DisplayName("Scale.Minor.Sharp")
+    final static class MinorSharp {
+        @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
+        @ArgumentsSource(ScaleTestArgsProvider.Minor.Sharp.class)
+        void scaleMajorNaturalCorrectNotes(
+            PitchClass rootPitchClass,
+            PitchClass[] expectedPitchClasses) {
+                final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 }
