@@ -299,39 +299,39 @@ enum Scale {
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.G).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.B).get(Accidental.FLAT);
-                        default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case B ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.C).get(Accidental.NATURAL);
-                        default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case C ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.B).get(Accidental.NATURAL);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.D).get(Accidental.FLAT);
-                        default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case D ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.C).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.E).get(Accidental.FLAT);
-                        default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case E ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.D).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.NATURAL);
-                        default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case G ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.FLAT);
-                        default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
                     };
-                default -> throw new IllegalArgumentException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
             });
     }
 }
