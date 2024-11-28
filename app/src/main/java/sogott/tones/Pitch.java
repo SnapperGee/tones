@@ -95,11 +95,7 @@ final class Pitch {
                         (this._pitchClass.letter().offset() + (this._pitchClass.accidental().offset()) + octaveOffset)
                                 / 12.0);
         this._frequency = pitchFrequency;
-
-        this._stringValue = this._pitchClass.accidental() == Accidental.NATURAL
-                ? "%c%d".formatted(this._pitchClass.letter().charValue(), this._octave)
-                : "%c%c%d".formatted(this._pitchClass.letter().charValue(), this.accidental().charValue(),
-                        this._octave);
+        this._stringValue = this._pitchClass.stringValue() + this._octave;
         this._hashCode = hash(this._pitchClass, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
                 Pitch.class.getSimpleName(),
