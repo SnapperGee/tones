@@ -90,11 +90,9 @@ final class Pitch {
         this._octave = octave;
 
         final int octaveOffset = (this._octave - 4) * 12;
-        final double pitchFrequency = 440
-                * Math.pow(2,
-                        (this._pitchClass.letter().offset() + (this._pitchClass.accidental().offset()) + octaveOffset)
-                                / 12.0);
-        this._frequency = pitchFrequency;
+        this._frequency = 440 * Math.pow(
+            2,
+            (this._pitchClass.letter().offset() + (this._pitchClass.accidental().offset()) + octaveOffset) / 12.0);
         this._stringValue = this._pitchClass.stringValue() + this._octave;
         this._hashCode = hash(this._pitchClass, this._octave);
         this._toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
