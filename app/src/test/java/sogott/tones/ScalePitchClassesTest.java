@@ -16,7 +16,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
-final class ScaleTestArgsProvider {
+final class ScalePitchClassesTestArgsProvider {
     static final class Major {
         static final class Natural implements ArgumentsProvider {
             @Override
@@ -568,88 +568,88 @@ final class ScaleTestArgsProvider {
     }
 }
 
-final class ScaleTest {
+final class ScalePitchClassesTest {
 
-    @ParameterizedTest(name = "Scale.{0}.of(null) throws IllegalArgumentException")
-    @EnumSource(Scale.class)
-    void scaleOfNullThrowsIllegalArgumentException(Scale scale) {
-            assertThrows(IllegalArgumentException.class, () -> scale.of(null));
+    @ParameterizedTest(name = "ScalePitchClasses.{0}.of(null) throws IllegalArgumentException")
+    @EnumSource(ScalePitchClasses.class)
+    void scaleOfNullThrowsIllegalArgumentException(ScalePitchClasses scalePitchClasses) {
+            assertThrows(IllegalArgumentException.class, () -> scalePitchClasses.of(null));
     }
 
     @Suite
-    @DisplayName("Scale.Major.Natural")
+    @DisplayName("ScalePitchClasses.Major.Natural")
     final static class MajorNatural {
-        @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
-        @ArgumentsSource(ScaleTestArgsProvider.Major.Natural.class)
+        @ParameterizedTest(name = "ScalePitchClasses.MAJOR.of({0}) contains {1}")
+        @ArgumentsSource(ScalePitchClassesTestArgsProvider.Major.Natural.class)
         void scaleMajorNaturalCorrectNotes(
             PitchClass rootPitchClass,
             PitchClass[] expectedPitchClasses) {
-                final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                final List<PitchClass> pitchClasses = ScalePitchClasses.MAJOR.of(rootPitchClass);
                 assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 
     @Suite
-    @DisplayName("Scale.Major.Flat")
+    @DisplayName("ScalePitchClasses.Major.Flat")
     final static class MajorFlat {
-        @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
-        @ArgumentsSource(ScaleTestArgsProvider.Major.Flat.class)
+        @ParameterizedTest(name = "ScalePitchClasses.MAJOR.of({0}) contains {1}")
+        @ArgumentsSource(ScalePitchClassesTestArgsProvider.Major.Flat.class)
         void scaleMajorNaturalCorrectNotes(
             PitchClass rootPitchClass,
             PitchClass[] expectedPitchClasses) {
-                final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                final List<PitchClass> pitchClasses = ScalePitchClasses.MAJOR.of(rootPitchClass);
                 assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 
     @Suite
-    @DisplayName("Scale.Major.Sharp")
+    @DisplayName("ScalePitchClasses.Major.Sharp")
     final static class MajorSharp {
-        @ParameterizedTest(name = "Scale.MAJOR.of({0}) contains {1}")
-        @ArgumentsSource(ScaleTestArgsProvider.Major.Sharp.class)
+        @ParameterizedTest(name = "ScalePitchClasses.MAJOR.of({0}) contains {1}")
+        @ArgumentsSource(ScalePitchClassesTestArgsProvider.Major.Sharp.class)
         void scaleMajorNaturalCorrectNotes(
             PitchClass rootPitchClass,
             PitchClass[] expectedPitchClasses) {
-                final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                final List<PitchClass> pitchClasses = ScalePitchClasses.MAJOR.of(rootPitchClass);
                 assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 
     @Suite
-    @DisplayName("Scale.Minor.Natural")
+    @DisplayName("ScalePitchClasses.Minor.Natural")
     final static class MinorNatural {
-        @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
-        @ArgumentsSource(ScaleTestArgsProvider.Minor.Natural.class)
+        @ParameterizedTest(name = "ScalePitchClasses.MINOR.of({0}) contains {1}")
+        @ArgumentsSource(ScalePitchClassesTestArgsProvider.Minor.Natural.class)
         void scaleMajorNaturalCorrectNotes(
             PitchClass rootPitchClass,
             PitchClass[] expectedPitchClasses) {
-                final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                final List<PitchClass> pitchClasses = ScalePitchClasses.MINOR.of(rootPitchClass);
                 assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 
     @Suite
-    @DisplayName("Scale.Minor.Flat")
+    @DisplayName("ScalePitchClasses.Minor.Flat")
     final static class MinorFlat {
-        @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
-        @ArgumentsSource(ScaleTestArgsProvider.Minor.Flat.class)
+        @ParameterizedTest(name = "ScalePitchClasses.MINOR.of({0}) contains {1}")
+        @ArgumentsSource(ScalePitchClassesTestArgsProvider.Minor.Flat.class)
         void scaleMajorNaturalCorrectNotes(
             PitchClass rootPitchClass,
             PitchClass[] expectedPitchClasses) {
-                final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                final List<PitchClass> pitchClasses = ScalePitchClasses.MINOR.of(rootPitchClass);
                 assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }
 
     @Suite
-    @DisplayName("Scale.Minor.Sharp")
+    @DisplayName("ScalePitchClasses.Minor.Sharp")
     final static class MinorSharp {
-        @ParameterizedTest(name = "Scale.MINOR.of({0}) contains {1}")
-        @ArgumentsSource(ScaleTestArgsProvider.Minor.Sharp.class)
+        @ParameterizedTest(name = "ScalePitchClasses.MINOR.of({0}) contains {1}")
+        @ArgumentsSource(ScalePitchClassesTestArgsProvider.Minor.Sharp.class)
         void scaleMajorNaturalCorrectNotes(
             PitchClass rootPitchClass,
             PitchClass[] expectedPitchClasses) {
-                final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                final List<PitchClass> pitchClasses = ScalePitchClasses.MINOR.of(rootPitchClass);
                 assertThat(pitchClasses, contains(expectedPitchClasses));
         }
     }

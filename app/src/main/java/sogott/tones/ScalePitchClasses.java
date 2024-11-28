@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static java.util.Collections.unmodifiableMap;
 
-enum Scale {
+enum ScalePitchClasses {
     MAJOR(new EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>>(Map.ofEntries(
             Map.entry(PitchLetter.A, unmodifiableMap(new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
                 Map.entry(Accidental.FLAT, List.of(
@@ -287,7 +287,7 @@ enum Scale {
 
     private final Map<PitchLetter, Map<Accidental, List<PitchClass>>> _accidentalPitchClassMap;
 
-    private Scale(EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>> accidentalPitchClassMap) {
+    private ScalePitchClasses(EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>> accidentalPitchClassMap) {
         this._accidentalPitchClassMap = unmodifiableMap(accidentalPitchClassMap);
     }
 
@@ -304,43 +304,43 @@ enum Scale {
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.G).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.B).get(Accidental.FLAT);
-                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("Error parsing %s.%s.of(%s)".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case B ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.C).get(Accidental.NATURAL);
-                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case C ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.B).get(Accidental.NATURAL);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.D).get(Accidental.FLAT);
-                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case D ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.C).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.E).get(Accidental.FLAT);
-                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case E ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.D).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.NATURAL);
-                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case F ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.E).get(Accidental.NATURAL);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.G).get(Accidental.FLAT);
-                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
                 case G ->
                     switch(pitchClass.accidental()) {
                         case FLAT -> this._accidentalPitchClassMap.get(PitchLetter.F).get(Accidental.SHARP);
                         case SHARP -> this._accidentalPitchClassMap.get(PitchLetter.A).get(Accidental.FLAT);
-                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(Scale.class.getSimpleName(), this.name(), pitchClass));
+                        default -> throw new RuntimeException("%s.%s.of(%s) error".formatted(ScalePitchClasses.class.getSimpleName(), this.name(), pitchClass));
                     };
             }
         );
