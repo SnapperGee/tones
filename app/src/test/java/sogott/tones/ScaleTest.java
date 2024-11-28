@@ -1,6 +1,8 @@
 package sogott.tones;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,22 +18,28 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 final class ScaleTestArgsProvider {
     static final List<ScalePitchClasses> scalePitchClasses = unmodifiableList(asList(ScalePitchClasses.values()));
 
-    static final class ScaleIn2ndOctaveWithLeadingToneIn1stOctave implements ArgumentsProvider {
+    private static final RandomGenerator random = RandomGenerator.getDefault();
+
+    static final class PitchClassesIn2ndOrHigherOctaveWithNegativeIndex1OctaveLower implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return scalePitchClasses.stream()
-                    .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
-                        .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
-                            pitchClasses ->
-                                arguments(pitchClasses, 2, -1, new Pitch(pitchClasses.get(pitchClasses.size() - 1), 1))
-                        )));
+            return IntStream.rangeClosed(-6, -1).mapToObj(negativeIndex -> scalePitchClasses.stream()
+            .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
+                .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
+                    pitchClasses ->
+                        {
+                            final int octave = random.nextInt(2, 6);
+                            return arguments(pitchClasses, octave, negativeIndex, new Pitch(pitchClasses.get(pitchClasses.size() + negativeIndex), octave - 1));
+                        }
+                ))))
+            .flatMap(s -> s);
         }
     }
 }
 
 final class ScaleTest {
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
-    @ArgumentsSource(ScaleTestArgsProvider.ScaleIn2ndOctaveWithLeadingToneIn1stOctave.class)
+    @ArgumentsSource(ScaleTestArgsProvider.PitchClassesIn2ndOrHigherOctaveWithNegativeIndex1OctaveLower.class)
     void scalePitchPassedNegativeIndex(
         List<PitchClass> pitchClasses,
         int scaleOctave,
