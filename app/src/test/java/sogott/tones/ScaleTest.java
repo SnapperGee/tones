@@ -21,89 +21,90 @@ final class ScaleTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                        new PitchClass[] {
                             new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.SHARP)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.SHARP),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.SHARP),
-                                new PitchClass(PitchLetter.A, Accidental.SHARP)
-                        }),
-
-                        arguments(
-                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL)
-                        }),
-
-                        arguments(
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
                             new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.SHARP),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.SHARP)
-                        }),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.SHARP)
+                    }),
 
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.SHARP),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.SHARP)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
                             new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP)
-                        }));
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.SHARP)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP)
+                    })
+                );
             }
         }
 
@@ -111,77 +112,90 @@ final class ScaleTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.A, Accidental.FLAT),
+                        new PitchClass[] {
                             new PitchClass(PitchLetter.A, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.B, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL)
-                        }),
-
-                        arguments(
-                            new PitchClass(PitchLetter.C, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.C, Accidental.FLAT),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.FLAT),
-                                new PitchClass(PitchLetter.G, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT)
-                        }),
-
-                        arguments(
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
                             new PitchClass(PitchLetter.D, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.FLAT),
-                                new PitchClass(PitchLetter.G, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.E, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL)
-                        }),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL)
+                    }),
 
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.B, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.C, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.C, Accidental.FLAT),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.FLAT),
                             new PitchClass(PitchLetter.G, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.G, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.FLAT),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL)
-                        }));
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.D, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.FLAT),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.E, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.F, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.SHARP)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.G, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.FLAT),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL)
+                    })
+                );
             }
         }
 
@@ -189,29 +203,90 @@ final class ScaleTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(
-                            new PitchClass(PitchLetter.C, Accidental.SHARP),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.SHARP),
-                                new PitchClass(PitchLetter.E, Accidental.SHARP),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.SHARP),
-                                new PitchClass(PitchLetter.A, Accidental.SHARP),
-                                new PitchClass(PitchLetter.B, Accidental.SHARP)
-                        }),
+                    arguments(
+                        new PitchClass(PitchLetter.A, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL)
+                    }),
 
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.B, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.C, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.SHARP),
+                            new PitchClass(PitchLetter.E, Accidental.SHARP),
                             new PitchClass(PitchLetter.F, Accidental.SHARP),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.SHARP),
-                                new PitchClass(PitchLetter.A, Accidental.SHARP),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.SHARP),
-                                new PitchClass(PitchLetter.E, Accidental.SHARP)
-                        }));
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.SHARP),
+                            new PitchClass(PitchLetter.B, Accidental.SHARP)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.D, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.E, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.F, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.SHARP),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.SHARP),
+                            new PitchClass(PitchLetter.E, Accidental.SHARP)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.G, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL)
+                    })
+                );
             }
         }
     }
@@ -221,89 +296,90 @@ final class ScaleTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                        new PitchClass[] {
                             new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT)
-                        }),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL)
+                    }),
 
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
                             new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.G, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL)
-                        }));
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL)
+                    })
+                );
             }
         }
 
@@ -311,53 +387,90 @@ final class ScaleTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.A, Accidental.FLAT),
+                        new PitchClass[] {
                             new PitchClass(PitchLetter.A, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.FLAT),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.FLAT),
-                                new PitchClass(PitchLetter.G, Accidental.FLAT)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.B, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT)
-                        }),
-
-                        arguments(
+                            new PitchClass(PitchLetter.C, Accidental.FLAT),
                             new PitchClass(PitchLetter.D, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.D, Accidental.FLAT),
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.FLAT),
-                                new PitchClass(PitchLetter.G, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.FLAT)
-                        }),
-
-                        arguments(
                             new PitchClass(PitchLetter.E, Accidental.FLAT),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.E, Accidental.FLAT),
-                                new PitchClass(PitchLetter.F, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.G, Accidental.FLAT),
-                                new PitchClass(PitchLetter.A, Accidental.FLAT),
-                                new PitchClass(PitchLetter.B, Accidental.FLAT),
-                                new PitchClass(PitchLetter.C, Accidental.FLAT),
-                                new PitchClass(PitchLetter.D, Accidental.FLAT)
-                        }));
+                            new PitchClass(PitchLetter.F, Accidental.FLAT),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.B, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.C, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.D, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.FLAT),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.E, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.FLAT),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.F, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.G, Accidental.FLAT),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.F, Accidental.SHARP),
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL)
+                    })
+                );
             }
         }
 
@@ -365,17 +478,90 @@ final class ScaleTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments(
+                    arguments(
+                        new PitchClass(PitchLetter.A, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.B, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.C, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.FLAT),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.D, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.FLAT),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.E, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.F, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.G, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.F, Accidental.SHARP),
+                        new PitchClass[] {
                             new PitchClass(PitchLetter.F, Accidental.SHARP),
-                            new PitchClass[] {
-                                new PitchClass(PitchLetter.F, Accidental.SHARP),
-                                new PitchClass(PitchLetter.G, Accidental.SHARP),
-                                new PitchClass(PitchLetter.A, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.B, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.C, Accidental.SHARP),
-                                new PitchClass(PitchLetter.D, Accidental.NATURAL),
-                                new PitchClass(PitchLetter.E, Accidental.NATURAL)
-                        }));
+                            new PitchClass(PitchLetter.G, Accidental.SHARP),
+                            new PitchClass(PitchLetter.A, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.B, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.C, Accidental.SHARP),
+                            new PitchClass(PitchLetter.D, Accidental.NATURAL),
+                            new PitchClass(PitchLetter.E, Accidental.NATURAL)
+                    }),
+
+                    arguments(
+                        new PitchClass(PitchLetter.G, Accidental.SHARP),
+                        new PitchClass[] {
+                            new PitchClass(PitchLetter.A, Accidental.FLAT),
+                            new PitchClass(PitchLetter.B, Accidental.FLAT),
+                            new PitchClass(PitchLetter.C, Accidental.FLAT),
+                            new PitchClass(PitchLetter.D, Accidental.FLAT),
+                            new PitchClass(PitchLetter.E, Accidental.FLAT),
+                            new PitchClass(PitchLetter.F, Accidental.FLAT),
+                            new PitchClass(PitchLetter.G, Accidental.FLAT)
+                    })
+                );
             }
         }
     }
