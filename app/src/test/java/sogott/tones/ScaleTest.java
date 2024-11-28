@@ -391,12 +391,8 @@ final class ScaleTest {
             void scaleMajorNaturalCorrectNotes(
                 PitchClass rootPitchClass,
                 PitchClass[] expectedPitchClasses) {
-                    final Optional<List<PitchClass>> pitchClasses = Scale.MAJOR.of(rootPitchClass);
-                    assertTrue(
-                        pitchClasses.isPresent(),
-                        () -> "Scale.MAJOR.of(%s) returned empty Optional.".formatted(rootPitchClass)
-                    );
-                    assertThat(pitchClasses.get(), contains(expectedPitchClasses));
+                    final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                    assertThat(pitchClasses, contains(expectedPitchClasses));
             }
         }
 
@@ -407,12 +403,8 @@ final class ScaleTest {
             void scaleMajorNaturalCorrectNotes(
                 PitchClass rootPitchClass,
                 PitchClass[] expectedPitchClasses) {
-                    final Optional<List<PitchClass>> pitchClasses = Scale.MAJOR.of(rootPitchClass);
-                    assertTrue(
-                        pitchClasses.isPresent(),
-                        () -> "Scale.MAJOR.of(%s) returned empty Optional.".formatted(rootPitchClass)
-                    );
-                    assertThat(pitchClasses.get(), contains(expectedPitchClasses));
+                    final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                    assertThat(pitchClasses, contains(expectedPitchClasses));
             }
         }
 
@@ -423,12 +415,8 @@ final class ScaleTest {
             void scaleMajorNaturalCorrectNotes(
                 PitchClass rootPitchClass,
                 PitchClass[] expectedPitchClasses) {
-                    final Optional<List<PitchClass>> pitchClasses = Scale.MAJOR.of(rootPitchClass);
-                    assertTrue(
-                        pitchClasses.isPresent(),
-                        () -> "Scale.MAJOR.of(%s) returned empty Optional.".formatted(rootPitchClass)
-                    );
-                    assertThat(pitchClasses.get(), contains(expectedPitchClasses));
+                    final List<PitchClass> pitchClasses = Scale.MAJOR.of(rootPitchClass);
+                    assertThat(pitchClasses, contains(expectedPitchClasses));
             }
         }
     }
@@ -442,12 +430,8 @@ final class ScaleTest {
             void scaleMajorNaturalCorrectNotes(
                 PitchClass rootPitchClass,
                 PitchClass[] expectedPitchClasses) {
-                    final Optional<List<PitchClass>> pitchClasses = Scale.MINOR.of(rootPitchClass);
-                    assertTrue(
-                        pitchClasses.isPresent(),
-                        () -> "Scale.MINOR.of(%s) returned empty Optional.".formatted(rootPitchClass)
-                    );
-                    assertThat(pitchClasses.get(), contains(expectedPitchClasses));
+                    final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                    assertThat(pitchClasses, contains(expectedPitchClasses));
             }
         }
 
@@ -458,12 +442,8 @@ final class ScaleTest {
             void scaleMajorNaturalCorrectNotes(
                 PitchClass rootPitchClass,
                 PitchClass[] expectedPitchClasses) {
-                    final Optional<List<PitchClass>> pitchClasses = Scale.MINOR.of(rootPitchClass);
-                    assertTrue(
-                        pitchClasses.isPresent(),
-                        () -> "Scale.MINOR.of(%s) returned empty Optional.".formatted(rootPitchClass)
-                    );
-                    assertThat(pitchClasses.get(), contains(expectedPitchClasses));
+                    final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                    assertThat(pitchClasses, contains(expectedPitchClasses));
             }
         }
 
@@ -474,12 +454,8 @@ final class ScaleTest {
             void scaleMajorNaturalCorrectNotes(
                 PitchClass rootPitchClass,
                 PitchClass[] expectedPitchClasses) {
-                    final Optional<List<PitchClass>> pitchClasses = Scale.MINOR.of(rootPitchClass);
-                    assertTrue(
-                        pitchClasses.isPresent(),
-                        () -> "Scale.MINOR.of(%s) returned empty Optional.".formatted(rootPitchClass)
-                    );
-                    assertThat(pitchClasses.get(), contains(expectedPitchClasses));
+                    final List<PitchClass> pitchClasses = Scale.MINOR.of(rootPitchClass);
+                    assertThat(pitchClasses, contains(expectedPitchClasses));
             }
         }
     }
