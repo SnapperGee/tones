@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class ScaleTestArgsProvider {
@@ -36,6 +37,24 @@ final class ScaleTestArgsProvider {
                 .flatMap(s -> s));
         }
     }
+
+    static final class ScalesWithInvalidPitchIndexesAndOctaves implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return scalePitchClasses.stream()
+            .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
+                .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
+                    pitchClasses ->
+                        {
+                            final int octave = random.nextInt(12);
+                            final int minInvalidIndex = -(pitchClasses.size() * octave + 1);
+                            return random.ints(20, minInvalidIndex * 3, minInvalidIndex).mapToObj(
+                                index -> arguments(pitchClasses, octave, index));
+                        }
+                ))
+                .flatMap(s -> s));
+        }
+    }
 }
 
 final class ScaleTest {
@@ -50,5 +69,16 @@ final class ScaleTest {
         final Scale scale = new Scale(pitchClasses, scaleOctave);
         final Pitch retrievedPitch = scale.pitch(pitchIndex);
         assertEquals(expectedPitch, retrievedPitch);
+    }
+
+    @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) throws IndexOutOfBoundsException")
+    @ArgumentsSource(ScaleTestArgsProvider.ScalesWithInvalidPitchIndexesAndOctaves.class)
+    void scalePitchPassedInvalidIndexThrowsIndexOutOfBoundsException(
+        List<PitchClass> pitchClasses,
+        int scaleOctave,
+        int pitchIndex
+    ) {
+        final Scale scale = new Scale(pitchClasses, scaleOctave);
+        assertThrows(IndexOutOfBoundsException.class, () -> scale.pitch(pitchIndex));
     }
 }
