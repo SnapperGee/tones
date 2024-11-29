@@ -141,6 +141,8 @@ final class AudioString {
 
     /**
      * Enum of char values used to separate the segments of an audio string.
+     *
+     * @see AudioString
      */
     static enum Delimiter {
         /**
