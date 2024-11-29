@@ -173,11 +173,6 @@ final class AudioString {
         }
     }
 
-    private static final String SILENCE_PREFIX = new StringBuilder(2)
-            .append(SILENCE_CHAR)
-            .append(Delimiter.VOICE_AND_DURATION.charValue())
-            .toString();
-
     /**
      * <em>Case insensitively</em> parses the passed {@code String} argument to
      * an {@link Audio} object, using the passed {@link WaveShape} argument as
