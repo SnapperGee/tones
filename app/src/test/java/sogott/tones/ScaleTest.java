@@ -20,34 +20,17 @@ final class ScaleTestArgsProvider {
 
     private static final RandomGenerator random = RandomGenerator.getDefault();
 
-    static final class PitchClassesIn2ndOrHigherOctaveWithNegativeIndexSingleOctaveLower implements ArgumentsProvider {
+    static final class ScalesWithValidPitchIndexesAndOctaves implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return scalePitchClasses.stream()
             .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
                 .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
                     pitchClasses ->
-                        IntStream.rangeClosed(-(pitchClasses.size() - 1), -1).mapToObj(
-                                negativeIndex -> {
-                                    final int octave = random.nextInt(2, 12);
-                                    return arguments(pitchClasses, octave, negativeIndex, new Pitch(pitchClasses.get(pitchClasses.size() + negativeIndex), octave - 1));
-                                })
-                ))
-                .flatMap(s -> s));
-        }
-    }
-
-    static final class PitchClassesWithPositiveIndexSingleOctaveHigher implements ArgumentsProvider {
-        @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return scalePitchClasses.stream()
-            .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
-                .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
-                    pitchClasses ->
-                        IntStream.rangeClosed(pitchClasses.size(), pitchClasses.size() * 2 - 1).mapToObj(
-                                positiveIndex -> {
-                                    final int octave = random.nextInt(12);
-                                    return arguments(pitchClasses, octave, positiveIndex, new Pitch(pitchClasses.get(positiveIndex - pitchClasses.size()), octave + 1));
+                        IntStream.rangeClosed((pitchClasses.size() - 1) * -4, (pitchClasses.size() - 1) * 4).mapToObj(
+                                index -> {
+                                    final int octave = random.nextInt(4, 12);
+                                    return arguments(pitchClasses, octave, index, new Pitch(pitchClasses.get(Math.floorMod(index, pitchClasses.size())), octave + Math.floorDiv(index, pitchClasses.size())));
                                 })
                 ))
                 .flatMap(s -> s));
@@ -57,21 +40,8 @@ final class ScaleTestArgsProvider {
 
 final class ScaleTest {
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
-    @ArgumentsSource(ScaleTestArgsProvider.PitchClassesIn2ndOrHigherOctaveWithNegativeIndexSingleOctaveLower.class)
-    void scalePitchPassedSingleOctaveLowerNegativeIndex(
-        List<PitchClass> pitchClasses,
-        int scaleOctave,
-        int pitchIndex,
-        Pitch expectedPitch
-    ) {
-        final Scale scale = new Scale(pitchClasses, scaleOctave);
-        final Pitch retrievedPitch = scale.pitch(pitchIndex);
-        assertEquals(expectedPitch, retrievedPitch);
-    }
-
-    @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
-    @ArgumentsSource(ScaleTestArgsProvider.PitchClassesWithPositiveIndexSingleOctaveHigher.class)
-    void scalePitchPassedSingleOctaveHigherPositiveIndex(
+    @ArgumentsSource(ScaleTestArgsProvider.ScalesWithValidPitchIndexesAndOctaves.class)
+    void scalePitchPassedValidIndex(
         List<PitchClass> pitchClasses,
         int scaleOctave,
         int pitchIndex,
