@@ -23,16 +23,17 @@ final class ScaleTestArgsProvider {
     static final class PitchClassesIn2ndOrHigherOctaveWithNegativeIndexSingleOctaveLower implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return IntStream.rangeClosed(-6, -1).mapToObj(negativeIndex -> scalePitchClasses.stream()
+            return scalePitchClasses.stream()
             .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
                 .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
                     pitchClasses ->
-                        {
-                            final int octave = random.nextInt(2, 6);
-                            return arguments(pitchClasses, octave, negativeIndex, new Pitch(pitchClasses.get(pitchClasses.size() + negativeIndex), octave - 1));
-                        }
-                ))))
-            .flatMap(s -> s);
+                        IntStream.rangeClosed(-(pitchClasses.size() - 1), -1).mapToObj(
+                                negativeIndex -> {
+                                    final int octave = random.nextInt(2, 12);
+                                    return arguments(pitchClasses, octave, negativeIndex, new Pitch(pitchClasses.get(pitchClasses.size() + negativeIndex), octave - 1));
+                                })
+                ))
+                .flatMap(s -> s));
         }
     }
 }
