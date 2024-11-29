@@ -219,13 +219,10 @@ final class AudioString {
     }
 
     /**
-     * Parses the passed {@code String} argument to an {@link Audio} object. If
-     * the passed string can't be parsed to audio then an empty optional is
-     * returned, otherwise the returned optional contains the resulting audio
-     * object from parsing the string.
-     *
-     * <p>
-     * The parsing is performed case insensitively.
+     * Parses the passed {@code String} argument case insensitively to an
+     * {@link Audio} object. If the passed string can't be parsed to audio then
+     * an empty optional is returned, otherwise the returned optional contains
+     * the resulting audio object from parsing the string.
      *
      * @param aString {@code String} to parse to an {@link Audio} object.
      *
