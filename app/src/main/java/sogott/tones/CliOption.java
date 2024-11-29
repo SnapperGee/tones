@@ -37,7 +37,7 @@ enum CliOption {
             .desc("Set speed of audio to INTEGER beats per minute (defaults to 140).")
             .type(Integer.class)
             .converter(arg -> {
-                if (arg.isBlank() || !arg.codePoints().allMatch(Character::isDigit)) {
+                if (arg.isBlank() || arg.codePoints().anyMatch(cp -> !Character.isDigit(cp))) {
                     throw new IllegalArgumentException(
                             "BPM requires positive (greater than 0) integer but got: \"%s\""
                                     .formatted(arg));
@@ -64,7 +64,7 @@ enum CliOption {
                     + " So if there's a time signature of 3/4, then `4` is the beat value of a note.")
             .type(Integer.class)
             .converter(arg -> {
-                if (arg.isBlank() || !arg.codePoints().allMatch(Character::isDigit)) {
+                if (arg.isBlank() || arg.codePoints().anyMatch(cp -> !Character.isDigit(cp))) {
                     throw new IllegalArgumentException(
                             "Note beat value requires positive (greater than 0) integer but got: \"%s\""
                                     .formatted(arg));

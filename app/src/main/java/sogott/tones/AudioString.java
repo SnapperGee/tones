@@ -256,7 +256,7 @@ final class AudioString {
         }
 
         // must only contain int after delimiter
-        if (!aString.codePoints().limit(delimiterIndex - 1).allMatch(Character::isDigit)) {
+        if (aString.codePoints().limit(delimiterIndex - 1).anyMatch(cp -> !Character.isDigit(cp))) {
             return Optional.empty();
         }
 
