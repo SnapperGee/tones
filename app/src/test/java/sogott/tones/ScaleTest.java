@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -15,11 +18,12 @@ import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.mock;
 
 final class ScaleTestArgsProvider {
     static final List<ScalePitchClasses> scalePitchClasses = unmodifiableList(asList(ScalePitchClasses.values()));
 
-    private static final RandomGenerator random = RandomGenerator.getDefault();
+    static final RandomGenerator random = RandomGenerator.getDefault();
 
     static final class ScalesWithValidPitchIndexesAndOctaves implements ArgumentsProvider {
         @Override
@@ -58,6 +62,25 @@ final class ScaleTestArgsProvider {
 }
 
 final class ScaleTest {
+    @Test
+    @DisplayName("Scale(null, 0 <= # <= 12) throws IllegalArgumentException")
+    void scaleConstructorPassedNullPitchClassesThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Scale(null, ScaleTestArgsProvider.random.nextInt(13)));
+    }
+
+    @Test
+    @DisplayName("Scale(empty list, 0 <= # <= 12) throws IllegalArgumentException")
+    void scaleConstructorPassedEmptyPitchClassesListThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Scale(List.of(), ScaleTestArgsProvider.random.nextInt(13)));
+    }
+
+    @Test
+    @DisplayName("Scale(List<PitchClass>, -12 <= # < 0) throws IllegalArgumentException")
+    void scaleConstructorPassedNegativeOctaveThrowsIllegalArgumentException() {
+        PitchClass pitchClassList = mock();
+        assertThrows(IllegalArgumentException.class, () -> new Scale(List.of(pitchClassList), ScaleTestArgsProvider.random.nextInt(-12, 0)));
+    }
+
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
     @ArgumentsSource(ScaleTestArgsProvider.ScalesWithValidPitchIndexesAndOctaves.class)
     void scalePitchPassedValidIndex(
