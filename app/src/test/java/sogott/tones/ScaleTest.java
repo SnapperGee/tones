@@ -36,12 +36,42 @@ final class ScaleTestArgsProvider {
                 .flatMap(s -> s));
         }
     }
+
+    static final class PitchClassesWithPositiveIndexSingleOctaveHigher implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return scalePitchClasses.stream()
+            .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
+                .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
+                    pitchClasses ->
+                        IntStream.rangeClosed(pitchClasses.size(), pitchClasses.size() * 2 - 1).mapToObj(
+                                positiveIndex -> {
+                                    final int octave = random.nextInt(12);
+                                    return arguments(pitchClasses, octave, positiveIndex, new Pitch(pitchClasses.get(positiveIndex - pitchClasses.size()), octave + 1));
+                                })
+                ))
+                .flatMap(s -> s));
+        }
+    }
 }
 
 final class ScaleTest {
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
     @ArgumentsSource(ScaleTestArgsProvider.PitchClassesIn2ndOrHigherOctaveWithNegativeIndexSingleOctaveLower.class)
     void scalePitchPassedSingleOctaveLowerNegativeIndex(
+        List<PitchClass> pitchClasses,
+        int scaleOctave,
+        int pitchIndex,
+        Pitch expectedPitch
+    ) {
+        final Scale scale = new Scale(pitchClasses, scaleOctave);
+        final Pitch retrievedPitch = scale.pitch(pitchIndex);
+        assertEquals(expectedPitch, retrievedPitch);
+    }
+
+    @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
+    @ArgumentsSource(ScaleTestArgsProvider.PitchClassesWithPositiveIndexSingleOctaveHigher.class)
+    void scalePitchPassedSingleOctaveHigherPositiveIndex(
         List<PitchClass> pitchClasses,
         int scaleOctave,
         int pitchIndex,
