@@ -20,7 +20,7 @@ final class ScaleTestArgsProvider {
 
     private static final RandomGenerator random = RandomGenerator.getDefault();
 
-    static final class PitchClassesIn2ndOrHigherOctaveWithNegativeIndex1OctaveLower implements ArgumentsProvider {
+    static final class PitchClassesIn2ndOrHigherOctaveWithNegativeIndexSingleOctaveLower implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return IntStream.rangeClosed(-6, -1).mapToObj(negativeIndex -> scalePitchClasses.stream()
@@ -39,8 +39,8 @@ final class ScaleTestArgsProvider {
 
 final class ScaleTest {
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
-    @ArgumentsSource(ScaleTestArgsProvider.PitchClassesIn2ndOrHigherOctaveWithNegativeIndex1OctaveLower.class)
-    void scalePitchPassedNegativeIndex(
+    @ArgumentsSource(ScaleTestArgsProvider.PitchClassesIn2ndOrHigherOctaveWithNegativeIndexSingleOctaveLower.class)
+    void scalePitchPassedSingleOctaveLowerNegativeIndex(
         List<PitchClass> pitchClasses,
         int scaleOctave,
         int pitchIndex,
