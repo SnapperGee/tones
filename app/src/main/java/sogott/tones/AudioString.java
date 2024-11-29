@@ -209,15 +209,7 @@ final class AudioString {
             throw new IllegalArgumentException("Null default wave.");
         }
 
-        if (isParsableSilence(aString)) {
-            return parseSilence(aString);
-        }
-
-        if (isParsableTone(aString, false)) {
-            return parseTone(aString, defaultWaveShape);
-        }
-
-        return Optional.empty();
+        return parseSilence(aString).or(() -> parseTone(aString, defaultWaveShape));
     }
 
     /**
@@ -250,31 +242,31 @@ final class AudioString {
                         : isParsableToneWithoutWaveShapePrefix(aString));
     }
 
-    private static boolean isParsableSilence(String aString) {
-        if (aString == null) {
-            return false;
-        }
-
-        // must be at least a leading silence char, angle bracket, period, and
-        // duration int
-        if (aString.length() < 3) {
-            return false;
-        }
-
-        if (!aString.startsWith(SILENCE_PREFIX)) {
-            return false;
-        }
-
-        return Character.isDigit(aString.charAt(2)) && aString.codePoints().skip(3).allMatch(Character::isDigit);
-    }
-
     private static Optional<Audio> parseSilence(String aString) {
-        if (!isParsableSilence(aString)) {
+        // must be at least a leading silence char, period, and duration int
+        if (aString.length() < 3) {
+            return Optional.empty();
+        }
+
+        // must start with silence char
+        if (aString.charAt(0) != SILENCE_CHAR) {
             return Optional.empty();
         }
 
         final int delimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
+
+        // must contain period char
+        if (delimiterIndex == -1) {
+            return Optional.empty();
+        }
+
+        // must only contain int after delimiter
+        if (aString.codePoints().limit(delimiterIndex - 1).allMatch(Character::isDigit)) {
+            return Optional.empty();
+        }
+
         final int duration = Integer.parseInt(aString, delimiterIndex, aString.length(), 10);
+
         return Optional.of(Audio.silence(duration));
     }
 
