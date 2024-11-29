@@ -47,8 +47,8 @@ final class ScaleTest {
         int pitchIndex,
         Pitch expectedPitch
     ) {
-            final Scale scale = new Scale(pitchClasses, scaleOctave);
-            final Pitch retrievedPitch = scale.pitch(pitchIndex);
-            assertEquals(expectedPitch, retrievedPitch);
+        final Scale scale = new Scale(pitchClasses, scaleOctave);
+        final Pitch retrievedPitch = scale.pitch(pitchIndex);
+        assertEquals(expectedPitch, retrievedPitch);
     }
 }
