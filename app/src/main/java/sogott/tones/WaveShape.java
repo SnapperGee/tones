@@ -141,19 +141,17 @@ enum WaveShape {
     }
 
     /**
-     * Returns an optional containing the enum value string the passed string
-     * argument is prefixed with if it is prefixed with one, otherwise returns
-     * an empty optional. A {@code boolean} argument can also optionally be
-     * passed to specify whether to ignore the case when matching the prefix.
-     * Defaults to {@code true} to perform a case insensitive match.
+     * Case insensitively checks if the passed {@code String} starts with a
+     * {@link WaveShape#stringValueAliases() stringValueAlias} and returns an
+     * {@link Optional} containing the matched {@code String} if it starts with
+     * one.
      *
-     * @param aString    {@code String} to extract enum string value prefix from
-     *                   if present.
+     * @param aString {@code String} to extract
+     *                {@link WaveShape#stringValueAliases() stringValueAlias} prefix
+     *                from if it starts with one.
      *
-     * @param ignoreCase {@code boolean} specifying whether to ignore case or not
-     *                   when matching the prefix.
-     *
-     * @return An optional containing the extracted prefix enum string value if
+     * @return An {@link Optional} containing the extracted prefix
+     *         {@link WaveShape#stringValueAliases() stringValueAlias} if
      *         present or an empty optional if not.
      */
     static Optional<String> extractPrefixString(String aString) {
