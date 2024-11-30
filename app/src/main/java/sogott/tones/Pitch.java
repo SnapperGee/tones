@@ -242,7 +242,7 @@ final class Pitch {
      * @return An optional containing the Pitch object resulting from parsing
      *         the string or an empty optional if it can't be parsed.
      *
-     * @throws IllegalArgumentException if passed argument is {@code null}.
+     * @throws IllegalArgumentException if passed {@code String} argument is {@code null}.
      */
     static Optional<Pitch> parse(String aString) {
         if (aString == null) {
