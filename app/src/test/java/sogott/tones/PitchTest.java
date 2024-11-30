@@ -143,18 +143,23 @@ final class PitchTestArgsProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(13);
-                    final String pitchStringNoAccidental = "%c%d".formatted(pitchLetter.charValue(),
-                            octave);
+                    final String pitchStringNoAccidental =
+                        new StringBuilder(2)
+                            .append(pitchLetter.charValue())
+                            .append(octave)
+                            .toString();
 
                     return Stream.concat(
                             Stream.of(arguments(pitchLetter, Accidental.NATURAL, octave, pitchStringNoAccidental)),
                             accidentals.stream()
                                     .filter(accidental -> accidental != Accidental.NATURAL)
                                     .map(accidental -> {
-                                        final String pitchStringWithAccidental = "%c%c%d".formatted(
-                                                pitchLetter.charValue(),
-                                                accidental.charValue(),
-                                                octave);
+                                        final String pitchStringWithAccidental =
+                                            new StringBuilder(3)
+                                                .append(pitchLetter.charValue())
+                                                .append(accidental.charValue())
+                                                .append(octave)
+                                                .toString();
                                         return arguments(pitchLetter, accidental, octave, pitchStringWithAccidental);
                                     }));
                 });
