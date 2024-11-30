@@ -95,6 +95,24 @@ final class PitchTestArgsProvider {
                 .map(pitchLetter -> arguments(pitchLetter, random.nextInt(octaveOrigin, octaveBound)));
     }
 
+    static final class PitchLetterAccidentalOctaveAndToString implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
+                .map(accidental -> {
+                    final int octave = random.nextInt(0, 13);
+                    final String stringValue = accidental == Accidental.NATURAL
+                        ? "%c%d".formatted(pitchLetter.charValue(), octave)
+                        : "%c%c%d".formatted(pitchLetter.charValue(), accidental.charValue(), octave);
+                    final String toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
+                Pitch.class.getSimpleName(),
+                pitchLetter.name(), accidental.name(), octave, stringValue);
+
+                    return arguments(pitchLetter, accidental, octave, toString);
+                }));
+        }
+    }
+
     static final class Valid {
         static final class PitchLetterAccidentalAndOctave implements ArgumentsProvider {
             @Override
@@ -740,17 +758,10 @@ final class PitchTest {
     // toString //
     //////////////
 
-    // TODO: Update arguments provider to have toString
-    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).toString() returns pretty String")
-    @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalAndOctave.class)
-    void pitchToStringReturnsPrettyString(PitchLetter pitchLetter, Accidental accidental, int octave) {
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).toString() returns \"{3}\"")
+    @ArgumentsSource(PitchTestArgsProvider.PitchLetterAccidentalOctaveAndToString.class)
+    void pitchToStringReturnsPrettyString(PitchLetter pitchLetter, Accidental accidental, int octave, String toString) {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
-        final String stringValue = accidental == Accidental.NATURAL
-                ? "%c%d".formatted(pitchLetter.charValue(), octave)
-                : "%c%c%d".formatted(pitchLetter.charValue(), accidental.charValue(), octave);
-        final String toString = "%s {note=%s, accidental=%s, octave=%d, stringValue=\"%s\"}".formatted(
-                Pitch.class.getSimpleName(),
-                pitchLetter.name(), accidental.name(), octave, stringValue);
         assertEquals(toString, pitch.toString());
     }
 }
