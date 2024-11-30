@@ -172,18 +172,24 @@ final class PitchTestArgsProvider {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(13);
                     return accidentals.stream()
-                            .map(accidental -> {
-                                final String stringValueWithAccidental = accidental != Accidental.NATURAL
-                                        ? new StringBuilder(3)
+                            .flatMap(accidental -> {
+                                final String stringValueWithAccidental =
+                                        new StringBuilder(3)
                                             .append(pitchLetter.charValue())
                                             .append(accidental.charValue())
                                             .append(octave)
-                                            .toString()
-                                        : new StringBuilder(2)
-                                            .append(pitchLetter.charValue())
-                                            .append(octave)
                                             .toString();
-                                return arguments(stringValueWithAccidental);
+
+                                return accidental != Accidental.NATURAL
+                                    ? Stream.of(arguments(stringValueWithAccidental))
+                                    : Stream.of(
+                                        arguments(stringValueWithAccidental),
+                                        arguments(
+                                            new StringBuilder(2)
+                                                .append(pitchLetter.charValue())
+                                                .append(octave)
+                                                .toString())
+                                        );
                             });
                 });
             }
