@@ -2,7 +2,6 @@ package sogott.tones;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import static java.util.Objects.hash;
 
