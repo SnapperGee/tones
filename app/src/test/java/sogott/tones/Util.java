@@ -15,10 +15,9 @@ final class Util {
                 32,
                 126
             )
-            .mapToObj(cp -> (char) cp)
             .collect(
                 StringBuilder::new,
-                StringBuilder::append,
+                (sb, cp) -> sb.append((char) cp),
                 StringBuilder::append)
             .toString()
         )
@@ -34,10 +33,9 @@ final class Util {
             )
             .filter(cp -> cp != exclude)
             .limit(random.nextInt(minLength, maxLength + 1))
-            .mapToObj(cp -> (char) cp)
             .collect(
                 StringBuilder::new,
-                StringBuilder::append,
+                (sb, cp) -> sb.append((char) cp),
                 StringBuilder::append)
             .toString()
         )
