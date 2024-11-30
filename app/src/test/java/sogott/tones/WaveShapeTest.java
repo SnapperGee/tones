@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-final class WaveTestArgsProvider {
+final class WaveShapeTestArgsProvider {
 
     static final RandomGenerator random = RandomGenerator.getDefault();
 
@@ -128,37 +128,37 @@ final class WaveTestArgsProvider {
     }
 }
 
-final class WaveTest {
+final class WaveShapeTest {
     @ParameterizedTest(name = "WaveShape.{0}.stringValue() = \"{1}\"")
-    @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringValue.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValuesWithUpperCaseStringValue.class)
     void waveShapeStringValueIsValid(WaveShape waveShape, String expectedStringValue) {
         final String waveStringValue = waveShape.stringValue();
         assertEquals(expectedStringValue, waveStringValue);
     }
 
     @ParameterizedTest(name = "WaveShape.{0}.stringValueAliases() = {1}")
-    @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAliases.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValuesWithUpperCaseStringAliases.class)
     void waveShapeStringValueAliasesIsValid(WaveShape waveShape, Set<String> expectedStringAliases) {
         final Set<String> waveStringAliases = waveShape.stringValueAliases();
         assertEquals(expectedStringAliases, waveStringAliases);
     }
 
     @ParameterizedTest(name = "WaveShape.parse(\"{0}\") returns optional of Wave.{1}")
-    @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithUpperCaseStringAlias.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValuesWithUpperCaseStringAlias.class)
     void waveShapeParseUpperCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
         final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
     @ParameterizedTest(name = "WaveShape.parse(\"{0}\") returns optional of Wave.{1}")
-    @ArgumentsSource(WaveTestArgsProvider.EnumValuesWithLowerCaseStringAlias.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValuesWithLowerCaseStringAlias.class)
     void waveShapeParseLowerCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
         final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
     @ParameterizedTest(name = "WaveShape.{0}.prefixes(\"{1}\") returns true")
-    @ArgumentsSource(WaveTestArgsProvider.PrefixedStrings.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.PrefixedStrings.class)
     void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
         assertTrue(waveShape.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
