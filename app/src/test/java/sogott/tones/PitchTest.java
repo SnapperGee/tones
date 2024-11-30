@@ -443,6 +443,7 @@ final class PitchTestArgsProvider {
                 return pitchLetters.stream().flatMap(pitchLetter -> accidentals.stream()
                         .flatMap(accidental -> {
                             final int octave = random.nextInt(13);
+
                             final String firstString = "%1$c%1$c%2$c%3$d".formatted(pitchLetter.charValue(),
                                     accidental.charValue(),
                                     octave);
@@ -464,11 +465,19 @@ final class PitchTestArgsProvider {
                                     octave);
                             final String eighthString = "%c %d".formatted(pitchLetter.charValue(),
                                     octave);
-                            final String validStringWithAccidental = "%c%c%d".formatted(pitchLetter.charValue(),
-                                    accidental.charValue(),
-                                    octave);
-                            final String validStringNoAccidental = "%c%d".formatted(pitchLetter.charValue(),
-                                    octave);
+                            final String validStringWithAccidental =
+                                new StringBuilder(3)
+                                    .append(pitchLetter.charValue())
+                                    .append(accidental.charValue())
+                                    .append(octave)
+                                    .toString();
+
+                            final String validStringNoAccidental =
+                                new StringBuilder(2)
+                                    .append(pitchLetter.charValue())
+                                    .append(octave)
+                                    .toString();
+
                             return Stream.of(arguments(Character.toString(pitchLetter.charValue())),
                                     arguments(Character.toString(accidental.charValue())),
                                     arguments(Integer.toString(octave)), arguments(firstString),
@@ -771,4 +780,8 @@ final class PitchTest {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
         assertEquals(toString, pitch.toString());
     }
+
+    /////////////////
+    // paresPrefix //
+    /////////////////
 }
