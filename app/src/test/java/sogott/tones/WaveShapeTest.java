@@ -128,9 +128,12 @@ final class WaveShapeTestArgsProvider {
                                         .mapToObj(i ->
                                             arguments(waveShape, stringValueAlias
                                                 + random.ints(i, 32, 127)
-                                                        .mapToObj(cp -> (char) cp).collect(StringBuilder::new,
-                                                                StringBuilder::append, StringBuilder::append)
-                                                        .toString()
+                                                        .mapToObj(cp -> (char) cp)
+                                                            .collect(
+                                                                StringBuilder::new,
+                                                                StringBuilder::append,
+                                                                StringBuilder::append)
+                                                            .toString()
                                             )
                                         )
                                 )
