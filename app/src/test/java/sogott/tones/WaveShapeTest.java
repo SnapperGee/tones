@@ -3,6 +3,7 @@ package sogott.tones;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Map;
 import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -140,6 +141,34 @@ final class WaveShapeTestArgsProvider {
                 ));
         }
     }
+
+    static final class WaveShapeAliasStringEntryAndPrefixedString implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return WAVE_SHAPES.stream()
+                .flatMap(waveShape -> Stream.concat(
+                    waveShape.stringValueAliases().stream().map(stringValueAlias ->
+                        arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias)),
+                            waveShape.stringValueAliases().stream()
+                                .flatMap(stringValueAlias ->
+                                    random.ints(7, 1, 10)
+                                        .mapToObj(i ->
+                                            arguments(
+                                                Map.entry(waveShape, stringValueAlias),
+                                                stringValueAlias
+                                                    + random.ints(i, 32, 127)
+                                                            .mapToObj(cp -> (char) cp)
+                                                                .collect(
+                                                                    StringBuilder::new,
+                                                                    StringBuilder::append,
+                                                                    StringBuilder::append)
+                                                                .toString()
+                                            )
+                                        )
+                                )
+                ));
+        }
+    }
 }
 
 final class WaveShapeTest {
@@ -176,5 +205,18 @@ final class WaveShapeTest {
     void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
         assertTrue(waveShape.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
+    }
+
+    @ParameterizedTest(name = "WaveShape.parsePrefix(\"{1}\") returns Optional<{0}>")
+    @ArgumentsSource(WaveShapeTestArgsProvider.WaveShapeAliasStringEntryAndPrefixedString.class)
+    void prefixesReturnsTrueForPrefixedStrings(Map.Entry<WaveShape, String> waveShapeStringAliasEntry, String prefixedString) {
+        final Optional<Map.Entry<WaveShape, String>> waveShapeStringAliasEntryOptional = WaveShape.parsePrefix(prefixedString);
+
+        assertTrue(
+            waveShapeStringAliasEntryOptional.isPresent(),
+            () -> "WaveShape.parsePrefix(\"%s\") returned empty Optional".formatted(prefixedString)
+        );
+
+        assertEquals(waveShapeStringAliasEntry, waveShapeStringAliasEntryOptional.get());
     }
 }
