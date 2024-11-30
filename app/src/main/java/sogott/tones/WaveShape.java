@@ -59,7 +59,7 @@ enum WaveShape {
      */
     SAW_DOWN(GenerateWaveByteBuffer::sawDown, "SDN", Set.of("SAW_DOWN", "SAWDOWN", "SDN"));
 
-    private static final List<WaveShape> WAVES = unmodifiableList(asList(WaveShape.values()));
+    private static final List<WaveShape> WAVE_SHAPES = unmodifiableList(asList(WaveShape.values()));
 
     private final BiFunction<Double, Integer, byte[]> _generatorFunc;
 
@@ -156,7 +156,7 @@ enum WaveShape {
      *         present or an empty optional if not.
      */
     static Optional<String> extractPrefixString(String aString) {
-        return WAVES.stream()
+        return WAVE_SHAPES.stream()
                 .flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                         && aString.regionMatches(true, 0, waveStringAlias, 0, waveStringAlias.length()))
@@ -164,7 +164,7 @@ enum WaveShape {
     }
 
     static Optional<Map.Entry<WaveShape, String>> parsePrefix(String aString) {
-        return WAVES.stream()
+        return WAVE_SHAPES.stream()
             .flatMap(wave -> wave.stringValueAliases().stream()
                     .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                             && aString.regionMatches(true, 0, waveStringAlias, 0, waveStringAlias.length()))
@@ -195,7 +195,7 @@ enum WaveShape {
             return Optional.empty();
         }
 
-        return WAVES.stream().filter(wave -> wave._stringValueAliases.stream()
+        return WAVE_SHAPES.stream().filter(wave -> wave._stringValueAliases.stream()
                 .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst();
     }
 
