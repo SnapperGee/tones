@@ -118,16 +118,23 @@ final class WaveShapeTestArgsProvider {
     static final class PrefixedStrings implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return WAVE_SHAPES.stream().flatMap(waveShape -> Stream.concat(
+            return WAVE_SHAPES.stream()
+                .flatMap(waveShape -> Stream.concat(
                     waveShape.stringValueAliases().stream().map(stringValueAlias ->
                         arguments(waveShape, stringValueAlias)),
                             waveShape.stringValueAliases().stream()
-                                .flatMap(stringValueAlias -> random.ints(7, 1, 10)
-                                        .mapToObj(i -> arguments(waveShape, stringValueAlias
+                                .flatMap(stringValueAlias ->
+                                    random.ints(7, 1, 10)
+                                        .mapToObj(i ->
+                                            arguments(waveShape, stringValueAlias
                                                 + random.ints(i, 32, 127)
                                                         .mapToObj(cp -> (char) cp).collect(StringBuilder::new,
                                                                 StringBuilder::append, StringBuilder::append)
-                                                        .toString())))));
+                                                        .toString()
+                                            )
+                                        )
+                                )
+                ));
         }
     }
 }
