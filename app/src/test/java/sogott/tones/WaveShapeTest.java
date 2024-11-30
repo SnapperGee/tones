@@ -125,7 +125,7 @@ final class WaveShapeTestArgsProvider {
                     .flatMap(stringValueAlias ->
                         Stream.concat(
                             Stream.of(arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias)),
-                            Util.randomStrings(7, 6, waveShape.stringValue().charAt(waveShape.stringValue().length() - 1)).map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
+                            Util.randomStrings(8, 1, 6, waveShape.stringValue().charAt(waveShape.stringValue().length() - 1)).map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
                         )
                     )
                 );
@@ -140,7 +140,7 @@ final class WaveShapeTestArgsProvider {
                     .flatMap(stringValueAlias ->
                         Stream.concat(
                             IntStream.range(1, stringValueAlias.length()).mapToObj(num -> arguments(stringValueAlias.substring(num))),
-                            Util.randomStrings(7, 1, 7).map(aString -> arguments(aString + stringValueAlias))
+                            Util.randomStrings(8, 1, 6).map(aString -> arguments(aString + stringValueAlias))
                         )
                     )
                 );

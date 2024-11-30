@@ -29,7 +29,7 @@ final class Util {
                 32,
                 126
             )
-            .filter(cp -> cp != exclude)
+            .filter(cp -> Character.toUpperCase(cp) != Character.toUpperCase(exclude))
             .limit(random.nextInt(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,

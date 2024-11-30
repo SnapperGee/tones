@@ -42,6 +42,33 @@ final class PitchClassTestArgsProvider {
             }
         }
 
+        static final class PitchLetterAndAccidentalWithPitchClassStringPrefix implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream()
+                        .flatMap(pitchLetter -> accidentals.stream()
+                            .flatMap(accidental ->
+                                {
+                                    final String pitchClassString = new StringBuilder(2)
+                                        .append(pitchLetter.charValue())
+                                        .append(accidental.charValue())
+                                        .toString();
+
+                                    return Stream.concat(
+                                        Stream.of(
+                                            arguments(
+                                                pitchLetter,
+                                                accidental,
+                                                pitchClassString)
+                                            ),
+                                        Util.randomStrings(7, 6, 1).map(aString -> arguments(pitchClassString + aString))
+                                    );
+                                }
+                            )
+                        );
+            }
+        }
+
         static final class PitchLetter implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
