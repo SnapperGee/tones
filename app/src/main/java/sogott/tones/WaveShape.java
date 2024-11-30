@@ -97,25 +97,6 @@ enum WaveShape {
     }
 
     /**
-     * Returns {@code true} if the passed {@code String} argument is case
-     * insensitively prefixed with any of the {@code String}s in this enum
-     * value's {@link #stringValueAliases() stringValueAliases}.
-     *
-     * @param aString    {@code String} to check if it's prefixed case
-     *                   insensitively with any of this enum value's
-     *                   {@link #stringValueAliases() stringValueAliases}.
-     *
-     * @return {@code true} if the passed {@code String} argument is case
-     *         insensitively prefixed with any of this enum value's
-     *         {@link #stringValueAliases() stringValueAliases}.
-     */
-    boolean prefixes(String aString) {
-        return aString != null && !aString.isEmpty() && this._stringValueAliases.stream()
-                .anyMatch(stringValueAlias -> aString.length() >= stringValueAlias.length()
-                        && aString.regionMatches(true, 0, stringValueAlias, 0, stringValueAlias.length()));
-    }
-
-    /**
      * Case insensitively checks if the passed {@code String} starts with a
      * {@link WaveShape#stringValueAliases() stringValueAlias} and returns an
      * {@link Optional} containing the matched {@code String} if it starts with

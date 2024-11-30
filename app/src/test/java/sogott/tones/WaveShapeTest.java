@@ -117,32 +117,6 @@ final class WaveShapeTestArgsProvider {
         }
     }
 
-    static final class EnumValueWithPrefixedString implements ArgumentsProvider {
-        @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return WAVE_SHAPES.stream()
-                .flatMap(waveShape -> Stream.concat(
-                    waveShape.stringValueAliases().stream().map(stringValueAlias ->
-                        arguments(waveShape, stringValueAlias)),
-                            waveShape.stringValueAliases().stream()
-                                .flatMap(stringValueAlias ->
-                                    random.ints(7, 1, 10)
-                                        .mapToObj(i ->
-                                            arguments(waveShape, stringValueAlias
-                                                + random.ints(i, 32, 127)
-                                                        .mapToObj(cp -> (char) cp)
-                                                            .collect(
-                                                                StringBuilder::new,
-                                                                StringBuilder::append,
-                                                                StringBuilder::append)
-                                                            .toString()
-                                            )
-                                        )
-                                )
-                ));
-        }
-    }
-
     static final class WaveShapeAliasStringEntryAndPrefixedString implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
@@ -224,13 +198,6 @@ final class WaveShapeTest {
     void waveShapeParseLowerCaseStringReturnsOptionalOfWave(String waveString, WaveShape expectedWave) {
         final Optional<WaveShape> optionalWave = WaveShape.parse(waveString);
         assertThat(optionalWave.orElse(null), is(expectedWave));
-    }
-
-    @ParameterizedTest(name = "WaveShape.{0}.prefixes(\"{1}\") returns true")
-    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValueWithPrefixedString.class)
-    void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
-        assertTrue(waveShape.prefixes(prefixedString),
-                () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
     }
 
     @ParameterizedTest(name = "WaveShape.parsePrefix(\"{1}\") returns Optional<{0}>")
