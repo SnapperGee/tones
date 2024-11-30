@@ -381,8 +381,11 @@ final class AudioTest {
     @MethodSource("positiveIntArgs")
     void silenceStringValueReturnsStringValue(int duration) {
         final Audio silenceAudio = Audio.silence(duration);
-        final String stringValue = "%c%c%d".formatted(AudioString.SILENCE_CHAR,
-                AudioString.Delimiter.VOICE_AND_DURATION.charValue(), duration);
+        final String stringValue = new StringBuilder(3)
+            .append(AudioString.SILENCE_CHAR)
+            .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+            .append(duration)
+            .toString();
         assertEquals(stringValue, silenceAudio.stringValue());
     }
 
@@ -402,7 +405,9 @@ final class AudioTest {
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioPitchPropertyReturnsPitch(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
-        assertTrue(audio.pitch().isPresent(), () -> "new Audio(WaveShape.%s, %s, %d).pitch() returned non present Optional."
+        assertTrue(
+            audio.pitch().isPresent(),
+            () -> "new Audio(WaveShape.%s, %s, %d).pitch() returned non present Optional."
                 .formatted(wave, pitch, duration));
         assertSame(pitch, audio.pitch().get());
     }
@@ -418,7 +423,14 @@ final class AudioTest {
     @ArgumentsSource(AudioTestArgsProvider.Valid.WavePitchDuration.class)
     void audioStringValuePropertyReturnsStringValue(WaveShape wave, Pitch pitch, int duration) {
         final Audio audio = new Audio(wave, pitch, duration);
-        final String stringValue = "%s>%s.%d".formatted(wave.stringValue(), pitch.stringValue(), duration);
+        final String stringValue = new StringBuilder(5)
+            .append(wave.stringValue())
+            .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+            .append(pitch.stringValue())
+            .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+            .append(duration)
+            .toString();
+
         assertEquals(stringValue, audio.stringValue());
     }
 
