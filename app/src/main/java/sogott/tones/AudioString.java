@@ -325,7 +325,7 @@ final class AudioString {
             return false;
         }
 
-        return WaveShape.extractPrefix(aString).map(prefix -> {
+        return WaveShape.extractPrefixString(aString).map(prefix -> {
             final int prefixLength = prefix.length();
 
             if (aString.charAt(prefixLength) != Delimiter.WAVE_SHAPE_AND_PITCH.charValue()) {

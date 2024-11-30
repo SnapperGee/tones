@@ -156,28 +156,12 @@ enum WaveShape {
      * @return An optional containing the extracted prefix enum string value if
      *         present or an empty optional if not.
      */
-    static Optional<String> extractPrefix(String aString, boolean ignoreCase) {
+    static Optional<String> extractPrefixString(String aString) {
         return WAVES.stream()
                 .flatMap(wave -> wave.stringValueAliases().stream())
                 .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
-                        && aString.regionMatches(ignoreCase, 0, waveStringAlias, 0, waveStringAlias.length()))
+                        && aString.regionMatches(true, 0, waveStringAlias, 0, waveStringAlias.length()))
                 .max(comparingInt(String::length));
-    }
-
-    /**
-     * Returns an optional containing the enum value string the passed string
-     * argument is prefixed with if it is prefixed with one, otherwise returns
-     * an empty optional. Performs a case insensitive match when checking the
-     * prefix string value.
-     *
-     * @param aString {@code String} to extract enum string value prefix from
-     *                if present.
-     *
-     * @return An optional containing the extracted prefix enum string value if
-     *         present or an empty optional if not.
-     */
-    static Optional<String> extractPrefix(String aString) {
-        return extractPrefix(aString, true);
     }
 
     /**
