@@ -32,8 +32,8 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
     }
 
     static Optional<Map.Entry<PitchClass, String>> parsePrefix(String aString) {
-        if (aString.isBlank()) {
-            return Optional.empty();
+        if (aString == null) {
+            throw new IllegalArgumentException("Null String");
         }
 
         return PitchLetter.fromChar(aString.charAt(0))
