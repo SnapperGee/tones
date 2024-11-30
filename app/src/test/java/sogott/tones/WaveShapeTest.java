@@ -115,7 +115,7 @@ final class WaveShapeTestArgsProvider {
         }
     }
 
-    static final class PrefixedStrings implements ArgumentsProvider {
+    static final class EnumValueWithPrefixedString implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return WAVE_SHAPES.stream()
@@ -172,7 +172,7 @@ final class WaveShapeTest {
     }
 
     @ParameterizedTest(name = "WaveShape.{0}.prefixes(\"{1}\") returns true")
-    @ArgumentsSource(WaveShapeTestArgsProvider.PrefixedStrings.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValueWithPrefixedString.class)
     void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
         assertTrue(waveShape.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
