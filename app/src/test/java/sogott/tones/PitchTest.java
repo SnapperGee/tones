@@ -712,11 +712,13 @@ final class PitchTest {
 
     @ParameterizedTest(name = "Pitch.parse(\"{3}\") returns new Pitch(Note.{0}, Accidental.{1}, {2})")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalAndOctaveStringValue.class)
-    void staticPitchParseMethodInitializesObject(PitchLetter note,
+    void staticPitchParseMethodInitializesObject(PitchLetter pitchLetter,
             Accidental accidental, int octave, String stringValue) {
         final Optional<Pitch> pitchOptional = Pitch.parse(stringValue);
-        assertTrue(pitchOptional.isPresent());
-        final Pitch pitch = new Pitch(note, accidental, octave);
+        assertTrue(
+            pitchOptional.isPresent(),
+            () -> "Pitch.parse(\"%s\") returned empty Optional".formatted(stringValue));
+        final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
         assertEquals(pitch, pitchOptional.get());
     }
 
