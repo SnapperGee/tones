@@ -247,26 +247,15 @@ final class Pitch {
             throw new IllegalArgumentException("Null string.");
         }
 
-        if (!aString.isBlank()) {
-            // first char must be pitch letter
-            return PitchLetter.fromChar(aString.charAt(0))
-                    // after leading pitch letter, an accidental or octave is required
-                    .filter(pitchLetter -> aString.length() > 1)
-                    // if leading char is pitch letter followed by an accidental
-                    .flatMap(pitchLetter -> Accidental.fromChar(aString.charAt(1))
-                            // octave int must come after leading pitch letter and accidental char
-                            .filter(accidental -> aString.length() >= 3
-                                    && aString.codePoints().skip(2).allMatch(Character::isDigit))
-                            .map(accidental -> new Pitch(new PitchClass(pitchLetter, accidental),
-                                    Integer.parseInt(aString, 2, aString.length(), 10)))
-                            // if string is a leading pitch letter followed by octave int
-                            .or(() -> aString.codePoints().skip(1).allMatch(Character::isDigit)
-                                    ? Optional.of(new Pitch(new PitchClass(pitchLetter),
-                                            Integer.parseInt(aString, 1, aString.length(), 10)))
-                                    : Optional.empty()));
-        }
-
-        return Optional.empty();
+        return PitchClass.parsePrefix(aString)
+            .filter(pitchClassAndStringEntry -> aString.length() >= 2
+                && aString.codePoints().skip(pitchClassAndStringEntry.getValue().length()).allMatch(Character::isDigit))
+            .map(pitchClassAndStringEntry ->
+                new Pitch(
+                    pitchClassAndStringEntry.getKey(),
+                    Integer.parseInt(aString, pitchClassAndStringEntry.getValue().length(), aString.length(), 10)
+                )
+            );
     }
 
     /**
