@@ -2,6 +2,8 @@ package sogott.tones;
 
 import java.util.stream.Stream;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,6 +18,7 @@ import static java.util.Collections.unmodifiableList;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class PitchClassTestArgsProvider {
@@ -59,9 +62,16 @@ final class PitchClassTestArgsProvider {
                                             arguments(
                                                 pitchLetter,
                                                 accidental,
+                                                pitchClassString,
                                                 pitchClassString)
                                             ),
-                                        Util.randomStrings(7, 6, 1).map(aString -> arguments(pitchClassString + aString))
+                                        Util.randomStrings(7, 1, 6)
+                                            .map(aString ->
+                                                arguments(
+                                                    pitchLetter,
+                                                    accidental,
+                                                    pitchClassString,
+                                                    pitchClassString + aString))
                                     );
                                 }
                             )
@@ -93,42 +103,64 @@ final class PitchClassTestArgsProvider {
 final class PitchClassTest {
     @ParameterizedTest(name = "new PitchClass(PitchLetter.{0}, Accidental.{1}) does not throw")
     @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetterAndAccidental.class)
-    void pitchConstructorPassedValidPitchLetterAndAccidentalDoesNotThrow(PitchLetter pitchLetter,
+    void pitchClassConstructorPassedValidPitchLetterAndAccidentalDoesNotThrow(PitchLetter pitchLetter,
             Accidental accidental) {
         assertDoesNotThrow(() -> new PitchClass(pitchLetter, accidental));
     }
 
     @ParameterizedTest(name = "new PitchClass(PitchLetter.{0}) does not throw")
     @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetter.class)
-    void pitchConstructorPassedValidPitchLetterDoesNotThrow(PitchLetter pitchLetter) {
+    void pitchClassConstructorPassedValidPitchLetterDoesNotThrow(PitchLetter pitchLetter) {
         assertDoesNotThrow(() -> new PitchClass(pitchLetter));
     }
 
     @Test
     @DisplayName("new PitchClass(null, Accidental) throws IllegalArgumentException")
-    void pitchConstructorPassedNullPitchLetterAndNonNullAccidentalThrows() {
+    void pitchClassConstructorPassedNullPitchLetterAndNonNullAccidentalThrows() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PitchClass(null, PitchClassTestArgsProvider.randomAccidental()));
     }
 
     @Test
     @DisplayName("new PitchClass(PitchLetter, null) throws IllegalArgumentException")
-    void pitchConstructorPassedPitchLetterAndNullAccidentalThrows() {
+    void pitchClassConstructorPassedPitchLetterAndNullAccidentalThrows() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PitchClass(PitchClassTestArgsProvider.randomPitchLetter(), null));
     }
 
     @Test
     @DisplayName("new PitchClass(null) throws IllegalArgumentException")
-    void pitchConstructorPassedNullAThrows() {
+    void pitchClassConstructorPassedNullAThrows() {
         assertThrows(IllegalArgumentException.class,
                 () -> new PitchClass(null));
     }
 
     @ParameterizedTest(name = "new PitchClass(PitchLetter.{0}) returns {1}")
     @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetterAndObject.class)
-    void pitchConstructorPassedValidPitchLetterReturnsPitchClassWithPitchLetterAndNatural(PitchLetter pitchLetter,
+    void pitchClassConstructorPassedValidPitchLetterReturnsPitchClassWithPitchLetterAndNatural(PitchLetter pitchLetter,
             PitchClass expectedPitchClass) {
         assertEquals(expectedPitchClass, new PitchClass(pitchLetter));
+    }
+
+    @ParameterizedTest(name = "PitchClass.parsePrefix(\"{3}\") returns Optional<Entry[PitchClass[pitchLetter={0}, accidental={1}]=\"{2}\"]>")
+    @ArgumentsSource(PitchClassTestArgsProvider.Valid.PitchLetterAndAccidentalWithPitchClassStringPrefix.class)
+    void pitchClassParsePrefixPassedPrefixedStringReturnsOptionalPitchClassWithStringEntry(
+            PitchLetter pitchLetter,
+            Accidental accidental,
+            String pitchClassString,
+            String prefixedString
+    ) {
+
+        final PitchClass pitchClass = new PitchClass(pitchLetter, accidental);
+        final Map.Entry<PitchClass, String> pitchClassAccidentalEntry = Map.entry(pitchClass, pitchClassString);
+        final Optional<Map.Entry<PitchClass, String>> pitchClassAccidentalEntryOptional = PitchClass.parsePrefix(prefixedString);
+
+        assertTrue(
+            pitchClassAccidentalEntryOptional.isPresent(),
+            () -> "PitchClass.parsePrefix(\"%s\") returned empty optional".formatted(pitchClassString)
+        );
+
+        assertEquals(pitchClassAccidentalEntryOptional.get(), pitchClassAccidentalEntry);
+
     }
 }
