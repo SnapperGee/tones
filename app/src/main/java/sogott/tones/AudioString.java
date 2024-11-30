@@ -322,34 +322,6 @@ final class AudioString {
         return Optional.of(new Audio(waveShape, pitch, duration));
     }
 
-    private static Optional<Audio> parsePitch(String aString) {
-        if (!isParsableTone(aString, true)) {
-            return Optional.empty();
-        }
-
-        final int voiceAndDurationDelimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
-
-        if (voiceAndDurationDelimiterIndex == -1) {
-            return Optional.empty();
-        }
-
-        final int duration = Integer.parseInt(aString, voiceAndDurationDelimiterIndex + 1, aString.length(), 10);
-
-        final int waveShapeAndPitchDelimiterIndex = aString.indexOf(Delimiter.WAVE_SHAPE_AND_PITCH.charValue());
-
-        // isolate prefix of String up to wave shape and pitch delimiter
-        final String waveShapeString = aString.substring(0, waveShapeAndPitchDelimiterIndex);
-        final WaveShape wave = WaveShape.parse(waveShapeString).orElseThrow();
-
-        // isolate section of String between wave shape and pitch delimiter and pitch
-        // and duration delimiter
-        final String pitchString = aString.substring(waveShapeAndPitchDelimiterIndex + 1,
-                voiceAndDurationDelimiterIndex);
-        final Pitch pitch = Pitch.parse(pitchString).orElseThrow();
-
-        return Optional.of(new Audio(wave, pitch, duration));
-    }
-
     private static boolean isParsableWaveShapePrefixedTone(String aString) {
         // must be at least a leading wav shape, angle bracket, note char,
         // octave int, period, and duration int
