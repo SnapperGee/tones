@@ -181,7 +181,7 @@ enum WaveShape {
                             && aString.regionMatches(true, 0, waveStringAlias, 0, waveStringAlias.length()))
                     .map(waveStringAlias -> new MatchedPrefix(wave, waveStringAlias)))
             .max(comparingInt(matchedPrefix -> matchedPrefix.prefixString().length()));
-}
+    }
 
     /**
      * Returns an optional containing the {@link WaveShape} value the passed string
