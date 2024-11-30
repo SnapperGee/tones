@@ -37,7 +37,7 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
         }
 
         return PitchLetter.fromChar(aString.charAt(0))
-            .flatMap(pitchLetter -> aString.length() > 1
+            .flatMap(pitchLetter -> aString.length() > 1 && Accidental.isAccidentalChar(aString.charAt(1))
                 // if string starts with pitch letter and accidental
                 ? Accidental.fromChar(aString.charAt(1)).map(accidental -> Map.entry(new PitchClass(pitchLetter, accidental), aString.substring(0, 2)))
                 // if string starts with only pitch letter
