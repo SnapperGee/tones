@@ -226,7 +226,39 @@ final class AudioString {
             throw new IllegalArgumentException("Null string.");
         }
 
-        return parseSilence(aString).or(() -> parsePitch(aString));
+        return parseSilence(aString).or(() ->
+            WaveShape.parsePrefix(aString)
+                .filter(waveShapeAndString ->
+                    aString.length() > waveShapeAndString.getValue().length() + 1
+                    && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                .flatMap(waveShapeAndString ->
+                    Pitch.parsePrefix(aString.substring(waveShapeAndString.getValue().length() + 1))
+                        .filter(pitchAndString ->
+                            aString.length() > waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 2
+                            && aString.charAt(waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 2) == Delimiter.VOICE_AND_DURATION.charValue())
+                        .flatMap(pitchAndString ->
+                            {
+                                final int pitchDurationDelimiterIndex = waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 1;
+
+                                if (aString.length() <= pitchDurationDelimiterIndex) {
+                                    return Optional.empty();
+                                }
+
+                                if (aString.codePoints().skip(pitchDurationDelimiterIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                                    return Optional.empty();
+                                }
+
+                                final int duration = Integer.parseInt(aString, pitchDurationDelimiterIndex, aString.length(), 10);
+
+                                return Optional.of(new Audio(
+                                    waveShapeAndString.getKey(),
+                                    pitchAndString.getKey(),
+                                    duration
+                                ));
+                            }
+                        )
+                )
+        );
     }
 
     private static boolean isParsableTone(String aString, boolean requireWaveShapePrefix) {
