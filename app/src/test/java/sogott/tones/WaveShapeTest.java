@@ -121,27 +121,14 @@ final class WaveShapeTestArgsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
             return WAVE_SHAPES.stream()
-                .flatMap(waveShape -> Stream.concat(
-                    waveShape.stringValueAliases().stream().map(stringValueAlias ->
-                        arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias)),
-                            waveShape.stringValueAliases().stream()
-                                .flatMap(stringValueAlias ->
-                                    random.ints(7, 1, 10)
-                                        .mapToObj(i ->
-                                            arguments(
-                                                Map.entry(waveShape, stringValueAlias),
-                                                stringValueAlias
-                                                    + random.ints(i, 32, 127)
-                                                            .mapToObj(cp -> (char) cp)
-                                                                .collect(
-                                                                    StringBuilder::new,
-                                                                    StringBuilder::append,
-                                                                    StringBuilder::append)
-                                                                .toString()
-                                            )
-                                        )
-                                )
-                ));
+                .flatMap(waveShape -> waveShape.stringValueAliases().stream()
+                    .flatMap(stringValueAlias ->
+                        Stream.concat(
+                            Stream.of(arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias)),
+                            Util.randomStrings(7, 6, waveShape.stringValue().charAt(waveShape.stringValue().length() - 1)).map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
+                        )
+                    )
+                );
         }
     }
 
