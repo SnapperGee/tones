@@ -8,10 +8,10 @@ import static java.util.Arrays.stream;
 final class Util {
     private final static RandomGenerator random = RandomGenerator.getDefault();
 
-    static Stream<String> randomStrings(long numOfStrings, int minLength, int maxLength) {
+    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength) {
         return Stream.generate(() ->
             random.ints(
-                random.nextInt(minLength, maxLength + 1),
+                random.nextLong(minLength, maxLength + 1),
                 32,
                 126
             )
@@ -25,14 +25,14 @@ final class Util {
         .limit(numOfStrings);
     }
 
-    static Stream<String> randomStrings(long numOfStrings, int minLength, int maxLength, char exclude) {
+    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength, char exclude) {
         return Stream.generate(() ->
             random.ints(
                 32,
                 126
             )
             .filter(cp -> Character.toUpperCase(cp) != Character.toUpperCase(exclude))
-            .limit(random.nextInt(minLength, maxLength + 1))
+            .limit(random.nextLong(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,
                 (sb, cp) -> sb.append((char) cp),
@@ -43,14 +43,14 @@ final class Util {
         .limit(numOfStrings);
     }
 
-    static Stream<String> randomStrings(long numOfStrings, int minLength, int maxLength, int[] exclude) {
+    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength, int[] exclude) {
         return Stream.generate(() ->
             random.ints(
                 32,
                 126
             )
             .filter(cp -> stream(exclude).noneMatch(anotherCp -> Character.toUpperCase(cp) == Character.toUpperCase(anotherCp)))
-            .limit(random.nextInt(minLength, maxLength + 1))
+            .limit(random.nextLong(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,
                 (sb, cp) -> sb.append((char) cp),
