@@ -97,48 +97,22 @@ enum WaveShape {
     }
 
     /**
-     * Returns {@code true} if the passed {@code String} argument is prefixed
-     * with this enum value's {@link #stringValue() stringValue} or any of the
-     * strings in this enum value's
-     * {@link #stringValueAliases() stringValueAliases}. A {@code boolean} value
-     * can optionally be passed to specify whether case is ignored or not. By
-     * default it's case insensitive.
+     * Returns {@code true} if the passed {@code String} argument is case
+     * insensitively prefixed with any of the {@code String}s in this enum
+     * value's {@link #stringValueAliases() stringValueAliases}.
      *
-     * @param aString    {@code String} to check if it's prefixed with any of
-     *                   this enum value's string values.
-     *
-     * @param ignoreCase Optional {@code boolean} to specify whether case is
-     *                   ignored or not. Defaults to {@code true} making case
-     *                   ignored.
-     *
-     * @return {@code true} if the passed {@code String} argument is prefixed
-     *         with this enum value's {@link #stringValue() stringValue} or any
-     *         of the strings in this enum value's
-     *         {@link #stringValueAliases() stringValueAliases}.
-     */
-    boolean prefixes(String aString, boolean ignoreCase) {
-        return aString != null && !aString.isEmpty() && this._stringValueAliases.stream()
-                .anyMatch(stringValueAlias -> aString.length() >= stringValueAlias.length()
-                        && aString.regionMatches(ignoreCase, 0, stringValueAlias, 0, stringValueAlias.length()));
-    }
-
-    /**
-     * Returns {@code true} if the passed {@code String} argument is prefixed
-     * with this enum value's {@link #stringValue() stringValue} or any of the
-     * strings in this enum value's
-     * {@link #stringValueAliases() stringValueAliases}. Case is ignored when
-     * checking for the prefix.
-     *
-     * @param aString {@code String} to case insensitively check if it's
-     *                prefixed with any of this enum value's string values.
+     * @param aString    {@code String} to check if it's prefixed case
+     *                   insensitively with any of this enum value's
+     *                   {@link #stringValueAliases() stringValueAliases}.
      *
      * @return {@code true} if the passed {@code String} argument is case
-     *         insensitively prefixed with this enum value's
-     *         {@link #stringValue() stringValue} or any of the strings in this
-     *         enum value's {@link #stringValueAliases() stringValueAliases}.
+     *         insensitively prefixed with any of this enum value's
+     *         {@link #stringValueAliases() stringValueAliases}.
      */
     boolean prefixes(String aString) {
-        return prefixes(aString, true);
+        return aString != null && !aString.isEmpty() && this._stringValueAliases.stream()
+                .anyMatch(stringValueAlias -> aString.length() >= stringValueAlias.length()
+                        && aString.regionMatches(true, 0, stringValueAlias, 0, stringValueAlias.length()));
     }
 
     /**
