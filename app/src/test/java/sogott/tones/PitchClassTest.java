@@ -213,4 +213,10 @@ final class PitchClassTest {
     void pitchClassParsePrefixPassedNonPrefixedStringReturnsEmptyOptional(String nonPrefixedString) {
         assertTrue(PitchClass.parsePrefix(nonPrefixedString).isEmpty());
     }
+
+    @Test
+    @DisplayName("PitchClass.parsePrefix(null) throws IllegalArgumentException")
+    void pitchClassParsePrefixPassedNullThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> PitchClass.parsePrefix(null));
+    }
 }
