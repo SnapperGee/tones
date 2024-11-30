@@ -138,22 +138,12 @@ final class WaveShapeTestArgsProvider {
             return WAVE_SHAPES.stream()
                 .flatMap(waveShape -> waveShape.stringValueAliases().stream()
                     .flatMap(stringValueAlias ->
-                        random.ints(7, 1, 10)
-                            .mapToObj(i ->
-                                Stream.concat(
-                                    IntStream.range(1, stringValueAlias.length()).mapToObj(num -> arguments(stringValueAlias.substring(num))),
-                                    Stream.of(arguments(random.ints(i, 32, 127)
-                                                .mapToObj(cp -> (char) cp)
-                                                    .collect(
-                                                        StringBuilder::new,
-                                                        StringBuilder::append,
-                                                        StringBuilder::append)
-                                                    .toString() + stringValueAlias
-                                    ))
-                                )
-                            )
-                            .flatMap(s -> s)
-                ));
+                        Stream.concat(
+                            IntStream.range(1, stringValueAlias.length()).mapToObj(num -> arguments(stringValueAlias.substring(num))),
+                            Util.randomStrings(7, 1, 7).map(aString -> arguments(aString + stringValueAlias))
+                        )
+                    )
+                );
         }
     }
 }

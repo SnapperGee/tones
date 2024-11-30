@@ -3,8 +3,6 @@ package sogott.tones;
 import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.stream;
-
 final class Util {
     private final static RandomGenerator random = RandomGenerator.getDefault();
 
