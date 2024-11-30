@@ -119,6 +119,10 @@ enum WaveShape {
     }
 
     static Optional<Map.Entry<WaveShape, String>> parsePrefix(String aString) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null String argument.");
+        }
+
         return WAVE_SHAPES.stream()
             .flatMap(wave -> wave.stringValueAliases().stream()
                     .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
@@ -143,7 +147,7 @@ enum WaveShape {
      */
     static Optional<WaveShape> parse(String aString) {
         if (aString == null) {
-            throw new IllegalArgumentException("Null string argument.");
+            throw new IllegalArgumentException("Null String argument.");
         }
 
         if (aString.isBlank()) {

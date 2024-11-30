@@ -7,11 +7,15 @@ import java.util.Map;
 import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.EmptySource;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
@@ -19,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 final class WaveShapeTestArgsProvider {
@@ -125,7 +130,7 @@ final class WaveShapeTestArgsProvider {
                     .flatMap(stringValueAlias ->
                         Stream.concat(
                             Stream.of(arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias)),
-                            Util.randomStrings(8, 1, 6, waveShape.stringValue().charAt(waveShape.stringValue().length() - 1)).map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
+                            Util.randomStrings(8, 1, 6, stringValueAlias.charAt(stringValueAlias.length() - 1)).map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
                         )
                     )
                 );
@@ -177,6 +182,12 @@ final class WaveShapeTest {
         assertThat(optionalWave.orElse(null), is(expectedWave));
     }
 
+    @Test
+    @DisplayName("WaveShape.parsePrefix(null) throws IllegalArgumentException")
+    void parsePrefixPassedNonPrefixedStringReturnsEmptyOptional() {
+        assertThrows(IllegalArgumentException.class, () ->WaveShape.parsePrefix(null).isEmpty());
+    }
+
     @ParameterizedTest(name = "WaveShape.parsePrefix(\"{1}\") returns Optional<{0}>")
     @ArgumentsSource(WaveShapeTestArgsProvider.WaveShapeAliasStringEntryAndPrefixedString.class)
     void parsePrefixPassedPrefixedStringReturnsOptionalOfWaveShapeStringAliasEntry(Map.Entry<WaveShape, String> waveShapeStringAliasEntry, String prefixedString) {
@@ -192,6 +203,7 @@ final class WaveShapeTest {
 
     @ParameterizedTest(name = "WaveShape.parsePrefix(\"{0}\") returns empty Optional")
     @ArgumentsSource(WaveShapeTestArgsProvider.NonPrefixedString.class)
+    @EmptySource
     void parsePrefixPassedNonPrefixedStringReturnsEmptyOptional(String nonPrefixedString) {
         assertTrue(WaveShape.parsePrefix(nonPrefixedString).isEmpty());
     }
