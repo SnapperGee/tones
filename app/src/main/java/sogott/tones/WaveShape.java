@@ -173,15 +173,12 @@ enum WaveShape {
     }
 
     /**
-     * Returns an optional containing the {@link WaveShape} value the passed string
-     * argument can be parsed to. If it can't be parsed to a {@link WaveShape}, then
-     * an empty optional is returned.
+     * Returns an {@link Optional} containing the {@link WaveShape} value the
+     * passed {@code String} can be case insensitively parsed to. If it can't be
+     * parsed to a {@link WaveShape}, then an empty {@link Optional} is returned.
      *
      * @param aString    {@code String} to case insensitively parse to a
      *                   {@link WaveShape}.
-     *
-     * @param ignoreCase {@code boolean} specifying whether case is ignored or
-     *                   not when parsing the passed {@code String} argument.
      *
      * @return An optional containing the {@link WaveShape} value the passed string
      *         argument can be parsed to if it can be, otherwise an empty optional.
@@ -189,7 +186,7 @@ enum WaveShape {
      * @throws IllegalArgumentException If passed {@code String} argument is
      *                                  {@code null}.
      */
-    static Optional<WaveShape> parse(String aString, boolean ignoreCase) {
+    static Optional<WaveShape> parse(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string argument.");
         }
@@ -198,29 +195,8 @@ enum WaveShape {
             return Optional.empty();
         }
 
-        if (ignoreCase) {
-            return WAVES.stream().filter(wave -> wave._stringValueAliases.stream()
-                    .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst();
-        }
-
         return WAVES.stream().filter(wave -> wave._stringValueAliases.stream()
-                .anyMatch(waveStringValue -> aString.equals(waveStringValue))).findFirst();
-    }
-
-    /**
-     * Returns an optional containing the {@link WaveShape} value the passed string
-     * argument can be case insensitively parsed to. If it can't be parsed to a
-     * {@link WaveShape}, then an empty optional is returned.
-     *
-     * @param aString {@code String} to case insensitively parse to a
-     *                {@link WaveShape}.
-     *
-     * @return An optional containing the {@link WaveShape} value the passed string
-     *         argument can be case insensitively parsed to if it can be,
-     *         otherwise an empty optional.
-     */
-    static Optional<WaveShape> parse(String aString) {
-        return parse(aString, true);
+                .anyMatch(waveStringValue -> aString.equalsIgnoreCase(waveStringValue))).findFirst();
     }
 
     /**
