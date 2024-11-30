@@ -1,7 +1,10 @@
 package sogott.tones;
 
-import static java.util.Objects.hash;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.IntStream;
+
+import static java.util.Objects.hash;
 
 /**
  * This class defines an object that can be used to represent the frequency of
@@ -255,6 +258,41 @@ final class Pitch {
                     pitchClassAndStringEntry.getKey(),
                     Integer.parseInt(aString, pitchClassAndStringEntry.getValue().length(), aString.length(), 10)
                 )
+            );
+    }
+
+    static Optional<Map.Entry<Pitch, String>> parsePrefix(String aString) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null String");
+        }
+
+        return PitchClass.parsePrefix(aString)
+            .filter(pitchClassAndStringEntry -> aString.length() > pitchClassAndStringEntry.getValue().length())
+            .flatMap(pitchClassAndStringEntry ->
+                {
+                    final int pitchClassStringLength = pitchClassAndStringEntry.getValue().length();
+
+                    final int firstNonDigitCharIndex = pitchClassAndStringEntry.getValue().length()
+                        + (int) aString.codePoints()
+                            .skip(pitchClassAndStringEntry.getValue().length())
+                            .takeWhile(Character::isDigit)
+                            .count();
+
+                    if (firstNonDigitCharIndex == pitchClassStringLength)
+                    {
+                        return Optional.empty();
+                    }
+
+                    final int octave = Integer.parseInt(aString, pitchClassStringLength, firstNonDigitCharIndex, 10);
+
+                    return Optional.of(Map.entry(
+                        new Pitch(
+                            pitchClassAndStringEntry.getKey(),
+                            octave
+                        ),
+                        aString.substring(0, firstNonDigitCharIndex)
+                    ));
+                }
             );
     }
 
