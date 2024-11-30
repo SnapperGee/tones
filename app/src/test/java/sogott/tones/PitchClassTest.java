@@ -67,15 +67,12 @@ final class PitchClassTestArgsProvider {
                                                 pitchLetter,
                                                 Accidental.NATURAL,
                                                 pitchLetterString,
-                                                pitchLetter + aString))
+                                                pitchLetterString + aString))
                                 ),
                                 accidentals.stream()
                                     .flatMap(accidental ->
                                         {
-                                            final String pitchClassString = new StringBuilder(2)
-                                                .append(pitchLetter.charValue())
-                                                .append(accidental.charValue())
-                                                .toString();
+                                            final String pitchClassString = pitchLetterString + accidental.charValue();
 
                                             return Stream.concat(
                                                 Stream.of(
