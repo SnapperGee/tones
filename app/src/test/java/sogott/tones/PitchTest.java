@@ -553,7 +553,7 @@ final class PitchTest {
     // properties/getters //
     ////////////////////////
 
-    @ParameterizedTest(name = "new Pitch({0}, {1}).letter() is PitchLetter.letter()")
+    @ParameterizedTest(name = "new Pitch({0}, {1}).letter() is PitchLetter of {0}")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLClassAndOctave.class)
     void pitchConstructedWithPitchClassAndOctaveLetterPropertyReturnsLetter(PitchClass pitchClass,
             int octave) {
@@ -561,7 +561,7 @@ final class PitchTest {
         assertSame(pitchClass.letter(), pitch.letter());
     }
 
-    @ParameterizedTest(name = "new Pitch({0}, {1}).accidental() is PitchLetter.accidental()")
+    @ParameterizedTest(name = "new Pitch({0}, {1}).accidental() is Accidental of {0}")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLClassAndOctave.class)
     void pitchConstructedWithPitchClassAndOctaveAccidentalPropertyReturnsAccidental(PitchClass pitchClass,
             int octave) {
@@ -569,7 +569,7 @@ final class PitchTest {
         assertSame(pitchClass.accidental(), pitch.accidental());
     }
 
-    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).letter() is PitchLetter.{0}")
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).letter() returns PitchLetter.{0}")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalAndOctave.class)
     void pitchConstructedWithPitchLetterAccidentalAndOctavePropertyReturnsNote(PitchLetter pitchLetter, Accidental accidental,
             int octave) {
@@ -577,7 +577,7 @@ final class PitchTest {
         assertSame(pitchLetter, pitch.letter());
     }
 
-    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).accidental() is Accidental.{1}")
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).accidental() returns Accidental.{1}")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalAndOctave.class)
     void pitchConstructedWithPitchLetterAccidentalAndOctavePropertyReturnsAccidental(PitchLetter pitchLetter,
             Accidental accidental,
