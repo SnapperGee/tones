@@ -250,7 +250,7 @@ final class Pitch {
         }
 
         return PitchClass.parsePrefix(aString)
-            .filter(pitchClassAndStringEntry -> aString.length() >= 2
+            .filter(pitchClassAndStringEntry -> aString.length() > pitchClassAndStringEntry.getValue().length()
                 && aString.codePoints().skip(pitchClassAndStringEntry.getValue().length()).allMatch(Character::isDigit))
             .map(pitchClassAndStringEntry ->
                 new Pitch(
