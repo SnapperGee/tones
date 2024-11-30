@@ -3,6 +3,7 @@ package sogott.tones;
 import java.util.Optional;
 import java.util.Set;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import static java.util.Arrays.asList;
@@ -162,25 +163,13 @@ enum WaveShape {
                 .max(comparingInt(String::length));
     }
 
-    final static record ParsedPrefix(WaveShape waveShape, String prefixString) {
-        ParsedPrefix {
-            if (waveShape == null) {
-                throw new IllegalArgumentException("Null wave shape");
-            }
-
-            if (prefixString == null) {
-                throw new IllegalArgumentException("Null prefix String");
-            }
-        }
-    }
-
-    static Optional<ParsedPrefix> parsePrefix(String aString) {
+    static Optional<Map.Entry<WaveShape, String>> parsePrefix(String aString) {
         return WAVES.stream()
             .flatMap(wave -> wave.stringValueAliases().stream()
                     .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                             && aString.regionMatches(true, 0, waveStringAlias, 0, waveStringAlias.length()))
-                    .map(waveStringAlias -> new ParsedPrefix(wave, waveStringAlias)))
-            .max(comparingInt(matchedPrefix -> matchedPrefix.prefixString().length()));
+                    .map(alias -> Map.entry(wave, alias)))
+            .max(comparingInt(entry -> entry.getValue().length()));
     }
 
     /**
