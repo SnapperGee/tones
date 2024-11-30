@@ -174,13 +174,15 @@ final class PitchTestArgsProvider {
                     return accidentals.stream()
                             .map(accidental -> {
                                 final String stringValueWithAccidental = accidental != Accidental.NATURAL
-                                        ? "%c%c%d".formatted(
-                                                pitchLetter.charValue(),
-                                                accidental.charValue(),
-                                                octave)
-                                        : "%c%d".formatted(
-                                                pitchLetter.charValue(),
-                                                octave);
+                                        ? new StringBuilder(3)
+                                            .append(pitchLetter.charValue())
+                                            .append(accidental.charValue())
+                                            .append(octave)
+                                            .toString()
+                                        : new StringBuilder(2)
+                                            .append(pitchLetter.charValue())
+                                            .append(octave)
+                                            .toString();
                                 return arguments(stringValueWithAccidental);
                             });
                 });
