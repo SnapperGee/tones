@@ -1,10 +1,9 @@
 package sogott.tones;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.random.RandomGenerator;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,6 +11,8 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,6 +22,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 final class WaveShapeTestArgsProvider {
 
     static final RandomGenerator random = RandomGenerator.getDefault();
+
+    private static final List<WaveShape> WAVE_SHAPES = unmodifiableList(asList(WaveShape.values()));
 
     static final class EnumValuesWithUpperCaseStringValue implements ArgumentsProvider {
         @Override
@@ -112,18 +115,29 @@ final class WaveShapeTestArgsProvider {
         }
     }
 
-    static final class PrefixedStrings implements ArgumentsProvider {
+    static final class EnumValueWithPrefixedString implements ArgumentsProvider {
         @Override
         public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return Arrays.stream(WaveShape.values()).flatMap(wave -> Stream.concat(
-                    wave.stringValueAliases().stream().map(stringValueAlias -> arguments(wave, stringValueAlias)),
-                    wave.stringValueAliases().stream()
-                            .flatMap(stringValueAlias -> IntStream.range(1, 7)
-                                    .mapToObj(i -> arguments(wave, stringValueAlias
-                                            + IntStream.rangeClosed(32, 126).limit(random.nextLong(1, 10))
-                                                    .mapToObj(cp -> (char) cp).collect(StringBuilder::new,
-                                                            StringBuilder::append, StringBuilder::append)
-                                                    .toString())))));
+            return WAVE_SHAPES.stream()
+                .flatMap(waveShape -> Stream.concat(
+                    waveShape.stringValueAliases().stream().map(stringValueAlias ->
+                        arguments(waveShape, stringValueAlias)),
+                            waveShape.stringValueAliases().stream()
+                                .flatMap(stringValueAlias ->
+                                    random.ints(7, 1, 10)
+                                        .mapToObj(i ->
+                                            arguments(waveShape, stringValueAlias
+                                                + random.ints(i, 32, 127)
+                                                        .mapToObj(cp -> (char) cp)
+                                                            .collect(
+                                                                StringBuilder::new,
+                                                                StringBuilder::append,
+                                                                StringBuilder::append)
+                                                            .toString()
+                                            )
+                                        )
+                                )
+                ));
         }
     }
 }
@@ -158,7 +172,7 @@ final class WaveShapeTest {
     }
 
     @ParameterizedTest(name = "WaveShape.{0}.prefixes(\"{1}\") returns true")
-    @ArgumentsSource(WaveShapeTestArgsProvider.PrefixedStrings.class)
+    @ArgumentsSource(WaveShapeTestArgsProvider.EnumValueWithPrefixedString.class)
     void prefixesReturnsTrueForPrefixedStrings(WaveShape waveShape, String prefixedString) {
         assertTrue(waveShape.prefixes(prefixedString),
                 () -> "Wave.%s.prefixes(\"%s\") returns false".formatted(waveShape.name(), prefixedString));
