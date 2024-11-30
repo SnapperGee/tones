@@ -1,5 +1,6 @@
 package sogott.tones;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.List;
 import java.util.Map;
@@ -49,32 +50,53 @@ final class PitchClassTestArgsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream()
-                        .flatMap(pitchLetter -> accidentals.stream()
-                            .flatMap(accidental ->
-                                {
-                                    final String pitchClassString = new StringBuilder(2)
-                                        .append(pitchLetter.charValue())
-                                        .append(accidental.charValue())
-                                        .toString();
+                        .flatMap(pitchLetter -> {
+                            final String pitchLetterString = Character.toString(pitchLetter.charValue());
 
-                                    return Stream.concat(
-                                        Stream.of(
+                            return Stream.concat(
+                                Stream.concat(
+                                    Stream.of(arguments(
+                                        pitchLetter,
+                                        Accidental.NATURAL,
+                                        pitchLetterString,
+                                        pitchLetterString
+                                    )),
+                                    Util.randomStrings(7, 1, 6, accidentals.stream().mapToInt(accidental -> accidental.charValue()).toArray())
+                                        .map(aString ->
                                             arguments(
                                                 pitchLetter,
-                                                accidental,
-                                                pitchClassString,
-                                                pitchClassString)
-                                            ),
-                                        Util.randomStrings(7, 1, 6)
-                                            .map(aString ->
-                                                arguments(
-                                                    pitchLetter,
-                                                    accidental,
-                                                    pitchClassString,
-                                                    pitchClassString + aString))
-                                    );
-                                }
-                            )
+                                                Accidental.NATURAL,
+                                                pitchLetterString,
+                                                pitchLetter + aString))
+                                ),
+                                accidentals.stream()
+                                    .flatMap(accidental ->
+                                        {
+                                            final String pitchClassString = new StringBuilder(2)
+                                                .append(pitchLetter.charValue())
+                                                .append(accidental.charValue())
+                                                .toString();
+
+                                            return Stream.concat(
+                                                Stream.of(
+                                                    arguments(
+                                                        pitchLetter,
+                                                        accidental,
+                                                        pitchClassString,
+                                                        pitchClassString)
+                                                    ),
+                                                Util.randomStrings(7, 1, 6)
+                                                    .map(aString ->
+                                                        arguments(
+                                                            pitchLetter,
+                                                            accidental,
+                                                            pitchClassString,
+                                                            pitchClassString + aString))
+                                            );
+                                        }
+                                    )
+                                );
+                            }
                         );
             }
         }
@@ -95,6 +117,31 @@ final class PitchClassTestArgsProvider {
                         .flatMap(pitchLetter -> accidentals.stream()
                                 .map(accidental -> arguments(pitchLetter,
                                         new PitchClass(pitchLetter, Accidental.NATURAL))));
+            }
+        }
+    }
+
+    static final class Invalid {
+        static final class NonPrefixedString implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream()
+                        .flatMap(pitchLetter -> accidentals.stream()
+                            .flatMap(accidental ->
+                                {
+                                    final String pitchClassString = new StringBuilder(2)
+                                        .append(pitchLetter.charValue())
+                                        .append(accidental.charValue())
+                                        .toString();
+
+                                    return Stream.concat(
+                                        IntStream.range(1, pitchClassString.length()).mapToObj(num -> arguments(pitchClassString.substring(num))),
+                                        Util.randomStrings(7, 1, 6, pitchLetters.stream().mapToInt(pl -> pl.charValue()).toArray())
+                                            .map(aString -> arguments(aString + pitchClassString))
+                                    );
+                                }
+                            )
+                        );
             }
         }
     }
@@ -162,5 +209,11 @@ final class PitchClassTest {
 
         assertEquals(pitchClassAccidentalEntryOptional.get(), pitchClassAccidentalEntry);
 
+    }
+
+    @ParameterizedTest(name = "PitchClass.parsePrefix(\"{0}\") returns empty Optional")
+    @ArgumentsSource(PitchClassTestArgsProvider.Invalid.NonPrefixedString.class)
+    void pitchClassParsePrefixPassedNonPrefixedStringReturnsEmptyOptional(String nonPrefixedString) {
+        assertTrue(PitchClass.parsePrefix(nonPrefixedString).isEmpty());
     }
 }
