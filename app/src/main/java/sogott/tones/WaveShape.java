@@ -162,8 +162,8 @@ enum WaveShape {
                 .max(comparingInt(String::length));
     }
 
-    final static record MatchedPrefix(WaveShape waveShape, String prefixString) {
-        MatchedPrefix {
+    final static record ParsedPrefix(WaveShape waveShape, String prefixString) {
+        ParsedPrefix {
             if (waveShape == null) {
                 throw new IllegalArgumentException("Null wave shape");
             }
@@ -174,12 +174,12 @@ enum WaveShape {
         }
     }
 
-    static Optional<MatchedPrefix> extractPrefix(String aString) {
+    static Optional<ParsedPrefix> parsePrefix(String aString) {
         return WAVES.stream()
             .flatMap(wave -> wave.stringValueAliases().stream()
                     .filter(waveStringAlias -> aString.length() >= waveStringAlias.length()
                             && aString.regionMatches(true, 0, waveStringAlias, 0, waveStringAlias.length()))
-                    .map(waveStringAlias -> new MatchedPrefix(wave, waveStringAlias)))
+                    .map(waveStringAlias -> new ParsedPrefix(wave, waveStringAlias)))
             .max(comparingInt(matchedPrefix -> matchedPrefix.prefixString().length()));
     }
 
