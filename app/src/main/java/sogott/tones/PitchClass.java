@@ -36,6 +36,10 @@ final record PitchClass(PitchLetter letter, Accidental accidental) {
             throw new IllegalArgumentException("Null String");
         }
 
+        if (aString.isBlank()) {
+            return Optional.empty();
+        }
+
         return PitchLetter.fromChar(aString.charAt(0))
             .flatMap(pitchLetter -> aString.length() > 1 && Accidental.isAccidentalChar(aString.charAt(1))
                 // if string starts with pitch letter and accidental
