@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -169,6 +170,31 @@ final class WaveShapeTestArgsProvider {
                 ));
         }
     }
+
+    static final class NonPrefixedString implements ArgumentsProvider {
+        @Override
+        public Stream<Arguments> provideArguments(ExtensionContext context) {
+            return WAVE_SHAPES.stream()
+                .flatMap(waveShape -> waveShape.stringValueAliases().stream()
+                    .flatMap(stringValueAlias ->
+                        random.ints(7, 1, 10)
+                            .mapToObj(i ->
+                                Stream.concat(
+                                    IntStream.range(1, stringValueAlias.length()).mapToObj(num -> arguments(stringValueAlias.substring(num))),
+                                    Stream.of(arguments(random.ints(i, 32, 127)
+                                                .mapToObj(cp -> (char) cp)
+                                                    .collect(
+                                                        StringBuilder::new,
+                                                        StringBuilder::append,
+                                                        StringBuilder::append)
+                                                    .toString() + stringValueAlias
+                                    ))
+                                )
+                            )
+                            .flatMap(s -> s)
+                ));
+        }
+    }
 }
 
 final class WaveShapeTest {
@@ -209,7 +235,7 @@ final class WaveShapeTest {
 
     @ParameterizedTest(name = "WaveShape.parsePrefix(\"{1}\") returns Optional<{0}>")
     @ArgumentsSource(WaveShapeTestArgsProvider.WaveShapeAliasStringEntryAndPrefixedString.class)
-    void prefixesReturnsTrueForPrefixedStrings(Map.Entry<WaveShape, String> waveShapeStringAliasEntry, String prefixedString) {
+    void parsePrefixPassedPrefixedStringReturnsOptionalOfWaveShapeStringAliasEntry(Map.Entry<WaveShape, String> waveShapeStringAliasEntry, String prefixedString) {
         final Optional<Map.Entry<WaveShape, String>> waveShapeStringAliasEntryOptional = WaveShape.parsePrefix(prefixedString);
 
         assertTrue(
@@ -218,5 +244,11 @@ final class WaveShapeTest {
         );
 
         assertEquals(waveShapeStringAliasEntry, waveShapeStringAliasEntryOptional.get());
+    }
+
+    @ParameterizedTest(name = "WaveShape.parsePrefix(\"{0}\") returns empty Optional")
+    @ArgumentsSource(WaveShapeTestArgsProvider.NonPrefixedString.class)
+    void parsePrefixPassedNonPrefixedStringReturnsEmptyOptional(String nonPrefixedString) {
+        assertTrue(WaveShape.parsePrefix(nonPrefixedString).isEmpty());
     }
 }
