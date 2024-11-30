@@ -130,7 +130,12 @@ final class WaveShapeTestArgsProvider {
                     .flatMap(stringValueAlias ->
                         Stream.concat(
                             Stream.of(arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias)),
-                            Util.randomStrings(8, 1, 6, stringValueAlias.charAt(stringValueAlias.length() - 1)).map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
+                            Util.randomStrings(
+                                8,
+                                1,
+                                6,
+                                stringValueAlias.charAt(stringValueAlias.length() - 1))
+                        .map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
                         )
                     )
                 );
