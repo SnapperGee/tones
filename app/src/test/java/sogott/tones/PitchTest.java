@@ -544,6 +544,62 @@ final class PitchTestArgsProvider {
                         }));
             }
         }
+
+        static final class PrefixedPitchStringValues implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream().flatMap(pitchLetter -> {
+                    final int octave = random.nextInt(13);
+                    return accidentals.stream()
+                            .flatMap(accidental -> {
+
+                                final String pitchStringValueWithAccidental =
+                                    new StringBuilder(3)
+                                        .append(pitchLetter.charValue())
+                                        .append(accidental.charValue())
+                                        .append(octave)
+                                        .toString();
+
+                                return Util.randomStrings(
+                                    7,
+                                    1,
+                                    7,
+                                    IntStream.concat(
+                                        IntStream.rangeClosed('A', 'G'),
+                                        IntStream.rangeClosed('a', 'g')
+                                    ).toArray())
+                                    .flatMap(aString ->
+                                        {
+                                            if (accidental == Accidental.NATURAL)
+                                            {
+                                                final String pitchStringValueNoAccidental =
+                                                    new StringBuilder(2)
+                                                        .append(pitchLetter.charValue())
+                                                        .append(octave)
+                                                        .toString();
+
+                                                return Stream.concat(
+                                                    Stream.concat(
+                                                        IntStream.range(1, pitchStringValueWithAccidental.length()).mapToObj(i -> arguments(pitchStringValueWithAccidental.substring(i))),
+                                                        IntStream.range(1, pitchStringValueNoAccidental.length()).mapToObj(i -> arguments(pitchStringValueNoAccidental.substring(i)))
+                                                    ),
+                                                    Stream.of(
+                                                        arguments(aString + pitchStringValueWithAccidental),
+                                                        arguments(aString + pitchStringValueNoAccidental)
+                                                    )
+                                                );
+                                            }
+
+                                            return Stream.concat(
+                                                IntStream.range(1, pitchStringValueWithAccidental.length()).mapToObj(i -> arguments(pitchStringValueWithAccidental.substring(i))),
+                                                Stream.of(arguments(aString + pitchStringValueWithAccidental))
+                                            );
+                                        }
+                                    );
+                            });
+                });
+            }
+        }
     }
 }
 
@@ -843,12 +899,20 @@ final class PitchTest {
     // paresPrefix //
     /////////////////
 
+    @Test
+    @DisplayName("Pitch.parsePrefix(null) throws IllegalArgumentException")
+    void pitchParsePrefixPassedNullThrowsIllegalArgumentException()
+    {
+        assertThrows(IllegalArgumentException.class, () -> Pitch.parsePrefix(null));
+    }
+
     @ParameterizedTest(name = "Pitch.parsePrefix(\"{3}\") returns Optional<Entry[Pitch '{'pitchClass={0}, octave={1}'}'=\"{2}\"]>")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PrefixedPitchStringValues.class)
-    void pitchParsePrefix( PitchClass pitchClass,
-                           int octave,
-                           String pitchStringPrefix,
-                           String prefixedPitchString )
+    void pitchParsePrefixPassedValidPrefixedStringReturnsOptionalOfPitchStringValueEntry(
+        PitchClass pitchClass,
+        int octave,
+        String pitchStringPrefix,
+        String prefixedPitchString )
     {
         final Pitch pitch = new Pitch(pitchClass, octave);
         final Map.Entry<Pitch, String> pitchPrefixStringEntry = Map.entry(pitch, pitchStringPrefix);
@@ -860,5 +924,16 @@ final class PitchTest {
         );
 
         assertEquals(pitchPrefixStringEntry, pitchPrefixStringEntryOptional.get());
+    }
+
+    @ParameterizedTest(name = "Pitch.parsePrefix(\"{0}\") returns empty Optional")
+    @ArgumentsSource(PitchTestArgsProvider.Invalid.PrefixedPitchStringValues.class)
+    @EmptySource
+    void pitchParsePrefixPassedInvalidStringReturnsEmptyOptional(String invalidPrefixedPitchString )
+    {
+        assertTrue(
+            Pitch.parsePrefix(invalidPrefixedPitchString).isEmpty(),
+            () -> "Pitch.parsePrefix(\"%s\") returned present Optional".formatted(invalidPrefixedPitchString)
+        );
     }
 }
