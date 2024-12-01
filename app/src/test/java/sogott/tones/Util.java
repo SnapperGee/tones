@@ -25,13 +25,13 @@ final class Util {
         .limit(numOfStrings);
     }
 
-    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength, char exclude) {
+    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength, char excludeChar) {
         return Stream.generate(() ->
             random.ints(
                 32,
                 126
             )
-            .filter(cp -> Character.toUpperCase(cp) != Character.toUpperCase(exclude))
+            .filter(cp -> Character.toUpperCase(cp) != Character.toUpperCase(excludeChar))
             .limit(random.nextLong(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,
@@ -43,13 +43,13 @@ final class Util {
         .limit(numOfStrings);
     }
 
-    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength, int[] exclude) {
+    static Stream<String> randomStrings(long numOfStrings, long minLength, long maxLength, int[] excludeCodePoints) {
         return Stream.generate(() ->
             random.ints(
                 32,
                 126
             )
-            .filter(cp -> stream(exclude).noneMatch(anotherCp -> Character.toUpperCase(cp) == Character.toUpperCase(anotherCp)))
+            .filter(cp -> stream(excludeCodePoints).noneMatch(anotherCp -> Character.toUpperCase(cp) == Character.toUpperCase(anotherCp)))
             .limit(random.nextLong(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,
@@ -59,13 +59,5 @@ final class Util {
         )
         .distinct()
         .limit(numOfStrings);
-    }
-
-    static Stream<String> randomStrings(long numOfStrings, int maxLength) {
-        return randomStrings(numOfStrings, 0, maxLength);
-    }
-
-    static Stream<String> randomStrings(long numOfStrings, int maxLength, char exclude) {
-        return randomStrings(numOfStrings, 0, maxLength, exclude);
     }
 }
