@@ -1,7 +1,9 @@
 package sogott.tones;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -173,6 +175,7 @@ final class PitchTestArgsProvider {
                     final int octave = random.nextInt(13);
                     return accidentals.stream()
                             .flatMap(accidental -> {
+
                                 final String stringValueWithAccidental =
                                         new StringBuilder(3)
                                             .append(pitchLetter.charValue())
@@ -190,6 +193,51 @@ final class PitchTestArgsProvider {
                                                 .append(octave)
                                                 .toString())
                                         );
+                            });
+                });
+            }
+        }
+
+        static final class PrefixedPitchStringValues implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return pitchLetters.stream().flatMap(pitchLetter -> {
+                    final int octave = random.nextInt(13);
+                    return accidentals.stream()
+                            .flatMap(accidental -> {
+
+                                final String pitchStringValueWithAccidental =
+                                    new StringBuilder(3)
+                                        .append(pitchLetter.charValue())
+                                        .append(accidental.charValue())
+                                        .append(octave)
+                                        .toString();
+
+                                return Util.randomStrings(7, 1, 7, IntStream.rangeClosed('0', '9').toArray())
+                                    .flatMap(aString ->
+                                        {
+                                            if (accidental == Accidental.NATURAL)
+                                            {
+                                                final String pitchStringValueNoAccidental =
+                                                    new StringBuilder(2)
+                                                        .append(pitchLetter.charValue())
+                                                        .append(octave)
+                                                        .toString();
+
+                                                return Stream.of(
+                                                    arguments(new PitchClass(pitchLetter, accidental), octave, pitchStringValueWithAccidental, pitchStringValueWithAccidental),
+                                                    arguments(new PitchClass(pitchLetter, accidental), octave, pitchStringValueWithAccidental, pitchStringValueWithAccidental + aString),
+                                                    arguments(new PitchClass(pitchLetter, accidental), octave, pitchStringValueNoAccidental, pitchStringValueNoAccidental),
+                                                    arguments(new PitchClass(pitchLetter, accidental), octave, pitchStringValueNoAccidental, pitchStringValueNoAccidental + aString)
+                                                );
+                                            }
+
+                                            return Stream.of(
+                                                arguments(new PitchClass(pitchLetter, accidental), octave, pitchStringValueWithAccidental, pitchStringValueWithAccidental),
+                                                arguments(new PitchClass(pitchLetter, accidental), octave, pitchStringValueWithAccidental, pitchStringValueWithAccidental + aString)
+                                            );
+                                        }
+                                    );
                             });
                 });
             }
@@ -782,7 +830,11 @@ final class PitchTest {
 
     @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, {2}).toString() returns \"{3}\"")
     @ArgumentsSource(PitchTestArgsProvider.PitchLetterAccidentalOctaveAndToString.class)
-    void pitchToStringReturnsPrettyString(PitchLetter pitchLetter, Accidental accidental, int octave, String toString) {
+    void pitchToStringReturnsPrettyString( PitchLetter pitchLetter,
+                                           Accidental accidental,
+                                           int octave,
+                                           String toString )
+    {
         final Pitch pitch = new Pitch(pitchLetter, accidental, octave);
         assertEquals(toString, pitch.toString());
     }
@@ -790,4 +842,23 @@ final class PitchTest {
     /////////////////
     // paresPrefix //
     /////////////////
+
+    @ParameterizedTest(name = "Pitch.parsePrefix(\"{3}\") returns Optional<Entry[Pitch '{'pitchClass={0}, octave={1}'}'=\"{2}\"]>")
+    @ArgumentsSource(PitchTestArgsProvider.Valid.PrefixedPitchStringValues.class)
+    void pitchParsePrefix( PitchClass pitchClass,
+                           int octave,
+                           String pitchStringPrefix,
+                           String prefixedPitchString )
+    {
+        final Pitch pitch = new Pitch(pitchClass, octave);
+        final Map.Entry<Pitch, String> pitchPrefixStringEntry = Map.entry(pitch, pitchStringPrefix);
+        final Optional<Map.Entry<Pitch, String>> pitchPrefixStringEntryOptional = Pitch.parsePrefix(prefixedPitchString);
+
+        assertTrue(
+            pitchPrefixStringEntryOptional.isPresent(),
+            () -> "Pitch.parsePrefix(\"{%s}\") returned empty Optional".formatted(prefixedPitchString)
+        );
+
+        assertEquals(pitchPrefixStringEntry, pitchPrefixStringEntryOptional.get());
+    }
 }
