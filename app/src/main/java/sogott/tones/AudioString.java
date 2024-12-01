@@ -229,16 +229,16 @@ final class AudioString {
         return parseSilence(aString).or(() ->
             WaveShape.parsePrefix(aString)
                 .filter(waveShapeAndString ->
-                    aString.length() > waveShapeAndString.getValue().length() + 1
+                    aString.length() > waveShapeAndString.getValue().length()
                     && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
                 .flatMap(waveShapeAndString ->
                     Pitch.parsePrefix(aString.substring(waveShapeAndString.getValue().length() + 1))
                         .filter(pitchAndString ->
-                            aString.length() > waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 2
-                            && aString.charAt(waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 2) == Delimiter.VOICE_AND_DURATION.charValue())
+                            aString.length() > waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 1
+                            && aString.charAt(waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 1) == Delimiter.VOICE_AND_DURATION.charValue())
                         .flatMap(pitchAndString ->
                             {
-                                final int pitchDurationDelimiterIndex = waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 1;
+                                final int pitchDurationDelimiterIndex = waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 2;
 
                                 if (aString.length() <= pitchDurationDelimiterIndex) {
                                     return Optional.empty();
