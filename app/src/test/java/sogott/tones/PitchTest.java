@@ -668,7 +668,7 @@ final class PitchTest {
         assertEquals(stringValue, pitch.stringValue());
     }
 
-    @ParameterizedTest(name = "Pitch(PitchLetter.{0}, Accidental.{1}, {2}).stringValue() = {3}")
+    @ParameterizedTest(name = "Pitch(PitchLetter.{0}, Accidental.{1}, {2}).frequency() ≈ {3}")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalOctaveFrequency.class)
     void pitchConstructedWithPitchLetterAccidentalAndOctaveStringValuePropertyReturnsFrequency(
             PitchLetter pitchLetter,
