@@ -595,7 +595,7 @@ final class PitchTest {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(pitchLetter, accidental, octave));
     }
 
-    @ParameterizedTest(name = "new Pitch(null, Note.{0}, {1}) throws IllegalArgumentException")
+    @ParameterizedTest(name = "new Pitch(null, PitchLetter.{0}, {1}) throws IllegalArgumentException")
     @ArgumentsSource(PitchTestArgsProvider.Valid.AccidentalAndOctave.class)
     void pitchConstructorWithNullNoteAccidentalAndNonNegativeOctaveThrows(Accidental accidental, int octave) {
         assertThrows(IllegalArgumentException.class, () -> new Pitch(null, accidental, octave));
@@ -708,7 +708,7 @@ final class PitchTest {
         assertTrue(aPitch.equals(equalPitch));
     }
 
-    @ParameterizedTest(name = "new Pitch(<PitchLetter.{0}>, <Accidental.{2}>, <{4}>) does not equal new Pitch(<Note.{1}>, <Accidental.{3}>, <{5}>)")
+    @ParameterizedTest(name = "new Pitch(<PitchLetter.{0}>, <Accidental.{2}>, <{4}>) does not equal new Pitch(<PitchLetter.{1}>, <Accidental.{3}>, <{5}>)")
     @ArgumentsSource(PitchTestArgsProvider.Valid.DifferingPitchLettersAccidentalsAndOctaves.class)
     void pitchDoesNotEqualPitchWithDifferingNoteAccidentalAndOctave(PitchLetter aPitchLetter,
             PitchLetter anotherPitchLetter, Accidental anAccidental, Accidental anotherAccidental,
@@ -719,7 +719,7 @@ final class PitchTest {
         assertFalse(aPitch.equals(notEqualPitch));
     }
 
-    @ParameterizedTest(name = "new Pitch(<PitchLetter.{0}>, Accidental.{2}, {3}) does not equal new Pitch(<Note.{1}>, Accidental.{2}, {3})")
+    @ParameterizedTest(name = "new Pitch(<PitchLetter.{0}>, Accidental.{2}, {3}) does not equal new Pitch(<PitchLetter.{1}>, Accidental.{2}, {3})")
     @ArgumentsSource(PitchTestArgsProvider.Valid.DifferingPitchLettersWithAccidentalAndOctave.class)
     void pitchDoesNotEqualPitchWithDifferingNotes(PitchLetter aPitchLetter, PitchLetter anotherPitchLetter,
             Accidental accidental, int octave) {
@@ -728,7 +728,7 @@ final class PitchTest {
         assertFalse(aPitch.equals(notEqualPitch));
     }
 
-    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, <Accidental.{1}>, {3}) does not equal new Pitch(Note.{0}, <Accidental.{2}>, {3})")
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, <Accidental.{1}>, {3}) does not equal new Pitch(PitchLetter.{0}, <Accidental.{2}>, {3})")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterWithDifferingAccidentalsAndOctave.class)
     void pitchDoesNotEqualPitchWithDifferingNotes(PitchLetter pitchLetter, Accidental anAccidental,
             Accidental anotherAccidental,
@@ -738,7 +738,7 @@ final class PitchTest {
         assertFalse(aPitch.equals(notEqualPitch));
     }
 
-    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, <{2}>) does not equal new Pitch(Note.{0}, Accidental.{1}, <{3}>)")
+    @ParameterizedTest(name = "new Pitch(PitchLetter.{0}, Accidental.{1}, <{2}>) does not equal new Pitch(PitchLetter.{0}, Accidental.{1}, <{3}>)")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalWithDifferingOctaves.class)
     void pitchDoesNotEqualPitchWithDifferingOctaves(PitchLetter pitchLetter, Accidental accidental, int anOctave,
             int anotherOctave) {
@@ -751,7 +751,7 @@ final class PitchTest {
     // hashCode //
     //////////////
 
-    @ParameterizedTest(name = "new Pitch(new PitchClass(PitchLetter.{0}, Accidental.{1}), {2}).hashCode() equals Objects.hash(Note.{0}, Accidental.{1}, {2})")
+    @ParameterizedTest(name = "new Pitch(new PitchClass(PitchLetter.{0}, Accidental.{1}), {2}).hashCode() equals Objects.hash(PitchLetter.{0}, Accidental.{1}, {2})")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalAndOctave.class)
     void hashCodesComputedFromPitchLetterAccidentalAndOctave(PitchLetter pitchLetter, Accidental accidental,
             int octave) {
@@ -798,7 +798,7 @@ final class PitchTest {
     // parse //
     ///////////
 
-    @ParameterizedTest(name = "Pitch.parse(\"{3}\") returns new Pitch(Note.{0}, Accidental.{1}, {2})")
+    @ParameterizedTest(name = "Pitch.parse(\"{3}\") returns new Pitch(PitchLetter.{0}, Accidental.{1}, {2})")
     @ArgumentsSource(PitchTestArgsProvider.Valid.PitchLetterAccidentalAndOctaveStringValue.class)
     void staticPitchParseMethodInitializesObject(PitchLetter pitchLetter,
             Accidental accidental, int octave, String stringValue) {
