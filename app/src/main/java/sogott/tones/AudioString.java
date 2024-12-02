@@ -248,9 +248,9 @@ final class AudioString {
     private static Optional<Audio> processWaveShapeAndStringEntry(String aString, Map.Entry<WaveShape, String> waveShapeAndStringEntry)
     {
         final int pitchStartIndex = waveShapeAndStringEntry.getValue().isEmpty() ? 0 : waveShapeAndStringEntry.getValue().length() + 1;
-        final String pitchString = aString.substring(pitchStartIndex);
+        final String pitchAndDurationString = aString.substring(pitchStartIndex);
 
-        return Pitch.parsePrefix(pitchString)
+        return Pitch.parsePrefix(pitchAndDurationString)
             .filter(pitchAndString ->
             {
                 final int pitchEndIndex = pitchStartIndex + pitchAndString.getValue().length();
