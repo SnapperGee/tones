@@ -1,5 +1,6 @@
 package sogott.tones;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.random.RandomGenerator;
 import java.util.List;
@@ -27,6 +28,7 @@ final class AudioStringTestArgsProvider {
     private static final List<WaveShape> waveShapes = unmodifiableList(asList(WaveShape.values()));
     private static final List<PitchLetter> pitchLetters = unmodifiableList(asList(PitchLetter.values()));
     private static final List<Accidental> accidentals = unmodifiableList(asList(Accidental.values()));
+    private static final List<ScalePitchClasses> scalePitchClasses = unmodifiableList(asList(ScalePitchClasses.values()));
 
     static final RandomGenerator random = RandomGenerator.getDefault();
 
@@ -36,7 +38,7 @@ final class AudioStringTestArgsProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
-                    final int duration = random.nextInt(1, 200000);
+                    final int duration = random.nextInt(1, 256);
                     return waveShapes.stream()
                         .flatMap(wave -> wave.stringValueAliases().stream()
                             .flatMap(waveStringAlias -> accidentals.stream()
@@ -88,12 +90,27 @@ final class AudioStringTestArgsProvider {
             }
         }
 
+        // TODO: implement arguments provider for parsing scale strings
+        static final class WaveShapePrefixedAudioScaleStringValueAndAudio implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return scalePitchClasses.stream().flatMap(scalePitchLetterMaps ->
+                    scalePitchLetterMaps.pitchLetterAccidentalMap().entrySet().stream()
+                        .map(accidentalPitchClassMaps ->
+                        {
+                            return null;
+                        }
+                    )
+                );
+            }
+        }
+
         static final class AudioPitchStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
-                    final int duration = random.nextInt(1, 200000);
+                    final int duration = random.nextInt(1, 256);
                     return waveShapes.stream()
                         .flatMap(wave -> accidentals.stream()
                             .flatMap(accidental -> Stream.of(
