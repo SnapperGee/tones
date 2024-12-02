@@ -31,7 +31,7 @@ final class AudioStringTestArgsProvider {
     static final RandomGenerator random = RandomGenerator.getDefault();
 
     static final class Valid {
-        static final class WaveShapePrefixedAudioStringValueAndAudio implements ArgumentsProvider {
+        static final class WaveShapePrefixedAudioPitchStringValueAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -78,7 +78,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        static final class AudioStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
+        static final class AudioPitchStringValueWithoutWaveShapePrefixAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -120,7 +120,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        static final class AudioStringValueWithoutWaveShapePrefix implements ArgumentsProvider {
+        static final class AudioPitchStringValueWithoutWaveShapePrefix implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -166,7 +166,7 @@ final class AudioStringTestArgsProvider {
     }
 
     static final class Invalid {
-        static final class AudioStringValue implements ArgumentsProvider {
+        static final class AudioPitchStringValue implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(note -> {
@@ -430,7 +430,7 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        static final class AudioStringAndWave implements ArgumentsProvider {
+        static final class AudioPitchStringAndWave implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
@@ -759,7 +759,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
-    @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioStringValueAndAudio.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioPitchStringValueAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
             Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
@@ -769,7 +769,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
-    @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioStringValueWithoutWaveShapePrefixAndAudio.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioPitchStringValueWithoutWaveShapePrefixAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
             WaveShape wave, Audio audio) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
@@ -779,7 +779,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\") returns empty optional")
-    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringValue.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioPitchStringValue.class)
     @EmptySource
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
@@ -788,7 +788,7 @@ final class AudioStringTest {
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty optional")
-    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioStringAndWave.class)
+    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioPitchStringAndWave.class)
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, WaveShape wave) {
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
         assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
