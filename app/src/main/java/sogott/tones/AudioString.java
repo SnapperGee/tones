@@ -277,26 +277,25 @@ final class AudioString {
                     && aString.charAt(pitchEndIndex) == Delimiter.VOICE_AND_DURATION.charValue();
             })
             .flatMap(pitchAndString ->
-                {
-                    final int durationStartIndex = pitchStartIndex + pitchAndString.getValue().length() + 1;
+            {
+                final int durationStartIndex = pitchStartIndex + pitchAndString.getValue().length() + 1;
 
-                    if (aString.length() <= durationStartIndex) {
-                        return Optional.empty();
-                    }
-
-                    if (aString.codePoints().skip(durationStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
-                        return Optional.empty();
-                    }
-
-                    final int duration = Integer.parseInt(aString, durationStartIndex, aString.length(), 10);
-
-                    return Optional.of(new Audio(
-                        waveShapeAndStringEntry.getKey(),
-                        pitchAndString.getKey(),
-                        duration
-                    ));
+                if (aString.length() <= durationStartIndex) {
+                    return Optional.empty();
                 }
-            );
+
+                if (aString.codePoints().skip(durationStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                    return Optional.empty();
+                }
+
+                final int duration = Integer.parseInt(aString, durationStartIndex, aString.length(), 10);
+
+                return Optional.of(new Audio(
+                    waveShapeAndStringEntry.getKey(),
+                    pitchAndString.getKey(),
+                    duration
+                ));
+            });
     }
 
     private static Optional<Audio> processWaveShapeAndStringEntry(
