@@ -260,8 +260,10 @@ final class AudioString {
         );
     }
 
-    private static Optional<Audio> processWaveShapeAndStringEntry(String aString, Map.Entry<WaveShape, String> waveShapeAndStringEntry)
-    {
+    private static Optional<Audio> processWaveShapeAndStringEntry(
+        String aString,
+        Map.Entry<WaveShape, String> waveShapeAndStringEntry
+    ) {
         final int pitchStartIndex = waveShapeAndStringEntry.getValue().isEmpty() ? 0 : waveShapeAndStringEntry.getValue().length() + 1;
         final String pitchAndDurationString = aString.substring(pitchStartIndex);
 
