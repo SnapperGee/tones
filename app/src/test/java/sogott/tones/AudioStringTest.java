@@ -127,39 +127,47 @@ final class AudioStringTestArgsProvider {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return Stream.concat(
-                            Stream.of(arguments(
-                                    "%c%d%c%d".formatted(pitchLetter.charValue(),
-                                            octave,
-                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                    .charValue(),
-                                            duration)),
-                                    arguments(
-                                            "%c%d%c%d".formatted(
-                                                    Character.toLowerCase(
-                                                            pitchLetter.charValue()),
-                                                    octave,
-                                                    Character.toLowerCase(
-                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                    .charValue()),
-                                                    duration))),
+                            Stream.of(
+                                arguments(
+                                    new StringBuilder()
+                                        .append(pitchLetter.charValue())
+                                        .append(octave)
+                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                        .append(duration)
+                                        .toString()
+                                ),
+                                arguments(
+                                    new StringBuilder()
+                                        .append(Character.toLowerCase(pitchLetter.charValue()))
+                                        .append(octave)
+                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                        .append(duration)
+                                        .toString()
+                                )),
                             accidentals.stream()
-                                    .flatMap(accidental -> Stream.of(arguments(
-                                            "%c%c%d%c%d".formatted(
-                                                    pitchLetter.charValue(),
-                                                    accidental.charValue(),
-                                                    octave,
-                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                            .charValue(),
-                                                    duration)),
-                                            arguments(
-                                                    "%c%c%d%c%d".formatted(
-                                                            Character.toLowerCase(
-                                                                    pitchLetter.charValue()),
-                                                            accidental.charValue(),
-                                                            octave,
-                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                    .charValue(),
-                                                            duration)))));
+                                .flatMap(accidental ->
+                                    Stream.of(
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(pitchLetter.charValue())
+                                                .append(accidental.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(Character.toLowerCase(pitchLetter.charValue()))
+                                                .append(accidental.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        )
+                                    )
+                                )
+                        );
                 });
             }
         }
