@@ -1,5 +1,6 @@
 package sogott.tones;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -204,7 +205,15 @@ final class AudioString {
             throw new IllegalArgumentException("Null default wave.");
         }
 
-        return parseSilence(aString).or(() -> parseTone(aString, defaultWaveShape));
+        return parseSilence(aString).or(() ->
+            WaveShape.parsePrefix(aString)
+                .or(() -> Optional.of(Map.entry(defaultWaveShape, "")))
+                .filter(waveShapeAndString ->
+                    // check next character is the wave shape and pitch delimiter
+                    waveShapeAndString.getValue().isEmpty() || aString.length() > waveShapeAndString.getValue().length()
+                    && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString))
+        );
     }
 
     /**
@@ -232,51 +241,45 @@ final class AudioString {
                     // check next character is the wave shape and pitch delimiter
                     aString.length() > waveShapeAndString.getValue().length()
                     && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                .flatMap(waveShapeAndString ->
-                {
-                    final int pitchStartIndex = waveShapeAndString.getValue().length() + 1;
-                    final String pitchString = aString.substring(pitchStartIndex);
-
-                    return Pitch.parsePrefix(pitchString)
-                        .filter(pitchAndString ->
-                        {
-                            final int pitchEndIndex = pitchStartIndex + pitchAndString.getValue().length();
-
-                            // check if next character is voice and duration delimiter
-                            return aString.length() > pitchEndIndex
-                                && aString.charAt(pitchEndIndex) == Delimiter.VOICE_AND_DURATION.charValue();
-                        })
-                        .flatMap(pitchAndString ->
-                            {
-                                final int durationStartIndex = pitchStartIndex + pitchAndString.getValue().length() + 1;
-
-                                if (aString.length() <= durationStartIndex) {
-                                    return Optional.empty();
-                                }
-
-                                if (aString.codePoints().skip(durationStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
-                                    return Optional.empty();
-                                }
-
-                                final int duration = Integer.parseInt(aString, durationStartIndex, aString.length(), 10);
-
-                                return Optional.of(new Audio(
-                                    waveShapeAndString.getKey(),
-                                    pitchAndString.getKey(),
-                                    duration
-                                ));
-                            }
-                        );
-                })
+                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString))
         );
     }
 
-    private static boolean isParsableTone(String aString, boolean requireWaveShapePrefix) {
-        return aString != null
-                && !aString.isBlank()
-                && (requireWaveShapePrefix
-                        ? isParsableWaveShapePrefixedTone(aString)
-                        : isParsableToneWithoutWaveShapePrefix(aString));
+    private static Optional<Audio> processWaveShapeAndStringEntry(String aString, Map.Entry<WaveShape, String> waveShapeAndStringEntry)
+    {
+        final int pitchStartIndex = waveShapeAndStringEntry.getValue().isEmpty() ? 0 : waveShapeAndStringEntry.getValue().length() + 1;
+        final String pitchString = aString.substring(pitchStartIndex);
+
+        return Pitch.parsePrefix(pitchString)
+            .filter(pitchAndString ->
+            {
+                final int pitchEndIndex = pitchStartIndex + pitchAndString.getValue().length();
+
+                // check if next character is voice and duration delimiter
+                return aString.length() > pitchEndIndex
+                    && aString.charAt(pitchEndIndex) == Delimiter.VOICE_AND_DURATION.charValue();
+            })
+            .flatMap(pitchAndString ->
+                {
+                    final int durationStartIndex = pitchStartIndex + pitchAndString.getValue().length() + 1;
+
+                    if (aString.length() <= durationStartIndex) {
+                        return Optional.empty();
+                    }
+
+                    if (aString.codePoints().skip(durationStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                        return Optional.empty();
+                    }
+
+                    final int duration = Integer.parseInt(aString, durationStartIndex, aString.length(), 10);
+
+                    return Optional.of(new Audio(
+                        waveShapeAndStringEntry.getKey(),
+                        pitchAndString.getKey(),
+                        duration
+                    ));
+                }
+            );
     }
 
     private static Optional<Audio> parseSilence(String aString) {
@@ -305,68 +308,6 @@ final class AudioString {
         final int duration = Integer.parseInt(aString, delimiterIndex, aString.length(), 10);
 
         return Optional.of(Audio.silence(duration));
-    }
-
-    private static Optional<Audio> parseTone(String aString, WaveShape defaultWave) {
-        if (!isParsableTone(aString, false)) {
-            return Optional.empty();
-        }
-
-        final int voiceAndDurationDelimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
-
-        if (voiceAndDurationDelimiterIndex == -1) {
-            return Optional.empty();
-        }
-
-        final int duration = Integer.parseInt(aString, voiceAndDurationDelimiterIndex + 1, aString.length(), 10);
-
-        final String waveShapePrefixAndPitch = aString.substring(0, voiceAndDurationDelimiterIndex);
-        final String[] splitWaveShapePrefixAndPitch = waveShapePrefixAndPitch
-                .split(Character.toString(Delimiter.WAVE_SHAPE_AND_PITCH.charValue()));
-        final WaveShape waveShape = splitWaveShapePrefixAndPitch.length == 1 ? defaultWave
-                : WaveShape.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow();
-        final Pitch pitch = splitWaveShapePrefixAndPitch.length == 1
-                ? Pitch.parse(splitWaveShapePrefixAndPitch[0]).orElseThrow()
-                : Pitch.parse(splitWaveShapePrefixAndPitch[1]).orElseThrow();
-
-        return Optional.of(new Audio(waveShape, pitch, duration));
-    }
-
-    private static boolean isParsableWaveShapePrefixedTone(String aString) {
-        // must be at least a leading wav shape, angle bracket, note char,
-        // octave int, period, and duration int
-        if (aString.length() < 6) {
-            return false;
-        }
-
-        return WaveShape.extractPrefixString(aString).map(prefix -> {
-            final int prefixLength = prefix.length();
-
-            if (aString.charAt(prefixLength) != Delimiter.WAVE_SHAPE_AND_PITCH.charValue()) {
-                return false;
-            }
-
-            final String[] pitchAndDuration = aString.substring(prefixLength + 1).split("\\.", 3);
-
-            return pitchAndDuration.length == 2 && Pitch.isParsable(pitchAndDuration[0])
-                    && !pitchAndDuration[1].isBlank() && pitchAndDuration[1].codePoints().allMatch(Character::isDigit);
-        }).orElse(false);
-    }
-
-    private static boolean isParsableToneWithoutWaveShapePrefix(String aString) {
-        // must be at least a note char, octave int, period, and duration int
-        if (aString.length() < 4) {
-            return false;
-        }
-
-        if (!PitchLetter.isPitchLetter(aString.charAt(0))) {
-            return isParsableWaveShapePrefixedTone(aString);
-        }
-
-        final String[] pitchAndDuration = aString.split("\\.", 3);
-
-        return pitchAndDuration.length == 2 && Pitch.isParsable(pitchAndDuration[0]) && !pitchAndDuration[1].isBlank()
-                && pitchAndDuration[1].codePoints().allMatch(Character::isDigit);
     }
 
     private AudioString() {
