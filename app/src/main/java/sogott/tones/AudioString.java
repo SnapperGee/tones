@@ -301,11 +301,11 @@ final class AudioString {
                     return Optional.empty();
                 }
 
-                if (aString.codePoints().skip(pitchStartIndex).limit(pitchEndIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                if (aString.codePoints().skip(pitchStartIndex).limit(pitchEndIndex - pitchStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
                     return Optional.empty();
                 }
 
-                if (aString.codePoints().skip(pitchEndIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                if (aString.codePoints().skip(pitchEndIndex + 1).anyMatch(cp -> !Character.isDigit(cp))) {
                     return Optional.empty();
                 }
 
