@@ -212,7 +212,7 @@ final class AudioString {
                     // check next character is the wave shape and pitch delimiter
                     waveShapeAndString.getValue().isEmpty() || aString.length() > waveShapeAndString.getValue().length()
                     && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                .flatMap(waveShapeAndString -> processWaveShapeEntryWithPitch(aString, waveShapeAndString))
+                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString))
         );
     }
 
@@ -241,11 +241,11 @@ final class AudioString {
                     // check next character is the wave shape and pitch delimiter
                     aString.length() > waveShapeAndString.getValue().length()
                     && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                .flatMap(waveShapeAndString -> processWaveShapeEntryWithPitch(aString, waveShapeAndString))
+                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString))
         );
     }
 
-    private static Optional<Audio> processWaveShapeEntryWithPitch(String aString, Map.Entry<WaveShape, String> waveShapeAndStringEntry)
+    private static Optional<Audio> processWaveShapeAndStringEntry(String aString, Map.Entry<WaveShape, String> waveShapeAndStringEntry)
     {
         final int pitchStartIndex = waveShapeAndStringEntry.getValue().isEmpty() ? 0 : waveShapeAndStringEntry.getValue().length() + 1;
         final String pitchString = aString.substring(pitchStartIndex);
