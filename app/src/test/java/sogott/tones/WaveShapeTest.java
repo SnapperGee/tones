@@ -8,11 +8,11 @@ import java.util.random.RandomGenerator;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.EmptySource;
@@ -134,7 +134,7 @@ final class WaveShapeTestArgsProvider {
                                 8,
                                 1,
                                 6,
-                                stringValueAlias.charAt(stringValueAlias.length() - 1))
+                                waveShape.stringValue().charAt(waveShape.stringValue().length() - 1))
                         .map(aString -> arguments(Map.entry(waveShape, stringValueAlias), stringValueAlias + aString))
                         )
                     )
