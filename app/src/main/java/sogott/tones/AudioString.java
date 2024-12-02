@@ -316,16 +316,17 @@ final class AudioString {
                     return Optional.empty();
                 }
 
-                // duration int must come after pitch segment
+                // more chars must come after pitch segment
                 if (aString.length() <= pitchEndIndex + 1) {
                     return Optional.empty();
                 }
 
-                // make pitch is an integer and account for negative pitch
+                // pitch must be an integer and account for negative pitch
                 if (aString.codePoints().skip(pitchStartIndex + (pitchIsNegative ? 1 : 0)).limit(pitchEndIndex - pitchStartIndex - (pitchIsNegative ? 1 : 0)).anyMatch(cp -> !Character.isDigit(cp))) {
                     return Optional.empty();
                 }
 
+                // duration must be a positive integer
                 if (aString.codePoints().skip(pitchEndIndex + 1).anyMatch(cp -> !Character.isDigit(cp))) {
                     return Optional.empty();
                 }
