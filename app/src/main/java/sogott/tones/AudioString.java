@@ -309,15 +309,20 @@ final class AudioString {
                 final int pitchStartIndex = waveShapeAndStringEntry.getValue().isEmpty() ? 0 : waveShapeAndStringEntry.getValue().length() + 1;
                 final int pitchEndIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
 
-                if (pitchEndIndex <= pitchStartIndex) {
+                final boolean pitchIsNegative = aString.charAt(pitchStartIndex) == '-';
+
+                // pitch segment can't be empty
+                if (pitchEndIndex <= pitchStartIndex + (pitchIsNegative ? 1 : 0)) {
                     return Optional.empty();
                 }
 
+                // duration int must come after pitch segment
                 if (aString.length() <= pitchEndIndex + 1) {
                     return Optional.empty();
                 }
 
-                if (aString.codePoints().skip(pitchStartIndex).limit(pitchEndIndex - pitchStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                // make pitch is an integer and account for negative pitch
+                if (aString.codePoints().skip(pitchStartIndex + (pitchIsNegative ? 1 : 0)).limit(pitchEndIndex - pitchStartIndex - (pitchIsNegative ? 1 : 0)).anyMatch(cp -> !Character.isDigit(cp))) {
                     return Optional.empty();
                 }
 
