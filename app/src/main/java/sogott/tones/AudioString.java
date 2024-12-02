@@ -232,7 +232,7 @@ final class AudioString {
      */
     static Optional<Audio> parse(String aString) {
         if (aString == null) {
-            throw new IllegalArgumentException("Null string.");
+            throw new IllegalArgumentException("Null String.");
         }
 
         return parseSilence(aString).or(() ->
@@ -242,6 +242,21 @@ final class AudioString {
                     aString.length() > waveShapeAndString.getValue().length()
                     && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
                 .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString))
+        );
+    }
+
+    static Optional<Audio> parse(String aString, Scale scale) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null String.");
+        }
+
+        return parseSilence(aString).or(() ->
+            WaveShape.parsePrefix(aString)
+                .filter(waveShapeAndString ->
+                    // check next character is the wave shape and pitch delimiter
+                    aString.length() > waveShapeAndString.getValue().length()
+                    && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString, scale))
         );
     }
 
