@@ -38,42 +38,52 @@ final class AudioStringTestArgsProvider {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waveShapes.stream()
-                            .flatMap(wave -> wave.stringValueAliases().stream()
-                                    .flatMap(waveStringAlias -> accidentals.stream()
-                                            .flatMap(accidental -> Stream
-                                                    .of(arguments(
-                                                            "%s%c%c%c%d%c%d".formatted(
-                                                                    waveStringAlias,
-                                                                    AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                            .charValue(),
-                                                                    pitchLetter.charValue(),
-                                                                    accidental.charValue(),
-                                                                    octave,
-                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                            .charValue(),
-                                                                    duration),
-                                                            new Audio(wave, new Pitch(
-                                                                    pitchLetter,
-                                                                    accidental,
-                                                                    octave),
-                                                                    duration)),
-                                                            arguments(
-                                                                    "%s%c%c%c%d%c%d".formatted(
-                                                                            waveStringAlias.toLowerCase(),
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            Character.toLowerCase(
-                                                                                    pitchLetter.charValue()),
-                                                                            accidental.charValue(),
-                                                                            octave,
-                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue(),
-                                                                            duration),
-                                                                    new Audio(wave, new Pitch(
-                                                                            pitchLetter,
-                                                                            accidental,
-                                                                            octave),
-                                                                            duration))))));
+                        .flatMap(wave -> wave.stringValueAliases().stream()
+                            .flatMap(waveStringAlias -> accidentals.stream()
+                                .flatMap(accidental -> Stream.of(
+                                    arguments(
+                                        new StringBuilder()
+                                            .append(waveStringAlias)
+                                            .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                            .append(pitchLetter.charValue())
+                                            .append(accidental.charValue())
+                                            .append(octave)
+                                            .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                            .append(duration)
+                                            .toString(),
+                                        new Audio(
+                                            wave,
+                                            new Pitch(
+                                                pitchLetter,
+                                                accidental,
+                                                octave
+                                            ),
+                                            duration
+                                        )
+                                    ),
+                                    arguments(
+                                        new StringBuilder()
+                                            .append(waveStringAlias.toLowerCase())
+                                            .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                            .append(Character.toLowerCase(pitchLetter.charValue()))
+                                            .append(accidental.charValue())
+                                            .append(octave)
+                                            .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                            .append(duration)
+                                            .toString(),
+                                        new Audio(
+                                            wave,
+                                            new Pitch(
+                                                pitchLetter,
+                                                accidental,
+                                                octave
+                                            ),
+                                            duration
+                                        )
+                                    )
+                                ))
+                            )
+                        );
                 });
             }
         }
@@ -85,37 +95,48 @@ final class AudioStringTestArgsProvider {
                     final int octave = random.nextInt(0, 13);
                     final int duration = random.nextInt(1, 200000);
                     return waveShapes.stream()
-                            .flatMap(wave -> accidentals.stream()
-                                    .flatMap(accidental -> Stream
-                                            .of(arguments(
-                                                    "%c%c%d%c%d".formatted(
-                                                            pitchLetter.charValue(),
-                                                            accidental.charValue(),
-                                                            octave,
-                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                    .charValue(),
-                                                            duration),
-                                                    wave,
-                                                    new Audio(wave, new Pitch(
-                                                            pitchLetter,
-                                                            accidental,
-                                                            octave),
-                                                            duration)),
-                                                    arguments(
-                                                            "%c%c%d%c%d".formatted(
-                                                                    Character.toLowerCase(
-                                                                            pitchLetter.charValue()),
-                                                                    accidental.charValue(),
-                                                                    octave,
-                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                            .charValue(),
-                                                                    duration),
-                                                            wave,
-                                                            new Audio(wave, new Pitch(
-                                                                    pitchLetter,
-                                                                    accidental,
-                                                                    octave),
-                                                                    duration)))));
+                        .flatMap(wave -> accidentals.stream()
+                            .flatMap(accidental -> Stream.of(
+                                arguments(
+                                    new StringBuilder()
+                                        .append(pitchLetter.charValue())
+                                        .append(accidental.charValue())
+                                        .append(octave)
+                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                        .append(duration)
+                                        .toString(),
+                                    wave,
+                                    new Audio(
+                                        wave,
+                                        new Pitch(
+                                            pitchLetter,
+                                            accidental,
+                                            octave
+                                        ),
+                                        duration
+                                    )
+                                ),
+                                arguments(
+                                    new StringBuilder()
+                                        .append(Character.toLowerCase(pitchLetter.charValue()))
+                                        .append(accidental.charValue())
+                                        .append(octave)
+                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                        .append(duration)
+                                        .toString(),
+                                    wave,
+                                    new Audio(
+                                        wave,
+                                        new Pitch(
+                                            pitchLetter,
+                                            accidental,
+                                            octave
+                                        ),
+                                        duration
+                                    )
+                                )
+                            ))
+                        );
                 });
             }
         }
