@@ -229,26 +229,36 @@ final class AudioString {
         return parseSilence(aString).or(() ->
             WaveShape.parsePrefix(aString)
                 .filter(waveShapeAndString ->
+                    // check next character is the wave shape and pitch delimiter
                     aString.length() > waveShapeAndString.getValue().length()
                     && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
                 .flatMap(waveShapeAndString ->
-                    Pitch.parsePrefix(aString.substring(waveShapeAndString.getValue().length() + 1))
+                {
+                    final int pitchStartIndex = waveShapeAndString.getValue().length() + 1;
+                    final String pitchString = aString.substring(pitchStartIndex);
+
+                    return Pitch.parsePrefix(pitchString)
                         .filter(pitchAndString ->
-                            aString.length() > waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 1
-                            && aString.charAt(waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 1) == Delimiter.VOICE_AND_DURATION.charValue())
+                        {
+                            final int pitchEndIndex = pitchStartIndex + pitchAndString.getValue().length();
+
+                            // check if next character is voice and duration delimiter
+                            return aString.length() > pitchEndIndex
+                                && aString.charAt(pitchEndIndex) == Delimiter.VOICE_AND_DURATION.charValue();
+                        })
                         .flatMap(pitchAndString ->
                             {
-                                final int pitchDurationDelimiterIndex = waveShapeAndString.getValue().length() + pitchAndString.getValue().length() + 2;
+                                final int durationStartIndex = pitchStartIndex + pitchAndString.getValue().length() + 1;
 
-                                if (aString.length() <= pitchDurationDelimiterIndex) {
+                                if (aString.length() <= durationStartIndex) {
                                     return Optional.empty();
                                 }
 
-                                if (aString.codePoints().skip(pitchDurationDelimiterIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                                if (aString.codePoints().skip(durationStartIndex).anyMatch(cp -> !Character.isDigit(cp))) {
                                     return Optional.empty();
                                 }
 
-                                final int duration = Integer.parseInt(aString, pitchDurationDelimiterIndex, aString.length(), 10);
+                                final int duration = Integer.parseInt(aString, durationStartIndex, aString.length(), 10);
 
                                 return Optional.of(new Audio(
                                     waveShapeAndString.getKey(),
@@ -256,8 +266,8 @@ final class AudioString {
                                     duration
                                 ));
                             }
-                        )
-                )
+                        );
+                })
         );
     }
 
