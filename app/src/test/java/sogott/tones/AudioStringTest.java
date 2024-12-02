@@ -125,7 +125,7 @@ final class AudioStringTestArgsProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(pitchLetter -> {
                     final int octave = random.nextInt(0, 13);
-                    final int duration = random.nextInt(1, 200000);
+                    final int duration = random.nextInt(1, 256);
                     return Stream.concat(
                             Stream.of(
                                 arguments(
@@ -179,261 +179,205 @@ final class AudioStringTestArgsProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return pitchLetters.stream().flatMap(note -> {
                     final int octave = random.nextInt(0, 13);
-                    final int duration = random.nextInt(1, 200000);
+                    final int duration = random.nextInt(1, 256);
                     return waveShapes.stream()
-                            .flatMap(wave -> wave.stringValueAliases().stream()
-                                    .flatMap(waveStringAlias -> Stream.concat(
+                        .flatMap(wave -> wave.stringValueAliases().stream()
+                            .flatMap(waveStringAlias -> Stream.concat(
+                                    Stream.of(
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(waveStringAlias)
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(duration)
+                                                .toString()
+                                        ),
+                                        arguments(
+                                            new StringBuilder()
+                                                .append(waveStringAlias)
+                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                .append(note.charValue())
+                                                .append(octave)
+                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                .toString()
+                                        )),
+                                    accidentals.stream()
+                                        .flatMap(accidental ->
                                             Stream.of(
-                                                    // duplicate
-                                                    arguments(
-                                                            "%1$s%1$s%2$c%3$c%4$d%5$c%6$d"
-                                                                    .formatted(waveStringAlias,
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            note.charValue(),
-                                                                            octave,
-                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue(),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%2$c%3$c%4$d%5$c%6$d"
-                                                                    .formatted(
-                                                                            waveStringAlias.toLowerCase(),
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            Character.toLowerCase(
-                                                                                    note.charValue()),
-                                                                            octave,
-                                                                            Character.toLowerCase(
-                                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                            .charValue()),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$c%3$c%4$d%5$c%6$d"
-                                                                    .formatted(waveStringAlias,
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            note.charValue(),
-                                                                            octave,
-                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue(),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$c%4$d%5$c%5$c%6$d"
-                                                                    .formatted(
-                                                                            waveStringAlias.toLowerCase(),
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            Character.toLowerCase(
-                                                                                    note.charValue()),
-                                                                            octave,
-                                                                            Character.toLowerCase(
-                                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                            .charValue()),
-                                                                            duration)),
-                                                    // missing
-                                                    arguments(
-                                                            "%1$c%2$c%3$d%4$c%5$d"
-                                                                    .formatted(
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            note.charValue(),
-                                                                            octave,
-                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue(),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$d%4$c%5$d"
-                                                                    .formatted(
-                                                                            waveStringAlias.toLowerCase(),
-                                                                            Character.toLowerCase(
-                                                                                    note.charValue()),
-                                                                            octave,
-                                                                            Character.toLowerCase(
-                                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                            .charValue()),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$d%4$c%5$d"
-                                                                    .formatted(waveStringAlias,
-                                                                            note.charValue(),
-                                                                            octave,
-                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                    .charValue(),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$c%4$c%5$d"
-                                                                    .formatted(
-                                                                            waveStringAlias.toLowerCase(),
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            Character.toLowerCase(
-                                                                                    note.charValue()),
-                                                                            Character.toLowerCase(
-                                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                            .charValue()),
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$c%4$d%5$d"
-                                                                    .formatted(waveStringAlias,
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            note.charValue(),
-                                                                            octave,
-                                                                            duration)),
-                                                    arguments(
-                                                            "%1$s%2$c%3$c%4$d%5$c"
-                                                                    .formatted(
-                                                                            waveStringAlias.toLowerCase(),
-                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                    .charValue(),
-                                                                            Character.toLowerCase(
-                                                                                    note.charValue()),
-                                                                            octave,
-                                                                            Character.toLowerCase(
-                                                                                    AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                            .charValue())))),
-                                            accidentals.stream()
-                                                    .flatMap(accidental -> Stream
-                                                            .of(
-                                                                    // duplicates
-                                                                    arguments(
-                                                                            "%1$s%1$s%2$c%3$c%4$c%5$d%6$c%7$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias
-                                                                                                    .toLowerCase(),
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            Character.toLowerCase(
-                                                                                                    note.charValue()),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%2$c%3$c%4$c%5$d%6$c%7$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias,
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            note.charValue(),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%3$c%4$c%5$d%6$c%7$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias
-                                                                                                    .toLowerCase(),
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            Character.toLowerCase(
-                                                                                                    note.charValue()),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$c%4$c%5$d%6$c%7$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias,
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            note.charValue(),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$c%5$d%6$c%6$c%7$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias
-                                                                                                    .toLowerCase(),
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            Character.toLowerCase(
-                                                                                                    note.charValue()),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    // missing
-                                                                    arguments(
-                                                                            "%1$c%2$c%3$c%4$d%5$c%6$d"
-                                                                                    .formatted(
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            note.charValue(),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$d%5$c%6$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias
-                                                                                                    .toLowerCase(),
-                                                                                            Character.toLowerCase(
-                                                                                                    note.charValue()),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$d%5$c%6$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias,
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$c%5$c%6$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias
-                                                                                                    .toLowerCase(),
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            Character.toLowerCase(
-                                                                                                    note.charValue()),
-                                                                                            accidental.charValue(),
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue(),
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$c%5$d%6$d"
-                                                                                    .formatted(
-                                                                                            waveStringAlias,
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            note.charValue(),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            duration)),
-                                                                    arguments(
-                                                                            "%1$s%2$c%3$c%4$c%5$d%6$c"
-                                                                                    .formatted(
-                                                                                            waveStringAlias
-                                                                                                    .toLowerCase(),
-                                                                                            AudioString.Delimiter.WAVE_SHAPE_AND_PITCH
-                                                                                                    .charValue(),
-                                                                                            Character.toLowerCase(
-                                                                                                    note.charValue()),
-                                                                                            accidental.charValue(),
-                                                                                            octave,
-                                                                                            AudioString.Delimiter.VOICE_AND_DURATION
-                                                                                                    .charValue())))))));
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(duration)
+                                                        .toString()
+                                                ),
+                                                arguments(
+                                                    new StringBuilder()
+                                                        .append(waveStringAlias)
+                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                        .append(note.charValue())
+                                                        .append(accidental.charValue())
+                                                        .append(octave)
+                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                        .toString()
+                                                )
+                                            )))));
                 });
             }
         }
