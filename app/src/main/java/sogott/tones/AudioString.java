@@ -282,6 +282,46 @@ final class AudioString {
             );
     }
 
+    private static Optional<Audio> processWaveShapeAndStringEntry(
+        String aString,
+        Map.Entry<WaveShape, String> waveShapeAndStringEntry,
+        Scale scale
+    ) {
+        return processWaveShapeAndStringEntry(aString, waveShapeAndStringEntry)
+            .or(() -> {
+
+                final int pitchStartIndex = waveShapeAndStringEntry.getValue().isEmpty() ? 0 : waveShapeAndStringEntry.getValue().length() + 1;
+                final int pitchEndIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
+
+                if (pitchEndIndex <= pitchStartIndex) {
+                    return Optional.empty();
+                }
+
+                if (aString.length() <= pitchEndIndex + 1) {
+                    return Optional.empty();
+                }
+
+                if (aString.codePoints().skip(pitchStartIndex).limit(pitchEndIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                    return Optional.empty();
+                }
+
+                if (aString.codePoints().skip(pitchEndIndex).anyMatch(cp -> !Character.isDigit(cp))) {
+                    return Optional.empty();
+                }
+
+                final int scalePitchIndex = Integer.parseInt(aString, pitchStartIndex, pitchEndIndex, 10);
+                final int duration = Integer.parseInt(aString, pitchEndIndex + 1, aString.length(), 10);
+
+                return Optional.of(
+                    new Audio(
+                        waveShapeAndStringEntry.getKey(),
+                        scale.pitch(scalePitchIndex),
+                        duration
+                    )
+                );
+            });
+    }
+
     private static Optional<Audio> parseSilence(String aString) {
         // must be at least a leading silence char, period, and duration int
         if (aString.length() < 3) {
