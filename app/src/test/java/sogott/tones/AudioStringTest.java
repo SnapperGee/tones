@@ -494,139 +494,140 @@ final class AudioStringTestArgsProvider {
                                             .toString(),
                                         wave
                                     )),
-                                        accidentals.stream()
-                                            .flatMap(accidental -> Stream.of(
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(duration)
-                                                        .toString(),
-                                                    wave
-                                                ),
-                                                arguments(
-                                                    new StringBuilder()
-                                                        .append(waveStringAlias)
-                                                        .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                                                        .append(pitchLetter.charValue())
-                                                        .append(accidental.charValue())
-                                                        .append(octave)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .toString(),
-                                                    wave
-                                                ))))));
+                                    accidentals.stream()
+                                        .flatMap(accidental -> Stream.of(
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(duration)
+                                                    .toString(),
+                                                wave
+                                            ),
+                                            arguments(
+                                                new StringBuilder()
+                                                    .append(waveStringAlias)
+                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                    .append(pitchLetter.charValue())
+                                                    .append(accidental.charValue())
+                                                    .append(octave)
+                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                    .toString(),
+                                                wave
+                                            )
+                                        )))));
                 });
             }
         }
