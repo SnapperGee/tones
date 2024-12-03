@@ -298,7 +298,11 @@ final class AudioString {
                 }
 
                 // pitch must be an integer and account for negative pitch
-                if (aString.codePoints().skip(pitchStartIndex + (pitchIsNegative ? 1 : 0)).limit(pitchEndIndex - pitchStartIndex - (pitchIsNegative ? 1 : 0)).anyMatch(cp -> !Character.isDigit(cp))) {
+                if (aString.codePoints()
+                    .skip(pitchStartIndex + (pitchIsNegative ? 1 : 0))
+                    .limit(pitchEndIndex - pitchStartIndex - (pitchIsNegative ? 1 : 0))
+                    .anyMatch(cp -> !Character.isDigit(cp))
+                ) {
                     return Optional.empty();
                 }
 
