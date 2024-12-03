@@ -106,14 +106,15 @@ final class AudioStringTestArgsProvider {
                                         return IntStream.rangeClosed(minScalePitchIndex, maxScalePitchIndexLimit)
                                             .mapToObj(scalePitchIndex ->
                                             {
+                                                final Scale scale = new Scale(accidentalPitchClassesMap.getValue(), octave);
+                                                final int computedPitchIndex = Math.floorMod(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
+                                                final int computedOctave = octave + Math.floorDiv(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
+                                                final PitchClass computedPitchClass = accidentalPitchClassesMap.getValue().get(computedPitchIndex);
+                                                final Pitch computedPitch = new Pitch(computedPitchClass, computedOctave);
+                                                final int duration = random.nextInt(1, 256);
+
                                                 return waveShapes.stream().flatMap(waveShape ->
                                                 {
-                                                    final Scale scale = new Scale(accidentalPitchClassesMap.getValue(), octave);
-                                                    final int duration = random.nextInt(1, 256);
-                                                    final int computedPitchIndex = Math.floorMod(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
-                                                    final int computedOctave = octave + Math.floorDiv(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
-                                                    final PitchClass computedPitchClass = accidentalPitchClassesMap.getValue().get(computedPitchIndex);
-                                                    final Pitch computedPitch = new Pitch(computedPitchClass, computedOctave);
                                                     final Audio expectedAudioObject = new Audio(waveShape, computedPitch, duration);
 
                                                     return waveShape.stringValueAliases().stream().map(waveShapeStringValueAlias ->
