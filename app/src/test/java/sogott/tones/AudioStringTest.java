@@ -122,13 +122,13 @@ final class AudioStringTestArgsProvider {
                                                         final String audioScaleString =
                                                             new StringBuilder()
                                                                 .append(waveShapeStringValueAlias)
-                                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH)
+                                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
                                                                 .append(scalePitchIndex)
-                                                                .append(AudioString.Delimiter.VOICE_AND_DURATION)
+                                                                .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
                                                                 .append(duration)
                                                                 .toString();
 
-                                                        return arguments(audioScaleString, expectedAudioObject, scale);
+                                                        return arguments(audioScaleString, scale, expectedAudioObject);
                                                     });
                                                 });
                                             })
@@ -740,40 +740,86 @@ final class AudioStringTest {
         assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null));
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates optional of {1}")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates Optional of {1}")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioPitchStringValueAndAudio.class)
-    void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(String audioString,
-            Audio audio) {
+    void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(
+        String audioString,
+        Audio audio
+    ) {
+
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
-        assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
-                .formatted(audioString));
+
+        assertTrue(
+            parsedAudio.isPresent(),
+            () -> "AudioString.parse(\"%s\") returned non present Optional."
+                .formatted(audioString)
+        );
+
         assertEquals(audio, parsedAudio.get());
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates optional of {2}")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates Optional of {2}")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioPitchStringValueWithoutWaveShapePrefixAndAudio.class)
-    void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(String audioString,
-            WaveShape wave, Audio audio) {
+    void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(
+            String audioString,
+            WaveShape wave,
+            Audio audio
+    ) {
+
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
-        assertTrue(parsedAudio.isPresent(), () -> "AudioString.parse(\"%s\") returned non present optional."
-                .formatted(audioString));
+
+        assertTrue(
+            parsedAudio.isPresent(),
+            () -> "AudioString.parse(\"%s\") returned non present Optional."
+                .formatted(audioString)
+        );
+
         assertEquals(audio, parsedAudio.get());
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\") returns empty optional")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\") returns empty Optional")
     @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioPitchStringValue.class)
     @EmptySource
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
+
         final Optional<Audio> parsedAudio = AudioString.parse(audioString);
-        assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
-                .formatted(audioString));
+
+        assertTrue(
+            parsedAudio.isEmpty(),
+            () -> "AudioString.parse(\"%s\") returned non empty Optional."
+                .formatted(audioString)
+        );
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty optional")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty Optional")
     @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioPitchStringAndWave.class)
     void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, WaveShape wave) {
+
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
-        assertTrue(parsedAudio.isEmpty(), () -> "AudioString.parse(\"%s\") returned non empty optional."
-                .formatted(audioString));
+
+        assertTrue(
+            parsedAudio.isEmpty(),
+            () -> "AudioString.parse(\"%s\") returned non empty Optional."
+                .formatted(audioString)
+        );
+    }
+
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns Optional<{2}>")
+    @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioScaleStringValueAndAudio.class)
+    void audioStringParseScaleStringWithValidScaleReturnsValidAudioObject(
+        String audioScaleString,
+        Scale scale,
+        Audio expectedAudioObject
+    ) {
+
+        final Optional<Audio> parsedAudio = AudioString.parse(audioScaleString, scale);
+
+        assertTrue(
+            parsedAudio.isPresent(),
+            () -> "AudioString.parse(\"%s\", %s) returned non empty Optional."
+                .formatted(audioScaleString, scale)
+        );
+
+        assertEquals(expectedAudioObject, parsedAudio.get());
     }
 }
