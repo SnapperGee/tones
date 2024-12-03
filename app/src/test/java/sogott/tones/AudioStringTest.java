@@ -108,6 +108,7 @@ final class AudioStringTestArgsProvider {
                                             {
                                                 return waveShapes.stream().flatMap(waveShape ->
                                                 {
+                                                    final Scale scale = new Scale(accidentalPitchClassesMap.getValue(), octave);
                                                     final int duration = random.nextInt(1, 256);
                                                     final int computedPitchIndex = Math.floorMod(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
                                                     final int computedOctave = octave + Math.floorDiv(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
@@ -126,7 +127,7 @@ final class AudioStringTestArgsProvider {
                                                                 .append(duration)
                                                                 .toString();
 
-                                                        return arguments(audioScaleString, expectedAudioObject);
+                                                        return arguments(audioScaleString, expectedAudioObject, scale);
                                                     });
                                                 });
                                             })
