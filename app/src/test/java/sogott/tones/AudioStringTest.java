@@ -751,7 +751,7 @@ final class AudioStringTest {
 
         assertTrue(
             parsedAudio.isPresent(),
-            () -> "AudioString.parse(\"%s\") returned non present Optional."
+            () -> "AudioString.parse(\"%s\") returned empty Optional."
                 .formatted(audioString)
         );
 
@@ -770,7 +770,7 @@ final class AudioStringTest {
 
         assertTrue(
             parsedAudio.isPresent(),
-            () -> "AudioString.parse(\"%s\") returned non present Optional."
+            () -> "AudioString.parse(\"%s\") returned empty Optional."
                 .formatted(audioString)
         );
 
@@ -816,7 +816,7 @@ final class AudioStringTest {
 
         assertTrue(
             parsedAudio.isPresent(),
-            () -> "AudioString.parse(\"%s\", %s) returned non empty Optional."
+            () -> "AudioString.parse(\"%s\", %s) returned empty Optional."
                 .formatted(audioScaleString, scale)
         );
 
