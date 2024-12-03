@@ -40,7 +40,8 @@ final class ScaleTestArgsProvider {
                             {
                                 final int computedIndex = Math.floorMod(scalePitchIndex, pitchClasses.size());
                                 final int computedOctave = octave + Math.floorDiv(scalePitchIndex, pitchClasses.size());
-                                return arguments(pitchClasses, octave, scalePitchIndex, new Pitch(pitchClasses.get(computedIndex), computedOctave));
+                                final PitchClass computedPitchClass = pitchClasses.get(computedIndex);
+                                return arguments(pitchClasses, octave, scalePitchIndex, new Pitch(computedPitchClass, computedOctave));
                             });
                     }
                 ))
