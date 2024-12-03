@@ -32,13 +32,17 @@ final class ScaleTestArgsProvider {
             .flatMap(scales -> scales.pitchLetterAccidentalMap().values().stream()
                 .flatMap(pitchLetterAccidentalMap -> pitchLetterAccidentalMap.values().stream().map(
                     pitchClasses ->
-                        IntStream.rangeClosed((pitchClasses.size() - 1) * -4, (pitchClasses.size() - 1) * 4).mapToObj(
-                                scalePitchIndex -> {
-                                    final int octave = random.nextInt(4, 12);
-                                    final int computedIndex = Math.floorMod(scalePitchIndex, pitchClasses.size());
-                                    final int computedOctave = octave + Math.floorDiv(scalePitchIndex, pitchClasses.size());
-                                    return arguments(pitchClasses, octave, scalePitchIndex, new Pitch(pitchClasses.get(computedIndex), computedOctave));
-                                })
+                    {
+                        final int octave = random.nextInt(0, 7);
+
+                        return IntStream.rangeClosed((pitchClasses.size() - 1) * -octave, (pitchClasses.size() - 1) * octave)
+                            .mapToObj(scalePitchIndex ->
+                            {
+                                final int computedIndex = Math.floorMod(scalePitchIndex, pitchClasses.size());
+                                final int computedOctave = octave + Math.floorDiv(scalePitchIndex, pitchClasses.size());
+                                return arguments(pitchClasses, octave, scalePitchIndex, new Pitch(pitchClasses.get(computedIndex), computedOctave));
+                            });
+                    }
                 ))
                 .flatMap(s -> s));
         }
