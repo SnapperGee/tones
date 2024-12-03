@@ -977,7 +977,7 @@ final class AudioStringTest {
     static class AudioScaleStringWithInvalidPrefixes {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidPrefix.class)
-        void audioStringParseScaleStringWithInvalidPrefixReturnsEmptyOptional(
+        void audioStringParseWaveShapePrefixedScaleStringWithInvalidPrefixReturnsEmptyOptional(
             String invalidPrefixedAudioScaleString
         ) {
             final WaveShape waveShape = mock();
@@ -997,7 +997,7 @@ final class AudioStringTest {
     static class AudioScaleStringWithInvalidSuffixes {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidSuffix.class)
-        void audioStringParseScaleStringWithInvalidSuffixReturnsEmptyOptional(
+        void audioStringParseWaveShapePrefixedScaleStringWithInvalidSuffixReturnsEmptyOptional(
             String invalidSuffixedAudioScaleString
         ) {
             final WaveShape waveShape = mock();
@@ -1017,7 +1017,7 @@ final class AudioStringTest {
     static class AudioScaleStringWithInvalidInserted {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidInserted.class)
-        void audioStringParseScaleStringWithInvalidInsertedReturnsEmptyOptional(
+        void audioStringParseWaveShapePrefixedScaleStringWithInvalidInsertedReturnsEmptyOptional(
             String invalidInsertedAudioScaleString
         ) {
             final WaveShape waveShape = mock();
