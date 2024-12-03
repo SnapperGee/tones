@@ -279,6 +279,10 @@ final class AudioString {
         Map.Entry<WaveShape, String> waveShapeAndStringEntry,
         Scale scale
     ) {
+        if (aString.isBlank()) {
+            return Optional.empty();
+        }
+
         return processWaveShapeAndStringEntry(aString, waveShapeAndStringEntry)
             .or(() -> {
 
