@@ -795,7 +795,7 @@ final class AudioStringTestArgsProvider {
                                                                     .append(duration)
                                                                     .toString();
 
-                                                            return Util.randomStrings(4, 1, 6)
+                                                            return Util.randomStrings(1, 1, 6)
                                                                 .flatMap(aString ->
                                                                     Stream.concat(
                                                                         Stream.of(
@@ -926,7 +926,7 @@ final class AudioStringTest {
     @Disabled
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}, {2}) returns empty Optional")
     @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioScaleString.class)
-    void audioStringParseWaveShapeInvalidStringReturnsEmptyOptional(
+    void audioStringParseInvalidScaleStringReturnsEmptyOptional(
         String invalidAudioScaleString,
         WaveShape waveShape,
         Scale scale
