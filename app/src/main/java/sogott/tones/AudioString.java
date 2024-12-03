@@ -329,13 +329,8 @@ final class AudioString {
     }
 
     private static Optional<Audio> parseSilence(String aString) {
-        // must be at least a leading silence char, period, and duration int
-        if (aString.length() < 3) {
-            return Optional.empty();
-        }
-
         // must start with silence char
-        if (aString.charAt(0) != SILENCE_CHAR) {
+        if (aString.indexOf(SILENCE_CHAR) != 0) {
             return Optional.empty();
         }
 
@@ -344,8 +339,8 @@ final class AudioString {
             return Optional.empty();
         }
 
-        // must only contain int after delimiter
-        if (aString.codePoints().skip(2).anyMatch(cp -> !Character.isDigit(cp))) {
+        // must contain int after silence char and delimiter
+        if (aString.length() < 3 || aString.codePoints().skip(2).anyMatch(cp -> !Character.isDigit(cp))) {
             return Optional.empty();
         }
 
