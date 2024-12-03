@@ -12,7 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
 
@@ -90,7 +89,6 @@ final class AudioStringTestArgsProvider {
             }
         }
 
-        // TODO: implement arguments provider for parsing scale strings
         static final class WaveShapePrefixedAudioScaleStringValueAndAudio implements ArgumentsProvider {
             @Override
             public Stream<Arguments> provideArguments(ExtensionContext context) {
@@ -734,30 +732,6 @@ final class AudioStringTest {
         assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null, wave));
     }
 
-    @Test
-    @DisplayName("AudioString.parse(null) throws")
-    void audioStringParseSingleNullThrows() {
-        assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null));
-    }
-
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\") creates Optional of {1}")
-    @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioPitchStringValueAndAudio.class)
-    void audioStringParseReturnsAudioObjectForValidAudioStringWithPrefix(
-        String audioString,
-        Audio audio
-    ) {
-
-        final Optional<Audio> parsedAudio = AudioString.parse(audioString);
-
-        assertTrue(
-            parsedAudio.isPresent(),
-            () -> "AudioString.parse(\"%s\") returned empty Optional."
-                .formatted(audioString)
-        );
-
-        assertEquals(audio, parsedAudio.get());
-    }
-
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates Optional of {2}")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioPitchStringValueWithoutWaveShapePrefixAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(
@@ -775,20 +749,6 @@ final class AudioStringTest {
         );
 
         assertEquals(audio, parsedAudio.get());
-    }
-
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\") returns empty Optional")
-    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioPitchStringValue.class)
-    @EmptySource
-    void audioStringParseReturnsEmptyOptionalForInvalidAudioStringArgument(String audioString) {
-
-        final Optional<Audio> parsedAudio = AudioString.parse(audioString);
-
-        assertTrue(
-            parsedAudio.isEmpty(),
-            () -> "AudioString.parse(\"%s\") returned non empty Optional."
-                .formatted(audioString)
-        );
     }
 
     @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty Optional")

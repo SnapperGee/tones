@@ -216,35 +216,6 @@ final class AudioString {
         );
     }
 
-    /**
-     * Parses the passed {@code String} argument case insensitively to an
-     * {@link Audio} object. If the passed string can't be parsed to audio then
-     * an empty optional is returned, otherwise the returned optional contains
-     * the resulting audio object from parsing the string.
-     *
-     * @param aString {@code String} to parse to an {@link Audio} object.
-     *
-     * @return An {@code Optional} containing the {@link Audio} object parsed from
-     *         the passed string or an empty optional if it can't be parsed.
-     *
-     * @throws IllegalArgumentException If the provided argument is
-     *                                  {@code null}.
-     */
-    static Optional<Audio> parse(String aString) {
-        if (aString == null) {
-            throw new IllegalArgumentException("Null String.");
-        }
-
-        return parseSilence(aString).or(() ->
-            WaveShape.parsePrefix(aString)
-                .filter(waveShapeAndString ->
-                    // check next character is the wave shape and pitch delimiter
-                    aString.length() > waveShapeAndString.getValue().length()
-                    && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
-                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString))
-        );
-    }
-
     static Optional<Audio> parse(String aString, Scale scale) {
         if (aString == null) {
             throw new IllegalArgumentException("Null String.");
