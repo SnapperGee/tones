@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -121,7 +122,7 @@ final class AudioStringTestArgsProvider {
                                                     return waveShape.stringValueAliases().stream()
                                                         .map(waveShapeStringValueAlias ->
                                                         {
-                                                            final String audioScaleString =
+                                                            final String waveShapePrefixedAudioScaleString =
                                                                 new StringBuilder()
                                                                     .append(waveShapeStringValueAlias)
                                                                     .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
@@ -130,7 +131,7 @@ final class AudioStringTestArgsProvider {
                                                                     .append(duration)
                                                                     .toString();
 
-                                                            return arguments(audioScaleString, aDifferentWaveShape, scale, expectedAudioObject);
+                                                            return arguments(waveShapePrefixedAudioScaleString, aDifferentWaveShape, scale, expectedAudioObject);
                                                         });
                                                 });
                                             })
@@ -171,14 +172,14 @@ final class AudioStringTestArgsProvider {
 
                                                     return waveShape.stringValueAliases().stream().map(waveShapeStringValueAlias ->
                                                     {
-                                                        final String audioScaleString =
+                                                        final String nonPrefixedAudioScaleString =
                                                             new StringBuilder()
                                                                 .append(scalePitchIndex)
                                                                 .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
                                                                 .append(duration)
                                                                 .toString();
 
-                                                        return arguments(audioScaleString, waveShape, scale, expectedAudioObject);
+                                                        return arguments(nonPrefixedAudioScaleString, waveShape, scale, expectedAudioObject);
                                                     });
                                                 });
                                             })
@@ -755,6 +756,69 @@ final class AudioStringTestArgsProvider {
                 });
             }
         }
+
+        static final class AudioScaleString implements ArgumentsProvider {
+            @Override
+            public Stream<Arguments> provideArguments(ExtensionContext context) {
+                return scalePitchClasses.stream().flatMap(scalePitchLetterMaps ->
+                    scalePitchLetterMaps.pitchLetterAccidentalMap().entrySet().stream()
+                        .flatMap(pitchLetterAccidentalMap ->
+                            pitchLetterAccidentalMap.getValue().entrySet().stream()
+                                .flatMap(accidentalPitchClassesMap ->
+                                    IntStream.rangeClosed(0, 3).mapToObj(octave ->
+                                    {
+                                        final int minScalePitchIndex = (accidentalPitchClassesMap.getValue().size() - 1) * -octave;
+                                        final int maxScalePitchIndexLimit = (accidentalPitchClassesMap.getValue().size() - 1) * 3;
+                                        return IntStream.rangeClosed(minScalePitchIndex, maxScalePitchIndexLimit)
+                                            .mapToObj(scalePitchIndex ->
+                                            {
+                                                final Scale scale = new Scale(accidentalPitchClassesMap.getValue(), octave);
+                                                final int duration = random.nextInt(1, 256);
+                                                return waveShapes.stream().flatMap(waveShape ->
+                                                {
+                                                    return waveShape.stringValueAliases().stream()
+                                                        .flatMap(waveShapeStringValueAlias ->
+                                                        {
+                                                            final String nonPrefixedAudioScaleString =
+                                                                new StringBuilder()
+                                                                    .append(scalePitchIndex)
+                                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                                    .append(duration)
+                                                                    .toString();
+
+                                                            final String waveShapePrefixedAudioScaleString =
+                                                                new StringBuilder()
+                                                                    .append(waveShapeStringValueAlias)
+                                                                    .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                                                                    .append(scalePitchIndex)
+                                                                    .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
+                                                                    .append(duration)
+                                                                    .toString();
+
+                                                            return Util.randomStrings(4, 1, 6)
+                                                                .flatMap(aString ->
+                                                                    Stream.concat(
+                                                                        Stream.of(
+                                                                            arguments(aString + nonPrefixedAudioScaleString, waveShape, scale),
+                                                                            arguments(nonPrefixedAudioScaleString + aString, waveShape, scale),
+                                                                            arguments(aString + waveShapePrefixedAudioScaleString, waveShape, scale),
+                                                                            arguments(waveShapePrefixedAudioScaleString + aString, waveShape, scale)
+                                                                        ),
+                                                                        IntStream.range(0, nonPrefixedAudioScaleString.length())
+                                                                            .mapToObj(i -> arguments(nonPrefixedAudioScaleString.substring(i), waveShape, scale))
+                                                                    )
+                                                                );
+                                                        });
+                                                });
+                                            })
+                                            .flatMap(s -> s);
+                                    })
+                                    .flatMap(s -> s)
+                                )
+                    )
+                );
+            }
+        }
     }
 }
 
@@ -784,7 +848,7 @@ final class AudioStringTest {
         assertThrows(IllegalArgumentException.class, () -> AudioString.parse(null, wave));
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", Wave.{1}) creates Optional of {2}")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape.{1}) creates Optional of {2}")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.AudioPitchStringValueWithoutWaveShapePrefixAndAudio.class)
     void audioStringParseReturnsAudioObjectForValidAudioStringWithoutPrefixWithDefaultWave(
             String audioString,
@@ -803,9 +867,12 @@ final class AudioStringTest {
         assertEquals(audio, parsedAudio.get());
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns empty Optional")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape.{1}) returns empty Optional")
     @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioPitchStringAndWave.class)
-    void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(String audioString, WaveShape wave) {
+    void audioStringParseReturnsEmptyOptionalForInvalidAudioStringAndWaveArgument(
+        String audioString,
+        WaveShape wave
+    ) {
 
         final Optional<Audio> parsedAudio = AudioString.parse(audioString, wave);
 
@@ -816,7 +883,7 @@ final class AudioStringTest {
         );
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}, {2}) returns Optional<{3}>")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape.{1}, {2}) returns Optional<{3}>")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioScaleStringValueAndAudio.class)
     void audioStringParseWaveShapePrefixedScaleStringWithValidScaleReturnsValidAudioObject(
         String waveShapePrefixedAudioScaleString,
@@ -829,14 +896,14 @@ final class AudioStringTest {
 
         assertTrue(
             parsedAudio.isPresent(),
-            () -> "AudioString.parse(\"%s\", %s) returned empty Optional."
-                .formatted(waveShapePrefixedAudioScaleString, scale)
+            () -> "AudioString.parse(\"%s\", WaveShape.%s, %s) returned empty Optional."
+                .formatted(waveShapePrefixedAudioScaleString, waveShape, scale)
         );
 
         assertEquals(expectedAudioObject, parsedAudio.get());
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}, {2}) returns Optional<{3}>")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape.{1}, {2}) returns Optional<{3}>")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.NonWaveShapePrefixedAudioScaleStringValueAndAudio.class)
     void audioStringParseNonWaveShapePrefixedScaleStringWithValidScaleReturnsValidAudioObject(
         String nonWaveShapePrefixedAudioScaleString,
@@ -849,10 +916,28 @@ final class AudioStringTest {
 
         assertTrue(
             parsedAudio.isPresent(),
-            () -> "AudioString.parse(\"%s\", %s) returned empty Optional."
-                .formatted(nonWaveShapePrefixedAudioScaleString, scale)
+            () -> "AudioString.parse(\"%s\", WaveShape.%s, %s) returned empty Optional."
+                .formatted(nonWaveShapePrefixedAudioScaleString, waveShape, scale)
         );
 
         assertEquals(expectedAudioObject, parsedAudio.get());
+    }
+
+    @Disabled
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}, {2}) returns empty Optional")
+    @ArgumentsSource(AudioStringTestArgsProvider.Invalid.AudioScaleString.class)
+    void audioStringParseWaveShapeInvalidStringReturnsEmptyOptional(
+        String invalidAudioScaleString,
+        WaveShape waveShape,
+        Scale scale
+    ) {
+
+        final Optional<Audio> parsedAudio = AudioString.parse(invalidAudioScaleString, waveShape, scale);
+
+        assertTrue(
+            parsedAudio.isEmpty(),
+            () -> "AudioString.parse(\"%s\", WaveShape.%s, %s) returned non empty Optional."
+                .formatted(invalidAudioScaleString, waveShape, scale)
+        );
     }
 }
