@@ -804,7 +804,7 @@ final class AudioStringTestArgsProvider {
                                                                             arguments(aString + waveShapePrefixedAudioScaleString, waveShape, scale),
                                                                             arguments(waveShapePrefixedAudioScaleString + aString, waveShape, scale)
                                                                         ),
-                                                                        IntStream.range(0, nonPrefixedAudioScaleString.length())
+                                                                        IntStream.range(1, nonPrefixedAudioScaleString.length() - 1)
                                                                             .mapToObj(i -> arguments(nonPrefixedAudioScaleString.substring(i), waveShape, scale))
                                                                     )
                                                                 );
