@@ -126,7 +126,7 @@ final class AudioStringTestArgsProvider {
                                                                 .append(duration)
                                                                 .toString();
 
-                                                        return arguments(audioScaleString, scale, expectedAudioObject);
+                                                        return arguments(audioScaleString, waveShape, scale, expectedAudioObject);
                                                     });
                                                 });
                                             })
@@ -764,15 +764,16 @@ final class AudioStringTest {
         );
     }
 
-    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}) returns Optional<{2}>")
+    @ParameterizedTest(name = "AudioString.parse(\"{0}\", {1}, {2}) returns Optional<{3}>")
     @ArgumentsSource(AudioStringTestArgsProvider.Valid.WaveShapePrefixedAudioScaleStringValueAndAudio.class)
     void audioStringParseScaleStringWithValidScaleReturnsValidAudioObject(
         String audioScaleString,
+        WaveShape waveShape,
         Scale scale,
         Audio expectedAudioObject
     ) {
 
-        final Optional<Audio> parsedAudio = AudioString.parse(audioScaleString, scale);
+        final Optional<Audio> parsedAudio = AudioString.parse(audioScaleString, waveShape, scale);
 
         assertTrue(
             parsedAudio.isPresent(),
