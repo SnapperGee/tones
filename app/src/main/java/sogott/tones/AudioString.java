@@ -216,6 +216,26 @@ final class AudioString {
         );
     }
 
+    static Optional<Audio> parse(String aString, WaveShape defaultWaveShape, Scale scale) {
+        if (aString == null) {
+            throw new IllegalArgumentException("Null string.");
+        }
+
+        if (defaultWaveShape == null) {
+            throw new IllegalArgumentException("Null default wave.");
+        }
+
+        return parseSilence(aString).or(() ->
+            WaveShape.parsePrefix(aString)
+                .or(() -> Optional.of(Map.entry(defaultWaveShape, "")))
+                .filter(waveShapeAndString ->
+                    // check next character is the wave shape and pitch delimiter
+                    waveShapeAndString.getValue().isEmpty() || aString.length() > waveShapeAndString.getValue().length()
+                    && aString.charAt(waveShapeAndString.getValue().length()) == Delimiter.WAVE_SHAPE_AND_PITCH.charValue())
+                .flatMap(waveShapeAndString -> processWaveShapeAndStringEntry(aString, waveShapeAndString, scale))
+        );
+    }
+
     static Optional<Audio> parse(String aString, Scale scale) {
         if (aString == null) {
             throw new IllegalArgumentException("Null String.");
