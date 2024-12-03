@@ -339,19 +339,17 @@ final class AudioString {
             return Optional.empty();
         }
 
-        final int delimiterIndex = aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue());
-
-        // must contain period char
-        if (delimiterIndex == -1) {
+        // must contain period char after silence char
+        if (aString.indexOf(Delimiter.VOICE_AND_DURATION.charValue()) != 1) {
             return Optional.empty();
         }
 
         // must only contain int after delimiter
-        if (aString.codePoints().limit(delimiterIndex - 1).anyMatch(cp -> !Character.isDigit(cp))) {
+        if (aString.codePoints().skip(2).anyMatch(cp -> !Character.isDigit(cp))) {
             return Optional.empty();
         }
 
-        final int duration = Integer.parseInt(aString, delimiterIndex, aString.length(), 10);
+        final int duration = Integer.parseInt(aString, 2, aString.length(), 10);
 
         return Optional.of(Audio.silence(duration));
     }
