@@ -96,10 +96,44 @@ final class AudioStringTestArgsProvider {
             public Stream<Arguments> provideArguments(ExtensionContext context) {
                 return scalePitchClasses.stream().flatMap(scalePitchLetterMaps ->
                     scalePitchLetterMaps.pitchLetterAccidentalMap().entrySet().stream()
-                        .map(accidentalPitchClassMaps ->
-                        {
-                            return null;
-                        }
+                        .flatMap(pitchLetterAccidentalMap ->
+                            pitchLetterAccidentalMap.getValue().entrySet().stream()
+                                .flatMap(accidentalPitchClassesMap ->
+                                    IntStream.rangeClosed(0, 3).mapToObj(octave ->
+                                    {
+                                        final int minScalePitchIndex = (accidentalPitchClassesMap.getValue().size() - 1) * -octave;
+                                        final int maxScalePitchIndexLimit = (accidentalPitchClassesMap.getValue().size() - 1) * 3;
+                                        return IntStream.rangeClosed(minScalePitchIndex, maxScalePitchIndexLimit)
+                                            .mapToObj(scalePitchIndex ->
+                                            {
+                                                return waveShapes.stream().flatMap(waveShape ->
+                                                {
+                                                    final int duration = random.nextInt(1, 256);
+                                                    final int computedPitchIndex = Math.floorMod(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
+                                                    final int computedOctave = octave + Math.floorDiv(scalePitchIndex, accidentalPitchClassesMap.getValue().size());
+                                                    final PitchClass computedPitchClass = accidentalPitchClassesMap.getValue().get(computedPitchIndex);
+                                                    final Pitch computedPitch = new Pitch(computedPitchClass, computedOctave);
+                                                    final Audio expectedAudioObject = new Audio(waveShape, computedPitch, duration);
+
+                                                    return waveShape.stringValueAliases().stream().map(waveShapeStringValueAlias ->
+                                                    {
+                                                        final String audioScaleString =
+                                                            new StringBuilder()
+                                                                .append(waveShapeStringValueAlias)
+                                                                .append(AudioString.Delimiter.WAVE_SHAPE_AND_PITCH)
+                                                                .append(scalePitchIndex)
+                                                                .append(AudioString.Delimiter.VOICE_AND_DURATION)
+                                                                .append(duration)
+                                                                .toString();
+
+                                                        return arguments(audioScaleString, expectedAudioObject);
+                                                    });
+                                                });
+                                            })
+                                            .flatMap(s -> s);
+                                    })
+                                    .flatMap(s -> s)
+                                )
                     )
                 );
             }
