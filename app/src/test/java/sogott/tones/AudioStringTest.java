@@ -973,7 +973,7 @@ final class AudioStringTest {
     }
 
     @Suite
-    @DisplayName("Audio Scale String with invalid prefixes.")
+    @DisplayName("WaveShape prefixed Audio Scale String with invalid prefixes.")
     static class AudioScaleStringWithInvalidPrefixes {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidPrefix.class)
@@ -993,7 +993,7 @@ final class AudioStringTest {
     }
 
     @Suite
-    @DisplayName("Audio Scale String with invalid suffixes.")
+    @DisplayName("WaveShape prefixed Audio Scale String with invalid suffixes.")
     static class AudioScaleStringWithInvalidSuffixes {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidSuffix.class)
@@ -1013,7 +1013,7 @@ final class AudioStringTest {
     }
 
     @Suite
-    @DisplayName("Audio Scale String with randomly inserted String.")
+    @DisplayName("WaveShape prefixed Audio Scale String with randomly inserted String.")
     static class AudioScaleStringWithInvalidInserted {
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidInserted.class)
