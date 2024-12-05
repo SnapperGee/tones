@@ -175,7 +175,7 @@ The pitch segment dictates if audio is silence or an audible tone with a
     &natural; then this character can be omitted. The 3 accidental characters
     are:
         - a minus sign `'-'` for a flat &flat;.
-        - an equals sign `'='` (or nothing) for a natural &natural;.
+        - nothing (or an equals sign `'='`) for a natural &natural;.
         - and a plus sign `'+'` for a sharp &sharp;.
 
 1. #### Octave
