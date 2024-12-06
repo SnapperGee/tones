@@ -211,6 +211,24 @@ enum CliOption {
             (someOptions, moreOptions) -> someOptions.addOptions(moreOptions));
 
     /**
+     *
+     * @param args The command line argument {@code String}s to parse.
+     *
+     * @param stopAtNonOption If {@code true} an unrecognized argument stops the
+     * parsing and the remaining arguments are added to the CommandLines args
+     * list. If false an unrecognized argument triggers a ParseException.
+     *
+     * @return The resulting {@link CommandLine} object from parsing the passed
+     *         command line arguments.
+     *
+     * @throws ParseException If there are any problems encountered while
+     * parsing the command line tokens.
+     */
+    static final CommandLine parse(String[] args, boolean stopAtNonOption) throws ParseException {
+        return DEFAULT_PARSER.parse(ALL_OPTIONS, args, stopAtNonOption);
+    }
+
+    /**
      * The default parser used by this cli application to parse the command line
      * arguments in the {@link Main#main(String[])} entry point method.
      *
@@ -219,12 +237,13 @@ enum CliOption {
      * @return The resulting {@link CommandLine} object from parsing the passed
      *         command line arguments.
      *
-     * @throws ParseException If an exception occurs during argument parsing.
+     * @throws ParseException If there are any problems encountered while
+     * parsing the command line tokens.
      *
      * @see Main#main(String[])
      */
     static final CommandLine parse(String[] args) throws ParseException {
-        return DEFAULT_PARSER.parse(ALL_OPTIONS, args);
+        return parse(args, false);
     }
 
     /**
