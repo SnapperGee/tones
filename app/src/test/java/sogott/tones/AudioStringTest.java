@@ -1012,10 +1012,10 @@ final class AudioStringTest {
         }
     }
 
+    @Disabled
     @Suite
     @DisplayName("WaveShape prefixed Audio Scale String with randomly inserted String.")
     static class AudioScaleStringWithInvalidInserted {
-        @Disabled
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidInserted.class)
         void audioStringParseWaveShapePrefixedScaleStringWithInvalidInsertedReturnsEmptyOptional(
