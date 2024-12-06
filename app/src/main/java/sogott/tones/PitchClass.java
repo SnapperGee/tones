@@ -6,13 +6,8 @@ import java.util.Optional;
 /**
      * A container for a {@link PitchLetter} and {@link Accidental} object.
      *
-     * <p>
-     * The {@code letter} gets set as the {@link PitchLetter} of the
-     * {@link PitchClass}.
-     *
-     * <p>
-     * The {@code accidental} gets set as the {@link Accidental} of this
-     * {@link PitchClass}.
+     * @param letter The {@link PitchLetter} of this {@link PitchClass}.
+     * @param accidental The {@link Accidental} of this {@link PitchClass}.
      *
      * @see PitchLetter
      * @see Accidental

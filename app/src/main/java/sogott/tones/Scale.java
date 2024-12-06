@@ -12,14 +12,6 @@ import java.util.List;
  * on a numeric integer value.
  *
  * <p>
- * The {@code pitchClasses} is the {@link PitchClass} {@code List} that
- * {@link Pitch}es are derived from.
- *
- * <p>
- * The {@code octave} is the root octave {@code int} applied to index 0 and
- * used to derive the octave of the created {@link Pitch}es.
- *
- * <p>
  * For instance lets say you wanted to make it possible to create the pitches
  * of the A minor scale in the 3rd octave. You could pass a list of the pitch
  * classes (in the correct order) for the A minor scale and the int 3 to the
@@ -28,6 +20,12 @@ import java.util.List;
  * `0` to the {@link #pitch(int)} method would return the scale's tonic, A3, and
  * then passing `1` to `6` would return the rest of the scale's notes, correctly
  * setting the octave to `4` for the pitches for notes C through G.
+ *
+ * @param pitchClasses The {@link PitchClass} {@code List} that {@link Pitch}es
+ *                     are derived from.
+ *
+ * @param octave The root octave {@code int} applied to index 0 and used to
+ *               derive the octave of the created {@link Pitch}es.
  *
  * @see PitchClass
  * @see Pitch
