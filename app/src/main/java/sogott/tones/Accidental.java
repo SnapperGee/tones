@@ -10,15 +10,13 @@ import java.util.Optional;
  *
  * <p>
  * Each accidental value consists of an {@link #offset() offset} {@code int}
- * value used by the static methods of the {@link Frequency} class to convert it
- * into a frequency.
+ * value used by the {@link Pitch} class to convert it into a frequency.
  *
  * <p>
  * Its {@link #charValue() charValue} is also used for parsing {@code String}s
  * to a {@link Pitch} object by the {@link AudioString} and {@link Pitch} class.
  *
  * @see AudioString
- * @see Frequency
  * @see Pitch
  */
 enum Accidental {
@@ -55,13 +53,11 @@ enum Accidental {
     }
 
     /**
-     * The {@code int} value of this {@link Accidental} used by the static
-     * methods of the {@link Frequency} class to generate a {@code double}
-     * frequency.
+     * The {@code int} value of this {@link Accidental} used by the
+     * {@link Pitch} class to generate a {@code double} frequency.
      *
-     * @return {@code int} value of this {@link Accidental} used by the static
-     *         methods of the {@link Frequency} class to generate a {@code double}
-     *         frequency.
+     * @return {@code int} value of this {@link Accidental} used by the the
+     *         {@link Pitch} class to generate a {@code double} frequency.
      */
     int offset() {
         return this._offset;
