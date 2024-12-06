@@ -118,6 +118,25 @@ enum WaveShape {
                 .max(comparingInt(String::length));
     }
 
+    /**
+     * If the passed {@code String} argument starts with a leading prefix that
+     * can be parsed into a {@link WaveShape}, returns an {@link Optional}
+     * containing a {@link Map.Entry} that contains the resulting
+     * {@link WaveShape} object of parsing it as the entry key and the raw
+     * {@code String} prefix that was parsed as the entry value.
+     *
+     * @param aString {@code String} to attempt to parse the leading prefix from
+     *                to a {@link WaveShape} object and to extract the parsed
+     *                leading prefix segment.
+     *
+     * @return An {@link Optional} containing a {@link Map.Entry} that contains
+     * the resulting {@link WaveShape} object of parsing the leading prefix of
+     * the passed {@code String} argument as the entry key and the raw
+     * {@code String} prefix that was parsed as the entry value.
+     *
+     * @throws IllegalArgumentException If the passed {@code String} argument is
+     * {@code null}.
+     */
     static Optional<Map.Entry<WaveShape, String>> parsePrefix(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null String argument.");
