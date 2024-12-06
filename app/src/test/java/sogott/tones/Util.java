@@ -17,7 +17,7 @@ final class Util {
             )
             .collect(
                 StringBuilder::new,
-                (sb, cp) -> sb.append((char) cp),
+                StringBuilder::appendCodePoint,
                 StringBuilder::append)
             .toString()
         )
@@ -35,7 +35,7 @@ final class Util {
             .limit(random.nextLong(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,
-                (sb, cp) -> sb.append((char) cp),
+                StringBuilder::appendCodePoint,
                 StringBuilder::append)
             .toString()
         )
@@ -53,7 +53,7 @@ final class Util {
             .limit(random.nextLong(minLength, maxLength + 1))
             .collect(
                 StringBuilder::new,
-                (sb, cp) -> sb.append((char) cp),
+                StringBuilder::appendCodePoint,
                 StringBuilder::append)
             .toString()
         )
