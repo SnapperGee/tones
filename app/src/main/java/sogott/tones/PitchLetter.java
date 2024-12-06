@@ -14,15 +14,13 @@ import static java.util.Collections.unmodifiableList;
  *
  * <p>
  * Each accidental value consists of an {@link #offset() offset} {@code int}
- * value used by the static methods of the {@link Frequency} class to convert it
- * into a frequency.
+ * value used by the {@link Pitch} class to convert it into a frequency.
  *
  * <p>
  * Its {@link #charValue() charValue} is also used for parsing {@code String}s
  * to a {@link Pitch} object by the {@link AudioString} and {@link Pitch} class.
  *
  * @see AudioString
- * @see Frequency
  * @see Pitch
  */
 enum PitchLetter {
@@ -90,11 +88,11 @@ enum PitchLetter {
     }
 
     /**
-     * The {@code int} value used by the static methods of the {@link Frequency}
-     * class to convert this enum value into a frequency.
+     * The {@code int} value used by the {@link Pitch} class to convert this
+     * enum value into a frequency.
      *
-     * @return The {@code int} value used by the static methods of the
-     *         {@link Frequency} class to convert this enum value into a frequency.
+     * @return The {@code int} value used by the {@link Pitch} class to convert this
+     *         enum value into a frequency.
      */
     int offset() {
         return this._offset;
