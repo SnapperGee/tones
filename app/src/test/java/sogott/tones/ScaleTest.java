@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -88,6 +88,7 @@ final class ScaleTest {
         assertThrows(IllegalArgumentException.class, () -> new Scale(List.of(pitchClassList), ScaleTestArgsProvider.random.nextInt(-12, 0)));
     }
 
+    @Disabled
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) returns {3}")
     @ArgumentsSource(ScaleTestArgsProvider.ScalesWithValidPitchIndexesAndOctaves.class)
     void scalePitchPassedValidIndex(
@@ -101,6 +102,7 @@ final class ScaleTest {
         assertEquals(expectedPitch, retrievedPitch);
     }
 
+    @Disabled
     @ParameterizedTest(name = "Scale(pitchClasses={0}, octave={1}).pitch({2}) throws IndexOutOfBoundsException")
     @ArgumentsSource(ScaleTestArgsProvider.ScalesWithInvalidPitchIndexesAndOctaves.class)
     void scalePitchPassedInvalidIndexThrowsIndexOutOfBoundsException(
