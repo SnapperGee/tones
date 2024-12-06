@@ -26,6 +26,8 @@ final public class Main {
     private static final int BPM = 140;
     private static final int NOTE_BEAT_VALUE = 4;
     private static final WaveShape WAVE = WaveShape.SINE;
+    private static final ScalePitchClasses SCALE_PITCH_CLASSES = ScalePitchClasses.MINOR;
+    private static final Pitch ROOT_PITCH = new Pitch(PitchLetter.A, Accidental.NATURAL, 4);
 
     /**
      * The entry point of this application where command line processing takes
@@ -63,6 +65,12 @@ final public class Main {
 
                 final WaveShape wave = cliArgs.getParsedOptionValue(CliOption.WAVE.value(), WAVE);
 
+                final ScalePitchClasses scalePitchClasses = cliArgs.getParsedOptionValue(CliOption.SCALE.value(), SCALE_PITCH_CLASSES);
+
+                final Pitch rootPitch = cliArgs.getParsedOptionValue(CliOption.ROOT.value(), ROOT_PITCH);
+
+                final Scale scale = new Scale(scalePitchClasses.of(rootPitch.pitchClass()), rootPitch.octave());
+
                 final double beatDuration = 60000.0 / bpm;
 
                 final double wholeNoteDuration = beatDuration * noteBeatValue;
@@ -75,7 +83,7 @@ final public class Main {
                                 new ArrayList<String>()),
                         (acc, operand) -> {
 
-                            AudioString.parse(operand, wave).ifPresentOrElse(
+                            AudioString.parse(operand, wave, scale).ifPresentOrElse(
                                     parsedOperand -> acc.valid().add(parsedOperand),
                                     () -> acc.invalid().add(operand));
 

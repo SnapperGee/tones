@@ -154,6 +154,10 @@ final class Pitch {
         this(pitchLetter, Accidental.NATURAL, octave);
     }
 
+    PitchClass pitchClass() {
+        return this._pitchClass;
+    }
+
     /**
      * The {@link PitchLetter} value of this {@link Pitch} object. That is, one
      * of the {@code char} values A-G defined in the {@link PitchLetter} enum.

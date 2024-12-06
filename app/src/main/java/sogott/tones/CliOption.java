@@ -63,14 +63,14 @@ enum CliOption {
                     + " The easiest way to think of this value is the bottom value of a time signature."
                     + " So if there's a time signature of 3/4, then `4` is the beat value of a note.")
             .type(Integer.class)
-            .converter(arg -> {
-                if (arg.isBlank() || arg.codePoints().anyMatch(cp -> !Character.isDigit(cp))) {
+            .converter(intString -> {
+                if (intString.isBlank() || intString.codePoints().anyMatch(cp -> !Character.isDigit(cp))) {
                     throw new IllegalArgumentException(
                             "Note beat value requires positive (greater than 0) integer but got: \"%s\""
-                                    .formatted(arg));
+                                    .formatted(intString));
                 }
 
-                return Integer.parseInt(arg);
+                return Integer.parseInt(intString);
             })
             .build()),
 
@@ -87,10 +87,50 @@ enum CliOption {
             .longOpt("wave")
             .hasArg()
             .type(WaveShape.class)
-            .converter(arg -> WaveShape.parse(arg).orElseThrow(() -> new IllegalArgumentException(
-                    "Invalid WAVE command line option argument: \"%s\"".formatted(arg))))
+            .converter(waveShapeString -> WaveShape.parse(waveShapeString).orElseThrow(() -> new IllegalArgumentException(
+                    "Invalid WAVE command line option argument. Wave shape String expected: \"%s\"".formatted(waveShapeString))))
             .desc("Set default wave shape to WAVE (defaults to SIN).")
             .build()),
+
+    /**
+     * Contains the {@link Option} for setting the musical scale of audio
+     * strings formatted with an index int for the pitch. It expects a valid
+     * scale {@code String} value defined as 1 of the {@link ScalePitchClasses}
+     * enum values.
+     *
+     * @see ScalePitchClasses
+     */
+    SCALE(Option.builder("s")
+            .argName("SCALE")
+            .longOpt("scale")
+            .hasArg()
+            .type(ScalePitchClasses.class)
+            .converter(scaleString ->
+                stream(ScalePitchClasses.values())
+                    .filter(scaleName -> scaleString.equalsIgnoreCase(scaleName.name()))
+                    .findFirst()
+                    .orElseThrow(() ->
+                        new IllegalArgumentException(
+                        "Invalid SCALE command line option argument. Scale name String expected: \"%s\"".formatted(scaleString))))
+            .desc("Set scale to SCALE (defaults to MINOR).")
+            .build()),
+
+    /**
+     * Contains the {@link Option} for setting the root pitch of the  scale used
+     * for audio strings formatted with an index int for the pitch. It expects a
+     * valid {@link Pitch} {@code String} value.
+     *
+     * @see Pitch
+     */
+    ROOT(Option.builder("r")
+        .argName("PITCH")
+        .longOpt("root")
+        .hasArg()
+        .type(Pitch.class)
+        .converter(pitchString -> Pitch.parse(pitchString).orElseThrow(() -> new IllegalArgumentException(
+                "Invalid ROOT command line option argument. Pitch String expected: \"%s\"".formatted(pitchString))))
+        .desc("Set scale root pitch to PITCH (defaults to A4).")
+        .build()),
 
     /**
      * Contains the {@link Option} for writing audio to a WAV file. It expects a
@@ -102,8 +142,8 @@ enum CliOption {
             .longOpt("out")
             .hasArg()
             .type(Path.class)
-            .converter(aString -> {
-                final Path filePathArg = Path.of(aString);
+            .converter(pathString -> {
+                final Path filePathArg = Path.of(pathString);
 
                 final Path outputFilePath = filePathArg.isAbsolute() ? filePathArg.normalize()
                         : Path.of(Path.of("").toString(), filePathArg.toString())
@@ -152,32 +192,23 @@ enum CliOption {
 
     private static final CommandLineParser DEFAULT_PARSER = new DefaultParser(false);
 
-    private static final String CMD_LINE_SYNTAX = "tones [--%s|-%s %s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [--%s|-%s %s] [--%s|-%s] [%s>]PITCH.INTEGER..."
-            .formatted(CliOption.BPM.value().getLongOpt(),
-                    CliOption.BPM.value().getOpt(),
-                    CliOption.BPM.value().getArgName(),
-                    CliOption.NOTE_BEAT_VALUE.value().getLongOpt(),
-                    CliOption.NOTE_BEAT_VALUE.value().getOpt(),
-                    CliOption.NOTE_BEAT_VALUE.value().getArgName(),
-                    CliOption.VERSION.value().getLongOpt(),
-                    CliOption.VERSION.value().getOpt(),
-                    CliOption.WAVE.value().getLongOpt(),
-                    CliOption.WAVE.value().getOpt(),
-                    CliOption.WAVE.value().getArgName(),
-                    CliOption.HELP.value().getLongOpt(),
-                    CliOption.HELP.value().getOpt(),
-                    CliOption.OUT.value().getLongOpt(),
-                    CliOption.OUT.value().getOpt(),
-                    CliOption.OUT.value().getArgName(),
-                    CliOption.QUIET.value().getOpt(),
-                    CliOption.QUIET.value().getLongOpt(),
+    private static final String CMD_LINE_SYNTAX = "tones %s %s %s %s %s %s %s %s %s [%s>]PITCH.INTEGER..."
+            .formatted(CliOption.BPM.usageString(),
+                    CliOption.NOTE_BEAT_VALUE.usageString(),
+                    CliOption.VERSION.usageString(),
+                    CliOption.WAVE.usageString(),
+                    CliOption.HELP.usageString(),
+                    CliOption.OUT.usageString(),
+                    CliOption.QUIET.usageString(),
+                    CliOption.SCALE.usageString(),
+                    CliOption.ROOT.usageString(),
                     CliOption.WAVE.value().getArgName())
             + "\nPlay musical note based tones.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
 
     private static final Options ALL_OPTIONS = stream(CliOption.values()).reduce(
             new Options(),
             (options, option) -> options.addOption(option.value()),
-            (options1, options2) -> options1.addOptions(options2));
+            (someOptions, moreOptions) -> someOptions.addOptions(moreOptions));
 
     /**
      * The default parser used by this cli application to parse the command line
@@ -207,9 +238,25 @@ enum CliOption {
     }
 
     final private Option _value;
+    final private String _usageString;
 
     private CliOption(Option value) {
         this._value = value;
+        this._usageString = this._value.hasArgName()
+            ? new StringBuilder("[--")
+                .append(this._value.getLongOpt())
+                .append("|-")
+                .append(this._value.getOpt())
+                .append('\u0020')
+                .append(this._value.getArgName())
+                .append(']')
+                .toString()
+            : new StringBuilder("[--")
+                .append(this._value.getLongOpt())
+                .append("|-")
+                .append(this._value.getOpt())
+                .append(']')
+                .toString();
     }
 
     /**
@@ -219,5 +266,16 @@ enum CliOption {
      */
     Option value() {
         return this._value;
+    }
+
+    /**
+     * Returns the {@code String} showing this {@link Option}'s usage suitable
+     * for use in a usage/example help string.
+     *
+     * @return {@code String} showing this {@link Option}'s usage suitable
+     *         for use in a usage/example help string.
+     */
+    String usageString() {
+        return this._usageString;
     }
 }
