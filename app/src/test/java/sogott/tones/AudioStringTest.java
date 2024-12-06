@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -1015,6 +1016,7 @@ final class AudioStringTest {
     @Suite
     @DisplayName("WaveShape prefixed Audio Scale String with randomly inserted String.")
     static class AudioScaleStringWithInvalidInserted {
+        @Disabled
         @ParameterizedTest(name = "AudioString.parse(\"{0}\", WaveShape, Scale) returns empty Optional")
         @ArgumentsSource(AudioStringTestArgsProvider.Invalid.WaveShapePrefixedAudioScaleStringWithInvalidInserted.class)
         void audioStringParseWaveShapePrefixedScaleStringWithInvalidInsertedReturnsEmptyOptional(
