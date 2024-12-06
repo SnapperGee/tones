@@ -282,7 +282,9 @@ final class Pitch {
      * object of parsing it as the entry key and the raw {@code String} prefix
      * that was parsed as the entry value.
      *
-     * @param aString
+     * @param aString {@code String} to attempt to parse the leading prefix from
+     *                to a {@link Pitch} object and to extract the parsed
+     *                leading prefix segment.
      *
      * @return An {@link Optional} containing a {@link Map.Entry} that contains
      * the resulting {@link Pitch} object of parsing the leading prefix of the
