@@ -95,6 +95,18 @@ wave shapes and their strings are:
   affects how the duration get's applied to a note and probably doesn't have to
   be manually set in most cases.
 
+- `--scale`, `-s`
+
+  Sets the musical scale to use if an integer index is used to define the pitch
+  of an audio string instead of a pitch letter, accidental, and octave. Defaults
+  to `MINOR`.
+
+- `--root`, `-r`
+
+  Sets the root note of the scale if an integer index is used to define the
+  pitch of an audio string instead of a pitch letter, accidental, and octave.
+  Expects a pitch class and defaults to `A4`.
+
 - `--out`, `-o`
 
   Outputs the audio to a 44.1khz/16bit WAV file. Expects a path (or filename)
@@ -186,6 +198,19 @@ The pitch segment dictates if audio is silence or an audible tone with a
 
 To create silence, the pitch segment is simply a question mark character, `'?'`.
 
+### Scale
+
+An alternative way to specify pitch in an audio string is via a
+***scale pitch index***. A scale pitch index is simply a 0 indexed integer that
+represents the pitch of a note in scale. For instance, to create audio
+consisting of quarter notes of all the pitches within the E&sharp; (sharp) scale
+in the 3rd octave, instead of having to write out all the pitch letters,
+accidentals, and octaves for each note, you could simply do:
+
+```bash
+$tones --scale minor --root e+3 0.4 1.4 2.4 3.4 4.4 5.4 6.4
+```
+
 ### Duration suffix
 
 The final segment of an audio string is the ***duration***. The duration amount
@@ -204,7 +229,10 @@ it'd be a quarter note etc.
 
 Double accidentals are not supported. Instead enharmonically equivalent notes
 should be used. For instance, C&sharp;&sharp; (C double sharp) is enharmonically
-equivalent to D&natural; (D natural).
+equivalent to D&natural; (D natural). This means that if the pitch letters,
+accidentals, and or octaves don't seem to match a scale, that's due to the fact
+that scales always get normalized to the ones within this API that are
+enharmonically equivalent.
 
 [java shield]: https://img.shields.io/badge/java%20JDK%2021-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white "Java JDK 21"
 [java website]: https://docs.oracle.com/en/java/javase/21/docs/api/index.html "Java"
