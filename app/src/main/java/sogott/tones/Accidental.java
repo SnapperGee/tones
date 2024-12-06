@@ -44,9 +44,9 @@ enum Accidental {
      */
     SHARP('+', 1, '♯');
 
-    final private char _char;
-    final private int _offset;
-    final private char _symbolChar;
+    private final char _char;
+    private final int _offset;
+    private final char _symbolChar;
 
     private Accidental(char charValue, int offset, char symbolChar) {
         this._char = charValue;

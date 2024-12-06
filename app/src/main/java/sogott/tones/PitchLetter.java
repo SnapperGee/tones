@@ -30,52 +30,54 @@ enum PitchLetter {
      * The enum value for the <strong><em>A</em></strong> pitch letter/letter
      * with an offset value of {@code 0}.
      */
-    A(0),
+    A(0, 9),
 
     /**
      * The enum value for the <strong><em>B</em></strong> pitch letter/letter
      * with an offset value of {@code 2}.
      */
-    B(2),
+    B(2, 11),
 
     /**
      * The enum value for the <strong><em>C</em></strong> pitch letter/letter
      * with an offset value of {@code -9}.
      */
-    C(-9),
+    C(-9, 0),
 
     /**
      * The enum value for the <strong><em>D</em></strong> pitch letter/letter
      * with an offset value of {@code -7}.
      */
-    D(-7),
+    D(-7, 2),
 
     /**
      * The enum value for the <strong><em>E</em></strong> pitch letter/letter
      * with an offset value of {@code -5}.
      */
-    E(-5),
+    E(-5, 4),
 
     /**
      * The enum value for the <strong><em>F</em></strong> pitch letter/letter
      * with an offset value of {@code -4}.
      */
-    F(-4),
+    F(-4, 5),
 
     /**
      * The enum value for the <strong><em>G</em></strong> pitch letter/letter
      * with an offset value of {@code -2}.
      */
-    G(-2);
+    G(-2, 7);
 
-    final private static List<PitchLetter> _pitchLetters = unmodifiableList(asList(PitchLetter.values()));
+    private final static List<PitchLetter> _pitchLetters = unmodifiableList(asList(PitchLetter.values()));
 
-    final private char _char;
-    final private int _offset;
+    private final char _char;
+    private final int _offset;
+    private final int _semitonesFromC;
 
-    private PitchLetter(int offSet) {
+    private PitchLetter(int offSet, int semitonesFromC) {
         this._char = this.name().charAt(0);
         this._offset = offSet;
+        this._semitonesFromC = semitonesFromC;
     }
 
     /**
@@ -96,6 +98,17 @@ enum PitchLetter {
      */
     int offset() {
         return this._offset;
+    }
+
+    /**
+     * An {@code int} indicating how many semitones from the pitch letter C this
+     * {@link PitchLetter} is.
+     *
+     * @return An {@code int} indicating how many semitones from the pitch letter
+     *         C this {@link PitchLetter} is.
+     */
+    int semitonesFromC() {
+        return this._semitonesFromC;
     }
 
     /**
