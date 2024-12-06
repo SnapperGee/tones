@@ -234,9 +234,6 @@ final class AudioString {
      *                         passed {@code String} argument is audible audio
      *                         with a tone (not silence) with no wave shape prefix.
      *
-     * @return An {@link Optional} containing the {@link Audio} object parsed
-     *         from the passed string or an empty optional if it can't be parsed.
-     *
      * @param scale The {@link Scale} to use if instead of a {@link Pitch}, the
      *              {@code String} contains a scale pitch index.
      *
