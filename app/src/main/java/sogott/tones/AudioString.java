@@ -177,11 +177,11 @@ final class AudioString {
     /**
      * <em>Case insensitively</em> parses the passed {@code String} argument to
      * an {@link Audio} object, using the passed {@link WaveShape} argument as
-     * the default wave shape if the passed {@code String} is audible audio with
-     * a tone (and not silence) and has no wave shape prefix segment. If the
-     * passed {@code String} can't be parsed to audio then an empty
-     * {@link Optional} is returned, otherwise the returned {@link Optional}
-     * contains the resulting audio object from parsing the {@code string}.
+     * the default wave shape if the passed {@code String} has no wave shape
+     * prefix segment. If the passed {@code String} can't be parsed to audio
+     * then an empty {@link Optional} is returned, otherwise the returned
+     * {@link Optional} contains the resulting audio object from parsing the
+     * {@code string}.
      *
      * @param aString          {@code String} to attempt to parse to an
      *                         {@link Audio} object.
@@ -216,6 +216,36 @@ final class AudioString {
         );
     }
 
+    /**
+     * <em>Case insensitively</em> parses the passed {@code String} argument to
+     * an {@link Audio} object, using the passed {@link WaveShape} argument as
+     * the default wave shape if the passed {@code String} has no wave shape
+     * prefix segment and if instead of a pitch the {@code String} contains a
+     * scale pitch index, uses the passed {@link Scale} to derive the
+     * {@link Pitch} of the {@link Audio}. If the passed {@code String} can't be
+     * parsed to audio then an empty {@link Optional} is returned, otherwise the
+     * returned {@link Optional} contains the resulting audio object from
+     * parsing the {@code string}.
+     *
+     * @param aString          {@code String} to attempt to parse to an
+     *                         {@link Audio} object.
+     *
+     * @param defaultWaveShape {@link WaveShape} to use as a default value if the
+     *                         passed {@code String} argument is audible audio
+     *                         with a tone (not silence) with no wave shape prefix.
+     *
+     * @return An {@link Optional} containing the {@link Audio} object parsed
+     *         from the passed string or an empty optional if it can't be parsed.
+     *
+     * @param scale The {@link Scale} to use if instead of a {@link Pitch}, the
+     *              {@code String} contains a scale pitch index.
+     *
+     * @return An {@link Optional} containing the {@link Audio} object parsed
+     *         from the passed string or an empty optional if it can't be parsed.
+     *
+     * @throws IllegalArgumentException If any of the provided arguments are
+     *                                  {@code null}.
+     */
     static Optional<Audio> parse(String aString, WaveShape defaultWaveShape, Scale scale) {
         if (aString == null) {
             throw new IllegalArgumentException("Null string.");
