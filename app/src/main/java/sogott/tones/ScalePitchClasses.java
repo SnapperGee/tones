@@ -7,7 +7,22 @@ import java.util.Map;
 
 import static java.util.Collections.unmodifiableMap;
 
+/**
+ * Contains {@code Map}s associating {@link PitchLetter}s with {@code Map}s
+ * associating {@link Accidental}s with {@code List}s of {@link PitchClass}es
+ * corresponding to musical scales.
+ *
+ * @see PitchLetter
+ * @see Accidental
+ * @see PitchClass
+ * @see Scale
+ */
 enum ScalePitchClasses {
+
+    /**
+     * Contains the {@link PitchLetter} and {@link Accidental} {@code Map}s
+     * for <i>major</i> scales.
+     */
     MAJOR(new EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>>(Map.ofEntries(
             Map.entry(PitchLetter.A, unmodifiableMap(new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
                 Map.entry(Accidental.FLAT, List.of(
@@ -160,6 +175,10 @@ enum ScalePitchClasses {
             ))))
         ))),
 
+    /**
+     * Contains the {@link PitchLetter} and {@link Accidental} {@code Map}s
+     * for <i>minor</i> scales.
+     */
     MINOR(new EnumMap<PitchLetter, Map<Accidental, List<PitchClass>>>(Map.ofEntries(
             Map.entry(PitchLetter.A, unmodifiableMap(new EnumMap<Accidental, List<PitchClass>>(Map.ofEntries(
                 Map.entry(Accidental.FLAT, List.of(
@@ -291,10 +310,31 @@ enum ScalePitchClasses {
         this._pitchLetterAccidentalMap = unmodifiableMap(accidentalPitchClassMap);
     }
 
+    /**
+     * Returns the {@link PitchLetter} {@code Map} containing the
+     * {@link Accidental} associated with the {@code List} of
+     * {@link PitchClass}es corresponding to a musical scale.
+     *
+     * @return The {@link PitchLetter} {@code Map} containing the
+     * {@link Accidental} associated with the {@code List} of
+     * {@link PitchClass}es corresponding to a musical scale.
+     */
     Map<PitchLetter, Map<Accidental, List<PitchClass>>> pitchLetterAccidentalMap() {
         return this._pitchLetterAccidentalMap;
     }
 
+    /**
+     * Returns the {@code List} of {@link PitchClass}es of a scale with the
+     * provided {@link PitchClass} as the root/tonic.
+     *
+     * @param pitchClass The root/tonic {@link PitchClass} of the scale to return.
+     *
+     * @return The {@code List} of {@link PitchClass}es of a scale with the
+     * provided {@link PitchClass} as the root/tonic.
+     *
+     * @throws IllegalArgumentException If the passed {@link PitchClass}
+     *         argument is {@code null}.
+     */
     List<PitchClass> of(PitchClass pitchClass) {
 
         if (pitchClass == null) {
