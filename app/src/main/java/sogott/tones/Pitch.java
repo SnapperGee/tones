@@ -11,9 +11,8 @@ import static java.util.Objects.hash;
  *
  * <h2>1.) {@code Pitch Letter}</h2>
  * The {@link #letter() letter} property consists of a character value
- * corresponding
- * to one of the musical notes (A-G). These note chars are defined in the
- * {@link PitchLetter} enum.
+ * corresponding to one of the musical notes (A-G). These note chars are defined
+ * in the {@link PitchLetter} enum.
  *
  * <h2>2.) {@code Accidental}</h2>
  * The {@link #accidental() accidental} property consists of a character value
@@ -30,13 +29,17 @@ import static java.util.Objects.hash;
  * property as well:
  *
  * <h3>4.) String value</h3>
- * The above 3 properties can be combined into a single {@code String} that
- * represents a {@link Pitch} object. It consists of a leading note char,
+ * The above 3 primary properties can be combined into a single {@code String}
+ * that represents a {@link Pitch} object. It consists of a leading note char,
  * followed by an accidental char or nothing if it doesn't have one, followed by
  * an octave integer. A string value of each {@link Pitch} object is stored as a
  * {@link #stringValue() stringValue} property. On top of that, the
  * {@link Pitch} class contains the static {@link #parse(String) parse(String)}
  * method capable of parsing a string into a {@link Pitch} object.
+ *
+ * <h3>4.) Pitch class</h3>
+ * The {@link #pitchClass() pitchClass} is simply an object that encapsulate
+ * this object's {@link PitchLetter} and {@link Accidental}.
  *
  * <p>
  * An example of a 440hz wave would be natural {@code 'A'} (no sharp or flat) in
@@ -52,6 +55,7 @@ import static java.util.Objects.hash;
  *
  * @see PitchLetter
  * @see Accidental
+ * @see PitchClass
  * @see Audio
  * @see AudioString
  */
@@ -154,6 +158,13 @@ final class Pitch {
         this(pitchLetter, Accidental.NATURAL, octave);
     }
 
+    /**
+     * The {@link PitchClass} value of this {@link Pitch} object.
+     *
+     * @return The {@link PitchClass} value of this {@link Pitch} object.
+     *
+     * @see PitchClass
+     */
     PitchClass pitchClass() {
         return this._pitchClass;
     }
@@ -264,6 +275,23 @@ final class Pitch {
             );
     }
 
+    /**
+     * If the passed {@code String} argument starts with a leading prefix that
+     * can be parsed into a {@link Pitch}, returns an {@link Optional}
+     * containing a {@link Map.Entry} that contains the resulting {@link Pitch}
+     * object of parsing it as the entry key and the raw {@code String} prefix
+     * that was parsed as the entry value.
+     *
+     * @param aString
+     *
+     * @return An {@link Optional} containing a {@link Map.Entry} that contains
+     * the resulting {@link Pitch} object of parsing the leading prefix of the
+     * passed {@code String} argument as the entry key and the raw {@code String}
+     * prefix that was parsed as the entry value.
+     *
+     * @throws IllegalArgumentException If the passed {@code String} argument is
+     * {@code null}.
+     */
     static Optional<Map.Entry<Pitch, String>> parsePrefix(String aString) {
         if (aString == null) {
             throw new IllegalArgumentException("Null String");
