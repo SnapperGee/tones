@@ -50,6 +50,8 @@ final class CliOptionTestArgsProvider {
                     arguments(CliOption.OUT, "o"),
                     arguments(CliOption.VERSION, "v"),
                     arguments(CliOption.QUIET, "q"),
+                    arguments(CliOption.ROOT, "r"),
+                    arguments(CliOption.SCALE, "s"),
                     arguments(CliOption.HELP, "h"));
         }
     }
@@ -62,6 +64,8 @@ final class CliOptionTestArgsProvider {
                     arguments(CliOption.NOTE_BEAT_VALUE, 1),
                     arguments(CliOption.WAVE, 1),
                     arguments(CliOption.OUT, 1),
+                    arguments(CliOption.ROOT, 1),
+                    arguments(CliOption.SCALE, 1),
                     arguments(CliOption.VERSION, 0),
                     arguments(CliOption.QUIET, 0),
                     arguments(CliOption.HELP, 0));
@@ -76,6 +80,8 @@ final class CliOptionTestArgsProvider {
                     arguments(CliOption.NOTE_BEAT_VALUE, "INTEGER"),
                     arguments(CliOption.WAVE, "WAVE"),
                     arguments(CliOption.OUT, "PATH"),
+                    arguments(CliOption.ROOT, "PITCH"),
+                    arguments(CliOption.SCALE, "SCALE"),
                     arguments(CliOption.VERSION, null),
                     arguments(CliOption.QUIET, null),
                     arguments(CliOption.HELP, null));
@@ -90,20 +96,8 @@ final class CliOptionTestArgsProvider {
                     arguments(CliOption.NOTE_BEAT_VALUE, Integer.class),
                     arguments(CliOption.WAVE, WaveShape.class),
                     arguments(CliOption.OUT, Path.class),
-                    arguments(CliOption.VERSION, String.class),
-                    arguments(CliOption.QUIET, String.class),
-                    arguments(CliOption.HELP, String.class));
-        }
-    }
-
-    static final class EnumValuesWithDescription implements ArgumentsProvider {
-        @Override
-        public Stream<Arguments> provideArguments(ExtensionContext context) {
-            return Stream.of(
-                    arguments(CliOption.BPM, Integer.class),
-                    arguments(CliOption.NOTE_BEAT_VALUE, Integer.class),
-                    arguments(CliOption.WAVE, WaveShape.class),
-                    arguments(CliOption.OUT, Path.class),
+                    arguments(CliOption.ROOT, Pitch.class),
+                    arguments(CliOption.SCALE, ScalePitchClasses.class),
                     arguments(CliOption.VERSION, String.class),
                     arguments(CliOption.QUIET, String.class),
                     arguments(CliOption.HELP, String.class));
