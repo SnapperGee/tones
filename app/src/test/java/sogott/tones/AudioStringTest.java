@@ -857,11 +857,10 @@ final class AudioStringTestArgsProvider {
                         Util.randomStrings(1, 2, 10, IntStream.rangeClosed('0', '9').toArray())
                             .map(randomString ->
                             {
-                                final int insertIndex = random.nextInt(1, waveShapePrefixedAudioString.length());
+                                final int insertIndex = random.nextInt(0, waveShapePrefixedAudioString.length() + 1);
                                 final String invalidAudioScaleString =
-                                    new StringBuilder(waveShapePrefixedAudioString.substring(0, insertIndex))
-                                    .append(randomString)
-                                    .append(waveShapePrefixedAudioString.substring(insertIndex))
+                                    new StringBuilder(waveShapePrefixedAudioString)
+                                    .insert(insertIndex, randomString)
                                     .toString();
 
                                 return arguments(invalidAudioScaleString);
