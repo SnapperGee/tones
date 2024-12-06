@@ -9,7 +9,7 @@ import javax.sound.sampled.SourceDataLine;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 
-import static java.util.Collections.unmodifiableList;
+import static java.util.Arrays.stream;
 
 /**
  * Command line processing takes place here and an operation dependent on the
@@ -51,9 +51,9 @@ final public class Main {
                 System.out.println(
                         "No audio output specified (audible playback disabled and no file output selected). Exiting...");
             } else {
-                final List<String> operands = unmodifiableList(cliArgs.getArgList());
+                final String[] operands = cliArgs.getArgs();
 
-                if (operands.isEmpty()) {
+                if (operands.length == 0) {
                     throw new ParseException("No audio String operand argument(s) passed.");
                 }
 
@@ -76,11 +76,13 @@ final public class Main {
                 final double wholeNoteDuration = beatDuration * noteBeatValue;
 
                 final record ValidAndInvalidOperands(List<Audio> valid, List<String> invalid) {
+                    ValidAndInvalidOperands() {
+                        this(new ArrayList<Audio>(), new ArrayList<String>());
+                    }
                 }
 
-                final ValidAndInvalidOperands validAndInvalidOperands = operands.stream().reduce(
-                        new ValidAndInvalidOperands(new ArrayList<Audio>(),
-                                new ArrayList<String>()),
+                final ValidAndInvalidOperands validAndInvalidOperands = stream(operands).reduce(
+                        new ValidAndInvalidOperands(),
                         (acc, operand) -> {
 
                             AudioString.parse(operand, wave, scale).ifPresentOrElse(
