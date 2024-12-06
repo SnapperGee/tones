@@ -41,9 +41,9 @@ final record Scale(List<PitchClass> pitchClasses, int octave) {
         final int targetSemitones = targetPitchClass.letter().semitonesFromC();
 
         // Find the difference in semitones between tonic and target
-        final int pitchClassDiff = targetSemitones - tonicSemitones >= 0
-            ? targetSemitones - tonicSemitones
-            : targetSemitones - tonicSemitones + TOTAL_SEMITONES_IN_OCTAVE;
+        final int semitoneDif = targetSemitones - tonicSemitones;
+        final int pitchClassDiff = semitoneDif >= 0 ? semitoneDif
+            : semitoneDif + TOTAL_SEMITONES_IN_OCTAVE;
 
         // Total semitones from C0
         final int totalSemitones = baselineSemitones + pitchClassDiff + (cycle * TOTAL_SEMITONES_IN_OCTAVE);
