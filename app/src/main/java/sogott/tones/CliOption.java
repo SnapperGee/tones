@@ -76,11 +76,11 @@ enum CliOption {
 
     /**
      * Contains the {@link Option} for setting the default wave shape. It
-     * expects a valid wave {@code String} value defined in the {@link Wave}
+     * expects a valid wave {@code String} value defined in the {@link WaveShape}
      * enum values. This is the wave shape of a note if it's omitted. Defaults
      * to a SINE wave if not specified.
      *
-     * @see Wave
+     * @see WaveShape
      */
     WAVE(Option.builder("w")
             .argName("WAVE")
