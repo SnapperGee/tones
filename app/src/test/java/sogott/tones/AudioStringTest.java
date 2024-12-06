@@ -69,39 +69,6 @@ final class AudioStringTestArgsProvider {
         );
     }
 
-    static Stream<String> waveShapeNonPrefixedAudioScaleStrings() {
-        return scalePitchClasses.stream().flatMap(scalePitchLetterMaps ->
-            scalePitchLetterMaps.pitchLetterAccidentalMap().entrySet().stream()
-                .flatMap(pitchLetterAccidentalMap ->
-                    pitchLetterAccidentalMap.getValue().entrySet().stream()
-                        .flatMap(accidentalPitchClassesMap ->
-                            IntStream.rangeClosed(0, 3).mapToObj(octave ->
-                            {
-                                final int minScalePitchIndex = (accidentalPitchClassesMap.getValue().size() - 1) * -octave;
-                                final int maxScalePitchIndexLimit = (accidentalPitchClassesMap.getValue().size() - 1) * 3;
-                                return IntStream.rangeClosed(minScalePitchIndex, maxScalePitchIndexLimit)
-                                    .mapToObj(scalePitchIndex ->
-                                    {
-                                        final int duration = random.nextInt(1, 256);
-                                        return waveShapes.stream().flatMap(waveShape ->
-                                            waveShape.stringValueAliases().stream()
-                                                .map(waveShapeStringValueAlias ->
-                                                    new StringBuilder()
-                                                        .append(scalePitchIndex)
-                                                        .append(AudioString.Delimiter.VOICE_AND_DURATION.charValue())
-                                                        .append(duration)
-                                                        .toString()
-                                                )
-                                        );
-                                    })
-                                    .flatMap(s -> s);
-                            })
-                            .flatMap(s -> s)
-                        )
-            )
-        );
-    }
-
     static final class Valid {
         static final class WaveShapePrefixedAudioPitchStringValueAndAudio implements ArgumentsProvider {
             @Override
