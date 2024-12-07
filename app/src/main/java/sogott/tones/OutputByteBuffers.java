@@ -77,7 +77,9 @@ final class OutputByteBuffers {
      * @throws IllegalArgumentException If either of the passed arguments are
      *                                  {@code null}.
      */
-    static final Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath) {
+    static final Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath)
+        throws IOException
+    {
         if (byteBuffers == null) {
             throw new IllegalArgumentException("Null byte buffers");
         }
@@ -95,14 +97,7 @@ final class OutputByteBuffers {
         final AudioInputStream audioInputStream = new AudioInputStream(sequenceInputStream, ByteBuffers.AUDIO_FORMAT,
                 AudioSystem.NOT_SPECIFIED);
 
-        try {
-            AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, outputFilePath.toFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println('\n' + e.getMessage());
-            System.exit(322);
-            return null;
-        }
+        AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, outputFilePath.toFile());
 
         return outputFilePath;
     }

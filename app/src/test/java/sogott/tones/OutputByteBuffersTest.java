@@ -1,5 +1,6 @@
 package sogott.tones;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.random.RandomGenerator;
@@ -85,7 +86,7 @@ final class OutputByteBuffersTest {
 
     @Test
     @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, Path with \".wav\" extension) creates file at Path")
-    void outputByteBuffersToWavFilePassedPathWithWavExtensionCreatesFileAtPath(@TempDir Path tempDir) {
+    void outputByteBuffersToWavFilePassedPathWithWavExtensionCreatesFileAtPath(@TempDir Path tempDir) throws IOException {
         final ByteBuffers byteBuffers = new ByteBuffers(emptyList(), random.nextInt(1, 1000));
         final Path filePath = tempDir.resolve("TEST_FILE.wav");
         OutputByteBuffers.toWavFile(byteBuffers, filePath);
@@ -95,7 +96,7 @@ final class OutputByteBuffersTest {
     @Test
     @DisplayName("OutputByteBuffers.toAudio(ByteBuffers, Path with out \".wav\" extension) creates file at Path with \".wav\" extension")
     void outputByteBuffersToWavFilePassedPathWithoutWavExtensionCreatesFileAtPathWithWavExtension(
-            @TempDir Path tempDir) {
+            @TempDir Path tempDir) throws IOException {
         final ByteBuffers byteBuffers = new ByteBuffers(emptyList(), random.nextInt(1, 1000));
         final Path filePathArg = tempDir.resolve("TEST_FILE");
         final Path expectedFilePath = Path.of(filePathArg.toString() + ".wav");

@@ -11,6 +11,8 @@ import org.apache.commons.cli.ParseException;
 
 import static java.util.Arrays.stream;
 
+import java.io.IOException;
+
 /**
  * Command line processing takes place here and an operation dependent on the
  * parsed command line arguments is executed. If invalid command line arguments
@@ -102,7 +104,7 @@ final public class Main {
                             validAndInvalidOperands.invalid().size() == 1 ? "argument"
                                     : "arguments",
                             String.join("\", \"", validAndInvalidOperands.invalid()));
-                    System.exit(200);
+                    System.exit(111);
                 }
 
                 final ByteBuffers byteBuffers = new ByteBuffers(validAndInvalidOperands.valid(), wholeNoteDuration);
@@ -123,11 +125,15 @@ final public class Main {
         } catch (ParseException e) {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
-            System.exit(100);
+            System.exit(222);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
             System.err.println('\n' + e.getMessage());
-            System.exit(311);
+            System.exit(333);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println('\n' + e.getMessage());
+            System.exit(444);
         }
     }
 
