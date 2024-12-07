@@ -1,5 +1,3 @@
-import java.awt.Desktop
-
 plugins {
     application
 }
@@ -46,8 +44,8 @@ tasks {
         }
 
         doLast {
-            // Open javadoc in web browser after generating
-            Desktop.getDesktop().browse(destinationDir?.toPath()?.resolve("index.html")?.toUri())
+            // Print path to generated javadoc index.html
+            println(destinationDir?.toPath()?.resolve("index.html")?.toUri())
         }
     }
 }
