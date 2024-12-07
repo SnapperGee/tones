@@ -43,3 +43,9 @@ tasks {
         }
     }
 }
+
+distributions {
+    main {
+        distributionBaseName = rootProject.name
+    }
+}
