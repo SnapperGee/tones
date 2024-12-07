@@ -1,3 +1,5 @@
+import java.awt.Desktop
+
 plugins {
     application
 }
@@ -38,8 +40,14 @@ tasks {
 
     named<Javadoc>("javadoc") {
         title = "tones"
+
         options {
             memberLevel = JavadocMemberLevel.PACKAGE
+        }
+
+        doLast {
+            // Open javadoc in web browser after generating
+            Desktop.getDesktop().browse(destinationDir?.toPath()?.resolve("index.html")?.toUri())
         }
     }
 }
