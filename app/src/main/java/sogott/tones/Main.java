@@ -1,5 +1,6 @@
 package sogott.tones;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.ArrayList;
@@ -10,8 +11,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 
 import static java.util.Arrays.stream;
-
-import java.io.IOException;
 
 /**
  * Command line processing takes place here and an operation dependent on the
