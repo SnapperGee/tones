@@ -30,14 +30,16 @@ application {
     mainClass = "sogott.tones.Main"
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-    jvmArgs("-javaagent:${mockitoAgent.asPath}")
-}
+tasks {
+    named<Test>("test") {
+        useJUnitPlatform()
+        jvmArgs("-javaagent:${mockitoAgent.asPath}")
+    }
 
-tasks.named<Javadoc>("javadoc") {
-    title = "tones"
-    options {
-        memberLevel = JavadocMemberLevel.PACKAGE
+    named<Javadoc>("javadoc") {
+        title = "tones"
+        options {
+            memberLevel = JavadocMemberLevel.PACKAGE
+        }
     }
 }
