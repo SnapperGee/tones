@@ -36,9 +36,15 @@
  * this segment from the following segment.
  *
  * <h3>Pitch/Frequency</h3>
- * The segment after the wave shape prefix, {@code "C=4"}, indicates the
+ * The segment after the wave shape prefix, {@code "C+4"}, indicates the
  * <i>pitch</i> (or <i>frequency</i>) of the audio. The period character
  * {@code '.'} delimits this segment from the final segment.
+ *
+ * <h3>Scale Pitch Index</h3>
+ * An alternative way to specify the pitch/frequency in an audio string is with
+ * an integer specifying the index of a pitch in a musical scale. The index
+ * retrieves the pitch relative to the tonic (root) pitch of the scale and can
+ * be negative assuming it doesn't result in a pitch with a negative octave.
  *
  * <h3>Duration (suffix)</h3>
  * The suffix integer {@code 4} indicates that the audio is a quarter note
@@ -49,7 +55,7 @@
  * {@link sogott.tones.GenerateWaveByteBuffer GenerateWaveByteBuffer} generate
  * the different wave shapes (as byte buffers appropriate for synthesizing PCM
  * audio). There are 5 shapes this package is capably of synthesizing defined in
- * the {@link sogott.tones.WaveShape Wave} enum. The shapes are:
+ * the {@link sogott.tones.WaveShape WaveShape} enum. The shapes are:
  *
  * <ol>
  * <li><strong><em>SINE</em></strong> &acd;

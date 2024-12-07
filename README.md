@@ -198,14 +198,15 @@ The pitch segment dictates if audio is silence or an audible tone with a
 
 To create silence, the pitch segment is simply a question mark character, `'?'`.
 
-### Scale
+### Scale Pitch Index
 
-An alternative way to specify pitch in an audio string is via a
-***scale pitch index***. A scale pitch index is simply a 0 indexed integer that
-represents the pitch of a note in scale. For instance, to create audio
-consisting of quarter notes of all the pitches within the E&sharp; (sharp) scale
-in the 3rd octave, instead of having to write out all the pitch letters,
-accidentals, and octaves for each note, you could simply do:
+An alternative way to specify the pitch/frequency in an audio string is with
+an integer specifying the index of a pitch in a musical scale. The index
+retrieves the pitch relative to the tonic (root) pitch of the scale and can
+be negative assuming it doesn't result in a pitch with a negative octave. For
+instance, to create audio consisting of quarter notes of all the pitches within
+the E&sharp; (sharp) scale in the 3rd octave, instead of having to write out all
+the pitch letters, accidentals, and octaves for each note, you could simply do:
 
 ```bash
 $tones --scale minor --root e+3 0.4 1.4 2.4 3.4 4.4 5.4 6.4
