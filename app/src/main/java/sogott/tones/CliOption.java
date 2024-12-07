@@ -203,7 +203,7 @@ enum CliOption {
                     CliOption.SCALE.usageString(),
                     CliOption.ROOT.usageString(),
                     CliOption.WAVE.value().getArgName())
-            + "\nPlay musical note based tones.\nExample: beep C4.4 D4.4 E-4.8 D4.8";
+            + "\nPlay musical note based tones.\nExample: tones C4.4 D4.4 E-4.8 D4.8";
 
     private static final Options ALL_OPTIONS = stream(CliOption.values()).reduce(
             new Options(),
@@ -211,6 +211,11 @@ enum CliOption {
             (someOptions, moreOptions) -> someOptions.addOptions(moreOptions));
 
     /**
+     * The default parser used by this cli application to parse the command line
+     * arguments in the {@link Main#main(String[])} entry point method that can
+     * take an optional {@code boolean} argument indicating whether arguments
+     * should still be prefixed as an option after encountering the first
+     * unrecognized option.
      *
      * @param args The command line argument {@code String}s to parse.
      *

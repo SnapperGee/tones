@@ -76,6 +76,8 @@ final class OutputByteBuffers {
      *
      * @throws IllegalArgumentException If either of the passed arguments are
      *                                  {@code null}.
+     *
+     * @throws IOException If there's an error writing audio file.
      */
     static final Path toWavFile(ByteBuffers byteBuffers, Path outputFilePath)
         throws IOException
