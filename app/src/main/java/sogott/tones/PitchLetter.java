@@ -8,9 +8,8 @@ import static java.util.Collections.unmodifiableList;
 
 /**
  * Enum of values to represent musical
- * <strong><em>pitch letter</em></strong>es/<strong><em>pitch
- * letter</em></strong>s, characters A-G, and static methods for processing
- * characters in ways related to these pitch letter enum values.
+ * <strong><em>pitch letter</em></strong>s, characters A-G, and static methods
+ * for processing characters in ways related to these pitch letter enum values.
  *
  * <p>
  * Each accidental value consists of an {@link #offset() offset} {@code int}
