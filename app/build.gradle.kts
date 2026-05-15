@@ -11,7 +11,7 @@ val mockitoAgent = configurations.create("mockitoAgent")
 val mockitoMavenPackageStr = "org.mockito:mockito-core:5.17.0"
 
 dependencies {
-    implementation("commons-cli:commons-cli:1.9.0")
+    implementation("commons-cli:commons-cli:1.11.0")
     testImplementation(libs.junit.jupiter)
     testImplementation("org.hamcrest:hamcrest:3.0")
     testImplementation("org.junit.platform:junit-platform-suite-api:1.12.2")
