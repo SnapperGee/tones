@@ -8,10 +8,13 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.help.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 
 import static java.util.Arrays.stream;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
 
 /**
  * Enum of command line interface options/flags and static methods related to
@@ -269,14 +272,27 @@ enum CliOption {
         return parse(args, false);
     }
 
+    private static final HelpFormatter HELP_FORMATTER = HelpFormatter.builder().get();
+
     /**
      * Prints a help message consisting of usage instructions and information
      * about the options and flags to stdout.
      */
     static final void printHelp() {
-        new HelpFormatter().printHelp(
+        try
+		{
+            HELP_FORMATTER.printHelp(
                 CliOption.CMD_LINE_SYNTAX,
-                ALL_OPTIONS);
+                null,
+                ALL_OPTIONS,
+                null,
+                false
+            );
+        }
+        catch (final IOException e)
+        {
+            throw new UncheckedIOException(e);
+        }
     }
 
     final private Option _value;
